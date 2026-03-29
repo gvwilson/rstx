@@ -1,0 +1,52 @@
+[project]
+name = "rsdtx"
+version = "0.1.0"
+description = "research software design and testing by example"
+authors = [{name = "Greg Wilson", email = "gvwilson@third-bit.com"}]
+license = {file = "LICENSE.md"}
+readme = "README.md"
+requires-python = ">=3.13"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.13",
+]
+dependencies = [
+    "altair>=6.0.0",
+    "matplotlib>=3.10.8",
+    "mccole>=2.13.1",
+    "networkx>=3.6.1",
+    "numpy>=2.4.4",
+    "polars>=1.39.3",
+    "ruff>=0.15.0",
+    "scipy>=1.17.1",
+    "vl-convert-python>=1.9.0.post1",
+]
+
+[project.urls]
+Homepage = "https://gvwilson.github.io/rsdtx"
+Repository = "https://github.com/gvwilson/rsdtx"
+
+[tool.mccole]
+title = "Research Software Design and Testing by Example"
+repo = "https://github.com/gvwilson/rsdtx"
+skips = [
+    "**/__pycache__",
+    "*.csv",
+    "*.py",
+    "*.pyc",
+    "*.sh",
+    "*.txt",
+    "Makefile",
+    "bin/*",
+    "docs/**",
+    "log/*",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
