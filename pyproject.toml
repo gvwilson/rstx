@@ -31,8 +31,9 @@ Homepage = "https://gvwilson.github.io/rsdtx"
 Repository = "https://github.com/gvwilson/rsdtx"
 
 [tool.mccole]
-title = "Research Software Design and Testing by Example"
-repo = "https://github.com/gvwilson/rsdtx"
+title = "Research Software Testing by Example"
+brand = "RSTX"
+repo = "https://github.com/gvwilson/rstx"
 skips = [
     "**/__pycache__",
     "*.csv",

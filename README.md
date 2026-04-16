@@ -1,4 +1,4 @@
-# Research Software Design and Testing by Example
+# Research Software Testing by Example
 
 ## Learner Persona
 
