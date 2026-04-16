@@ -64,15 +64,6 @@ Because character n-grams are language-independent.
 -   Dividing by the norms makes the measure length-independent:
     a short text and a long text with the same relative frequencies score 1
 
-<div class="forma-numeric-entry" data-correct="0.96" data-tolerance="0.001" data-lang="en" markdown="1">
-
-Profile A has bigrams "ab" with frequency 0.6 and "cd" with frequency 0.8
-(it contains no other bigrams, and the two frequencies form a unit vector).
-Profile B has "ab" with frequency 0.8 and "cd" with frequency 0.6.
-What is the cosine similarity of A and B?
-
-</div>
-
 ## Generating Synthetic Texts
 
 -   The 15-character alphabet "abcdefghijklmno" is divided into three equal groups of five
@@ -188,6 +179,13 @@ Attribution margin
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Profile A has bigrams "ab" with frequency 0.6 and "cd" with frequency 0.8
+(it contains no other bigrams, and the two frequencies form a unit vector).
+Profile B has "ab" with frequency 0.8 and "cd" with frequency 0.6.
+What is the cosine similarity of A and B?
 
 ### Effect of n-gram size
 

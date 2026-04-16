@@ -113,13 +113,6 @@ $\sqrt{8}$
 
 [%inc topics.py mark="kmeans"%]
 
-<div class="forma-numeric-entry" data-correct="5" data-tolerance="0.001" data-lang="en" markdown="1">
-
-Consider two document vectors $\mathbf{a} = [3, 4]$ and centroid $\mathbf{c} = [0, 0]$.
-What is the Euclidean distance $d(\mathbf{a}, \mathbf{c})$?
-
-</div>
-
 ## Top Words Per Cluster
 
 -   After k-means converges, the top words for each cluster are those with the highest
@@ -237,6 +230,11 @@ L2 normalization
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Consider two document vectors $\mathbf{a} = [3, 4]$ and centroid $\mathbf{c} = [0, 0]$.
+What is the Euclidean distance $d(\mathbf{a}, \mathbf{c})$?
 
 ### Effect of K
 

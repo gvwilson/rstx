@@ -60,14 +60,6 @@ Because averaging all stations equally would always overestimate the value.
     IDW is a [%g convexity "convex combination" %]:
     all estimates lie within $[\min_i z_i,\, \max_i z_i]$
 
-<div class="forma-numeric-entry" data-correct="0.8" data-tolerance="0.01" data-lang="en" markdown="1">
-
-Station A is 1 unit from the query point and has value 1.0.
-Station B is 2 units away and has value 0.0.
-Using p = 2, what is the IDW estimate at the query point?
-
-</div>
-
 ## Generating Synthetic Station Data
 
 -   The true temperature field is $T(x, y) = \sin(3\pi x)\cos(2\pi y)$ on $[0,1]^2$,
@@ -183,6 +175,12 @@ Leave-one-out cross-validation
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Station A is 1 unit from the query point and has value 1.0.
+Station B is 2 units away and has value 0.0.
+Using p = 2, what is the IDW estimate at the query point?
 
 ### Effect of the power parameter
 

@@ -54,14 +54,6 @@ A break always makes the residuals larger in absolute value, raising the CUSUM.
 -   Because detect_break returns the last index before the estimated break,
     the estimated break location in terms of steps is $\hat{\tau} + 1$
 
-<div class="forma-numeric-entry" data-correct="99" data-tolerance="0" data-lang="en" markdown="1">
-
-A noise-free series has value 0 for steps 0-99 and value 3 for steps 100-199.
-The global mean is 1.5.
-At which step index (0-based) does $|C_t|$ reach its maximum?
-
-</div>
-
 ## Generating Synthetic Data
 
 -   The series has a single abrupt break at step 100:
@@ -213,6 +205,12 @@ Break detection rule
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A noise-free series has value 0 for steps 0-99 and value 3 for steps 100-199.
+The global mean is 1.5.
+At which step index (0-based) does $|C_t|$ reach its maximum?
 
 ### Two break points
 

@@ -51,13 +51,6 @@ Because Dijkstra's algorithm always prefers shorter paths.
 -   $d(A, B) = 1$ for orthogonal moves and $\sqrt{2}$ for diagonal moves,
     so longer edges cost proportionally more.
 
-<div class="forma-numeric-entry" data-correct="0.75" data-tolerance="0.001" data-lang="en" markdown="1">
-
-Cell A has elevation 0.5 and orthogonally adjacent cell B has elevation 1.0.
-What is the edge cost from A to B?
-
-</div>
-
 ## Generating Synthetic Terrain
 
 -   The terrain is a superposition of sinusoidal waves at four octaves
@@ -171,6 +164,11 @@ Edge cost (terrain)
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Cell A has elevation 0.5 and orthogonally adjacent cell B has elevation 1.0.
+What is the edge cost from A to B?
 
 ### Slope-based cost
 

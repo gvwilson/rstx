@@ -116,17 +116,15 @@ Marking after popping would cause the algorithm to miss cells in the last row.
 
 [%inc test_porous.py%]
 
-<div class="forma-numeric-entry" data-correct="0.5927" data-tolerance="0.002" data-lang="en" markdown="1">
+<section class="exercises" markdown="1">
+
+## Exercises
+
+### Do the math
 
 The theoretical percolation threshold for 2D site percolation on a square lattice with
 4-neighbor connectivity is commonly cited as 0.5927.
 To three decimal places, what is `THRESHOLD_THEORY` as defined in `porous.py`?
-
-</div>
-
-<section class="exercises" markdown="1">
-
-## Exercises
 
 ### Larger grids
 

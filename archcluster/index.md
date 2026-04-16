@@ -58,13 +58,6 @@ Because cluster sites always outnumber noise sites.
 
 [%inc archcluster.py mark="grid"%]
 
-<div class="forma-numeric-entry" data-correct="5" data-tolerance="0" data-lang="en" markdown="1">
-
-A survey region runs from 0 to 100 units.  GRID_SIZE is 20, so each cell is
-5 units wide.  A site at easting 27.3 maps to which column index?
-
-</div>
-
 ## Identifying Concentration Cells
 
 -   A cell with `count >= HOT_THRESHOLD` is called a "hot" cell
@@ -82,11 +75,11 @@ A survey region runs from 0 to 100 units.  GRID_SIZE is 20, so each cell is
 
 <div class="forma-multiple-choice" data-lang="en" markdown="1">
 
-What happens to the number of detected clusters when GRID_SIZE is halved
+What happens to the number of detected clusters when `GRID_SIZE` is halved
 (from 20 to 10)?
 
 The number of clusters always increases, because there are more cells to label.
-:   Wrong: halving GRID_SIZE reduces the number of cells, not increases them;
+:   Wrong: halving `GRID_SIZE` reduces the number of cells, not increases them;
     each coarser cell aggregates more sites.
 
 Each cell covers four times the area and accumulates more sites, so cells are
@@ -204,13 +197,6 @@ The label of the cluster whose centroid is closest to the site.
     should be close to the planted center
     -   The offset is the estimation error
 
-<div class="forma-numeric-entry" data-correct="3" data-tolerance="0" data-lang="en" markdown="1">
-
-Four clusters are planted in the synthetic data.  How many entries does the
-dict returned by cluster_centroids contain, assuming all four are recovered?
-
-</div>
-
 ## Testing
 
 Grid shape and total count
@@ -272,6 +258,14 @@ Cluster centroid
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+1.  A survey region runs from 0 to 100 units.  `GRID_SIZE` is 20, so each cell is
+    5 units wide.  A site at easting 27.3 maps to which column index?
+
+1.  Four clusters are planted in the synthetic data.  How many entries does the
+    dict returned by `cluster_centroids` contain, assuming all four are recovered?
 
 ### Parameter sensitivity
 

@@ -51,12 +51,6 @@ Because power-laws are easier to fit than lines with scipy.
     rather than log-linearizing,
     which avoids distorting the noise structure when reaction times have additive Gaussian noise.
 
-<div class="forma-numeric-entry" data-correct="200" data-tolerance="0.1" data-lang="en" markdown="1">
-
-If A = 400 ms and b = 0.5, what is the predicted reaction time (in ms) on trial 4?
-
-</div>
-
 ## Generating Synthetic Trial Data
 
 -   The true parameters are $A = 500$ ms and $b = 0.3$,
@@ -164,6 +158,10 @@ Confidence interval (parameter)
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+If A = 400 ms and b = 0.5, what is the predicted reaction time (in ms) on trial 4?
 
 ### Log-log linearity
 

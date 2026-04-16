@@ -105,14 +105,6 @@ Put these steps in the correct order to generate a synthetic SIR outbreak with P
 
 [%inc sir.py mark="fit"%]
 
-<div class="forma-numeric-entry" data-correct="3.0" data-tolerance="0.05" data-lang="en" markdown="1">
-
-Using `BETA_TRUE` = 0.30 day$^{-1}$ and `GAMMA_TRUE` = 0.10 day$^{-1}$,
-compute $R_0 = \beta / \gamma$.
-Give your answer to one decimal place.
-
-</div>
-
 ## Visualizing the Results
 
 [%inc sir.py mark="plot"%]
@@ -153,6 +145,12 @@ Give your answer to one decimal place.
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Using `BETA_TRUE` = 0.30 day$^{-1}$ and `GAMMA_TRUE` = 0.10 day$^{-1}$,
+compute $R_0 = \beta / \gamma$.
+Give your answer to one decimal place.
 
 ### Herd immunity threshold
 

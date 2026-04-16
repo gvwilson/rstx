@@ -38,15 +38,6 @@
 
 [%inc cellseg.py mark="smooth"%]
 
-<div class="forma-numeric-entry" data-correct="0.90" data-tolerance="0.005" data-lang="en" markdown="1">
-
-A cell has peak brightness $B = 1.0$ and Gaussian width $\sigma = 6$ pixels.
-After smoothing with a Gaussian filter of width $\sigma_s = 2$ pixels,
-the smoothed peak brightness is $B \cdot \sigma^2 / (\sigma^2 + \sigma_s^2)$.
-What is the result? Give your answer to two decimal places.
-
-</div>
-
 ## Step 2: Thresholding and Labelling
 
 -   Pixels above a threshold form a [%g binary_mask "binary mask" %]
@@ -186,6 +177,13 @@ Pure noise
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A cell has peak brightness $B = 1.0$ and Gaussian width $\sigma = 6$ pixels.
+After smoothing with a Gaussian filter of width $\sigma_s = 2$ pixels,
+the smoothed peak brightness is $B \cdot \sigma^2 / (\sigma^2 + \sigma_s^2)$.
+What is the result? Give your answer to two decimal places.
 
 ### Watershed segmentation
 

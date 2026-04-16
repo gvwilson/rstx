@@ -52,14 +52,6 @@ A fraction $f = 0.25$ is drawn.  What is Agent A's wealth after the exchange?
 
 [%inc wealth.py mark="gini"%]
 
-<div class="forma-numeric-entry" data-correct="0" data-tolerance="0.001" data-lang="en" markdown="1">
-
-Three agents hold 1, 1, and 1 unit of wealth respectively.
-Using the formula $G = (2\sum i\,w_{(i)} - (n+1)\sum w) / (n\sum w)$ with $n=3$,
-compute the Gini coefficient.
-
-</div>
-
 ## The Exchange Simulation
 
 -   The simulation records the Gini coefficient after every exchange so we can watch
@@ -198,6 +190,12 @@ Wealth conservation invariant
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Three agents hold 1, 1, and 1 unit of wealth respectively.
+Using the formula $G = (2\sum i\,w_{(i)} - (n+1)\sum w) / (n\sum w)$ with $n=3$,
+compute the Gini coefficient.
 
 ### Theoretical steady-state Gini
 

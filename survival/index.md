@@ -25,13 +25,6 @@
 -   As $t \to \infty$, $S(t) \to 0$; the curve decays smoothly rather than dropping in steps.
 -   The mean survival time is $\mu = 1/\lambda$; the median is $(\ln 2)/\lambda \approx 0.693/\lambda$.
 
-<div class="forma-numeric-entry" data-correct="0.5" data-tolerance="0.001" data-lang="en" markdown="1">
-
-The survival time of a population follows an Exponential distribution with rate $\lambda = 1/20$.
-Using $S(t) = e^{-\lambda t}$, compute $S(20 \ln 2)$ to three decimal places.
-
-</div>
-
 ## Generating Synthetic Data
 
 -   Each patient's true event time is drawn from Exponential($\mu = 20$ days, i.e. $\lambda = 1/20$).
@@ -110,13 +103,6 @@ $$\hat{\lambda} = \frac{d}{\sum_i t_i}$$
 
 [%inc survival.py mark="corrected-rate"%]
 
-<div class="forma-numeric-entry" data-correct="0.125" data-tolerance="0.001" data-lang="en" markdown="1">
-
-Three patients have times $[2, 4, 10]$ with event indicators $[1, 1, 0]$.
-Compute $\hat{\lambda} = d / \sum t_i$ to three decimal places.
-
-</div>
-
 ## The Empirical Survival Curve
 
 -   To visualize how well the model fits, plot the fraction of uncensored events occurring after each time.
@@ -178,6 +164,14 @@ Naive bias
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+1.  The survival time of a population follows an Exponential distribution with rate $\lambda = 1/20$.
+    Using $S(t) = e^{-\lambda t}$, compute $S(20 \ln 2)$ to three decimal places.
+
+1.  Three patients have times $[2, 4, 10]$ with event indicators $[1, 1, 0]$.
+    Compute $\hat{\lambda} = d / \sum t_i$ to three decimal places.
 
 ### Confidence interval for the rate
 

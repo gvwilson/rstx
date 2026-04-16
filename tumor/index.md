@@ -26,13 +26,6 @@
 
 [%inc tumor.py mark="model"%]
 
-<div class="forma-numeric-entry" data-correct="0.731" data-tolerance="0.002" data-lang="en" markdown="1">
-
-A logistic regression model with $\mathbf{w} = [1, 0]$ and $b = 1$ receives input
-$\mathbf{x} = [0, 0]$.  Compute $\sigma(0 \cdot 1 + 0 \cdot 0 + 1) = \sigma(1)$ to three decimal places.
-
-</div>
-
 ## Training: Minimising Binary Cross-Entropy
 
 -   The binary cross-entropy loss penalises confident wrong predictions:
@@ -159,6 +152,11 @@ Confusion matrix
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A logistic regression model with $\mathbf{w} = [1, 0]$ and $b = 1$ receives input $\mathbf{x} = [0, 0]$.
+Compute $\sigma(0 \cdot 1 + 0 \cdot 0 + 1) = \sigma(1)$ to three decimal places.
 
 ### Feature normalisation
 

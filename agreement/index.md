@@ -70,13 +70,6 @@ About 50%, because raters tend to pick the most common category.
 -   $\kappa < 0$ is possible when observed agreement falls below chance,
     though this rarely occurs in practice
 
-<div class="forma-numeric-entry" data-correct="0.5" data-tolerance="0.005" data-lang="en" markdown="1">
-
-A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each
-off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?
-
-</div>
-
 [%inc agreement.py mark="kappa"%]
 
 ## The Expected Agreement P_e
@@ -183,6 +176,11 @@ Expected agreement P_e
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each
+off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?
 
 ### Weighted kappa
 

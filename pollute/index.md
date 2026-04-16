@@ -145,7 +145,11 @@ TRANSPORT_RATE
 
 [%inc test_pollute.py%]
 
-<div class="forma-numeric-entry" data-correct="0.48" data-tolerance="0.005" data-lang="en" markdown="1">
+<section class="exercises" markdown="1">
+
+## Exercises
+
+### Do the math
 
 Starting from $c = [1, 0, 0, 0, 0]$ and using `TRANSPORT_RATE` = 0.4, what is the concentration at
 `junction` (node 2) after exactly 2 time steps?
@@ -154,12 +158,6 @@ Give your answer to two decimal places.
 Hint: trace through the update rule step by step.
 At step 1, junction receives $0.4 \times c_0[\text{upstream\_a}]$ from upstream_a.
 At step 2, junction retains $0.6$ of its step-1 value and receives another inflow from upstream_a.
-
-</div>
-
-<section class="exercises" markdown="1">
-
-## Exercises
 
 ### Adding a tributary
 

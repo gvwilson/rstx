@@ -188,18 +188,16 @@ assert r <= 0.5
 
 [%inc test_diffusion.py%]
 
-<div class="forma-numeric-entry" data-correct="0.169" data-tolerance="0.005" data-lang="en" markdown="1">
+<section class="exercises" markdown="1">
+
+## Exercises
+
+### Do the math
 
 Using the analytical formula $\sigma^2(t) = \sigma_0^2 + 2Dt$, compute $\sigma^2$ after `N_STEPS` = 500 steps.
 Use `PULSE_WIDTH` = 0.05 for $\sigma_0$, `DIFFUSIVITY` = 0.1, `GRID_POINTS` = 50, `LENGTH` = 1.0,
 and note that `DT` = `STABILITY_RATIO * DX**2 / DIFFUSIVITY`.
 Give your answer to three decimal places.
-
-</div>
-
-<section class="exercises" markdown="1">
-
-## Exercises
 
 ### Step-function initial condition
 

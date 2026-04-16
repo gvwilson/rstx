@@ -23,15 +23,6 @@
 
 $$z_i = \frac{x_i - \bar{x}_i}{\hat{\sigma}_i}$$
 
-<div class="forma-numeric-entry" data-correct="2.0" data-tolerance="0.01" data-lang="en" markdown="1">
-
-A trailing window of width 3 contains values [68, 70, 72].
-The window mean is 70, and the sample standard deviation is 2.
-A new reading of 74 arrives.
-What is the z-score of 74 against this window?
-
-</div>
-
 ## Detecting Anomalies
 
 -   A reading is flagged when $|z_i| > \theta$, where $\theta$ is the detection threshold.
@@ -165,6 +156,13 @@ Spike
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A trailing window of width 3 contains values [68, 70, 72].
+The window mean is 70, and the sample standard deviation is 2.
+A new reading of 74 arrives.
+What is the z-score of 74 against this window?
 
 ### Bidirectional window
 

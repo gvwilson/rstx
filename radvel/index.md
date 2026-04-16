@@ -27,13 +27,6 @@
 -   Because only $M_p \sin i$ appears in the formula,
     the RV method gives a minimum planet mass; the true mass requires an independent inclination measurement.
 
-<div class="forma-numeric-entry" data-correct="50.0" data-tolerance="0.5" data-lang="en" markdown="1">
-
-Using $v(t) = K \sin(2\pi t / P + \varphi) + v_\text{sys}$ with $K = 50$ m/s, $P = 10$ days,
-$\varphi = 0$, $v_\text{sys} = 0$, what is $v(2.5)$? Give your answer in m/s.
-
-</div>
-
 ## Generating Synthetic Observations
 
 -   Observation times are drawn uniformly at random across the time baseline
@@ -169,6 +162,11 @@ Fractional amplitude uncertainty $\sigma_K / K$
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Using $v(t) = K \sin(2\pi t / P + \varphi) + v_\text{sys}$ with $K = 50$ m/s, $P = 10$ days,
+$\varphi = 0$, $v_\text{sys} = 0$, what is $v(2.5)$? Give your answer in m/s.
 
 ### Lomb-Scargle periodogram
 

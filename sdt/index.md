@@ -129,14 +129,6 @@ Threshold at the midpoint of all scores
 
 [%inc sdt.py mark="auc"%]
 
-<div class="forma-numeric-entry" data-correct="0.5" data-tolerance="0.05" data-lang="en" markdown="1">
-
-An observer's evidence scores are identical for signal and noise trials, so their
-ROC curve follows the diagonal exactly.
-What is their AUC?
-
-</div>
-
 ## Visualizing the ROC Curve
 
 [%inc sdt.py mark="plot"%]
@@ -225,6 +217,12 @@ Area under the curve (AUC)
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+An observer's evidence scores are identical for signal and noise trials, so their
+ROC curve follows the diagonal exactly.
+What is their AUC?
 
 ### Compute AUC from a small example
 

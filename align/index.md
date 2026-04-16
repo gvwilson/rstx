@@ -122,12 +122,6 @@ Mismatches are penalised more heavily than gaps
         so the delete wins
 -   $H[4,3] = 5$: the score of the best global alignment
 
-<div class="forma-numeric-entry" data-correct="1" data-tolerance="0" data-lang="en" markdown="1">
-
-Using the table above, what is the value of $H[2,2]$ (row C, column G)?
-
-</div>
-
 ## Traceback
 
 -   The best global alignment ends at $H[m, n]$ (bottom-right cell)
@@ -184,14 +178,6 @@ b: A-GT
 -   The gap in `seq_b` at position 2 accounts for the `C` in `seq_a` that has no counterpart
 -   The score is $3 \times 2 + (-1) = 5$:
     three matches at `MATCH_SCORE` = 2 and one gap at `GAP_PENALTY` = -1
-
-<div class="forma-numeric-entry" data-correct="5" data-tolerance="0" data-lang="en" markdown="1">
-
-Aligning "AGTC" with "AGC" using `MATCH_SCORE = 2`, `MISMATCH_PENALTY = -1`, `GAP_PENALTY = -1`:
-the best global alignment has three matches and one gap.
-What is the total alignment score?
-
-</div>
 
 ## Visualizing the Scoring Matrix
 
@@ -250,6 +236,12 @@ All mismatches
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Aligning "AGTC" with "AGC" using `MATCH_SCORE = 2`, `MISMATCH_PENALTY = -1`, `GAP_PENALTY = -1`:
+the best global alignment has three matches and one gap.
+What is the total alignment score?
 
 ### Effect of gap penalty
 

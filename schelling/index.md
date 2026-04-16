@@ -51,13 +51,6 @@ Random movement eventually produces uniform mixing.
 -   An agent with no occupied neighbours is treated as satisfied ($f = 1$)
     so that isolated agents do not drift endlessly across empty space
 
-<div class="forma-numeric-entry" data-correct="0.375" data-tolerance="0.001" data-lang="en" markdown="1">
-
-An agent has 8 fully occupied Moore neighbours, of which 3 are the same type.
-What is its same-neighbour fraction?
-
-</div>
-
 ## Initializing the Grid
 
 -   Equal numbers of red and blue agents are placed at random in a fraction
@@ -186,6 +179,11 @@ Emergent segregation
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+An agent has 8 fully occupied Moore neighbours, of which 3 are the same type.
+What is its same-neighbour fraction?
 
 ### Effect of threshold
 

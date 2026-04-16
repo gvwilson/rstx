@@ -95,16 +95,6 @@ Put these steps for one iteration of UPGMA in the correct order.
     The final node (node6) sits at height $2.35/2 = 1.175$.
     Branch lengths are $1.175 - 0.45 = 0.725$ to node4 and $1.175 - 0.70 = 0.475$ to node5.
 
-<div class="forma-numeric-entry" data-correct="0.45" data-tolerance="0.005" data-lang="en" markdown="1">
-
-In the first UPGMA iteration Human and Gorilla are merged.
-$D(\text{Human}, \text{Gorilla}) = 0.9$.
-The new internal node is placed at height $D/2$.
-What is the branch length from the new node to Human?
-Give your answer to two decimal places.
-
-</div>
-
 <div class="forma-multiple-choice" data-lang="en" markdown="1">
 
 Why does UPGMA assume a molecular clock?
@@ -193,6 +183,14 @@ Because it produces a rooted tree rather than an unrooted tree.
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+In the first UPGMA iteration Human and Gorilla are merged.
+$D(\text{Human}, \text{Gorilla}) = 0.9$.
+The new internal node is placed at height $D/2$.
+What is the branch length from the new node to Human?
+Give your answer to two decimal places.
 
 ### Neighbor-joining comparison
 

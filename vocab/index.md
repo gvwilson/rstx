@@ -54,13 +54,6 @@ Because tokenisation introduces more errors in longer texts.
     averaging them gives a length-fair summary.
 -   When $T \leq w$ there is only one window and MATTR equals the global TTR.
 
-<div class="forma-numeric-entry" data-correct="0.6" data-tolerance="0.001" data-lang="en" markdown="1">
-
-A 100-word text contains 60 distinct word types.
-What is its type-token ratio?
-
-</div>
-
 ## Generating Synthetic Texts
 
 -   Word frequencies in natural language follow [%g zipf_law "Zipf's law" %]:
@@ -136,6 +129,11 @@ Window width (MATTR)
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+A 100-word text contains 60 distinct word types.
+What is its type-token ratio?
 
 ### Effect of window width
 

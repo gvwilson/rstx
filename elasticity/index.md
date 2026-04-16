@@ -43,14 +43,6 @@ Quantity is unchanged because consumers need the product regardless of price.
     fitting $y = a + bx$ where $y = \ln Q$ and $x = \ln P$ directly estimates the elasticity as the slope $b$
 -   The intercept $a = \ln A$ gives the log of the demand intercept, but is rarely reported by itself.
 
-<div class="forma-numeric-entry" data-correct="-1.5" data-tolerance="0.01" data-lang="en" markdown="1">
-
-Using $\ln Q = a + \varepsilon \ln P$ with $a = 5$ and $\varepsilon = -1.5$,
-compute $\ln Q$ when $P = e$ (Euler's number, so $\ln P = 1$).
-What is the corresponding elasticity (the slope of the log-log line)?
-
-</div>
-
 ## Ordinary Least Squares in Log-Log Space
 
 -   Transforming prices and quantities to logs reduces the nonlinear power-law model
@@ -159,6 +151,12 @@ Residual standard error
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Using $\ln Q = a + \varepsilon \ln P$ with $a = 5$ and $\varepsilon = -1.5$,
+compute $\ln Q$ when $P = e$ (Euler's number, so $\ln P = 1$).
+What is the corresponding elasticity (the slope of the log-log line)?
 
 ### Residual diagnostics
 

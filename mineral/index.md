@@ -21,16 +21,6 @@
 [%inc generate_mineral.py mark="constants"%]
 [%inc generate_mineral.py mark="make-data"%]
 
-<div class="forma-numeric-entry" data-correct="0.895" data-tolerance="0.005" data-lang="en" markdown="1">
-
-The Mahalanobis distance between two univariate Gaussians with means $\mu_1$, $\mu_2$ and
-equal standard deviation $\sigma$ is $|\mu_1 - \mu_2| / \sigma$.
-Using `FELSIC_MEAN[0] = 70`, `MAFIC_MEAN[0] = 50`, `FELSIC_STD[0] = 3`,
-what fraction of the $\text{SiO}_2$ distributions overlap?
-(Hint: use the 68-95-99.7 rule: the distance is about $6.7\sigma$, so overlap $\approx 0$.)
-
-</div>
-
 ## The Logistic Regression Model
 
 -   The model predicts the probability that a sample is mafic (class 1):
@@ -184,6 +174,14 @@ Gradient descent
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+The Mahalanobis distance between two univariate Gaussians with means $\mu_1$, $\mu_2$ and
+equal standard deviation $\sigma$ is $|\mu_1 - \mu_2| / \sigma$.
+Using `FELSIC_MEAN[0] = 70`, `MAFIC_MEAN[0] = 50`, `FELSIC_STD[0] = 3`,
+what fraction of the $\text{SiO}_2$ distributions overlap?
+(Hint: use the 68-95-99.7 rule: the distance is about $6.7\sigma$, so overlap $\approx 0$.)
 
 ### Three-class classification
 

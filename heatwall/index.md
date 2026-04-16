@@ -25,15 +25,6 @@
 -   At every layer interface both the temperature and the heat flux must be continuous:
     $T$ does not jump and $k_L\,dT/dx$ on the left equals $k_R\,dT/dx$ on the right
 
-<div class="forma-numeric-entry" data-correct="1.514" data-tolerance="0.005" data-lang="en" markdown="1">
-
-Compute the total thermal resistance ($\text{m}^2\,\text{K}\,\text{W}^{-1}$) of a three-layer wall with:
-brick 0.10 m at $0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$, insulation 0.05 m at $0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$,
-concrete 0.15 m at $1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$.
-Use $R = \sum_i L_i / k_i$ and give your answer to three decimal places.
-
-</div>
-
 ## Thermal Resistance
 
 -   The [%g thermal_resistance "thermal resistance" %] of a uniform layer
@@ -154,18 +145,6 @@ A profile that depends on the initial guess and never changes.
   caption="Convergence of Jacobi iteration for a brick-insulation-concrete wall. The initial guess is a straight line. After 10 sweeps the profile is already bending toward the correct shape; after 100 sweeps it is nearly indistinguishable from the converged solution."
 %]
 
-<div class="forma-numeric-entry" data-correct="19.82" data-tolerance="0.05" data-lang="en" markdown="1">
-
-Using the thermal resistance formula with the constants defined above
-($L_\text{brick} = 0.10$ m, $k_\text{brick} = 0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
-$L_\text{ins} = 0.05$ m, $k_\text{ins} = 0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
-$L_\text{conc} = 0.15$ m, $k_\text{conc} = 1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
-$T_\text{left} = 20$°C, $T_\text{right} = -10$°C),
-what is the heat flux $q$ in $\text{W}\,\text{m}^{-2}$?
-Give your answer to two decimal places.
-
-</div>
-
 ## Solving and Plotting the Profile
 
 [%inc heatwall.py mark="solve"%]
@@ -259,6 +238,22 @@ Jacobi iteration
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+1.  Compute the total thermal resistance ($\text{m}^2\,\text{K}\,\text{W}^{-1}$) of a three-layer wall with:
+    brick 0.10 m at $0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$,
+	insulation 0.05 m at $0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$,
+    concrete 0.15 m at $1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$.
+    Use $R = \sum_i L_i / k_i$ and give your answer to three decimal places.
+
+1.  Using the thermal resistance formula with the constants defined above
+    ($L_\text{brick} = 0.10$ m, $k_\text{brick} = 0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
+    $L_\text{ins} = 0.05$ m, $k_\text{ins} = 0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
+    $L_\text{conc} = 0.15$ m, $k_\text{conc} = 1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}$;
+    $T_\text{left} = 20$°C, $T_\text{right} = -10$°C),
+    what is the heat flux $q$ in $\text{W}\,\text{m}^{-2}$?
+    Give your answer to two decimal places.
 
 ### Grid refinement study
 

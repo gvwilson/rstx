@@ -50,13 +50,6 @@ $$f_{w,d} = \frac{c_{w,d}}{N_d}$$
 -   All normalized frequencies in a decade sum to 1, making them comparable across
     decades regardless of how many texts were digitized or produced.
 
-<div class="forma-numeric-entry" data-correct="0.025" data-tolerance="0.0001" data-lang="en" markdown="1">
-
-A word appears 50 times in a decade that contains 2000 total tokens.
-What is its normalized frequency?
-
-</div>
-
 ## Linear Trend
 
 -   A linear trend assumes that the normalized frequency changes by a constant amount
@@ -70,15 +63,6 @@ What is its normalized frequency?
 -   A positive $\hat{\beta}_w$ means the word's share of tokens rose over time;
     a negative slope means it fell.
 -   The units of $\hat{\beta}_w$ are normalized-frequency change per 10-year period.
-
-<div class="forma-numeric-entry" data-correct="0.010" data-tolerance="0.0001" data-lang="en" markdown="1">
-
-A word has normalized frequency 0.010 at decade index 0 and 0.020 at decade
-index 1 (two data points only).
-The mean decade index is 0.5 and the mean frequency is 0.015.
-What is the OLS slope?
-
-</div>
 
 ## Generating Synthetic Data
 
@@ -170,6 +154,16 @@ OLS slope
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+1.  A word appears 50 times in a decade that contains 2000 total tokens.
+    What is its normalized frequency?
+
+1.  A word has normalized frequency 0.010 at decade index 0 and 0.020 at decade
+    index 1 (two data points only).
+    The mean decade index is 0.5 and the mean frequency is 0.015.
+    What is the OLS slope?
 
 ### Confidence interval on the slope
 

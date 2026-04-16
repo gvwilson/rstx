@@ -56,15 +56,6 @@ The errors are scribal conventions and do not indicate copying relationships.
     distance to each other than to manuscripts from a different family, because they
     share inherited variants in addition to their unique ones.
 
-<div class="forma-numeric-entry" data-correct="0.15" data-tolerance="0.0001" data-lang="en" markdown="1">
-
-Two manuscripts each have 100 variant loci.
-Manuscript A differs from the archetype at loci 1–10 and 21–30.
-Manuscript B differs from the archetype at loci 1–10 and 41–55.
-What is the Hamming distance between A and B?
-
-</div>
-
 ## Distance Matrix for the Reference Stemma
 
 -   The reference stemma is:
@@ -158,15 +149,6 @@ The recovered edges are:
 | node5 -- C | 0.05 |
 | node5 -- D | 0.05 |
 | node4 -- node5 | 0.21 |
-
-<div class="forma-numeric-entry" data-correct="0.22" data-tolerance="0.001" data-lang="en" markdown="1">
-
-After merging A and B into node4 in the first UPGMA step,
-$D(A, C) = 0.23$ and $D(B, C) = 0.21$.
-Using the UPGMA averaging rule $D(\text{node4}, C) = (D(A,C) + D(B,C)) / 2$,
-what is $D(\text{node4}, C)$?
-
-</div>
 
 <div class="forma-multiple-choice" data-lang="en" markdown="1">
 
@@ -284,6 +266,18 @@ UPGMA
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+1.  Two manuscripts each have 100 variant loci.
+    Manuscript A differs from the archetype at loci 1–10 and 21–30.
+    Manuscript B differs from the archetype at loci 1–10 and 41–55.
+    What is the Hamming distance between A and B?
+
+1.  After merging A and B into node4 in the first UPGMA step,
+    $D(A, C) = 0.23$ and $D(B, C) = 0.21$.
+    Using the UPGMA averaging rule $D(\text{node4}, C) = (D(A,C) + D(B,C)) / 2$,
+    what is $D(\text{node4}, C)$?
 
 ### Hamming distance from manuscript sequences
 

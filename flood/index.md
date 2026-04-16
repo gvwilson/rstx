@@ -94,15 +94,6 @@ Put these steps in the correct order for method-of-moments estimation of log-nor
 
 [%inc flood.py mark="return-level"%]
 
-<div class="forma-numeric-entry" data-correct="308.1" data-tolerance="1.0" data-lang="en" markdown="1">
-
-Using $\hat{\mu}_y = 4.80$ and $\hat{\sigma}_y = 0.40$, the standard normal quantile at
-$p = 0.99$ is $z_{0.99} \approx 2.3263$.
-Compute the 100-year return level $x_{100} = \exp(4.80 + 2.3263 \times 0.40)$.
-Give your answer in m^3/s, rounded to one decimal place.
-
-</div>
-
 <div class="forma-multiple-choice" data-lang="en" markdown="1">
 
 A community's flood barrier is designed for the 100-year return level.
@@ -168,6 +159,13 @@ Exactly 50%
 <section class="exercises" markdown="1">
 
 ## Exercises
+
+### Do the math
+
+Using $\hat{\mu}_y = 4.80$ and $\hat{\sigma}_y = 0.40$, the standard normal quantile at
+$p = 0.99$ is $z_{0.99} \approx 2.3263$.
+Compute the 100-year return level $x_{100} = \exp(4.80 + 2.3263 \times 0.40)$.
+Give your answer in m^3/s, rounded to one decimal place.
 
 ### Confidence intervals by bootstrap
 
