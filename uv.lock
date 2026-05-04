@@ -380,7 +380,7 @@ wheels = [
 
 [[package]]
 name = "mccole"
-version = "2.15.0"
+version = "3.1.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -391,9 +391,9 @@ dependencies = [
     { name = "python-frontmatter" },
     { name = "tomli" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/14/96/3ea0210e490f22a3582f9594d449746a70c36ea59321a7fa539c5dc87e99/mccole-2.15.0.tar.gz", hash = "sha256:7241a3e07e82ea3b6f787e299c854997393d530c0ae12e2b30f31a9da10b2886", size = 702757, upload-time = "2026-05-01T02:17:34.83Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/80/28/537ae31ee63fdb63f1196910d20e217d322455bf972168cbee4bb7b63fd5/mccole-3.1.0.tar.gz", hash = "sha256:8d5b1ecf94d46f3edcc2d49e7b2dad1c06ba1fe7b36383ae0a252df07de57c68", size = 705519, upload-time = "2026-05-04T20:38:08.394Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/97/e4/2745cef523cb9be9a78bb63fbc90c11acdd4931f0798ed029b7d23798996/mccole-2.15.0-py3-none-any.whl", hash = "sha256:1b71d01efd71706bf99df1785e7dfc96d6a9cc2dc8bd373f6708402efbf3e1d0", size = 34144, upload-time = "2026-05-01T02:17:33.353Z" },
+    { url = "https://files.pythonhosted.org/packages/9e/62/cbb6d5efeab09a655b8b2e42914f4ad4a44c4a97eefde95946cf89b67287/mccole-3.1.0-py3-none-any.whl", hash = "sha256:289cb4924eef193594a3aaab8986f1cbf1d6424c9235a3253211a17d6b607a32", size = 38033, upload-time = "2026-05-04T20:38:06.863Z" },
 ]
 
 [[package]]
@@ -766,7 +766,7 @@ dev = [
 requires-dist = [
     { name = "altair", specifier = ">=6.0.0" },
     { name = "matplotlib", specifier = ">=3.10.8" },
-    { name = "mccole", specifier = ">=2.15.0" },
+    { name = "mccole", specifier = ">=3.1.0" },
     { name = "networkx", specifier = ">=3.6.1" },
     { name = "numpy", specifier = ">=2.4.4" },
     { name = "polars", specifier = ">=1.39.3" },
