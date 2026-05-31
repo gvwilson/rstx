@@ -16,7 +16,7 @@ GRID_SIZE = 20
 HOT_THRESHOLD = 2
 
 
-# [mccole] grid
+# mccole:grid
 def build_grid(coords, region_min, region_max, grid_size):
     """Count sites per grid cell.
 
@@ -37,17 +37,17 @@ def build_grid(coords, region_min, region_max, grid_size):
         row = min(row, grid_size - 1)
         grid[row, col] += 1
     return grid
-# [/mccole] grid
+# mccole: /grid
 
 
-# [mccole] hot-cells
+# mccole:hot-cells
 def find_hot_cells(grid, threshold):
     """Boolean mask: True where count >= threshold."""
     return grid >= threshold
-# [/mccole] hot-cells
+# mccole: /hot-cells
 
 
-# [mccole] dfs
+# mccole:dfs
 def find_clusters(hot):
     """DFS connected components with 8-connectivity.
 
@@ -85,10 +85,10 @@ def find_clusters(hot):
             cluster_id += 1
 
     return labels
-# [/mccole] dfs
+# mccole: /dfs
 
 
-# [mccole] assign
+# mccole:assign
 def assign_labels(coords, cell_labels, region_min, region_max, grid_size):
     """Map each site coordinate to its cluster label.
 
@@ -107,10 +107,10 @@ def assign_labels(coords, cell_labels, region_min, region_max, grid_size):
         row = min(row, grid_size - 1)
         site_labels[i] = cell_labels[row, col]
     return site_labels
-# [/mccole] assign
+# mccole: /assign
 
 
-# [mccole] centroids
+# mccole:centroids
 def cluster_centroids(coords, labels):
     """Mean x/y per cluster, excluding noise (label -1).
 
@@ -123,10 +123,10 @@ def cluster_centroids(coords, labels):
         mask = labels == lbl
         centroids[lbl] = (coords[mask, 0].mean(), coords[mask, 1].mean())
     return centroids
-# [/mccole] centroids
+# mccole: /centroids
 
 
-# [mccole] plot
+# mccole:plot
 def plot_clusters(df, filename):
     """Save a scatter map coloured by cluster label."""
     chart = (
@@ -153,7 +153,7 @@ def plot_clusters(df, filename):
         )
     )
     chart.save(filename)
-# [/mccole] plot
+# mccole: /plot
 
 
 if __name__ == "__main__":

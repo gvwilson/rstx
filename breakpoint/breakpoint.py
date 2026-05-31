@@ -4,7 +4,7 @@ import altair as alt
 from generate_breakpoint import make_breakpoint_data, BREAK_STEP
 
 
-# [mccole] mean_residuals
+# mccole: mean_residuals
 def residuals_mean(values):
     """Residuals from a mean-only fit.
 
@@ -13,10 +13,10 @@ def residuals_mean(values):
     stationary around a constant mean before and after the break.
     """
     return values - np.mean(values)
-# [/mccole] mean_residuals
+# mccole: /mean_residuals
 
 
-# [mccole] trend_residuals
+# mccole: trend_residuals
 def residuals_trend(values):
     """Residuals from a linear-trend fit.
 
@@ -29,7 +29,7 @@ def residuals_trend(values):
     t = np.arange(len(values), dtype=float)
     coeffs = np.polyfit(t, values, 1)
     return values - np.polyval(coeffs, t)
-# [/mccole] trend_residuals
+# mccole: /trend_residuals
 
 
 # mccole: cusum

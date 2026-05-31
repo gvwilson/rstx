@@ -11,33 +11,33 @@ TRUE_RATE = 1.0 / MEAN_SURVIVAL
 T_MAX_DAYS = 3 * MEAN_SURVIVAL
 
 
-# [mccole] naive-rate
+# mccole: naive-rate
 def naive_rate(times, observed):
     """Estimate lambda using only uncensored observations."""
     uncensored = [t for t, o in zip(times, observed) if o]
     return 1.0 / (sum(uncensored) / len(uncensored))
-# [/mccole] naive-rate
+# mccole: /naive-rate
 
 
-# [mccole] corrected-rate
+# mccole: corrected-rate
 def corrected_rate(times, observed):
     """MLE of lambda for exponential under censoring: d / sum(t)."""
     d = sum(observed)
     return d / sum(times)
-# [/mccole] corrected-rate
+# mccole: /corrected-rate
 
 
-# [mccole] empirical-curve
+# mccole: empirical-curve
 def empirical_survival(times, observed):
     """Empirical survival: fraction of uncensored events occurring after each time point."""
     event_times = sorted(t for t, o in zip(times, observed) if o)
     n = len(event_times)
     fractions = [(n - i) / n for i in range(n)]
     return event_times, fractions
-# [/mccole] empirical-curve
+# mccole: /empirical-curve
 
 
-# [mccole] plot
+# mccole: plot
 def plot_survival(times, observed, lam_naive, lam_corrected, filename):
     """Save a chart with the empirical survival curve and two exponential fits.
 
@@ -87,7 +87,7 @@ def plot_survival(times, observed, lam_naive, lam_corrected, filename):
         width=500, height=250, title="Empirical survival curve with exponential fits"
     )
     chart.save(filename)
-# [/mccole] plot
+# mccole: /plot
 
 
 if __name__ == "__main__":
