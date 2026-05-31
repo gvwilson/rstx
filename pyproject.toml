@@ -41,10 +41,12 @@ skips = [
     "*.pyc",
     "*.sh",
     "*.txt",
+    "CLAUDE.md",
     "Makefile",
-    "bin/*",
-    "docs/**",
-    "log/*",
+    "bin",
+    "docs",
+    "log",
+    "uv.lock"
 ]
 
 [dependency-groups]
