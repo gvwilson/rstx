@@ -17379,4 +17379,429 @@
 [2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c/c768faee405ca1798783f6f806c5a7d50ce641 reason=ignored-dir
 [2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c reason=ignored-dir
 [2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c reason=ignored-dir
-[2026-11-02T02:09:55.771Z] [watcher] 
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c/tmp_obj_krCzBj reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c/tmp_obj_krCzBj reason=event-kind
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/2c/tmp_obj_krCzBj reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07/c2ae89f1068eac519874b76c7e5fe17ef7e3d3 reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07 reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07 reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07/tmp_obj_fJb1kO reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07/tmp_obj_fJb1kO reason=event-kind
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/07/tmp_obj_fJb1kO reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/f0 reason=ignored-dir
+[2026-11-02T02:09:55.771Z] [watcher] dispatch=skip path=.git/objects/f0/tmp_obj_AWDfjQ reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0/ce727fc5720aaf79f08d62ac026f87e0a7e03e reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0 reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0 reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0/tmp_obj_AWDfjQ reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0/tmp_obj_AWDfjQ reason=event-kind
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/f0/tmp_obj_AWDfjQ reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f/c937c5b0d592f960fa1216f60bd99518ca938e reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f/tmp_obj_Sk0UOR reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f/tmp_obj_Sk0UOR reason=event-kind
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/1f/tmp_obj_Sk0UOR reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e/ae57349230d254e8113395c13d80a830431c1a reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e/tmp_obj_mc5rCZ reason=ignored-dir
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e/tmp_obj_mc5rCZ reason=event-kind
+[2026-11-02T02:09:55.774Z] [watcher] dispatch=skip path=.git/objects/0e/tmp_obj_mc5rCZ reason=ignored-dir
+[2026-11-02T02:09:55.792Z] [watcher] dispatch=skip path=.git/objects/b9 reason=ignored-dir
+[2026-11-02T02:09:55.792Z] [watcher] dispatch=skip path=.git/objects/b9/tmp_obj_Il82nW reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9/4dd85f52e591f8c1f5956d3cfde097446c30f8 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9/tmp_obj_Il82nW reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9/tmp_obj_Il82nW reason=event-kind
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/b9/tmp_obj_Il82nW reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46/485a3a73baae43b9400b8c5702115bd97c6229 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46/tmp_obj_oUEEX0 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46/tmp_obj_oUEEX0 reason=event-kind
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/46/tmp_obj_oUEEX0 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b/fccd93f4bba2faca57a4f49b4e1ff183396935 reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b/tmp_obj_dji9gL reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b/tmp_obj_dji9gL reason=event-kind
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/4b/tmp_obj_dji9gL reason=ignored-dir
+[2026-11-02T02:09:55.797Z] [watcher] dispatch=skip path=.git/objects/60 reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60/61bc6ac044d9049c99dd0b709a8d4fe8d0c76c reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60 reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60 reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60/tmp_obj_gVohRY reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60/tmp_obj_gVohRY reason=event-kind
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/60/tmp_obj_gVohRY reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e/cc9c600834b8d9a744356bc05e534f14deaa45 reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e/tmp_obj_uSDfMT reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e/tmp_obj_uSDfMT reason=event-kind
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/6e/tmp_obj_uSDfMT reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e/f738f9a8f684a46174e198b3ba4ffd8e0fd7a2 reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e/tmp_obj_XLIHDE reason=ignored-dir
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e/tmp_obj_XLIHDE reason=event-kind
+[2026-11-02T02:09:55.798Z] [watcher] dispatch=skip path=.git/objects/1e/tmp_obj_XLIHDE reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd/tmp_obj_1tYKvM reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd/tmp_obj_1tYKvM reason=event-kind
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd/tmp_obj_1tYKvM reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93/fb288b66fd8e38c2066d9a09e2b5d27e5382a1 reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93 reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93 reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93/tmp_obj_6Hj7oE reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93/tmp_obj_6Hj7oE reason=event-kind
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/93/tmp_obj_6Hj7oE reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd/1a2ac0dc302f98e07bd38e4560160ed392df8d reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/objects/fd/1a2ac0dc302f98e07bd38e4560160ed392df8d reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.806Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.806Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.806Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.806Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.806Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.806Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.806Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.806Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.806Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.807Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:55.806Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:55.807Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:55.806Z","event_name":"git-status-changed","push_subscribers":1,"tick":62}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:55.807Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:55.808Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:55.808Z","event_name":"search-index-changed","push_subscribers":1,"tick":69}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:55.808Z","elapsed_ms":0,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:55.808Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:55.808Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:55.808Z","event_name":"git-status-changed","push_subscribers":1,"tick":63}
+[2026-11-02T02:09:55.809Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:55.808Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:55.827Z] [search-index] op=scan bucket=commits files=13 indexed=0 skipped=13 rows=20 redacted=0 ms=21
+[2026-11-02T02:09:55.855Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585395855-462
+[2026-11-02T02:09:55.855Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585395855-463
+[2026-11-02T02:09:55.856Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:09:55.855Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":63}
+[2026-11-02T02:09:55.856Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:09:55.857Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=187 duration_ms=2 correlation_id=route-1793585395855-462
+[2026-11-02T02:09:55.868Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.869Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.878Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.878Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.878Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.878Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.878Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.878Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.878Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.878Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.878Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.879Z] [route] phase=exit method=GET path=__worklist status=200 body_size=320 duration_ms=23 correlation_id=route-1793585395855-463
+[2026-11-02T02:09:55.930Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:55.930Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:55.931Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:55.930Z","event_name":"git-status-changed","push_subscribers":1,"tick":64}
+[2026-11-02T02:09:55.931Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:55.930Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:55.931Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:55.931Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:55.931Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:55.931Z","event_name":"git-status-changed","push_subscribers":1,"tick":65}
+[2026-11-02T02:09:55.931Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:55.931Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:55.968Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585395968-464
+[2026-11-02T02:09:55.968Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:09:55.968Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":65}
+[2026-11-02T02:09:55.969Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:09:55.981Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.982Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.991Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.991Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.991Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.991Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.991Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:55.991Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:55.991Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:55.991Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:55.991Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:55.991Z] [route] phase=exit method=GET path=__worklist status=200 body_size=320 duration_ms=23 correlation_id=route-1793585395968-464
+[2026-11-02T02:09:56.008Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:56.008Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:56.008Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:56.008Z","event_name":"git-status-changed","push_subscribers":1,"tick":66}
+[2026-11-02T02:09:56.009Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:56.008Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:56.009Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:56.009Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:56.009Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:56.009Z","event_name":"git-status-changed","push_subscribers":1,"tick":67}
+[2026-11-02T02:09:56.009Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:56.009Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:56.083Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585396083-465
+[2026-11-02T02:09:56.083Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:09:56.083Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":67}
+[2026-11-02T02:09:56.084Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:09:56.094Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.096Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.096Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.105Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.105Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.105Z] [route] phase=exit method=GET path=__worklist status=200 body_size=320 duration_ms=22 correlation_id=route-1793585396083-465
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:56.107Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:56.107Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:56.107Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:56.107Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:56.107Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:56.107Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.107Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:56.120Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:56.119Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:56.120Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:56.120Z","event_name":"git-status-changed","push_subscribers":1,"tick":68}
+[2026-11-02T02:09:56.120Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:56.120Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:56.121Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:56.120Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:56.121Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:56.120Z","event_name":"git-status-changed","push_subscribers":1,"tick":69}
+[2026-11-02T02:09:56.121Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:56.120Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:56.157Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585396157-466
+[2026-11-02T02:09:56.157Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:09:56.156Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":69}
+[2026-11-02T02:09:56.157Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:09:56.168Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.169Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.169Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.176Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.176Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:56.177Z] [route] phase=exit method=GET path=__worklist status=200 body_size=320 duration_ms=20 correlation_id=route-1793585396157-466
+[2026-11-02T02:09:56.179Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:56.180Z] [watcher] dispatch=skip path=.git/index.lock reason=event-kind
+[2026-11-02T02:09:57.307Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:57.307Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:09:57.307Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:57.307Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:09:57.309Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:57.307Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:09:57.310Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:57.308Z","event_name":"search-index-changed","push_subscribers":1,"tick":70}
+[2026-11-02T02:09:57.314Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:57.313Z","elapsed_ms":5,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:09:57.315Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:57.314Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:09:57.315Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:57.314Z","event_name":"search-index-changed","push_subscribers":1,"tick":71}
+[2026-11-02T02:09:57.316Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:57.316Z","elapsed_ms":2,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:09:57.348Z] [search-index] op=scan bucket=commits files=13 indexed=0 skipped=13 rows=20 redacted=0 ms=41
+[2026-11-02T02:09:57.379Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585397379-467
+[2026-11-02T02:09:57.382Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=187 duration_ms=2 correlation_id=route-1793585397379-467
+[2026-11-02T02:09:58.812Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:58.812Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:09:58.814Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:58.813Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:09:58.815Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:58.814Z","event_name":"search-index-changed","push_subscribers":1,"tick":72}
+[2026-11-02T02:09:58.820Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:58.819Z","elapsed_ms":5,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:09:58.876Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585398876-468
+[2026-11-02T02:09:58.879Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=179 duration_ms=2 correlation_id=route-1793585398876-468
+[2026-11-02T02:09:59.519Z] [search-index] op=issues-since not_modified=1 changed=0 indexed=0 skipped=0 since=2026-04-16T00:50:28Z call_ms=408
+[2026-11-02T02:09:59.521Z] [search-index] op=scan bucket=issues files=0 indexed=0 skipped=0 rows=20 redacted=0 ms=425
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/7b/3adb89c57f3808860d0afd602fd6fcc60395ef reason=ignored-dir
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/7b reason=ignored-dir
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/7b/tmp_obj_1SPV5p reason=ignored-dir
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/7b/tmp_obj_1SPV5p reason=event-kind
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/7b/tmp_obj_1SPV5p reason=ignored-dir
+[2026-11-02T02:09:59.705Z] [watcher] dispatch=skip path=.git/objects/42/2f941b7ccc9a703d8815c49ef3a47d17deb676 reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/42 reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/42 reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/42/tmp_obj_NYZUFa reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/42/tmp_obj_NYZUFa reason=event-kind
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/42/tmp_obj_NYZUFa reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/7d/tmp_obj_TQLZPR reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/7d/tmp_obj_TQLZPR reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/7d/8e04e4cf5c686ba8c922d595e4e0bcadbc1ac1 reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/7d reason=ignored-dir
+[2026-11-02T02:09:59.706Z] [watcher] dispatch=skip path=.git/objects/7d reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/7d/tmp_obj_TQLZPR reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/7d/tmp_obj_TQLZPR reason=event-kind
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/7d/tmp_obj_TQLZPR reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92/b8a9b6790276d58d9d2d9f8ff447bc0334ff55 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92/tmp_obj_E2NIo0 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92/tmp_obj_E2NIo0 reason=event-kind
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/92/tmp_obj_E2NIo0 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7/9484032def21769e2c1a35e45fef49696ad2cc reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7 reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7/tmp_obj_SlM67x reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7/tmp_obj_SlM67x reason=event-kind
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/a7/tmp_obj_SlM67x reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d/52601751b8f8a12c9194f997737e92ec3cad5a reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d/tmp_obj_903tzZ reason=ignored-dir
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d/tmp_obj_903tzZ reason=event-kind
+[2026-11-02T02:09:59.707Z] [watcher] dispatch=skip path=.git/objects/3d/tmp_obj_903tzZ reason=ignored-dir
+[2026-11-02T02:09:59.709Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:59.709Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:59.709Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:59.709Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:59.710Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.710Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.710Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=git-status path=.git/index source=.git
+[2026-11-02T02:09:59.710Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.710Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.710Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.710Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.710Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/index reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/COMMIT_EDITMSG reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/COMMIT_EDITMSG reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c/11fde159b1b0eadc095ffd069cff6818d4f4ec reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c/tmp_obj_CzPe3l reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c/tmp_obj_CzPe3l reason=event-kind
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/objects/0c/tmp_obj_CzPe3l reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=git-status path=.git/logs/HEAD source=.git
+[2026-11-02T02:09:59.710Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.710Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.710Z] [watcher] dispatch=skip path=.git/logs/HEAD reason=ignored-dir
+[2026-11-02T02:09:59.710Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=skip path=.git/logs/refs/heads/main reason=ignored-dir
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=git-status path=.git/refs/heads/main.lock source=.git
+[2026-11-02T02:09:59.711Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.711Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.711Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=skip path=.git/refs/heads/main.lock reason=ignored-dir
+[2026-11-02T02:09:59.711Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.710Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=git-status path=.git/refs/heads/main.lock source=.git
+[2026-11-02T02:09:59.711Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.711Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.711Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=skip path=.git/refs/heads/main.lock reason=ignored-dir
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=git-status path=.git/refs/heads/main.lock source=.git
+[2026-11-02T02:09:59.711Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.710Z","event_name":"git-status-changed","push_subscribers":1,"tick":70}
+[2026-11-02T02:09:59.711Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.711Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.711Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.711Z] [watcher] dispatch=skip path=.git/refs/heads/main.lock reason=ignored-dir
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=git-status path=.git/refs/heads/main source=.git
+[2026-11-02T02:09:59.712Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.712Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.712Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=skip path=.git/refs/heads/main reason=ignored-dir
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=git-status path=.git/refs/heads/main source=.git
+[2026-11-02T02:09:59.712Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:09:59.712Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:09:59.712Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=skip path=.git/refs/heads/main reason=ignored-dir
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=skip path=.git/HEAD.lock reason=ignored-dir
+[2026-11-02T02:09:59.712Z] [watcher] dispatch=skip path=.git/HEAD.lock reason=event-kind
+[2026-11-02T02:09:59.712Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.712Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.712Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.712Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:09:59.713Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.712Z","event_name":"search-index-changed","push_subscribers":1,"tick":73}
+[2026-11-02T02:09:59.713Z] [watcher] dispatch=skip path=.git/AUTO_MERGE.lock reason=ignored-dir
+[2026-11-02T02:09:59.713Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.713Z","elapsed_ms":1,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:09:59.713Z] [watcher] dispatch=skip path=.git/AUTO_MERGE.lock reason=event-kind
+[2026-11-02T02:09:59.713Z] [watcher] dispatch=skip path=.git/packed-refs.lock reason=ignored-dir
+[2026-11-02T02:09:59.713Z] [watcher] dispatch=skip path=.git/packed-refs.lock reason=event-kind
+[2026-11-02T02:09:59.713Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.713Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.714Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.713Z","event_name":"git-status-changed","push_subscribers":1,"tick":71}
+[2026-11-02T02:09:59.714Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.713Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.714Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.714Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.714Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.714Z","event_name":"git-status-changed","push_subscribers":1,"tick":72}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.714Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.714Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.714Z","event_name":"git-status-changed","push_subscribers":1,"tick":73}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.715Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.715Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.715Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.715Z","event_name":"git-status-changed","push_subscribers":1,"tick":74}
+[2026-11-02T02:09:59.716Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.715Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.716Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.715Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.716Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.715Z","event_name":"git-status-changed","push_subscribers":1,"tick":75}
+[2026-11-02T02:09:59.716Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.716Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.716Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.716Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.717Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.716Z","event_name":"git-status-changed","push_subscribers":1,"tick":76}
+[2026-11-02T02:09:59.717Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.716Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.717Z] [iframe] subkind=event-received {"at":"2026-11-02T02:09:59.716Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:09:59.717Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:09:59.716Z","event_name":"git-status-changed","push_subscribers":1,"tick":77}
+[2026-11-02T02:09:59.717Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:09:59.717Z","elapsed_ms":0,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:09:59.725Z] [watcher] dispatch=skip path=.git/objects/maintenance.lock reason=ignored-dir
+[2026-11-02T02:09:59.725Z] [watcher] dispatch=skip path=.git/objects/maintenance.lock reason=event-kind
+[2026-11-02T02:09:59.768Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585399768-469
+[2026-11-02T02:09:59.769Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585399769-470
+[2026-11-02T02:09:59.769Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:09:59.768Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":77}
+[2026-11-02T02:09:59.769Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:09:59.770Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=187 duration_ms=1 correlation_id=route-1793585399768-469
+[2026-11-02T02:09:59.776Z] [search-index] op=diff-truncated sha=0c11fde15 kept=262210 elided_lines=2 dropped_bytes=2505181
+[2026-11-02T02:09:59.782Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.782Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.791Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:09:59.791Z] [watcher] dispatch=skip path=.git/index.lock reason=event-kind
+[2026-11-02T02:09:59.792Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.792Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:09:59.792Z] [route] phase=exit method=GET path=__worklist status=200 body_size=241 duration_ms=23 correlation_id=route-1793585399769-470
+[2026-11-02T02:10:00.615Z] [emit] kind=git-status-changed payload_size=0 correlation_id=
+[2026-11-02T02:10:00.615Z] [event-remember] kind=git-status-changed payload_size=4 source=signal
+[2026-11-02T02:10:00.615Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:10:00.615Z] [iframe] subkind=event-received {"at":"2026-11-02T02:10:00.615Z","event_name":"git-status-changed","subscribers":1}
+[2026-11-02T02:10:00.616Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:10:00.615Z","event_name":"git-status-changed","push_subscribers":1,"tick":78}
+[2026-11-02T02:10:00.616Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:10:00.616Z","elapsed_ms":1,"event_name":"git-status-changed","subscriber_index":0}
+[2026-11-02T02:10:00.616Z] [search-index] op=scan bucket=commits files=14 indexed=1 skipped=13 rows=21 redacted=3 ms=906
+[2026-11-02T02:10:00.658Z] [route] phase=entry method=GET path=__worklist query= correlation_id=route-1793585400658-471
+[2026-11-02T02:10:00.658Z] [iframe] subkind=live-refetch {"at":"2026-11-02T02:10:00.657Z","event_name":"git-status-changed","refetched":1,"replayed":false,"tick":78}
+[2026-11-02T02:10:00.658Z] [worklist-build] op=git-batch items=0 paths=0 spawns=0 ms=0
+[2026-11-02T02:10:00.669Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:10:00.670Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:10:00.670Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:10:00.680Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:10:00.680Z] [claim-interval] op=membership paths=0 ms=0 spawns=0 ambiguous=0 cached=false fresh=false reason=no-begun
+[2026-11-02T02:10:00.681Z] [route] phase=exit method=GET path=__worklist status=200 body_size=241 duration_ms=23 correlation_id=route-1793585400658-471
+[2026-11-02T02:10:00.681Z] [watcher] dispatch=skip path=.git/index.lock reason=ignored-dir
+[2026-11-02T02:10:00.681Z] [watcher] dispatch=skip path=.git/index.lock reason=event-kind
+[2026-11-02T02:10:01.210Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:10:01.211Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:10:01.211Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:10:01.211Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:10:01.213Z] [iframe] subkind=event-received {"at":"2026-11-02T02:10:01.211Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:10:01.214Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:10:01.212Z","event_name":"search-index-changed","push_subscribers":1,"tick":74}
+[2026-11-02T02:10:01.219Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:10:01.218Z","elapsed_ms":6,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:10:01.220Z] [iframe] subkind=event-received {"at":"2026-11-02T02:10:01.219Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:10:01.220Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:10:01.219Z","event_name":"search-index-changed","push_subscribers":1,"tick":75}
+[2026-11-02T02:10:01.224Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:10:01.223Z","elapsed_ms":4,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:10:01.253Z] [search-index] op=scan bucket=commits files=14 indexed=0 skipped=14 rows=21 redacted=0 ms=41
+[2026-11-02T02:10:01.285Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585401285-472
+[2026-11-02T02:10:01.288Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=147 duration_ms=3 correlation_id=route-1793585401285-472
+[2026-11-02T02:10:02.716Z] [emit] kind=search-index-changed payload_size=0 correlation_id=
+[2026-11-02T02:10:02.716Z] [event-remember] kind=search-index-changed payload_size=4 source=signal
+[2026-11-02T02:10:02.719Z] [iframe] subkind=event-received {"at":"2026-11-02T02:10:02.717Z","event_name":"search-index-changed","subscribers":1}
+[2026-11-02T02:10:02.720Z] [iframe] subkind=push-fanout {"at":"2026-11-02T02:10:02.718Z","event_name":"search-index-changed","push_subscribers":1,"tick":76}
+[2026-11-02T02:10:02.726Z] [iframe] subkind=subscriber-fired {"at":"2026-11-02T02:10:02.725Z","elapsed_ms":7,"event_name":"search-index-changed","subscriber_index":0}
+[2026-11-02T02:10:02.789Z] [route] phase=entry method=GET path=__search-index-status query= correlation_id=route-1793585402789-473
+[2026-11-02T02:10:02.792Z] [route] phase=exit method=GET path=__search-index-status status=200 body_size=139 duration_ms=3 correlation_id=route-1793585402789-473
+[2026-11-02T02:10:02.994Z] [iframe] subkind=heartbeat-batch {"at":"2026-11-02T02:10:02.993Z","avgDriftMs":6,"bgFires":null,"fires":50,"maxDriftMs":71,"roFiresPerSec":0,"spanMs":10107,"spikes":0,"sumDriftMs":307}
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/logs/refs/remotes/origin/main reason=ignored-dir
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/logs/refs/remotes/origin/main reason=ignored-dir
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/refs/remotes/origin/main.lock reason=ignored-dir
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/refs/remotes/origin/main.lock reason=ignored-dir
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/refs/remotes/origin/main.lock reason=ignored-dir
+[2026-11-02T02:10:03.814Z] [watcher] dispatch=skip path=.git/refs/remotes/origin/main reason=ignored-dir
+[2026-11-02T02:10:05.352Z] [iframe] subkind=pane-visibility {"at":"2026-11-02T02:10:05.350Z","state":"focus","via":"window"}
+[2026-11-02T02:10:05.413Z] [iframe] subkind=draft-restore {"at":"2026-11-02T02:10:05.412Z","chars":0,"hydrated":true,"source":"session"}
+[2026-11-02T02:10:06.630Z] [pty] op=exit-hangup via=exit shell_pid=Some(80875) fg_pgid=Some(81370) groups=[81370, 80875]
+[2026-11-02T02:10:06.631Z] [pty-in] gap_ms=986165 bytes=1 runs=1 preview="\x07"
+[2026-11-02T02:10:06.631Z] [pty-in] gap_ms=0 bytes=32 preview="\x1b[?1006l\x1b[?1003l\x1b[?1002l\x1b[?1000l"
+[2026-11-02T02:10:06.641Z] [watcher] path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl change=modify dedup=false
+[2026-11-02T02:10:06.641Z] [watcher] dispatch=session-jsonl path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl
+[2026-11-02T02:10:06.641Z] [jsonl] file=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl bytes=908902
+[2026-11-02T02:10:06.641Z] [jsonl-turn-end] op=poll-handoff source=watcher provider=claude path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl mtime=1793585406634 activeClaim=none
+[2026-11-02T02:10:06.641Z] [jsonl-turn-end] op=enter provider=claude path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl
+[2026-11-02T02:10:06.657Z] [jsonl-turn-end] op=scan provider=claude path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl tailTypes=assistant,system,last-prompt,ai-title,mode,permission-mode decision=end_turn detected=true
+[2026-11-02T02:10:06.657Z] [turn-state] from=finished to=finished provider=claude turn=1793584337552 source=jsonl reason=end_turn menu= jsonlReason=end_turn emitted=false
+[2026-11-02T02:10:06.658Z] [finished-cue] source=jsonl provider=claude verb=(none) elapsed=(none)
+[2026-11-02T02:10:06.658Z] [turn-end-defer] op=schedule reason=pty-turn-finished grace_ms=500 provider=claude verb=(none)
+[2026-11-02T02:10:06.658Z] [emit] kind=turn-context-changed payload_size=69 correlation_id= at_host_ms=
+[2026-11-02T02:10:06.658Z] [event-remember] kind=turn-context-changed payload_size=69 source=payload
+[2026-11-02T02:10:06.658Z] [turn-context] op=set kind=turn-end ids=0
+[2026-11-02T02:10:06.658Z] [jsonl-turn-end] op=skip provider=claude reason=no-active-sentinel decision=end_turn path=d0c9a343-a698-43e9-9fcb-159a1cb64303.jsonl mtime=1793585406634
