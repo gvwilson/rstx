@@ -1,0 +1,53 @@
+2026-11-02T01:46:44.340Z claude-rs PreToolUse Bash decided=allow target=- ms=1 reason=bash-read-only
+2026-11-02T01:46:44.409Z claude-rs PostToolUse Bash post=/__menu/permission/clear ok ms=0
+2026-11-02T01:46:44.420Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:46:54.511Z claude-rs PreToolUse Bash decided=allow target=- ms=0 reason=bash-read-only
+2026-11-02T01:46:54.526Z claude-rs PermissionRequest Bash post=/__menu/permission ok ms=2
+2026-11-02T01:46:57.153Z claude-rs PostToolUse Bash post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:01.636Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:01.638Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.337Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.338Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.338Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.338Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.339Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.339Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.340Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:07.341Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:13.603Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=1
+2026-11-02T01:47:19.945Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:50:36.095Z claude-rs PreToolUse Bash decided=allow target=- ms=1 reason=bash-read-only
+2026-11-02T01:50:36.141Z claude-rs PostToolUse Bash post=/__menu/permission/clear ok ms=0
+2026-11-02T01:50:42.919Z claude-rs PreToolUse Bash decided=allow target=- ms=1 reason=bash-read-only
+2026-11-02T01:51:45.120Z claude-rs PostToolUse Read post=/__menu/permission/clear ok ms=0
+2026-11-02T01:51:54.386Z claude-rs PreToolUse Write decided=allow target=resources/worklist-drafts/reorder-lessons-by-difficulty.md ms=0 reason=bram-lifecycle-channel
+2026-11-02T01:51:54.406Z claude-rs PostToolUse Write post=/__menu/permission/clear ok ms=0
+2026-11-02T01:51:54.431Z claude-rs PreToolUse Write decided=allow target=resources/worklist.json ms=0 reason=worklist-author
+2026-11-02T01:51:54.446Z claude-rs PermissionRequest Write post=/__menu/permission ok ms=4
+2026-11-02T01:51:57.114Z claude-rs PostToolUse Write post=/__menu/permission/clear ok ms=0
+2026-11-02T01:52:42.077Z claude-rs PreToolUse Edit decided=allow target=README.md ms=0 reason=covered-by-worklist-item
+2026-11-02T01:52:42.096Z claude-rs PostToolUse Edit post=/__menu/permission/clear ok ms=0
+2026-11-02T01:53:29.611Z claude-rs PreToolUse Bash decided=allow target=- ms=0 reason=bash-write-nonrepo-target
+2026-11-02T01:53:29.626Z claude-rs PermissionRequest Bash post=/__menu/permission ok ms=4
+2026-11-02T01:53:32.433Z claude-rs PostToolUse Bash post=/__menu/permission/clear ok ms=0
+2026-11-02T01:53:35.781Z claude-rs PreToolUse Bash decided=allow target=- ms=0 reason=bash-read-only
+2026-11-02T01:53:36.189Z claude-rs PostToolUse Bash post=/__menu/permission/clear ok ms=0

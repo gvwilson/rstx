@@ -1,0 +1,4 @@
+[2026-11-02T01:46:40.533Z] [send-forensics] op=inject id=1793584000514-inline kind=inline mode= bytes=436 provider=claude menu_at_inject=false turn_open_at_inject=false ms_since_pty_out=95066 stale_input=false preview=""read the tutorials in */index.md. rank them in order of incr""
+[2026-11-02T01:46:41.469Z] [send-forensics] op=landed id=1793584000514-inline via_queue=false elapsed_ms=954 cross_session=false turn_open_at_inject=false queue_wait_ms=-1
+[2026-11-02T01:52:17.463Z] [send-forensics] op=inject id=1793584337463-inline kind=inline mode= bytes=100 provider=claude menu_at_inject=false turn_open_at_inject=false ms_since_pty_out=11663 stale_input=false preview=""approved: {\"items\":[{\"id\":\"reorder-lessons-by-difficulty\",\"f""
+[2026-11-02T01:52:17.860Z] [send-forensics] op=landed id=1793584337463-inline via_queue=false elapsed_ms=397 cross_session=false turn_open_at_inject=false queue_wait_ms=-1

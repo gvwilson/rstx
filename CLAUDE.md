@@ -132,3 +132,7 @@ To reference a glossary term in a lesson, use the shortcode:
 
 where `some-key` matches the `id` attribute of the glossary entry
 and `display text` is the phrase as it appears in the lesson prose.
+
+<!-- bram:start -->
+@.claude/bram-conventions.md
+<!-- bram:end -->

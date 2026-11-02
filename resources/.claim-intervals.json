@@ -1,0 +1,21 @@
+{
+  "intervals": [
+    {
+      "atMs": 1793584337332,
+      "ids": [
+        "reorder-lessons-by-difficulty"
+      ],
+      "kind": "approved",
+      "ref": "refs/bram/claims/1793584337332",
+      "tree": "c48c0c1eb5b0f77b776ae6c96a04ae3797024127"
+    },
+    {
+      "atMs": 1793584416091,
+      "ids": [],
+      "kind": "cleared",
+      "ref": "refs/bram/claims/1793584416091",
+      "tree": "d712c98e5fb4d96efe6bd2a951c62ed22843110b"
+    }
+  ],
+  "version": 1
+}

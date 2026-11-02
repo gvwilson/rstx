@@ -1,0 +1,18 @@
+{
+  "description": "",
+  "items": [
+    {
+      "_citationsMissing": true,
+      "after": "Reorder the 31 lessons in README.md's \"lessons\" section by increasing\nmathematical/statistical difficulty, keeping Introduction first and Conclusion\nlast. New slug order (least to most sophisticated):\n\n1.  schelling      — neighbour fractions, no continuous math\n2.  vocab          — ratios and moving averages\n3.  pollute        — fractions, mass conservation\n4.  porous         — probability p, Monte Carlo fraction\n5.  archcluster    — cell counting, connected components, centroids\n6.  leastcost      — Dijkstra, edge-cost averaging\n7.  align          — dynamic programming, integer arithmetic\n8.  authorship     — n-gram counts, cosine similarity\n9.  stemma         — Hamming distance, UPGMA arithmetic means\n10. phylo          — UPGMA, four-point condition, bipartitions\n11. vitals         — z-score (mean/std)\n12. massspec       — Gaussian noise, sigma/sqrt(w), threshold\n13. cellseg        — 2D Gaussian, convolution\n14. wealth         — Gini coefficient, Lorenz curve\n15. topics         — TF vectors, L2 norm, k-means, inertia\n16. sdt            — hit/false-alarm rates, ROC, AUC\n17. interp         — inverse-distance weighting, cross-validation\n18. agreement      — Cohen's kappa, standard error\n19. wordshift      — OLS slope\n20. diffusion      — PDE finite differences, Taylor series, truncation error\n21. heatwall       — steady-state heat equation, Jacobi iteration\n22. lotka          — ODE system, equilibrium, linearization\n23. sir            — ODE system, least-squares fitting, R0\n24. mineral        — logistic regression, gradient descent, cross-entropy\n25. tumor          — logistic regression, confusion matrix\n26. learning       — nonlinear least squares, covariance, CI\n27. radvel         — sinusoid fit, covariance, Cramer-Rao, significance\n28. elasticity     — log-log OLS, standard error, t CI\n29. flood          — log-normal, method of moments, return periods\n30. survival       — maximum-likelihood estimation, censoring\n31. breakpoint     — CUSUM statistic, detrending, critical values",
+      "before": "README.md's \"lessons\" section lists the 31 lessons (between Introduction and\nConclusion) in a thematically grouped order that does not reflect mathematical\nor statistical difficulty. Current slug order:\n\ndiffusion, lotka, align, phylo, massspec, cellseg, radvel, mineral, heatwall,\npollute, flood, porous, sir, survival, vitals, tumor, elasticity, wealth,\nbreakpoint, schelling, vocab, topics, authorship, wordshift, stemma, leastcost,\narchcluster, interp, learning, sdt, agreement",
+      "citations": [],
+      "closesIssues": [],
+      "files": [
+        "README.md"
+      ],
+      "id": "reorder-lessons-by-difficulty",
+      "status": "proposed"
+    }
+  ],
+  "version": 1
+}
