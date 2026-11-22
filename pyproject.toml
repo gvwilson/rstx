@@ -17,7 +17,6 @@ classifiers = [
 dependencies = [
     "altair>=6.0.0",
     "matplotlib>=3.10.8",
-    "mccole>=3.1.0",
     "networkx>=3.6.1",
     "numpy>=2.4.4",
     "polars>=1.39.3",
@@ -29,25 +28,6 @@ dependencies = [
 [project.urls]
 Homepage = "https://gvwilson.github.io/rsdtx"
 Repository = "https://github.com/gvwilson/rsdtx"
-
-[tool.mccole]
-title = "Research Software Testing by Example"
-brand = "RSTX"
-repo = "https://github.com/gvwilson/rstx"
-skips = [
-    "**/__pycache__",
-    "*.csv",
-    "*.py",
-    "*.pyc",
-    "*.sh",
-    "*.txt",
-    "CLAUDE.md",
-    "Makefile",
-    "bin",
-    "docs",
-    "log",
-    "uv.lock"
-]
 
 [dependency-groups]
 dev = [

@@ -1,255 +1,594 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Spatial Clustering of Archaeological Sites</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; Spatial Clustering of Archaeological Sites – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../leastcost/index.html" rel="next">
+<link href="../porous/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a class="active" href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../archcluster/index.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
-</nav>
-<main id="main-content">
-<h1>Spatial Clustering of Archaeological Sites</h1>
-<h2>The Problem</h2>
-<ul>
-<li>Archaeological surveys record the locations of sites
-    (settlements, hearths, burial mounds) as 2-D coordinates on a map</li>
-<li>Sites are rarely distributed uniformly:<ul>
-<li>Concentrations may represent settlements around a water source,
-    nodes in a trade network,
-    or ritual landscapes</li>
-</ul>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
 </li>
-<li><a class="gl-ref" href="../glossary/#spatial_clustering">Spatial clustering</a> groups sites by proximity
-    without requiring the analyst to specify the number of groups in advance</li>
-<li>The approach here:<ul>
-<li>Generate a synthetic set of site locations in which clusters at known centers
-    are surrounded by random background noise</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">6.1</span> The Problem</a></li>
+  <li><a href="#dividing-the-region-into-a-grid" id="toc-dividing-the-region-into-a-grid" class="nav-link" data-scroll-target="#dividing-the-region-into-a-grid"><span class="header-section-number">6.2</span> Dividing the Region into a Grid</a></li>
+  <li><a href="#identifying-concentration-cells" id="toc-identifying-concentration-cells" class="nav-link" data-scroll-target="#identifying-concentration-cells"><span class="header-section-number">6.3</span> Identifying Concentration Cells</a></li>
+  <li><a href="#finding-clusters-with-depth-first-search" id="toc-finding-clusters-with-depth-first-search" class="nav-link" data-scroll-target="#finding-clusters-with-depth-first-search"><span class="header-section-number">6.4</span> Finding Clusters with Depth-First Search</a></li>
+  <li><a href="#assigning-sites-to-clusters" id="toc-assigning-sites-to-clusters" class="nav-link" data-scroll-target="#assigning-sites-to-clusters"><span class="header-section-number">6.5</span> Assigning Sites to Clusters</a></li>
+  <li><a href="#cluster-centroids" id="toc-cluster-centroids" class="nav-link" data-scroll-target="#cluster-centroids"><span class="header-section-number">6.6</span> Cluster Centroids</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">6.7</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">6.8</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">6.8.1</span> Do the math</a></li>
+  <li><a href="#parameter-sensitivity" id="toc-parameter-sensitivity" class="nav-link" data-scroll-target="#parameter-sensitivity"><span class="header-section-number">6.8.2</span> Parameter sensitivity</a></li>
+  <li><a href="#cluster-purity" id="toc-cluster-purity" class="nav-link" data-scroll-target="#cluster-purity"><span class="header-section-number">6.8.3</span> Cluster purity</a></li>
+  <li><a href="#boundary-sensitivity" id="toc-boundary-sensitivity" class="nav-link" data-scroll-target="#boundary-sensitivity"><span class="header-section-number">6.8.4</span> Boundary sensitivity</a></li>
+  <li><a href="#centroid-error" id="toc-centroid-error" class="nav-link" data-scroll-target="#centroid-error"><span class="header-section-number">6.8.5</span> Centroid error</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/archcluster/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/archcluster/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">6.1</span> The Problem</h2>
+<ul>
+<li>Archaeological surveys record the locations of sites (settlements, hearths, burial mounds) as 2-D coordinates on a map</li>
+<li>Sites are rarely distributed uniformly:
+<ul>
+<li>Concentrations may represent settlements around a water source, nodes in a trade network, or ritual landscapes</li>
+</ul></li>
+<li><a href="../glossary/index.html#spatial_clustering">Spatial clustering</a> groups sites by proximity without requiring the analyst to specify the number of groups in advance</li>
+<li>The approach here:
+<ul>
+<li>Generate a synthetic set of site locations in which clusters at known centers are surrounded by random background noise</li>
 <li>Divide the survey region into a regular grid and count sites per cell</li>
-<li>Mark cells whose count meets a density threshold as "hot"</li>
-<li>Find <a class="gl-ref" href="../glossary/#connected_component">connected components</a> of hot cells
-    using <a class="gl-ref" href="../glossary/#depth_first_search">depth-first search</a> (DFS) with 8-connectivity</li>
+<li>Mark cells whose count meets a density threshold as “hot”</li>
+<li>Find <a href="../glossary/index.html#connected_component">connected components</a> of hot cells using depth-first search (DFS) with 8-connectivity</li>
 <li>Assign each site the label of the component containing its cell</li>
 <li>Compute the centroid of each cluster</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="forma-multiple-choice" data-lang="en">
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>Why does a grid-cell density approach label some sites as noise (label -1)?</p>
 <dl>
 <dt>Because noise sites are placed outside the survey region.</dt>
-<dd>Wrong: all sites in the synthetic data lie within the region bounds;
-noise sites land in cells just like cluster sites do.</dd>
-<dt>Because any site whose cell has fewer than HOT_THRESHOLD sites is treated as</dt>
-<dt>background, not part of any cluster.</dt>
-<dd>Correct: a cell below the threshold is not hot, so sites in that cell
-receive label -1 regardless of how close they are to a cluster cell.</dd>
+<dd>
+Wrong: all sites in the synthetic data lie within the region bounds; noise sites land in cells just like cluster sites do.
+</dd>
+</dl>
+<p>Because any site whose cell has fewer than HOT_THRESHOLD sites is treated as background, not part of any cluster. : Correct: a cell below the threshold is not hot, so sites in that cell receive label -1 regardless of how close they are to a cluster cell.</p>
+<dl>
 <dt>Because the DFS algorithm cannot reach sites at the edge of the grid.</dt>
-<dd>Wrong: the DFS visits all hot cells, including those on the grid boundary;
-edge position alone does not determine whether a cell is hot.</dd>
+<dd>
+Wrong: the DFS visits all hot cells, including those on the grid boundary; edge position alone does not determine whether a cell is hot.
+</dd>
 <dt>Because cluster sites always outnumber noise sites.</dt>
-<dd>Wrong: in the synthetic data there are 20 noise points and 60 cluster sites,
-but the labelling depends on cell density, not overall counts.</dd>
+<dd>
+Wrong: in the synthetic data there are 20 noise points and 60 cluster sites, but the labelling depends on cell density, not overall counts.
+</dd>
 </dl>
 </div>
-<h2>Dividing the Region into a Grid</h2>
+</section>
+<section id="dividing-the-region-into-a-grid" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="dividing-the-region-into-a-grid"><span class="header-section-number">6.2</span> Dividing the Region into a Grid</h2>
 <ul>
-<li>The survey region spans $[\text{region_min}, \text{region_max}]$ in both easting and northing</li>
-<li>Divide each axis into <code>grid_size</code> equal-width cells of width
-    $w = (\text{region_max} - \text{region_min}) / \text{grid_size}$</li>
-<li>The cell index along one axis for a coordinate $v$ is:</li>
+<li>The survey region spans <span class="math inline">\([\text{region\_min}, \text{region\_max}]\)</span> in both easting and northing</li>
+<li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline">\(w = (\text{region\_max} - \text{region\_min}) / \text{grid\_size}\)</span></li>
+<li>The cell index along one axis for a coordinate <span class="math inline">\(v\)</span> is:</li>
 </ul>
-<p>$$\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor$$</p>
+<p><span class="math display">\[\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor\]</span></p>
 <ul>
-<li>Sites exactly on the upper boundary would map to index <code>grid_size</code><ul>
+<li>Sites exactly on the upper boundary would map to index <code>grid_size</code>
+<ul>
 <li>Clip to <code>grid_size - 1</code> to keep them inside the array</li>
-</ul>
-</li>
+</ul></li>
 <li>Count the number of sites in each cell; the result is a 2D integer array of shape <code>(grid_size, grid_size)</code></li>
 </ul>
-<div data-inc="archcluster.py" data-mark="grid"><span aria-label="Source: archcluster/archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">build_grid</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">region_min</span><span class="p">,</span> <span class="n">region_max</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Count sites per grid cell.</span>
-
-<span class="sd">    Each coordinate is mapped to a cell index by floor division:</span>
-<span class="sd">        cell = int((value - region_min) / cell_width)</span>
-<span class="sd">    clipped to [0, grid_size - 1] so that sites exactly on the upper boundary</span>
-<span class="sd">    fall in the last cell rather than out of bounds.</span>
-
-<span class="sd">    Returns a 2D integer array of shape (grid_size, grid_size) where entry</span>
-<span class="sd">    [row, col] counts sites whose northing maps to row and easting to col.</span>
-<span class="sd">    """</span>
-    <span class="n">cell_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">region_max</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">grid_size</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">grid_size</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">easting</span><span class="p">,</span> <span class="n">northing</span> <span class="ow">in</span> <span class="n">coords</span><span class="p">:</span>
-        <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">easting</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_width</span><span class="p">)</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">northing</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_width</span><span class="p">)</span>
-        <span class="n">col</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">grid_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">grid_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">grid</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">grid</span>
-</code></pre></div>
-</div>
-<h2>Identifying Concentration Cells</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="identifying-concentration-cells" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="identifying-concentration-cells"><span class="header-section-number">6.3</span> Identifying Concentration Cells</h2>
 <ul>
-<li>A cell with <code>count &gt;= HOT_THRESHOLD</code> is called a "hot" cell<ul>
+<li>A cell with <code>count &gt;= HOT_THRESHOLD</code> is called a “hot” cell
+<ul>
 <li>It represents a local concentration of sites</li>
-</ul>
-</li>
-<li>Cells below the threshold are background<ul>
+</ul></li>
+<li>Cells below the threshold are background
+<ul>
 <li>Isolated or sparse finds that do not indicate a settlement pattern</li>
-</ul>
-</li>
+</ul></li>
 <li>The Boolean mask of hot cells is straightforward:</li>
 </ul>
-<div data-inc="archcluster.py" data-mark="hot-cells"><span aria-label="Source: archcluster/archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_hot_cells</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">threshold</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Boolean mask: True where count &gt;= threshold."""</span>
-    <span class="k">return</span> <span class="n">grid</span> <span class="o">&gt;=</span> <span class="n">threshold</span>
-</code></pre></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Raising <code>HOT_THRESHOLD</code> requires denser concentrations before a cell qualifies,
-    which can split a real cluster into fragments or eliminate it entirely</li>
-<li>Lowering <code>HOT_THRESHOLD</code> to 1 makes every occupied cell hot,
-    merging isolated noise points into spurious clusters</li>
+<li>Raising <code>HOT_THRESHOLD</code> requires denser concentrations before a cell qualifies, which can split a real cluster into fragments or eliminate it entirely</li>
+<li>Lowering <code>HOT_THRESHOLD</code> to 1 makes every occupied cell hot, merging isolated noise points into spurious clusters</li>
 </ul>
-<div class="forma-multiple-choice" data-lang="en">
-<p>What happens to the number of detected clusters when <code>GRID_SIZE</code> is halved
-(from 20 to 10)?</p>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>What happens to the number of detected clusters when <code>GRID_SIZE</code> is halved (from 20 to 10)?</p>
 <dl>
 <dt>The number of clusters always increases, because there are more cells to label.</dt>
-<dd>Wrong: halving <code>GRID_SIZE</code> reduces the number of cells, not increases them;
-each coarser cell aggregates more sites.</dd>
-<dt>Each cell covers four times the area and accumulates more sites, so cells are</dt>
-<dt>more likely to meet HOT_THRESHOLD and previously separate clusters may merge.</dt>
-<dd>Correct: coarser cells combine sites from a wider area; two formerly distinct
-concentration zones may land in the same or adjacent hot cells and merge into
-one connected component.</dd>
+<dd>
+Wrong: halving <code>GRID_SIZE</code> reduces the number of cells, not increases them; each coarser cell aggregates more sites.
+</dd>
+</dl>
+<p>Each cell covers four times the area and accumulates more sites, so cells are more likely to meet HOT_THRESHOLD and previously separate clusters may merge. : Correct: coarser cells combine sites from a wider area; two formerly distinct concentration zones may land in the same or adjacent hot cells and merge into one connected component.</p>
+<dl>
 <dt>The number of clusters is unaffected because HOT_THRESHOLD does not change.</dt>
-<dd>Wrong: cell size and threshold interact; the same threshold applied to cells
-of different sizes produces different hot-cell patterns.</dd>
+<dd>
+Wrong: cell size and threshold interact; the same threshold applied to cells of different sizes produces different hot-cell patterns.
+</dd>
 <dt>Each cluster splits into more fragments because the cells are larger.</dt>
-<dd>Wrong: larger cells aggregate more sites; the tendency is to merge clusters,
-not split them.</dd>
+<dd>
+Wrong: larger cells aggregate more sites; the tendency is to merge clusters, not split them.
+</dd>
 </dl>
 </div>
-<h2>Finding Clusters with Depth-First Search</h2>
+</section>
+<section id="finding-clusters-with-depth-first-search" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="finding-clusters-with-depth-first-search"><span class="header-section-number">6.4</span> Finding Clusters with Depth-First Search</h2>
 <ul>
 <li>Two hot cells belong to the same cluster if they are connected through a chain of adjacent hot cells</li>
-<li>8-connectivity counts all eight neighbors (four cardinal, four diagonal),
-    so clusters that touch only at corners are still merged</li>
+<li>8-connectivity counts all eight neighbors (four cardinal, four diagonal), so clusters that touch only at corners are still merged</li>
 <li>The same iterative DFS used in the <code>porous</code> lesson labels connected components</li>
 <li>Here it assigns cluster IDs instead of testing for top-to-bottom percolation</li>
 </ul>
-<div data-inc="archcluster.py" data-mark="dfs"><span aria-label="Source: archcluster/archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">find_clusters</span><span class="p">(</span><span class="n">hot</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""DFS connected components with 8-connectivity.</span>
-
-<span class="sd">    Visits every True cell in the boolean mask exactly once, assigning</span>
-<span class="sd">    consecutive integer labels starting at 0.  Cells where hot is False</span>
-<span class="sd">    receive label -1.</span>
-
-<span class="sd">    8-connectivity means each cell has up to 8 neighbors (4 cardinal + 4</span>
-<span class="sd">    diagonal), so clusters that touch only at corners are still merged.</span>
-
-<span class="sd">    Returns an integer label array of the same shape as hot.</span>
-<span class="sd">    """</span>
-    <span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span> <span class="o">=</span> <span class="n">hot</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">full</span><span class="p">((</span><span class="n">nrows</span><span class="p">,</span> <span class="n">ncols</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">cluster_id</span> <span class="o">=</span> <span class="mi">0</span>
-
-    <span class="k">for</span> <span class="n">start_r</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nrows</span><span class="p">):</span>
-        <span class="k">for</span> <span class="n">start_c</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">ncols</span><span class="p">):</span>
-            <span class="k">if</span> <span class="ow">not</span> <span class="n">hot</span><span class="p">[</span><span class="n">start_r</span><span class="p">,</span> <span class="n">start_c</span><span class="p">]</span> <span class="ow">or</span> <span class="n">labels</span><span class="p">[</span><span class="n">start_r</span><span class="p">,</span> <span class="n">start_c</span><span class="p">]</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                <span class="k">continue</span>
-            <span class="c1"># Start a new cluster from this unlabelled hot cell.</span>
-            <span class="n">stack</span> <span class="o">=</span> <span class="p">[(</span><span class="n">start_r</span><span class="p">,</span> <span class="n">start_c</span><span class="p">)]</span>
-            <span class="n">labels</span><span class="p">[</span><span class="n">start_r</span><span class="p">,</span> <span class="n">start_c</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
-            <span class="k">while</span> <span class="n">stack</span><span class="p">:</span>
-                <span class="n">r</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">stack</span><span class="o">.</span><span class="n">pop</span><span class="p">()</span>
-                <span class="k">for</span> <span class="n">dr</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-                    <span class="k">for</span> <span class="n">dc</span> <span class="ow">in</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
-                        <span class="k">if</span> <span class="n">dr</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">dc</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-                            <span class="k">continue</span>
-                        <span class="n">nr</span><span class="p">,</span> <span class="n">nc</span> <span class="o">=</span> <span class="n">r</span> <span class="o">+</span> <span class="n">dr</span><span class="p">,</span> <span class="n">c</span> <span class="o">+</span> <span class="n">dc</span>
-                        <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nr</span> <span class="o">&lt;</span> <span class="n">nrows</span> <span class="ow">and</span> <span class="mi">0</span> <span class="o">&lt;=</span> <span class="n">nc</span> <span class="o">&lt;</span> <span class="n">ncols</span><span class="p">:</span>
-                            <span class="k">if</span> <span class="n">hot</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">]</span> <span class="ow">and</span> <span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">:</span>
-                                <span class="n">labels</span><span class="p">[</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">]</span> <span class="o">=</span> <span class="n">cluster_id</span>
-                                <span class="n">stack</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">nr</span><span class="p">,</span> <span class="n">nc</span><span class="p">))</span>
-            <span class="n">cluster_id</span> <span class="o">+=</span> <span class="mi">1</span>
-
-    <span class="k">return</span> <span class="n">labels</span>
-</code></pre></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li><code>labels</code> is initialized to -1<ul>
+<li><code>labels</code> is initialized to -1
+<ul>
 <li>Only hot cells receive a non-negative label</li>
+</ul></li>
+<li>Each cell is pushed onto the stack at most once (when first labelled), so the algorithm runs in <span class="math inline">\(O(\text{grid\_size}^2)\)</span> time</li>
 </ul>
-</li>
-<li>Each cell is pushed onto the stack at most once (when first labelled),
-    so the algorithm runs in $O(\text{grid_size}^2)$ time</li>
-</ul>
-<div class="forma-ordering" data-lang="en">
+<div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps of the DFS connected-component labelling in the correct order.</p>
-<ol>
+<ol type="1">
 <li>Scan the grid row by row; find the first hot cell with label -1</li>
 <li>Assign the current cluster_id to that cell and push it onto the stack</li>
 <li>Pop a cell from the stack; iterate over its 8 neighbors</li>
@@ -257,301 +596,751 @@ not split them.</dd>
 <li>When the stack empties, increment cluster_id and scan for the next unlabelled hot cell</li>
 </ol>
 </div>
-<div class="forma-multiple-choice" data-lang="en">
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>What happens when HOT_THRESHOLD is raised from 2 to 5?</p>
 <dl>
 <dt>Every cell qualifies as hot, so the entire grid becomes one large cluster.</dt>
-<dd>Wrong: raising the threshold makes it harder for cells to qualify; fewer
-cells are hot, not more.</dd>
-<dt>Cells need more sites to qualify, so some former cluster cells become background</dt>
-<dt>and clusters may shrink, split, or disappear.</dt>
-<dd>Correct: cells that previously had 2-4 sites are no longer hot; if those
-cells were part of a cluster's boundary or interior, the component may
-fragment into smaller pieces or fall below connectivity.</dd>
+<dd>
+Wrong: raising the threshold makes it harder for cells to qualify; fewer cells are hot, not more.
+</dd>
+</dl>
+<p>Cells need more sites to qualify, so some former cluster cells become background and clusters may shrink, split, or disappear. : Correct: cells that previously had 2-4 sites are no longer hot; if those cells were part of a cluster’s boundary or interior, the component may fragment into smaller pieces or fall below connectivity.</p>
+<dl>
 <dt>The cluster boundaries become smoother because the threshold filters outlier cells.</dt>
-<dd>Wrong: raising the threshold removes cells from clusters; it can fragment
-boundaries rather than smooth them.</dd>
+<dd>
+Wrong: raising the threshold removes cells from clusters; it can fragment boundaries rather than smooth them.
+</dd>
 <dt>The number of noise sites decreases because more sites fall into hot cells.</dt>
-<dd>Wrong: raising the threshold removes cells from the hot set, so more sites
-end up in background cells and are labelled as noise.</dd>
+<dd>
+Wrong: raising the threshold removes cells from the hot set, so more sites end up in background cells and are labelled as noise.
+</dd>
 </dl>
 </div>
-<h2>Assigning Sites to Clusters</h2>
+</section>
+<section id="assigning-sites-to-clusters" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="assigning-sites-to-clusters"><span class="header-section-number">6.5</span> Assigning Sites to Clusters</h2>
 <ul>
 <li>Each site is mapped to a grid cell using the same floor-division formula as <code>build_grid</code></li>
 <li>The site receives the cluster label of its cell</li>
 <li>Sites in background cells receive -1 (noise)</li>
 </ul>
-<div data-inc="archcluster.py" data-mark="assign"><span aria-label="Source: archcluster/archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">assign_labels</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">cell_labels</span><span class="p">,</span> <span class="n">region_min</span><span class="p">,</span> <span class="n">region_max</span><span class="p">,</span> <span class="n">grid_size</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Map each site coordinate to its cluster label.</span>
-
-<span class="sd">    Applies the same floor-division formula used in build_grid to find which</span>
-<span class="sd">    cell each site belongs to, then returns the label for that cell.  Sites</span>
-<span class="sd">    whose cell is not hot receive label -1 (noise).</span>
-
-<span class="sd">    Returns a 1D integer array of length len(coords).</span>
-<span class="sd">    """</span>
-    <span class="n">cell_width</span> <span class="o">=</span> <span class="p">(</span><span class="n">region_max</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">grid_size</span>
-    <span class="n">site_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">easting</span><span class="p">,</span> <span class="n">northing</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">coords</span><span class="p">):</span>
-        <span class="n">col</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">easting</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_width</span><span class="p">)</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">northing</span> <span class="o">-</span> <span class="n">region_min</span><span class="p">)</span> <span class="o">/</span> <span class="n">cell_width</span><span class="p">)</span>
-        <span class="n">col</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">col</span><span class="p">,</span> <span class="n">grid_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">row</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">row</span><span class="p">,</span> <span class="n">grid_size</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
-        <span class="n">site_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">cell_labels</span><span class="p">[</span><span class="n">row</span><span class="p">,</span> <span class="n">col</span><span class="p">]</span>
-    <span class="k">return</span> <span class="n">site_labels</span>
-</code></pre></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
-<li>Sites in hot cells that belong to a small disconnected cluster receive a distinct positive label,
-    not noise</li>
-<li>Two sites in adjacent cells may receive different labels if one cell is hot and the other is not,
-    even if the sites are physically close</li>
+<li>Sites in hot cells that belong to a small disconnected cluster receive a distinct positive label, not noise</li>
+<li>Two sites in adjacent cells may receive different labels if one cell is hot and the other is not, even if the sites are physically close</li>
 </ul>
-<div class="forma-multiple-choice" data-lang="en">
-<p>Site A is at easting 34.0, northing 24.0.  Its cell has a count of 1
-and HOT_THRESHOLD is 2.  What label does site A receive?</p>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>Site A is at easting 34.0, northing 24.0. Its cell has a count of 1 and HOT_THRESHOLD is 2. What label does site A receive?</p>
 <dl>
-<dt>The label of the nearest hot cell's cluster.</dt>
-<dd>Wrong: assign_labels uses the cell containing the site, not the nearest hot
-cell; proximity to a hot cell does not transfer the label.</dd>
+<dt>The label of the nearest hot cell’s cluster.</dt>
+<dd>
+Wrong: assign_labels uses the cell containing the site, not the nearest hot cell; proximity to a hot cell does not transfer the label.
+</dd>
 <dt>-1, because its cell does not meet the density threshold.</dt>
-<dd>Correct: the cell count (1) is below HOT_THRESHOLD (2), so the cell is not
-hot and every site in it is labelled -1.</dd>
+<dd>
+Correct: the cell count (1) is below HOT_THRESHOLD (2), so the cell is not hot and every site in it is labelled -1.
+</dd>
 <dt>0, because it is the first site encountered in the scan.</dt>
-<dd>Wrong: label 0 is the first cluster label assigned by find_clusters, not a
-default for unlabelled sites; unlabelled sites receive -1.</dd>
+<dd>
+Wrong: label 0 is the first cluster label assigned by find_clusters, not a default for unlabelled sites; unlabelled sites receive -1.
+</dd>
 <dt>The label of the cluster whose centroid is closest to the site.</dt>
-<dd>Wrong: the grid method assigns labels by cell membership, not by distance
-to cluster centroids.</dd>
+<dd>
+Wrong: the grid method assigns labels by cell membership, not by distance to cluster centroids.
+</dd>
 </dl>
 </div>
-<h2>Cluster Centroids</h2>
+</section>
+<section id="cluster-centroids" class="level2" data-number="6.6">
+<h2 data-number="6.6" class="anchored" data-anchor-id="cluster-centroids"><span class="header-section-number">6.6</span> Cluster Centroids</h2>
 <ul>
 <li>The centroid of a cluster is the mean easting and mean northing of all sites assigned to that cluster</li>
-<li>Centroids summarize each cluster's geographic location and can be compared with known landscape features</li>
+<li>Centroids summarize each cluster’s geographic location and can be compared with known landscape features</li>
 </ul>
-<div data-inc="archcluster.py" data-mark="centroids"><span aria-label="Source: archcluster/archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cluster_centroids</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Mean x/y per cluster, excluding noise (label -1).</span>
-
-<span class="sd">    Returns a dict mapping each non-negative cluster label to a (easting,</span>
-<span class="sd">    northing) tuple.</span>
-<span class="sd">    """</span>
-    <span class="n">centroids</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="n">unique_labels</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">labels</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="k">for</span> <span class="n">lbl</span> <span class="ow">in</span> <span class="n">unique_labels</span><span class="p">:</span>
-        <span class="n">mask</span> <span class="o">=</span> <span class="n">labels</span> <span class="o">==</span> <span class="n">lbl</span>
-        <span class="n">centroids</span><span class="p">[</span><span class="n">lbl</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="n">coords</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">coords</span><span class="p">[</span><span class="n">mask</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span>
-    <span class="k">return</span> <span class="n">centroids</span>
-</code></pre></div>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ul>
 <li>Noise sites (label -1) are excluded from all centroid calculations</li>
-<li>The centroid of a cluster recovered from Gaussian-distributed data
-    should be close to the planted center<ul>
+<li>The centroid of a cluster recovered from Gaussian-distributed data should be close to the planted center
+<ul>
 <li>The offset is the estimation error</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<h2>Testing</h2>
+</section>
+<section id="testing" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="testing"><span class="header-section-number">6.7</span> Testing</h2>
 <dl>
 <dt>Grid shape and total count</dt>
-<dd><code>build_grid</code> must return an array of shape <code>(grid_size, grid_size)</code>.
-The sum of all cell counts must equal the total number of sites,
-because every site lands in exactly one cell.</dd>
+<dd>
+<code>build_grid</code> must return an array of shape <code>(grid_size, grid_size)</code>. The sum of all cell counts must equal the total number of sites, because every site lands in exactly one cell.
+</dd>
 <dt>Hot-cell mask</dt>
-<dd><code>find_hot_cells</code> must mark cells with count &gt;= threshold as True and all other cells as False.</dd>
+<dd>
+<code>find_hot_cells</code> must mark cells with count &gt;= threshold as True and all other cells as False.
+</dd>
 <dt>Two disconnected blocks become two clusters</dt>
-<dd>A 3x3 hot mask with True at (0, 0) and True at (2, 2) must receive two distinct non-negative cluster IDs,
-because those cells are not 8-connected.</dd>
+<dd>
+A 3x3 hot mask with True at (0, 0) and True at (2, 2) must receive two distinct non-negative cluster IDs, because those cells are not 8-connected.
+</dd>
 <dt>At least two clusters on synthetic data</dt>
-<dd>Running the full pipeline on the synthetic data must produce at least two clusters.
-The four planted concentrations are far enough apart to remain separate under the default parameters.</dd>
+<dd>
+Running the full pipeline on the synthetic data must produce at least two clusters. The four planted concentrations are far enough apart to remain separate under the default parameters.
+</dd>
 <dt>One centroid per label</dt>
-<dd><code>cluster_centroids</code> must return exactly one entry for every unique non-negative label in the input,
-and the centroid coordinates must equal the mean of the corresponding sites.</dd>
+<dd>
+<code>cluster_centroids</code> must return exactly one entry for every unique non-negative label in the input, and the centroid coordinates must equal the mean of the corresponding sites.
+</dd>
 </dl>
-<div data-inc="test_archcluster.py"><span aria-label="Source: archcluster/test_archcluster.py" class="inc-path" role="img" tabindex="0" title="archcluster/test_archcluster.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_archcluster</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">make_sites</span><span class="p">,</span>
-    <span class="n">REGION_MIN</span><span class="p">,</span>
-    <span class="n">REGION_MAX</span><span class="p">,</span>
-<span class="p">)</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">archcluster</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-    <span class="n">build_grid</span><span class="p">,</span>
-    <span class="n">find_hot_cells</span><span class="p">,</span>
-    <span class="n">find_clusters</span><span class="p">,</span>
-    <span class="n">assign_labels</span><span class="p">,</span>
-    <span class="n">cluster_centroids</span><span class="p">,</span>
-    <span class="n">GRID_SIZE</span><span class="p">,</span>
-    <span class="n">HOT_THRESHOLD</span><span class="p">,</span>
-<span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_build_grid_shape</span><span class="p">():</span>
-    <span class="c1"># Grid must have the requested number of rows and columns.</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">20.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">50.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">],</span> <span class="p">[</span><span class="mf">90.0</span><span class="p">,</span> <span class="mf">80.0</span><span class="p">]])</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">build_grid</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">REGION_MIN</span><span class="p">,</span> <span class="n">REGION_MAX</span><span class="p">,</span> <span class="n">GRID_SIZE</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">grid</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">GRID_SIZE</span><span class="p">,</span> <span class="n">GRID_SIZE</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_build_grid_sum</span><span class="p">():</span>
-    <span class="c1"># Every site must land in exactly one cell, so the grid sum equals site count.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_sites</span><span class="p">()</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">"easting"</span><span class="p">,</span> <span class="s2">"northing"</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">build_grid</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">REGION_MIN</span><span class="p">,</span> <span class="n">REGION_MAX</span><span class="p">,</span> <span class="n">GRID_SIZE</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">grid</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="n">coords</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_find_hot_cells_threshold</span><span class="p">():</span>
-    <span class="c1"># Cells with count &gt;= threshold must be True; cells below must be False.</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]])</span>
-    <span class="n">hot</span> <span class="o">=</span> <span class="n">find_hot_cells</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="n">grid</span> <span class="o">&gt;=</span> <span class="mi">2</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">array_equal</span><span class="p">(</span><span class="n">hot</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_find_clusters_two_disconnected_blocks</span><span class="p">():</span>
-    <span class="c1"># Two separated 1-cell hot regions must receive distinct non-negative IDs.</span>
-    <span class="n">hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-    <span class="n">hot</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># top-left block</span>
-    <span class="n">hot</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># bottom-right block (not 8-connected to top-left)</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">find_clusters</span><span class="p">(</span><span class="n">hot</span><span class="p">)</span>
-    <span class="n">lbl_a</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="n">lbl_b</span> <span class="o">=</span> <span class="n">labels</span><span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">lbl_a</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-    <span class="k">assert</span> <span class="n">lbl_b</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-    <span class="k">assert</span> <span class="n">lbl_a</span> <span class="o">!=</span> <span class="n">lbl_b</span>
-    <span class="c1"># Cold cells stay -1.</span>
-    <span class="k">assert</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
-    <span class="k">assert</span> <span class="n">labels</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_find_clusters_8connectivity</span><span class="p">():</span>
-    <span class="c1"># Diagonal neighbors must be merged into one cluster.</span>
-    <span class="n">hot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">bool</span><span class="p">)</span>
-    <span class="n">hot</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>
-    <span class="n">hot</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="kc">True</span>   <span class="c1"># diagonal from (0,0)</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">find_clusters</span><span class="p">(</span><span class="n">hot</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">labels</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">labels</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">&gt;=</span> <span class="mi">0</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_assign_labels_produces_two_or_more_clusters</span><span class="p">():</span>
-    <span class="c1"># On the standard synthetic data the pipeline must find at least two clusters.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_sites</span><span class="p">()</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">select</span><span class="p">([</span><span class="s2">"easting"</span><span class="p">,</span> <span class="s2">"northing"</span><span class="p">])</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
-    <span class="n">grid</span> <span class="o">=</span> <span class="n">build_grid</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">REGION_MIN</span><span class="p">,</span> <span class="n">REGION_MAX</span><span class="p">,</span> <span class="n">GRID_SIZE</span><span class="p">)</span>
-    <span class="n">hot</span> <span class="o">=</span> <span class="n">find_hot_cells</span><span class="p">(</span><span class="n">grid</span><span class="p">,</span> <span class="n">HOT_THRESHOLD</span><span class="p">)</span>
-    <span class="n">cell_labels</span> <span class="o">=</span> <span class="n">find_clusters</span><span class="p">(</span><span class="n">hot</span><span class="p">)</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">assign_labels</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">cell_labels</span><span class="p">,</span> <span class="n">REGION_MIN</span><span class="p">,</span> <span class="n">REGION_MAX</span><span class="p">,</span> <span class="n">GRID_SIZE</span><span class="p">)</span>
-    <span class="n">n_clusters</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">labels</span><span class="p">[</span><span class="n">labels</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">]))</span>
-    <span class="k">assert</span> <span class="n">n_clusters</span> <span class="o">&gt;=</span> <span class="mi">2</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_cluster_centroids_one_per_label</span><span class="p">():</span>
-    <span class="c1"># cluster_centroids must return exactly one entry for every unique non-negative label.</span>
-    <span class="n">coords</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span>
-        <span class="p">[</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">11.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">50.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">51.0</span><span class="p">,</span> <span class="mf">50.0</span><span class="p">],</span>
-        <span class="p">[</span><span class="mf">90.0</span><span class="p">,</span> <span class="mf">90.0</span><span class="p">],</span>  <span class="c1"># noise</span>
-    <span class="p">])</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">])</span>
-    <span class="n">centroids</span> <span class="o">=</span> <span class="n">cluster_centroids</span><span class="p">(</span><span class="n">coords</span><span class="p">,</span> <span class="n">labels</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">centroids</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span> <span class="o">==</span> <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
-    <span class="n">cx0</span><span class="p">,</span> <span class="n">cy0</span> <span class="o">=</span> <span class="n">centroids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cx0</span> <span class="o">-</span> <span class="mf">10.5</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-9</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">cy0</span> <span class="o">-</span> <span class="mf">10.0</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">1e-9</span>
-</code></pre></div>
-</div>
-<div class="forma-flashcard" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_archcluster <span class="im">import</span> (</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    make_sites,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    REGION_MIN,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    REGION_MAX,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> archcluster <span class="im">import</span> (</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    build_grid,</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    find_hot_cells,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>    find_clusters,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    assign_labels,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    cluster_centroids,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    GRID_SIZE,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    HOT_THRESHOLD,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_build_grid_shape():</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Grid must have the requested number of rows and columns.</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>    coords <span class="op">=</span> np.array([[<span class="fl">10.0</span>, <span class="fl">20.0</span>], [<span class="fl">50.0</span>, <span class="fl">50.0</span>], [<span class="fl">90.0</span>, <span class="fl">80.0</span>]])</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> build_grid(coords, REGION_MIN, REGION_MAX, GRID_SIZE)</span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> grid.shape <span class="op">==</span> (GRID_SIZE, GRID_SIZE)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_build_grid_sum():</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Every site must land in exactly one cell, so the grid sum equals site count.</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_sites()</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>    coords <span class="op">=</span> df.select([<span class="st">"easting"</span>, <span class="st">"northing"</span>]).to_numpy()</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> build_grid(coords, REGION_MIN, REGION_MAX, GRID_SIZE)</span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> grid.<span class="bu">sum</span>() <span class="op">==</span> <span class="bu">len</span>(coords)</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_find_hot_cells_threshold():</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cells with count &gt;= threshold must be True; cells below must be False.</span></span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> np.array([[<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">0</span>], [<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">5</span>]])</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    hot <span class="op">=</span> find_hot_cells(grid, threshold<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> grid <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.array_equal(hot, expected)</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_find_clusters_two_disconnected_blocks():</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Two separated 1-cell hot regions must receive distinct non-negative IDs.</span></span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    hot <span class="op">=</span> np.zeros((<span class="dv">3</span>, <span class="dv">3</span>), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    hot[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="va">True</span>   <span class="co"># top-left block</span></span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    hot[<span class="dv">2</span>, <span class="dv">2</span>] <span class="op">=</span> <span class="va">True</span>   <span class="co"># bottom-right block (not 8-connected to top-left)</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> find_clusters(hot)</span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a>    lbl_a <span class="op">=</span> labels[<span class="dv">0</span>, <span class="dv">0</span>]</span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a>    lbl_b <span class="op">=</span> labels[<span class="dv">2</span>, <span class="dv">2</span>]</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> lbl_a <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> lbl_b <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> lbl_a <span class="op">!=</span> lbl_b</span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Cold cells stay -1.</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> labels[<span class="dv">0</span>, <span class="dv">1</span>] <span class="op">==</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> labels[<span class="dv">1</span>, <span class="dv">0</span>] <span class="op">==</span> <span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_find_clusters_8connectivity():</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Diagonal neighbors must be merged into one cluster.</span></span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>    hot <span class="op">=</span> np.zeros((<span class="dv">3</span>, <span class="dv">3</span>), dtype<span class="op">=</span><span class="bu">bool</span>)</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>    hot[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">=</span> <span class="va">True</span></span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    hot[<span class="dv">1</span>, <span class="dv">1</span>] <span class="op">=</span> <span class="va">True</span>   <span class="co"># diagonal from (0,0)</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> find_clusters(hot)</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> labels[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">==</span> labels[<span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> labels[<span class="dv">0</span>, <span class="dv">0</span>] <span class="op">&gt;=</span> <span class="dv">0</span></span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_assign_labels_produces_two_or_more_clusters():</span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># On the standard synthetic data the pipeline must find at least two clusters.</span></span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_sites()</span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    coords <span class="op">=</span> df.select([<span class="st">"easting"</span>, <span class="st">"northing"</span>]).to_numpy()</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    grid <span class="op">=</span> build_grid(coords, REGION_MIN, REGION_MAX, GRID_SIZE)</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    hot <span class="op">=</span> find_hot_cells(grid, HOT_THRESHOLD)</span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    cell_labels <span class="op">=</span> find_clusters(hot)</span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> assign_labels(coords, cell_labels, REGION_MIN, REGION_MAX, GRID_SIZE)</span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    n_clusters <span class="op">=</span> <span class="bu">len</span>(<span class="bu">set</span>(labels[labels <span class="op">&gt;=</span> <span class="dv">0</span>]))</span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> n_clusters <span class="op">&gt;=</span> <span class="dv">2</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_cluster_centroids_one_per_label():</span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cluster_centroids must return exactly one entry for every unique non-negative label.</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    coords <span class="op">=</span> np.array([</span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">10.0</span>, <span class="fl">10.0</span>],</span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">11.0</span>, <span class="fl">10.0</span>],</span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">50.0</span>, <span class="fl">50.0</span>],</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">51.0</span>, <span class="fl">50.0</span>],</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">90.0</span>, <span class="fl">90.0</span>],  <span class="co"># noise</span></span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    ])</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>    centroids <span class="op">=</span> cluster_centroids(coords, labels)</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">set</span>(centroids.keys()) <span class="op">==</span> {<span class="dv">0</span>, <span class="dv">1</span>}</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>    cx0, cy0 <span class="op">=</span> centroids[<span class="dv">0</span>]</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(cx0 <span class="op">-</span> <span class="fl">10.5</span>) <span class="op">&lt;</span> <span class="fl">1e-9</span></span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(cy0 <span class="op">-</span> <span class="fl">10.0</span>) <span class="op">&lt;</span> <span class="fl">1e-9</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Grid-cell density clustering key terms</p>
 <dl>
 <dt>Spatial clustering</dt>
-<dd>The task of partitioning geographic point locations into groups whose members
-are spatially proximate, without specifying the number of groups in advance</dd>
+<dd>
+The task of partitioning geographic point locations into groups whose members are spatially proximate, without specifying the number of groups in advance
+</dd>
 <dt>Grid cell</dt>
-<dd>One element of a regular lattice that tiles the survey region; sites are
-counted per cell to estimate local density</dd>
+<dd>
+One element of a regular lattice that tiles the survey region; sites are counted per cell to estimate local density
+</dd>
 <dt>Hot cell</dt>
-<dd>A grid cell whose site count meets or exceeds HOT_THRESHOLD; hot cells
-are the building blocks of detected clusters</dd>
+<dd>
+A grid cell whose site count meets or exceeds HOT_THRESHOLD; hot cells are the building blocks of detected clusters
+</dd>
 <dt>Connected component</dt>
-<dd>A maximal set of hot cells that are all linked to one another through
-shared edges or corners (8-connectivity); each component is one cluster</dd>
+<dd>
+A maximal set of hot cells that are all linked to one another through shared edges or corners (8-connectivity); each component is one cluster
+</dd>
 <dt>Depth-first search</dt>
-<dd>A graph traversal that explores as far as possible along each branch before
-backtracking, implemented here with a stack to label connected components
-of hot cells</dd>
+<dd>
+A graph traversal that explores as far as possible along each branch before backtracking, implemented here with a stack to label connected components of hot cells
+</dd>
 <dt>Cluster centroid</dt>
-<dd>The mean easting and northing of all sites assigned to a cluster;
-summarizes the cluster's geographic location</dd>
+<dd>
+The mean easting and northing of all sites assigned to a cluster; summarizes the cluster’s geographic location
+</dd>
 </dl>
 </div>
 <ul>
 <li>DBSCAN handles clusters of irregular shape and density without discretizing space</li>
 <li>It requires a more advanced algorithms course.</li>
 </ul>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<ol>
-<li>
-<p>A survey region runs from 0 to 100 units.  <code>GRID_SIZE</code> is 20, so each cell is
-    5 units wide.  A site at easting 27.3 maps to which column index?</p>
-</li>
-<li>
-<p>Four clusters are planted in the synthetic data.  How many entries does the
-    dict returned by <code>cluster_centroids</code> contain, assuming all four are recovered?</p>
-</li>
-</ol>
-<h3>Parameter sensitivity</h3>
-<p>Run the pipeline on the synthetic data with <code>GRID_SIZE</code> values of 10, 20, and 40
-and <code>HOT_THRESHOLD</code> values of 1, 2, and 4 (nine combinations in total).
-Record the number of clusters and noise sites for each combination.
-Which settings merge the four planted clusters into fewer groups?
-Which settings fragment them into many small pieces?</p>
-<h3>Cluster purity</h3>
-<p>For each recovered cluster, compute the fraction of its member sites that share
-the same <code>true_cluster</code> value from the generator.
-A perfectly recovered cluster has purity 1.0.
-What is the minimum purity across all recovered clusters at the default parameters?</p>
-<h3>Boundary sensitivity</h3>
-<p>Move one planted cluster center 10 units closer to another and regenerate the
-synthetic data.
-Do the two clusters merge into one under the default parameters?
-At what separation distance do they first appear as a single cluster?</p>
-<h3>Centroid error</h3>
-<p>For each recovered cluster, compute the Euclidean distance between its centroid
-and the nearest planted cluster center.
-Is the error consistent across all four clusters, or does it vary with cluster size?</p>
+<section class="exercises">
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a>
-</div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../interp/">Spatial Interpolation of Climate Data</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+<section id="exercises" class="level2" data-number="6.8">
+<h2 data-number="6.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">6.8</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="6.8.1">
+<h3 data-number="6.8.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">6.8.1</span> Do the math</h3>
+<ol type="1">
+<li><p>A survey region runs from 0 to 100 units. <code>GRID_SIZE</code> is 20, so each cell is 5 units wide. A site at easting 27.3 maps to which column index?</p></li>
+<li><p>Four clusters are planted in the synthetic data. How many entries does the dict returned by <code>cluster_centroids</code> contain, assuming all four are recovered?</p></li>
+</ol>
+</section>
+<section id="parameter-sensitivity" class="level3" data-number="6.8.2">
+<h3 data-number="6.8.2" class="anchored" data-anchor-id="parameter-sensitivity"><span class="header-section-number">6.8.2</span> Parameter sensitivity</h3>
+<p>Run the pipeline on the synthetic data with <code>GRID_SIZE</code> values of 10, 20, and 40 and <code>HOT_THRESHOLD</code> values of 1, 2, and 4 (nine combinations in total). Record the number of clusters and noise sites for each combination. Which settings merge the four planted clusters into fewer groups? Which settings fragment them into many small pieces?</p>
+</section>
+<section id="cluster-purity" class="level3" data-number="6.8.3">
+<h3 data-number="6.8.3" class="anchored" data-anchor-id="cluster-purity"><span class="header-section-number">6.8.3</span> Cluster purity</h3>
+<p>For each recovered cluster, compute the fraction of its member sites that share the same <code>true_cluster</code> value from the generator. A perfectly recovered cluster has purity 1.0. What is the minimum purity across all recovered clusters at the default parameters?</p>
+</section>
+<section id="boundary-sensitivity" class="level3" data-number="6.8.4">
+<h3 data-number="6.8.4" class="anchored" data-anchor-id="boundary-sensitivity"><span class="header-section-number">6.8.4</span> Boundary sensitivity</h3>
+<p>Move one planted cluster center 10 units closer to another and regenerate the synthetic data. Do the two clusters merge into one under the default parameters? At what separation distance do they first appear as a single cluster?</p>
+</section>
+<section id="centroid-error" class="level3" data-number="6.8.5">
+<h3 data-number="6.8.5" class="anchored" data-anchor-id="centroid-error"><span class="header-section-number">6.8.5</span> Centroid error</h3>
+<p>For each recovered cluster, compute the Euclidean distance between its centroid and the nearest planted cluster center. Is the error consistent across all four clusters, or does it vary with cluster size?</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../porous/index.html" class="pagination-link" aria-label="Percolation in a Porous Medium">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../leastcost/index.html" class="pagination-link" aria-label="Least-Cost Path Analysis for Trade Routes">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/archcluster/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/archcluster/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

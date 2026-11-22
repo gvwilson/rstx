@@ -1,0 +1,48 @@
+metadata-files:
+  - mccole/mccole.yml
+
+book:
+  title: "Research Software Testing by Example"
+  repo-url: "https://github.com/gvwilson/rstx"
+  repo-actions: [edit, source, issue]
+  chapters:
+    - index.qmd
+    - intro/index.qmd
+    - schelling/index.qmd
+    - vocab/index.qmd
+    - pollute/index.qmd
+    - porous/index.qmd
+    - archcluster/index.qmd
+    - leastcost/index.qmd
+    - align/index.qmd
+    - authorship/index.qmd
+    - stemma/index.qmd
+    - phylo/index.qmd
+    - vitals/index.qmd
+    - massspec/index.qmd
+    - cellseg/index.qmd
+    - wealth/index.qmd
+    - topics/index.qmd
+    - sdt/index.qmd
+    - interp/index.qmd
+    - agreement/index.qmd
+    - wordshift/index.qmd
+    - diffusion/index.qmd
+    - heatwall/index.qmd
+    - lotka/index.qmd
+    - sir/index.qmd
+    - mineral/index.qmd
+    - tumor/index.qmd
+    - learning/index.qmd
+    - radvel/index.qmd
+    - elasticity/index.qmd
+    - flood/index.qmd
+    - survival/index.qmd
+    - breakpoint/index.qmd
+    - finale/index.qmd
+  appendices:
+    - license/index.qmd
+    - conduct/index.qmd
+    - contributing/index.qmd
+    - bibliography/index.qmd
+    - glossary/index.qmd

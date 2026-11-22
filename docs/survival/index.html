@@ -1,415 +1,1216 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Survival Analysis</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>31&nbsp; Survival Analysis – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../breakpoint/index.html" rel="next">
+<link href="../flood/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a class="active" href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../survival/index.html"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
-<main id="main-content">
-<h1>Survival Analysis</h1>
-<h2>The Problem</h2>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">31.1</span> The Problem</a></li>
+  <li><a href="#the-survival-function" id="toc-the-survival-function" class="nav-link" data-scroll-target="#the-survival-function"><span class="header-section-number">31.2</span> The Survival Function</a></li>
+  <li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data" class="nav-link" data-scroll-target="#generating-synthetic-data"><span class="header-section-number">31.3</span> Generating Synthetic Data</a></li>
+  <li><a href="#a-naive-estimate" id="toc-a-naive-estimate" class="nav-link" data-scroll-target="#a-naive-estimate"><span class="header-section-number">31.4</span> A Naive Estimate</a></li>
+  <li><a href="#why-the-naive-estimate-is-biased" id="toc-why-the-naive-estimate-is-biased" class="nav-link" data-scroll-target="#why-the-naive-estimate-is-biased"><span class="header-section-number">31.5</span> Why the Naive Estimate Is Biased</a></li>
+  <li><a href="#a-corrected-estimate" id="toc-a-corrected-estimate" class="nav-link" data-scroll-target="#a-corrected-estimate"><span class="header-section-number">31.6</span> A Corrected Estimate</a></li>
+  <li><a href="#the-empirical-survival-curve" id="toc-the-empirical-survival-curve" class="nav-link" data-scroll-target="#the-empirical-survival-curve"><span class="header-section-number">31.7</span> The Empirical Survival Curve</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">31.8</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">31.9</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">31.9.1</span> Do the math</a></li>
+  <li><a href="#confidence-interval-for-the-rate" id="toc-confidence-interval-for-the-rate" class="nav-link" data-scroll-target="#confidence-interval-for-the-rate"><span class="header-section-number">31.9.2</span> Confidence interval for the rate</a></li>
+  <li><a href="#effect-of-censoring-fraction" id="toc-effect-of-censoring-fraction" class="nav-link" data-scroll-target="#effect-of-censoring-fraction"><span class="header-section-number">31.9.3</span> Effect of censoring fraction</a></li>
+  <li><a href="#weibull-extension" id="toc-weibull-extension" class="nav-link" data-scroll-target="#weibull-extension"><span class="header-section-number">31.9.4</span> Weibull extension</a></li>
+  <li><a href="#two-group-comparison" id="toc-two-group-comparison" class="nav-link" data-scroll-target="#two-group-comparison"><span class="header-section-number">31.9.5</span> Two-group comparison</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/survival/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/survival/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="31.1">
+<h2 data-number="31.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">31.1</span> The Problem</h2>
 <ul>
-<li>In a clinical trial some patients experience the event of interest (death, relapse, recovery)
-    while others leave the study before the trial ends or are still event-free when the data are analysed.</li>
-<li>An observation where the true event time is unknown because we only know the patient
-    survived past a certain point is called <a class="gl-ref" href="../glossary/#right_censoring">right-censored</a>.</li>
+<li>In a clinical trial some patients experience the event of interest (death, relapse, recovery) while others leave the study before the trial ends or are still event-free when the data are analysed.</li>
+<li>An observation where the true event time is unknown because we only know the patient survived past a certain point is called <a href="../glossary/index.html#right_censoring">right-censored</a>.</li>
 <li>Ignoring censored observations or treating them as events both bias the estimate of survival time.</li>
-<li>This lesson builds an exponential survival model, showing how a naive estimate is biased and
-    how maximum-likelihood estimation corrects for censoring.</li>
+<li>This lesson builds an exponential survival model, showing how a naive estimate is biased and how maximum-likelihood estimation corrects for censoring.</li>
 </ul>
-<h2>The Survival Function</h2>
+</section>
+<section id="the-survival-function" class="level2" data-number="31.2">
+<h2 data-number="31.2" class="anchored" data-anchor-id="the-survival-function"><span class="header-section-number">31.2</span> The Survival Function</h2>
 <ul>
-<li>The <a class="gl-ref" href="../glossary/#survival_function">survival function</a> $S(t)$ is the probability that a randomly
-    chosen individual survives past time $t$:</li>
+<li>The <a href="../glossary/index.html#survival_function">survival function</a> <span class="math inline">\(S(t)\)</span> is the probability that a randomly chosen individual survives past time <span class="math inline">\(t\)</span>:</li>
 </ul>
-<p>$$S(t) = P(T &gt; t)$$</p>
+<p><span class="math display">\[S(t) = P(T &gt; t)\]</span></p>
 <ul>
-<li>$S(0) = 1$ (everyone is alive at the start) and $S(t)$ is non-increasing.</li>
-<li>For an Exponential distribution with rate $\lambda$, the survival function is:</li>
+<li><span class="math inline">\(S(0) = 1\)</span> (everyone is alive at the start) and <span class="math inline">\(S(t)\)</span> is non-increasing.</li>
+<li>For an Exponential distribution with rate <span class="math inline">\(\lambda\)</span>, the survival function is:</li>
 </ul>
-<p>$$S(t) = e^{-\lambda t}$$</p>
+<p><span class="math display">\[S(t) = e^{-\lambda t}\]</span></p>
 <ul>
-<li>As $t \to \infty$, $S(t) \to 0$; the curve decays smoothly rather than dropping in steps.</li>
-<li>The mean survival time is $\mu = 1/\lambda$; the median is $(\ln 2)/\lambda \approx 0.693/\lambda$.</li>
+<li>As <span class="math inline">\(t \to \infty\)</span>, <span class="math inline">\(S(t) \to 0\)</span>; the curve decays smoothly rather than dropping in steps.</li>
+<li>The mean survival time is <span class="math inline">\(\mu = 1/\lambda\)</span>; the median is <span class="math inline">\((\ln 2)/\lambda \approx 0.693/\lambda\)</span>.</li>
 </ul>
-<h2>Generating Synthetic Data</h2>
+</section>
+<section id="generating-synthetic-data" class="level2" data-number="31.3">
+<h2 data-number="31.3" class="anchored" data-anchor-id="generating-synthetic-data"><span class="header-section-number">31.3</span> Generating Synthetic Data</h2>
 <ul>
-<li>Each patient's true event time is drawn from Exponential($\mu = 20$ days, i.e. $\lambda = 1/20$).</li>
-<li>An independent censoring time drawn from Uniform($10$, $35$) days simulates patients
-    who leave the study at different points.</li>
+<li>Each patient’s true event time is drawn from Exponential(<span class="math inline">\(\mu = 20\)</span> days, i.e.&nbsp;<span class="math inline">\(\lambda = 1/20\)</span>).</li>
+<li>An independent censoring time drawn from Uniform(<span class="math inline">\(10\)</span>, <span class="math inline">\(35\)</span>) days simulates patients who leave the study at different points.</li>
 <li>The observed time is whichever comes first; <code>observed = 1</code> if the event came first.</li>
 </ul>
-<div data-inc="generate_survival.py" data-mark="constants"><span aria-label="Source: survival/generate_survival.py" class="inc-path" role="img" tabindex="0" title="survival/generate_survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="n">SEED</span> <span class="o">=</span> <span class="mi">7493418</span>  <span class="c1"># RNG seed for reproducibility</span>
-<span class="n">N_PATIENTS</span> <span class="o">=</span> <span class="mi">100</span>  <span class="c1"># number of patients in the study</span>
-<span class="n">MEAN_SURVIVAL</span> <span class="o">=</span> <span class="p">(</span>
-    <span class="mf">20.0</span>  <span class="c1"># mean event time drawn from Exponential(scale=MEAN_SURVIVAL) in days</span>
-<span class="p">)</span>
-<span class="c1"># Censoring time drawn from Uniform(CENSOR_MIN, CENSOR_MAX): patients followed up for a random</span>
-<span class="c1"># duration, with the study ending if the event has not yet occurred.</span>
-<span class="n">CENSOR_MIN</span> <span class="o">=</span> <span class="mf">10.0</span>  <span class="c1"># minimum follow-up time (days)</span>
-<span class="n">CENSOR_MAX</span> <span class="o">=</span> <span class="mf">35.0</span>  <span class="c1"># maximum follow-up time (days)</span>
-</code></pre></div>
-</div>
-<div data-inc="generate_survival.py" data-mark="generate"><span aria-label="Source: survival/generate_survival.py" class="inc-path" role="img" tabindex="0" title="survival/generate_survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_survival_data</span><span class="p">(</span>
-    <span class="n">n</span><span class="o">=</span><span class="n">N_PATIENTS</span><span class="p">,</span>
-    <span class="n">mean_survival</span><span class="o">=</span><span class="n">MEAN_SURVIVAL</span><span class="p">,</span>
-    <span class="n">censor_min</span><span class="o">=</span><span class="n">CENSOR_MIN</span><span class="p">,</span>
-    <span class="n">censor_max</span><span class="o">=</span><span class="n">CENSOR_MAX</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return a Polars DataFrame with columns 'time' and 'observed'.</span>
-
-<span class="sd">    Each patient has a true event time drawn from Exponential(scale=mean_survival).</span>
-<span class="sd">    An independent censoring time is drawn from Uniform(censor_min, censor_max).</span>
-<span class="sd">    The observed time is whichever comes first.</span>
-<span class="sd">    'observed' is 1 if the event occurred before censoring, 0 otherwise.</span>
-<span class="sd">    """</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">true_event_times</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">exponential</span><span class="p">(</span><span class="n">scale</span><span class="o">=</span><span class="n">mean_survival</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">censoring_times</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">uniform</span><span class="p">(</span><span class="n">low</span><span class="o">=</span><span class="n">censor_min</span><span class="p">,</span> <span class="n">high</span><span class="o">=</span><span class="n">censor_max</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">n</span><span class="p">)</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="p">(</span><span class="n">true_event_times</span> <span class="o">&lt;=</span> <span class="n">censoring_times</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">minimum</span><span class="p">(</span><span class="n">true_event_times</span><span class="p">,</span> <span class="n">censoring_times</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"time"</span><span class="p">:</span> <span class="n">times</span><span class="p">,</span> <span class="s2">"observed"</span><span class="p">:</span> <span class="n">observed</span><span class="p">})</span>
-</code></pre></div>
-</div>
-<h2>A Naive Estimate</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="a-naive-estimate" class="level2" data-number="31.4">
+<h2 data-number="31.4" class="anchored" data-anchor-id="a-naive-estimate"><span class="header-section-number">31.4</span> A Naive Estimate</h2>
 <ul>
 <li>A first attempt: use only the patients whose event was actually observed, ignore the rest.</li>
-<li>For an Exponential distribution, the mean of uncensored times estimates $\mu$, giving:</li>
+<li>For an Exponential distribution, the mean of uncensored times estimates <span class="math inline">\(\mu\)</span>, giving:</li>
 </ul>
-<p>$$\hat{\lambda}_{\text{naive}} = \frac{1}{\bar{t}_{\text{uncensored}}}$$</p>
-<div data-inc="survival.py" data-mark="naive-rate"><span aria-label="Source: survival/survival.py" class="inc-path" role="img" tabindex="0" title="survival/survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">naive_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Estimate lambda using only uncensored observations."""</span>
-    <span class="n">uncensored</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="k">if</span> <span class="n">o</span><span class="p">]</span>
-    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">uncensored</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">uncensored</span><span class="p">))</span>
-</code></pre></div>
-</div>
-<div class="forma-multiple-choice" data-lang="en">
-<p>Patient A is censored at day 10. Patient B has an event at day 25.
-If we compute the naive rate using only uncensored patients, which of these is true?</p>
+<p><span class="math display">\[\hat{\lambda}_{\text{naive}} = \frac{1}{\bar{t}_{\text{uncensored}}}\]</span></p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>Patient A is censored at day 10. Patient B has an event at day 25. If we compute the naive rate using only uncensored patients, which of these is true?</p>
 <dl>
-<dt>Patient A's time of 10 days is included in the mean.</dt>
-<dd>Wrong: the naive estimate discards censored patients entirely.</dd>
-<dt>Patient B's time of 25 days raises the mean, lowering $\hat{\lambda}_{\text{naive}}$.</dt>
-<dd>Wrong: a longer uncensored time raises the mean, which lowers the rate estimate — the direction is correct but this is not a problem if all observations are uncensored.</dd>
-<dt>Dropping patient A removes a long survival time from the calculation, inflating $\hat{\lambda}_{\text{naive}}$.</dt>
-<dd>Correct: censored patients tended to survive longer; removing them makes the mean look smaller and the rate look higher.</dd>
+<dt>Patient A’s time of 10 days is included in the mean.</dt>
+<dd>
+Wrong: the naive estimate discards censored patients entirely.
+</dd>
+<dt>Patient B’s time of 25 days raises the mean, lowering <span class="math inline">\(\hat{\lambda}_{\text{naive}}\)</span>.</dt>
+<dd>
+Wrong: a longer uncensored time raises the mean, which lowers the rate estimate — the direction is correct but this is not a problem if all observations are uncensored.
+</dd>
+<dt>Dropping patient A removes a long survival time from the calculation, inflating <span class="math inline">\(\hat{\lambda}_{\text{naive}}\)</span>.</dt>
+<dd>
+Correct: censored patients tended to survive longer; removing them makes the mean look smaller and the rate look higher.
+</dd>
 <dt>Dropping patient A has no effect because censored patients never experienced the event.</dt>
-<dd>Wrong: even though the event did not occur, the censored time still carries information about how long the patient survived.</dd>
+<dd>
+Wrong: even though the event did not occur, the censored time still carries information about how long the patient survived.
+</dd>
 </dl>
 </div>
-<h2>Why the Naive Estimate Is Biased</h2>
+</section>
+<section id="why-the-naive-estimate-is-biased" class="level2" data-number="31.5">
+<h2 data-number="31.5" class="anchored" data-anchor-id="why-the-naive-estimate-is-biased"><span class="header-section-number">31.5</span> Why the Naive Estimate Is Biased</h2>
 <ul>
 <li>Censored patients were still alive at their last observation — they survived at least that long.</li>
 <li>Dropping them removes longer-than-average survival times from the calculation.</li>
-<li>The remaining uncensored times have a shorter mean, so $\hat{\lambda}_{\text{naive}}$ is too high.</li>
+<li>The remaining uncensored times have a shorter mean, so <span class="math inline">\(\hat{\lambda}_{\text{naive}}\)</span> is too high.</li>
 <li>The bias grows with the censoring fraction: the more patients are censored, the worse the estimate.</li>
 </ul>
-<div class="forma-ordering" data-lang="en">
+<div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these reasoning steps about censoring bias in the correct order.</p>
-<ol>
-<li>Censoring occurs because a patient's follow-up ends before the event</li>
+<ol type="1">
+<li>Censoring occurs because a patient’s follow-up ends before the event</li>
 <li>Censored patients were alive at their last observation, so their true event time is longer</li>
 <li>Dropping them leaves only patients who tended to have shorter survival times</li>
-<li>The mean of the remaining times underestimates $\mu$, so the rate is overestimated</li>
+<li>The mean of the remaining times underestimates <span class="math inline">\(\mu\)</span>, so the rate is overestimated</li>
 </ol>
 </div>
-<h2>A Corrected Estimate</h2>
+</section>
+<section id="a-corrected-estimate" class="level2" data-number="31.6">
+<h2 data-number="31.6" class="anchored" data-anchor-id="a-corrected-estimate"><span class="header-section-number">31.6</span> A Corrected Estimate</h2>
 <ul>
-<li>The maximum-likelihood estimate (MLE) of $\lambda$ uses all observed times, not just events.</li>
-<li>The log-likelihood for $n$ patients with times $t_i$ and event indicators $\delta_i$ is:</li>
+<li>The maximum-likelihood estimate (MLE) of <span class="math inline">\(\lambda\)</span> uses all observed times, not just events.</li>
+<li>The log-likelihood for <span class="math inline">\(n\)</span> patients with times <span class="math inline">\(t_i\)</span> and event indicators <span class="math inline">\(\delta_i\)</span> is:</li>
 </ul>
-<p>$$\ell(\lambda) = \sum_{i=1}^{n} \left[ \delta_i \ln \lambda - \lambda t_i \right]$$</p>
+<p><span class="math display">\[\ell(\lambda) = \sum_{i=1}^{n} \left[ \delta_i \ln \lambda - \lambda t_i \right]\]</span></p>
 <ul>
-<li>Setting $d\ell/d\lambda = 0$, where $d = \sum_i \delta_i$ is the total number of events:</li>
+<li>Setting <span class="math inline">\(d\ell/d\lambda = 0\)</span>, where <span class="math inline">\(d = \sum_i \delta_i\)</span> is the total number of events:</li>
 </ul>
-<p>$$\frac{d}{d\lambda} \left( d \ln \lambda - \lambda \sum_i t_i \right) = \frac{d}{\lambda} - \sum_i t_i = 0$$</p>
+<p><span class="math display">\[\frac{d}{d\lambda} \left( d \ln \lambda - \lambda \sum_i t_i \right) = \frac{d}{\lambda} - \sum_i t_i = 0\]</span></p>
 <ul>
 <li>Solving gives:</li>
 </ul>
-<p>$$\hat{\lambda} = \frac{d}{\sum_i t_i}$$</p>
+<p><span class="math display">\[\hat{\lambda} = \frac{d}{\sum_i t_i}\]</span></p>
 <ul>
-<li>Every patient's time contributes to $\sum_i t_i$, whether or not the event occurred.</li>
-<li>A censored patient contributes time up to the point they were last observed: this is called
-    person-time and captures the information that the patient was alive throughout that period.</li>
+<li>Every patient’s time contributes to <span class="math inline">\(\sum_i t_i\)</span>, whether or not the event occurred.</li>
+<li>A censored patient contributes time up to the point they were last observed: this is called person-time and captures the information that the patient was alive throughout that period.</li>
 </ul>
-<div data-inc="survival.py" data-mark="corrected-rate"><span aria-label="Source: survival/survival.py" class="inc-path" role="img" tabindex="0" title="survival/survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">corrected_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""MLE of lambda for exponential under censoring: d / sum(t)."""</span>
-    <span class="n">d</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">observed</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">d</span> <span class="o">/</span> <span class="nb">sum</span><span class="p">(</span><span class="n">times</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<h2>The Empirical Survival Curve</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-empirical-survival-curve" class="level2" data-number="31.7">
+<h2 data-number="31.7" class="anchored" data-anchor-id="the-empirical-survival-curve"><span class="header-section-number">31.7</span> The Empirical Survival Curve</h2>
 <ul>
 <li>To visualize how well the model fits, plot the fraction of uncensored events occurring after each time.</li>
-<li>Sort the uncensored event times<ul>
-<li>At the $i$-th event time (0-indexed), $(n - i)/n$ events occur at or after that time</li>
-</ul>
-</li>
-<li>This gives a non-increasing step function that starts at 1 and reaches $1/n$ at the last event</li>
-</ul>
-<div data-inc="survival.py" data-mark="empirical-curve"><span aria-label="Source: survival/survival.py" class="inc-path" role="img" tabindex="0" title="survival/survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">empirical_survival</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Empirical survival: fraction of uncensored events occurring after each time point."""</span>
-    <span class="n">event_times</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">o</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="k">if</span> <span class="n">o</span><span class="p">)</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">event_times</span><span class="p">)</span>
-    <span class="n">fractions</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)]</span>
-    <span class="k">return</span> <span class="n">event_times</span><span class="p">,</span> <span class="n">fractions</span>
-</code></pre></div>
-</div>
+<li>Sort the uncensored event times
 <ul>
-<li>Overlay the exponential curves $e^{-\hat{\lambda}_{\text{naive}} t}$ and $e^{-\hat{\lambda} t}$
-    to see which fits the empirical curve more closely</li>
+<li>At the <span class="math inline">\(i\)</span>-th event time (0-indexed), <span class="math inline">\((n - i)/n\)</span> events occur at or after that time</li>
+</ul></li>
+<li>This gives a non-increasing step function that starts at 1 and reaches <span class="math inline">\(1/n\)</span> at the last event</li>
 </ul>
-<div data-inc="survival.py" data-mark="plot"><span aria-label="Source: survival/survival.py" class="inc-path" role="img" tabindex="0" title="survival/survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_survival</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">,</span> <span class="n">lam_naive</span><span class="p">,</span> <span class="n">lam_corrected</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Save a chart with the empirical survival curve and two exponential fits.</span>
-
-<span class="sd">    The empirical curve shows the fraction of uncensored events that occurred</span>
-<span class="sd">    after each event time.  The naive and corrected exponential curves are</span>
-<span class="sd">    overlaid for comparison.</span>
-<span class="sd">    """</span>
-    <span class="n">event_times</span><span class="p">,</span> <span class="n">fractions</span> <span class="o">=</span> <span class="n">empirical_survival</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
-    <span class="n">emp_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"t"</span><span class="p">:</span> <span class="n">event_times</span><span class="p">,</span> <span class="s2">"S"</span><span class="p">:</span> <span class="n">fractions</span><span class="p">})</span>
-    <span class="n">emp_line</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">emp_df</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s2">"steelblue"</span><span class="p">,</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">interpolate</span><span class="o">=</span><span class="s2">"step-after"</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"t:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Time (days)"</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"S:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Survival fraction"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="c1"># Build smooth exponential curves over [0, T_MAX_DAYS].</span>
-    <span class="n">t_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">T_MAX_DAYS</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
-    <span class="n">exp_df</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">{</span>
-            <span class="s2">"t"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">t_vals</span><span class="p">,</span> <span class="n">t_vals</span><span class="p">]),</span>
-            <span class="s2">"S"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">(</span>
-                <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lam_naive</span> <span class="o">*</span> <span class="n">t_vals</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">lam_corrected</span> <span class="o">*</span> <span class="n">t_vals</span><span class="p">)]</span>
-            <span class="p">),</span>
-            <span class="s2">"model"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"naive"</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_vals</span><span class="p">)</span> <span class="o">+</span> <span class="p">[</span><span class="s2">"corrected"</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_vals</span><span class="p">),</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-    <span class="n">exp_lines</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">exp_df</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">strokeDash</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">strokeWidth</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="s2">"t:Q"</span><span class="p">,</span>
-            <span class="n">y</span><span class="o">=</span><span class="s2">"S:Q"</span><span class="p">,</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span>
-                <span class="s2">"model:N"</span><span class="p">,</span>
-                <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span>
-                    <span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="s2">"naive"</span><span class="p">,</span> <span class="s2">"corrected"</span><span class="p">],</span>
-                    <span class="nb">range</span><span class="o">=</span><span class="p">[</span><span class="s2">"firebrick"</span><span class="p">,</span> <span class="s2">"darkorange"</span><span class="p">],</span>
-                <span class="p">),</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-
-    <span class="n">chart</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">layer</span><span class="p">(</span><span class="n">emp_line</span><span class="p">,</span> <span class="n">exp_lines</span><span class="p">)</span><span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-        <span class="n">width</span><span class="o">=</span><span class="mi">500</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Empirical survival curve with exponential fits"</span>
-    <span class="p">)</span>
-    <span class="n">chart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<ul>
+<li>Overlay the exponential curves <span class="math inline">\(e^{-\hat{\lambda}_{\text{naive}} t}\)</span> and <span class="math inline">\(e^{-\hat{\lambda} t}\)</span> to see which fits the empirical curve more closely</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-survival-exp" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Step-function empirical survival curve with two exponential overlays: naive rate (red dashed) decays faster, corrected rate (orange dashed) tracks the empirical curve more closely.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-survival-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="survival.svg" class="img-fluid figure-img" alt="Step-function empirical survival curve with two exponential overlays: naive rate (red dashed) decays faster, corrected rate (orange dashed) tracks the empirical curve more closely.">
 </div>
-<figure id="f:survival-exp">
-<img alt="Step-function empirical survival curve with two exponential overlays: naive rate (red dashed) decays faster, corrected rate (orange dashed) tracks the empirical curve more closely." src="survival.svg"/>
-<figcaption>Figure 1: Empirical survival curve for 100 synthetic patients with exponential fits. The naive rate (red) overestimates decay because it ignores censored patients. The corrected MLE rate (orange) fits the empirical curve more closely.</figcaption>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-survival-exp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;31.1: Empirical survival curve for 100 synthetic patients with exponential fits. The naive rate (red) overestimates decay because it ignores censored patients. The corrected MLE rate (orange) fits the empirical curve more closely.
+</figcaption>
 </figure>
-<h2>Testing</h2>
-<ul>
-<li><code>naive_rate</code> should return $1 / \bar{t}_{\text{uncensored}}$; compute the mean by hand for a small dataset.</li>
-<li><code>corrected_rate</code> should return $d / \sum t_i$; again, hand-check with a small dataset.</li>
-<li>When censored observations exist, <code>naive_rate</code> must exceed <code>corrected_rate</code> — the bias should be
-    detectable on the full 100-patient synthetic dataset.</li>
-<li><code>empirical_survival</code> must return fractions in $[0, 1]$ that are non-increasing.</li>
-<li>When all observations are uncensored, the two rates must agree: with $\delta_i = 1$ for all $i$,
-    $d / \sum t_i = n / \sum t_i = 1 / \bar{t} = \hat{\lambda}_{\text{naive}}$.</li>
-</ul>
-<div data-inc="test_survival.py"><span aria-label="Source: survival/test_survival.py" class="inc-path" role="img" tabindex="0" title="survival/test_survival.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_survival</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_survival_data</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">survival</span><span class="w"> </span><span class="kn">import</span> <span class="n">naive_rate</span><span class="p">,</span> <span class="n">corrected_rate</span><span class="p">,</span> <span class="n">empirical_survival</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_naive_rate_is_reciprocal_of_uncensored_mean</span><span class="p">():</span>
-    <span class="c1"># Only the two uncensored times (2.0 and 4.0) contribute; mean = 3.0, rate = 1/3.</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">naive_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span> <span class="o">/</span> <span class="mf">3.0</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_corrected_rate_is_events_over_total_time</span><span class="p">():</span>
-    <span class="c1"># d = 2, sum(t) = 2.0 + 4.0 + 10.0 = 16.0, rate = 2/16 = 0.125.</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">corrected_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">2.0</span> <span class="o">/</span> <span class="mf">16.0</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_naive_rate_exceeds_corrected_when_censored</span><span class="p">():</span>
-    <span class="c1"># Censored patients survived longer than average; dropping them inflates the naive rate.</span>
-    <span class="c1"># With any dataset that has at least one censored observation, naive &gt; corrected.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_survival_data</span><span class="p">()</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"time"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"observed"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="n">naive_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">corrected_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_empirical_survival_fractions_non_increasing_and_bounded</span><span class="p">():</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_survival_data</span><span class="p">()</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"time"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s2">"observed"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">fractions</span> <span class="o">=</span> <span class="n">empirical_survival</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span>
-    <span class="c1"># All fractions must be in [0, 1].</span>
-    <span class="k">assert</span> <span class="nb">all</span><span class="p">(</span><span class="mf">0.0</span> <span class="o">&lt;=</span> <span class="n">f</span> <span class="o">&lt;=</span> <span class="mf">1.0</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">fractions</span><span class="p">)</span>
-    <span class="c1"># Fractions must be non-increasing.</span>
-    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">fractions</span><span class="p">,</span> <span class="n">fractions</span><span class="p">[</span><span class="mi">1</span><span class="p">:]):</span>
-        <span class="k">assert</span> <span class="n">a</span> <span class="o">&gt;=</span> <span class="n">b</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_corrected_equals_naive_when_no_censoring</span><span class="p">():</span>
-    <span class="c1"># When every observation is an event, d/sum(t) == 1/mean(t) == naive_rate.</span>
-    <span class="n">times</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">]</span>
-    <span class="n">observed</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">naive_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">corrected_rate</span><span class="p">(</span><span class="n">times</span><span class="p">,</span> <span class="n">observed</span><span class="p">))</span>
-</code></pre></div>
 </div>
-<div class="forma-flashcard" data-lang="en">
+</section>
+<section id="testing" class="level2" data-number="31.8">
+<h2 data-number="31.8" class="anchored" data-anchor-id="testing"><span class="header-section-number">31.8</span> Testing</h2>
+<ul>
+<li><code>naive_rate</code> should return <span class="math inline">\(1 / \bar{t}_{\text{uncensored}}\)</span>; compute the mean by hand for a small dataset.</li>
+<li><code>corrected_rate</code> should return <span class="math inline">\(d / \sum t_i\)</span>; again, hand-check with a small dataset.</li>
+<li>When censored observations exist, <code>naive_rate</code> must exceed <code>corrected_rate</code> — the bias should be detectable on the full 100-patient synthetic dataset.</li>
+<li><code>empirical_survival</code> must return fractions in <span class="math inline">\([0, 1]\)</span> that are non-increasing.</li>
+<li>When all observations are uncensored, the two rates must agree: with <span class="math inline">\(\delta_i = 1\)</span> for all <span class="math inline">\(i\)</span>, <span class="math inline">\(d / \sum t_i = n / \sum t_i = 1 / \bar{t} = \hat{\lambda}_{\text{naive}}\)</span>.</li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_survival <span class="im">import</span> make_survival_data</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> survival <span class="im">import</span> naive_rate, corrected_rate, empirical_survival</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_naive_rate_is_reciprocal_of_uncensored_mean():</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Only the two uncensored times (2.0 and 4.0) contribute; mean = 3.0, rate = 1/3.</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> [<span class="fl">2.0</span>, <span class="fl">4.0</span>, <span class="fl">10.0</span>]</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    observed <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> naive_rate(times, observed) <span class="op">==</span> pytest.approx(<span class="fl">1.0</span> <span class="op">/</span> <span class="fl">3.0</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_corrected_rate_is_events_over_total_time():</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># d = 2, sum(t) = 2.0 + 4.0 + 10.0 = 16.0, rate = 2/16 = 0.125.</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> [<span class="fl">2.0</span>, <span class="fl">4.0</span>, <span class="fl">10.0</span>]</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    observed <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>]</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> corrected_rate(times, observed) <span class="op">==</span> pytest.approx(<span class="fl">2.0</span> <span class="op">/</span> <span class="fl">16.0</span>)</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_naive_rate_exceeds_corrected_when_censored():</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Censored patients survived longer than average; dropping them inflates the naive rate.</span></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With any dataset that has at least one censored observation, naive &gt; corrected.</span></span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_survival_data()</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> df[<span class="st">"time"</span>].to_list()</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>    observed <span class="op">=</span> df[<span class="st">"observed"</span>].to_list()</span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> naive_rate(times, observed) <span class="op">&gt;</span> corrected_rate(times, observed)</span>
+<span id="cb7-27"><a href="#cb7-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-28"><a href="#cb7-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-29"><a href="#cb7-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_empirical_survival_fractions_non_increasing_and_bounded():</span>
+<span id="cb7-30"><a href="#cb7-30" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_survival_data()</span>
+<span id="cb7-31"><a href="#cb7-31" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> df[<span class="st">"time"</span>].to_list()</span>
+<span id="cb7-32"><a href="#cb7-32" aria-hidden="true" tabindex="-1"></a>    observed <span class="op">=</span> df[<span class="st">"observed"</span>].to_list()</span>
+<span id="cb7-33"><a href="#cb7-33" aria-hidden="true" tabindex="-1"></a>    _, fractions <span class="op">=</span> empirical_survival(times, observed)</span>
+<span id="cb7-34"><a href="#cb7-34" aria-hidden="true" tabindex="-1"></a>    <span class="co"># All fractions must be in [0, 1].</span></span>
+<span id="cb7-35"><a href="#cb7-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">all</span>(<span class="fl">0.0</span> <span class="op">&lt;=</span> f <span class="op">&lt;=</span> <span class="fl">1.0</span> <span class="cf">for</span> f <span class="kw">in</span> fractions)</span>
+<span id="cb7-36"><a href="#cb7-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fractions must be non-increasing.</span></span>
+<span id="cb7-37"><a href="#cb7-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b <span class="kw">in</span> <span class="bu">zip</span>(fractions, fractions[<span class="dv">1</span>:]):</span>
+<span id="cb7-38"><a href="#cb7-38" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> a <span class="op">&gt;=</span> b</span>
+<span id="cb7-39"><a href="#cb7-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-40"><a href="#cb7-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_corrected_equals_naive_when_no_censoring():</span>
+<span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When every observation is an event, d/sum(t) == 1/mean(t) == naive_rate.</span></span>
+<span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    times <span class="op">=</span> [<span class="fl">1.0</span>, <span class="fl">2.0</span>, <span class="fl">3.0</span>, <span class="fl">4.0</span>]</span>
+<span id="cb7-44"><a href="#cb7-44" aria-hidden="true" tabindex="-1"></a>    observed <span class="op">=</span> [<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>]</span>
+<span id="cb7-45"><a href="#cb7-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> naive_rate(times, observed) <span class="op">==</span> pytest.approx(corrected_rate(times, observed))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Exponential survival analysis key terms</p>
 <dl>
 <dt>Right-censoring</dt>
-<dd>An observation where the event has not occurred by the end of follow-up; the true event time is unknown but greater than the censoring time</dd>
-<dt>Survival function $S(t)$</dt>
-<dd>The probability that a randomly chosen individual has not yet experienced the event by time $t$; for an Exponential with rate $\lambda$ this is $e^{-\lambda t}$</dd>
+<dd>
+An observation where the event has not occurred by the end of follow-up; the true event time is unknown but greater than the censoring time
+</dd>
+<dt>Survival function <span class="math inline">\(S(t)\)</span></dt>
+<dd>
+The probability that a randomly chosen individual has not yet experienced the event by time <span class="math inline">\(t\)</span>; for an Exponential with rate <span class="math inline">\(\lambda\)</span> this is <span class="math inline">\(e^{-\lambda t}\)</span>
+</dd>
 <dt>Person-time</dt>
-<dd>The total time each individual was observed, summed across all individuals; censored patients contribute time up to their last observation, so $\sum_i t_i$ captures all available information</dd>
-<dt>MLE rate $\hat{\lambda}$</dt>
-<dd>$d / \sum_i t_i$: events divided by total person-time; accounts for censored observations by including their follow-up time in the denominator</dd>
+<dd>
+The total time each individual was observed, summed across all individuals; censored patients contribute time up to their last observation, so <span class="math inline">\(\sum_i t_i\)</span> captures all available information
+</dd>
+<dt>MLE rate <span class="math inline">\(\hat{\lambda}\)</span></dt>
+<dd>
+<span class="math inline">\(d / \sum_i t_i\)</span>: events divided by total person-time; accounts for censored observations by including their follow-up time in the denominator
+</dd>
 <dt>Naive bias</dt>
-<dd>Dropping censored patients inflates $\hat{\lambda}$ because censored patients tended to survive longer; the bias grows with the censoring fraction</dd>
+<dd>
+Dropping censored patients inflates <span class="math inline">\(\hat{\lambda}\)</span> because censored patients tended to survive longer; the bias grows with the censoring fraction
+</dd>
 </dl>
 </div>
-<blockquote>
-<p>The Kaplan-Meier estimator handles censored observations more carefully using conditional
-probabilities at each event time, and does not assume an exponential distribution; it requires
-more advanced statistics.</p>
+<blockquote class="blockquote">
+<p>The Kaplan-Meier estimator handles censored observations more carefully using conditional probabilities at each event time, and does not assume an exponential distribution; it requires more advanced statistics.</p>
 </blockquote>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<ol>
-<li>
-<p>The survival time of a population follows an Exponential distribution with rate $\lambda = 1/20$.
-    Using $S(t) = e^{-\lambda t}$, compute $S(20 \ln 2)$ to three decimal places.</p>
-</li>
-<li>
-<p>Three patients have times $[2, 4, 10]$ with event indicators $[1, 1, 0]$.
-    Compute $\hat{\lambda} = d / \sum t_i$ to three decimal places.</p>
-</li>
-</ol>
-<h3>Confidence interval for the rate</h3>
-<p>The asymptotic standard error of $\hat{\lambda}$ is $\hat{\lambda} / \sqrt{d}$.
-Add a function <code>rate_ci(times, observed, alpha=0.05)</code> that returns a 95% confidence interval
-using a normal approximation, and verify that the interval contains the true rate on the
-synthetic dataset.</p>
-<h3>Effect of censoring fraction</h3>
-<p>Generate datasets with censoring windows that produce 10%, 30%, 50%, and 70% censoring fractions.
-For each, compute the naive and corrected rates and plot both against the true rate.
-At what censoring fraction does the naive estimate become seriously misleading?</p>
-<h3>Weibull extension</h3>
-<p>The Weibull distribution generalises the Exponential: $S(t) = e^{-(\lambda t)^k}$ where $k = 1$
-recovers the Exponential.  Derive the log-likelihood, implement MLE for both $\lambda$ and $k$
-using <code>scipy.optimize.minimize</code>, and compare the Weibull and Exponential fits on the synthetic data.</p>
-<h3>Two-group comparison</h3>
-<p>Generate two groups with true rates $\lambda_1 = 0.04$ and $\lambda_2 = 0.06$.
-Estimate the corrected rate for each group and test whether the ratio $\hat{\lambda}_1 / \hat{\lambda}_2$
-differs significantly from 1 using the fact that $\ln(\hat{\lambda}_1 / \hat{\lambda}_2)$ is
-approximately normal with standard error $\sqrt{1/d_1 + 1/d_2}$.</p>
+<section class="exercises">
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../sir/">Fitting an SIR Epidemic Model</a>
-</div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../vitals/">Anomaly Detection in Patient Vital Signs</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+<section id="exercises" class="level2" data-number="31.9">
+<h2 data-number="31.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">31.9</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="31.9.1">
+<h3 data-number="31.9.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">31.9.1</span> Do the math</h3>
+<ol type="1">
+<li><p>The survival time of a population follows an Exponential distribution with rate <span class="math inline">\(\lambda = 1/20\)</span>. Using <span class="math inline">\(S(t) = e^{-\lambda t}\)</span>, compute <span class="math inline">\(S(20 \ln 2)\)</span> to three decimal places.</p></li>
+<li><p>Three patients have times <span class="math inline">\([2, 4, 10]\)</span> with event indicators <span class="math inline">\([1, 1, 0]\)</span>. Compute <span class="math inline">\(\hat{\lambda} = d / \sum t_i\)</span> to three decimal places.</p></li>
+</ol>
+</section>
+<section id="confidence-interval-for-the-rate" class="level3" data-number="31.9.2">
+<h3 data-number="31.9.2" class="anchored" data-anchor-id="confidence-interval-for-the-rate"><span class="header-section-number">31.9.2</span> Confidence interval for the rate</h3>
+<p>The asymptotic standard error of <span class="math inline">\(\hat{\lambda}\)</span> is <span class="math inline">\(\hat{\lambda} / \sqrt{d}\)</span>. Add a function <code>rate_ci(times, observed, alpha=0.05)</code> that returns a 95% confidence interval using a normal approximation, and verify that the interval contains the true rate on the synthetic dataset.</p>
+</section>
+<section id="effect-of-censoring-fraction" class="level3" data-number="31.9.3">
+<h3 data-number="31.9.3" class="anchored" data-anchor-id="effect-of-censoring-fraction"><span class="header-section-number">31.9.3</span> Effect of censoring fraction</h3>
+<p>Generate datasets with censoring windows that produce 10%, 30%, 50%, and 70% censoring fractions. For each, compute the naive and corrected rates and plot both against the true rate. At what censoring fraction does the naive estimate become seriously misleading?</p>
+</section>
+<section id="weibull-extension" class="level3" data-number="31.9.4">
+<h3 data-number="31.9.4" class="anchored" data-anchor-id="weibull-extension"><span class="header-section-number">31.9.4</span> Weibull extension</h3>
+<p>The Weibull distribution generalises the Exponential: <span class="math inline">\(S(t) = e^{-(\lambda t)^k}\)</span> where <span class="math inline">\(k = 1\)</span> recovers the Exponential. Derive the log-likelihood, implement MLE for both <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(k\)</span> using <code>scipy.optimize.minimize</code>, and compare the Weibull and Exponential fits on the synthetic data.</p>
+</section>
+<section id="two-group-comparison" class="level3" data-number="31.9.5">
+<h3 data-number="31.9.5" class="anchored" data-anchor-id="two-group-comparison"><span class="header-section-number">31.9.5</span> Two-group comparison</h3>
+<p>Generate two groups with true rates <span class="math inline">\(\lambda_1 = 0.04\)</span> and <span class="math inline">\(\lambda_2 = 0.06\)</span>. Estimate the corrected rate for each group and test whether the ratio <span class="math inline">\(\hat{\lambda}_1 / \hat{\lambda}_2\)</span> differs significantly from 1 using the fact that <span class="math inline">\(\ln(\hat{\lambda}_1 / \hat{\lambda}_2)\)</span> is approximately normal with standard error <span class="math inline">\(\sqrt{1/d_1 + 1/d_2}\)</span>.</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../flood/index.html" class="pagination-link" aria-label="Flood Frequency Analysis">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../breakpoint/index.html" class="pagination-link" aria-label="Structural Break Detection in Economic Time Series">
+        <span class="nav-page-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/survival/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/survival/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -1,456 +1,1221 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Inter-Rater Agreement</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>19&nbsp; Inter-Rater Agreement – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../wordshift/index.html" rel="next">
+<link href="../interp/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a class="active" href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../agreement/index.html"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
-</nav>
-<main id="main-content">
-<h1>Inter-Rater Agreement</h1>
-<h2>The Problem</h2>
-<ul>
-<li>In qualitative research, clinical coding, or data annotation,
-    two or more human raters independently assign categories to the same observations</li>
-<li>The fraction of observations on which raters agree is straightforward to compute,
-    but it is inflated by the agreement that would occur by chance
-    even if raters were assigning labels randomly.</li>
-<li><a class="gl-ref" href="../glossary/#cohens_kappa">Cohen's kappa</a> corrects for chance agreement
-    and produces a standardized measure of
-    how much the observed agreement exceeds the expectation under independence</li>
-<li>Our approach:<ul>
-<li>Generate synthetic rating pairs with a known underlying agreement probability
-    using a controlled random model</li>
-<li>Construct the <a class="gl-ref" href="../glossary/#contingency_table_raters">contingency table</a> of rater label pairs
-    and compute kappa with its standard error</li>
-<li>Compare kappa across several scenarios with different agreement levels</li>
-</ul>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">19.1</span> The Problem</a></li>
+  <li><a href="#the-contingency-table" id="toc-the-contingency-table" class="nav-link" data-scroll-target="#the-contingency-table"><span class="header-section-number">19.2</span> The Contingency Table</a></li>
+  <li><a href="#cohens-kappa" id="toc-cohens-kappa" class="nav-link" data-scroll-target="#cohens-kappa"><span class="header-section-number">19.3</span> Cohen’s Kappa</a></li>
+  <li><a href="#the-expected-agreement-p_e" id="toc-the-expected-agreement-p_e" class="nav-link" data-scroll-target="#the-expected-agreement-p_e"><span class="header-section-number">19.4</span> The Expected Agreement P_e</a></li>
+  <li><a href="#generating-synthetic-rating-data" id="toc-generating-synthetic-rating-data" class="nav-link" data-scroll-target="#generating-synthetic-rating-data"><span class="header-section-number">19.5</span> Generating Synthetic Rating Data</a></li>
+  <li><a href="#standard-error-of-kappa" id="toc-standard-error-of-kappa" class="nav-link" data-scroll-target="#standard-error-of-kappa"><span class="header-section-number">19.6</span> Standard Error of Kappa</a></li>
+  <li><a href="#comparing-scenarios" id="toc-comparing-scenarios" class="nav-link" data-scroll-target="#comparing-scenarios"><span class="header-section-number">19.7</span> Comparing Scenarios</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">19.8</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">19.9</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">19.9.1</span> Do the math</a></li>
+  <li><a href="#weighted-kappa" id="toc-weighted-kappa" class="nav-link" data-scroll-target="#weighted-kappa"><span class="header-section-number">19.9.2</span> Weighted kappa</a></li>
+  <li><a href="#confidence-intervals-across-scenarios" id="toc-confidence-intervals-across-scenarios" class="nav-link" data-scroll-target="#confidence-intervals-across-scenarios"><span class="header-section-number">19.9.3</span> Confidence intervals across scenarios</a></li>
+  <li><a href="#three-or-more-raters" id="toc-three-or-more-raters" class="nav-link" data-scroll-target="#three-or-more-raters"><span class="header-section-number">19.9.4</span> Three or more raters</a></li>
+  <li><a href="#category-prevalence" id="toc-category-prevalence" class="nav-link" data-scroll-target="#category-prevalence"><span class="header-section-number">19.9.5</span> Category prevalence</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/agreement/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/agreement/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="19.1">
+<h2 data-number="19.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">19.1</span> The Problem</h2>
+<ul>
+<li>In qualitative research, clinical coding, or data annotation, two or more human raters independently assign categories to the same observations</li>
+<li>The fraction of observations on which raters agree is straightforward to compute, but it is inflated by the agreement that would occur by chance even if raters were assigning labels randomly.</li>
+<li><a href="../glossary/index.html#cohens_kappa">Cohen's kappa</a> corrects for chance agreement and produces a standardized measure of how much the observed agreement exceeds the expectation under independence</li>
+<li>Our approach:
+<ul>
+<li>Generate synthetic rating pairs with a known underlying agreement probability using a controlled random model</li>
+<li>Construct the <a href="../glossary/index.html#contingency_table_raters">contingency table</a> of rater label pairs and compute kappa with its standard error</li>
+<li>Compare kappa across several scenarios with different agreement levels</li>
+</ul></li>
 </ul>
-<div class="forma-multiple-choice" data-lang="en">
-<p>Two raters each independently assign one of three equally likely categories to
-100 items. Even if they have no shared understanding of the categories, what
-fraction of items do they agree on by chance?</p>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>Two raters each independently assign one of three equally likely categories to 100 items. Even if they have no shared understanding of the categories, what fraction of items do they agree on by chance?</p>
 <dl>
 <dt>0%, because random assignment never produces agreement.</dt>
-<dd>Wrong: by chance, whenever both raters happen to pick the same category
-for the same item they agree; with three equally likely categories that
-happens 1/3 of the time.</dd>
-<dt>About 33%, because with three equally likely categories the probability of</dt>
-<dt>two independent draws matching is 1/3.</dt>
-<dd>Correct: P(agree by chance) = sum over k of P(A = k) * P(B = k) = 3 * (1/3)^2 = 1/3.</dd>
+<dd>
+Wrong: by chance, whenever both raters happen to pick the same category for the same item they agree; with three equally likely categories that happens 1/3 of the time.
+</dd>
+</dl>
+<p>About 33%, because with three equally likely categories the probability of two independent draws matching is 1/3. : Correct: P(agree by chance) = sum over k of P(A = k) * P(B = k) = 3 * (1/3)^2 = 1/3.</p>
+<dl>
 <dt>About 50%, because raters tend to pick the most common category.</dt>
-<dd>Wrong: with equally likely categories no single category dominates; the
-expected agreement is 1/K where K is the number of categories.</dd>
+<dd>
+Wrong: with equally likely categories no single category dominates; the expected agreement is 1/K where K is the number of categories.
+</dd>
 <dt>100%, because raters always agree eventually with enough practice.</dt>
-<dd>Wrong: practice is not relevant here; the calculation is a probability
-under the assumption of independent uniform random choices.</dd>
+<dd>
+Wrong: practice is not relevant here; the calculation is a probability under the assumption of independent uniform random choices.
+</dd>
 </dl>
 </div>
-<h2>The Contingency Table</h2>
+</section>
+<section id="the-contingency-table" class="level2" data-number="19.2">
+<h2 data-number="19.2" class="anchored" data-anchor-id="the-contingency-table"><span class="header-section-number">19.2</span> The Contingency Table</h2>
 <ul>
-<li>For $K$ categories,
-    the contingency table is a $K \times K$ integer matrix
-    where entry $C_{ij}$ is the number of items for which rater A assigned category $i$
-    and rater B assigned category $j$</li>
-<li>The diagonal entries $C_{ii}$ represent agreements,
-    while off-diagonal entries represent disagreements</li>
+<li>For <span class="math inline">\(K\)</span> categories, the contingency table is a <span class="math inline">\(K \times K\)</span> integer matrix where entry <span class="math inline">\(C_{ij}\)</span> is the number of items for which rater A assigned category <span class="math inline">\(i\)</span> and rater B assigned category <span class="math inline">\(j\)</span></li>
+<li>The diagonal entries <span class="math inline">\(C_{ii}\)</span> represent agreements, while off-diagonal entries represent disagreements</li>
 <li>The table summarises all information needed to compute kappa</li>
 </ul>
-<div data-inc="agreement.py" data-mark="table"><span aria-label="Source: agreement/agreement.py" class="inc-path" role="img" tabindex="0" title="agreement/agreement.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">contingency_table</span><span class="p">(</span><span class="n">rater_a</span><span class="p">,</span> <span class="n">rater_b</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return a (n_cats x n_cats) integer contingency table.</span>
-
-<span class="sd">    table[i, j] is the number of items for which rater A assigned</span>
-<span class="sd">    category i and rater B assigned category j.  Diagonal entries</span>
-<span class="sd">    represent agreement; off-diagonal entries represent disagreement.</span>
-<span class="sd">    """</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_cats</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">rater_a</span><span class="p">,</span> <span class="n">rater_b</span><span class="p">):</span>
-        <span class="n">table</span><span class="p">[</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">table</span>
-</code></pre></div>
-</div>
-<h2>Cohen's Kappa</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="cohens-kappa" class="level2" data-number="19.3">
+<h2 data-number="19.3" class="anchored" data-anchor-id="cohens-kappa"><span class="header-section-number">19.3</span> Cohen’s Kappa</h2>
 <ul>
-<li>Let $N$ be the total number of items and:<ul>
-<li>$P_o = \sum_i C_{ii} / N$: observed agreement proportion</li>
-<li>$p_i = \sum_j C_{ij} / N$: rater A's marginal probability for category $i$</li>
-<li>$q_j = \sum_i C_{ij} / N$: rater B's marginal probability for category $j$</li>
-<li>$P_e = \sum_i p_i q_i$: expected agreement under independence</li>
-</ul>
-</li>
-<li>Cohen's kappa is:</li>
-</ul>
-<p>$$\kappa = \frac{P_o - P_e}{1 - P_e}$$</p>
+<li>Let <span class="math inline">\(N\)</span> be the total number of items and:
 <ul>
-<li>$\kappa = 0$ when observed agreement equals the chance expectation</li>
-<li>$\kappa = 1$ when raters agree perfectly ($P_o = 1$)</li>
-<li>$\kappa &lt; 0$ is possible when observed agreement falls below chance,
-    though this rarely occurs in practice</li>
+<li><span class="math inline">\(P_o = \sum_i C_{ii} / N\)</span>: observed agreement proportion</li>
+<li><span class="math inline">\(p_i = \sum_j C_{ij} / N\)</span>: rater A’s marginal probability for category <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(q_j = \sum_i C_{ij} / N\)</span>: rater B’s marginal probability for category <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(P_e = \sum_i p_i q_i\)</span>: expected agreement under independence</li>
+</ul></li>
+<li>Cohen’s kappa is:</li>
 </ul>
-<div data-inc="agreement.py" data-mark="kappa"><span aria-label="Source: agreement/agreement.py" class="inc-path" role="img" tabindex="0" title="agreement/agreement.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return Cohen's kappa and its standard error from a contingency table.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    table : (K, K) integer array; table[i, j] = count where rater A said i</span>
-<span class="sd">            and rater B said j</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    kappa : Cohen's kappa, correcting for chance agreement</span>
-<span class="sd">    se    : asymptotic standard error of kappa</span>
-
-<span class="sd">    Derivation</span>
-<span class="sd">    ----------</span>
-<span class="sd">    N   = total item count</span>
-<span class="sd">    P_o = sum(diagonal) / N               (observed agreement proportion)</span>
-<span class="sd">    p_i = row_i_sum / N                   (rater A's marginal for category i)</span>
-<span class="sd">    q_j = col_j_sum / N                   (rater B's marginal for category j)</span>
-<span class="sd">    P_e = sum_i(p_i * q_i)               (expected agreement under independence)</span>
-<span class="sd">    kappa = (P_o - P_e) / (1 - P_e)</span>
-
-<span class="sd">    The standard error uses the asymptotic formula of Cohen (1960):</span>
-<span class="sd">    se = sqrt(P_o * (1 - P_o) / (N * (1 - P_e)^2))</span>
-<span class="sd">    This approximates SE(P_o) = sqrt(P_o*(1-P_o)/N) and propagates it</span>
-<span class="sd">    through the kappa formula, ignoring variability in P_e.</span>
-<span class="sd">    """</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-    <span class="n">p_o</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">diagonal</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="n">row_sums</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="n">col_sums</span> <span class="o">=</span> <span class="n">table</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="n">p_e</span> <span class="o">=</span> <span class="nb">float</span><span class="p">((</span><span class="n">row_sums</span> <span class="o">*</span> <span class="n">col_sums</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
-    <span class="n">kappa</span> <span class="o">=</span> <span class="p">(</span><span class="n">p_o</span> <span class="o">-</span> <span class="n">p_e</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">p_e</span><span class="p">)</span>
-    <span class="n">se</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">p_o</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">p_o</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">p_e</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">kappa</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">se</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<h2>The Expected Agreement P_e</h2>
+<p><span class="math display">\[\kappa = \frac{P_o - P_e}{1 - P_e}\]</span></p>
 <ul>
-<li>$P_e = \sum_i p_i q_i$ is the probability that two independently drawn labels
-    (one from rater A's marginal, one from rater B's)
-    happen to match</li>
-<li>Under the generation model used here,
-    with probability <code>agree_prob</code> both raters draw the same uniform label,
-    and otherwise they draw independently</li>
-<li>With $K$ categories this gives:</li>
+<li><span class="math inline">\(\kappa = 0\)</span> when observed agreement equals the chance expectation</li>
+<li><span class="math inline">\(\kappa = 1\)</span> when raters agree perfectly (<span class="math inline">\(P_o = 1\)</span>)</li>
+<li><span class="math inline">\(\kappa &lt; 0\)</span> is possible when observed agreement falls below chance, though this rarely occurs in practice</li>
 </ul>
-<p>$$P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}$$</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="the-expected-agreement-p_e" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="the-expected-agreement-p_e"><span class="header-section-number">19.4</span> The Expected Agreement P_e</h2>
 <ul>
-<li>When marginals are uniform ($p_i = q_i = 1/K$):
-    $P_e = K \cdot (1/K)^2 = 1/K$</li>
-<li>Substituting into the kappa formula and simplifying gives
-    $\kappa = \text{agree_prob}$.</li>
-<li>So the synthetic generator produces data where
-    the expected kappa directly equals the underlying agreement probability,
-    making it easy to verify the implementation</li>
+<li><span class="math inline">\(P_e = \sum_i p_i q_i\)</span> is the probability that two independently drawn labels (one from rater A’s marginal, one from rater B’s) happen to match</li>
+<li>Under the generation model used here, with probability <code>agree_prob</code> both raters draw the same uniform label, and otherwise they draw independently</li>
+<li>With <span class="math inline">\(K\)</span> categories this gives:</li>
 </ul>
-<h2>Generating Synthetic Rating Data</h2>
-<div data-inc="generate_agreement.py" data-mark="generate"><span aria-label="Source: agreement/generate_agreement.py" class="inc-path" role="img" tabindex="0" title="agreement/generate_agreement.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_ratings</span><span class="p">(</span><span class="n">n_items</span><span class="o">=</span><span class="n">N_ITEMS</span><span class="p">,</span> <span class="n">n_cats</span><span class="o">=</span><span class="n">N_CATS</span><span class="p">,</span> <span class="n">agree_prob</span><span class="o">=</span><span class="n">AGREE_PROB</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return a Polars DataFrame of paired rater label vectors.</span>
-
-<span class="sd">    Columns:</span>
-<span class="sd">        rater_a -- integer category label from rater A (0 to n_cats - 1)</span>
-<span class="sd">        rater_b -- integer category label from rater B (0 to n_cats - 1)</span>
-
-<span class="sd">    For each item, with probability agree_prob both raters draw the same</span>
-<span class="sd">    category uniformly from 0..n_cats-1.  With probability 1 - agree_prob</span>
-<span class="sd">    each rater independently draws a category uniformly.  Under this model</span>
-<span class="sd">    the expected Cohen's kappa equals agree_prob when marginals are uniform</span>
-<span class="sd">    (see lesson for the derivation).</span>
-<span class="sd">    """</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">a_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_items</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="n">b_labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">(</span><span class="n">n_items</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
-    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_items</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">rng</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">agree_prob</span><span class="p">:</span>
-            <span class="n">label</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">))</span>
-            <span class="n">a_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
-            <span class="n">b_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">label</span>
-        <span class="k">else</span><span class="p">:</span>
-            <span class="n">a_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">))</span>
-            <span class="n">b_labels</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"rater_a"</span><span class="p">:</span> <span class="n">a_labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"rater_b"</span><span class="p">:</span> <span class="n">b_labels</span><span class="o">.</span><span class="n">tolist</span><span class="p">()})</span>
-</code></pre></div>
-</div>
-<h2>Standard Error of Kappa</h2>
+<p><span class="math display">\[P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}\]</span></p>
+<ul>
+<li>When marginals are uniform (<span class="math inline">\(p_i = q_i = 1/K\)</span>): <span class="math inline">\(P_e = K \cdot (1/K)^2 = 1/K\)</span></li>
+<li>Substituting into the kappa formula and simplifying gives <span class="math inline">\(\kappa = \text{agree\_prob}\)</span>.</li>
+<li>So the synthetic generator produces data where the expected kappa directly equals the underlying agreement probability, making it easy to verify the implementation</li>
+</ul>
+</section>
+<section id="generating-synthetic-rating-data" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="generating-synthetic-rating-data"><span class="header-section-number">19.5</span> Generating Synthetic Rating Data</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="standard-error-of-kappa" class="level2" data-number="19.6">
+<h2 data-number="19.6" class="anchored" data-anchor-id="standard-error-of-kappa"><span class="header-section-number">19.6</span> Standard Error of Kappa</h2>
 <ul>
 <li>The asymptotic standard error is:</li>
 </ul>
-<p>$$\text{SE}(\kappa) = \sqrt{\frac{P_o(1 - P_o)}{N(1 - P_e)^2}}$$</p>
+<p><span class="math display">\[\text{SE}(\kappa) = \sqrt{\frac{P_o(1 - P_o)}{N(1 - P_e)^2}}\]</span></p>
 <ul>
-<li>This approximates $\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}$
-    (each item is an independent Bernoulli trial for agreement)
-    and propagates it through the kappa formula by dividing by $(1 - P_e)$</li>
-<li>A 95% confidence interval for $\kappa$ is $\kappa \pm 1.96 \cdot \text{SE}(\kappa)$</li>
+<li>This approximates <span class="math inline">\(\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}\)</span> (each item is an independent Bernoulli trial for agreement) and propagates it through the kappa formula by dividing by <span class="math inline">\((1 - P_e)\)</span></li>
+<li>A 95% confidence interval for <span class="math inline">\(\kappa\)</span> is <span class="math inline">\(\kappa \pm 1.96 \cdot \text{SE}(\kappa)\)</span></li>
 </ul>
-<h2>Comparing Scenarios</h2>
-<div data-inc="agreement.py" data-mark="plot"><span aria-label="Source: agreement/agreement.py" class="inc-path" role="img" tabindex="0" title="agreement/agreement.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_kappa_scenarios</span><span class="p">(</span><span class="n">scenarios</span><span class="p">,</span> <span class="n">n_items</span><span class="p">,</span> <span class="n">n_cats</span><span class="p">,</span> <span class="n">seed</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Save a bar chart of kappa values across underlying agreement scenarios."""</span>
-    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">prob</span> <span class="ow">in</span> <span class="n">scenarios</span><span class="p">:</span>
-        <span class="n">df</span> <span class="o">=</span> <span class="n">make_ratings</span><span class="p">(</span><span class="n">n_items</span><span class="o">=</span><span class="n">n_items</span><span class="p">,</span> <span class="n">n_cats</span><span class="o">=</span><span class="n">n_cats</span><span class="p">,</span> <span class="n">agree_prob</span><span class="o">=</span><span class="n">prob</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">seed</span><span class="p">)</span>
-        <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span>
-            <span class="n">df</span><span class="p">[</span><span class="s2">"rater_a"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">"rater_b"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">n_cats</span>
-        <span class="p">)</span>
-        <span class="n">kappa</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-        <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">"agree_prob"</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">prob</span><span class="p">),</span>
-                <span class="s2">"kappa"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">kappa</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-                <span class="s2">"se"</span><span class="p">:</span> <span class="nb">round</span><span class="p">(</span><span class="n">se</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-
-    <span class="n">chart</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Data</span><span class="p">(</span><span class="n">values</span><span class="o">=</span><span class="n">records</span><span class="p">))</span>
-        <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"agree_prob:O"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Underlying agreement probability"</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"kappa:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Cohen's kappa"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">domain</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])),</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span>
-                <span class="s2">"kappa:Q"</span><span class="p">,</span>
-                <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">scheme</span><span class="o">=</span><span class="s2">"blues"</span><span class="p">),</span>
-                <span class="n">legend</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
-            <span class="p">),</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">"Cohen's kappa across agreement scenarios (N = 100, K = 3)"</span><span class="p">,</span>
-            <span class="n">width</span><span class="o">=</span><span class="mi">360</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="mi">280</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">chart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</code></pre></div>
+</section>
+<section id="comparing-scenarios" class="level2" data-number="19.7">
+<h2 data-number="19.7" class="anchored" data-anchor-id="comparing-scenarios"><span class="header-section-number">19.7</span> Comparing Scenarios</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-agreement-kappa" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-agreement-kappa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="agreement-kappa.svg" class="img-fluid figure-img" alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa.">
 </div>
-<figure id="f:agreement-kappa">
-<img alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa." src="agreement-kappa.svg"/>
-<figcaption>Figure 1: Cohen's kappa for five synthetic rating scenarios (N = 100 items, K = 3 categories). Kappa closely tracks the underlying agreement probability, confirming the theoretical result that expected kappa equals agree_prob under the uniform marginal model.</figcaption>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-agreement-kappa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;19.1: Cohen’s kappa for five synthetic rating scenarios (N = 100 items, K = 3 categories). Kappa closely tracks the underlying agreement probability, confirming the theoretical result that expected kappa equals agree_prob under the uniform marginal model.
+</figcaption>
 </figure>
-<h2>Testing</h2>
+</div>
+</section>
+<section id="testing" class="level2" data-number="19.8">
+<h2 data-number="19.8" class="anchored" data-anchor-id="testing"><span class="header-section-number">19.8</span> Testing</h2>
 <dl>
 <dt>Table shape</dt>
-<dd><code>contingency_table</code> with <code>n_cats=3</code> must return a $(3, 3)$ array.</dd>
+<dd>
+<code>contingency_table</code> with <code>n_cats=3</code> must return a <span class="math inline">\((3, 3)\)</span> array.
+</dd>
 <dt>Table sum equals item count</dt>
-<dd>All entries in the contingency table must sum to <code>N_ITEMS</code>.</dd>
+<dd>
+All entries in the contingency table must sum to <code>N_ITEMS</code>.
+</dd>
 <dt>Perfect agreement gives kappa = 1</dt>
-<dd>When both raters assign identical labels,
-every item is on the diagonal and kappa must equal 1.0 regardless of the marginal distribution.</dd>
+<dd>
+When both raters assign identical labels, every item is on the diagonal and kappa must equal 1.0 regardless of the marginal distribution.
+</dd>
 <dt>Chance agreement gives kappa near zero</dt>
-<dd>Independent uniform labels have $P_o \approx P_e = 1/K$,
-so kappa should be near zero.
-The tolerance 0.15 accounts for sampling variability.</dd>
+<dd>
+Independent uniform labels have <span class="math inline">\(P_o \approx P_e = 1/K\)</span>, so kappa should be near zero. The tolerance 0.15 accounts for sampling variability.
+</dd>
 <dt>Standard error positive and finite</dt>
-<dd>The standard error must be a positive finite number for any valid table.</dd>
+<dd>
+The standard error must be a positive finite number for any valid table.
+</dd>
 <dt>Kappa close to agree_prob</dt>
-<dd>With <code>N_ITEMS = 100</code> and uniform marginals,
-the observed kappa must be within 0.15 of <code>AGREE_PROB</code>.
-This is conservative given the sampling variability of approximately $\text{SE} \approx 0.05$
-at this sample size</dd>
+<dd>
+With <code>N_ITEMS = 100</code> and uniform marginals, the observed kappa must be within 0.15 of <code>AGREE_PROB</code>. This is conservative given the sampling variability of approximately <span class="math inline">\(\text{SE} \approx 0.05\)</span> at this sample size
+</dd>
 </dl>
-<div data-inc="test_agreement.py"><span aria-label="Source: agreement/test_agreement.py" class="inc-path" role="img" tabindex="0" title="agreement/test_agreement.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_agreement</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_ratings</span><span class="p">,</span> <span class="n">N_ITEMS</span><span class="p">,</span> <span class="n">N_CATS</span><span class="p">,</span> <span class="n">AGREE_PROB</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">agreement</span><span class="w"> </span><span class="kn">import</span> <span class="n">contingency_table</span><span class="p">,</span> <span class="n">cohen_kappa</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_table_shape</span><span class="p">():</span>
-    <span class="c1"># Contingency table must be square with side equal to N_CATS.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_ratings</span><span class="p">()</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">"rater_a"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">"rater_b"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">N_CATS</span>
-    <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">table</span><span class="o">.</span><span class="n">shape</span> <span class="o">==</span> <span class="p">(</span><span class="n">N_CATS</span><span class="p">,</span> <span class="n">N_CATS</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_table_sum_equals_n_items</span><span class="p">():</span>
-    <span class="c1"># All entries in the contingency table must sum to the total item count.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_ratings</span><span class="p">()</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">"rater_a"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">"rater_b"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">N_CATS</span>
-    <span class="p">)</span>
-    <span class="k">assert</span> <span class="n">table</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="o">==</span> <span class="n">N_ITEMS</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_perfect_agreement_kappa_one</span><span class="p">():</span>
-    <span class="c1"># When both raters assign identical labels, every item lies on the diagonal</span>
-    <span class="c1"># and kappa must equal 1.0 regardless of the marginal distribution.</span>
-    <span class="n">labels</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span><span class="n">labels</span><span class="p">,</span> <span class="n">labels</span><span class="p">,</span> <span class="n">n_cats</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">kappa</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">kappa</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">abs</span><span class="o">=</span><span class="mf">1e-9</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_chance_agreement_kappa_near_zero</span><span class="p">():</span>
-    <span class="c1"># Independent uniform labels have P_o ≈ P_e = 1/K, so kappa ≈ 0.</span>
-    <span class="c1"># With 300 items the sampling error is small; tolerance 0.15 is conservative.</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
-    <span class="n">a</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">integers</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">n_cats</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
-    <span class="n">kappa</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">kappa</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.15</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_se_positive_and_finite</span><span class="p">():</span>
-    <span class="c1"># Standard error must be a positive finite number.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_ratings</span><span class="p">()</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">"rater_a"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">"rater_b"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">N_CATS</span>
-    <span class="p">)</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">se</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">se</span> <span class="o">&gt;</span> <span class="mf">0.0</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">isfinite</span><span class="p">(</span><span class="n">se</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_kappa_close_to_agree_prob</span><span class="p">():</span>
-    <span class="c1"># Under the generation model, expected kappa equals agree_prob when</span>
-    <span class="c1"># marginals are uniform and N_CATS = 3.  Tolerance 0.15 accounts for</span>
-    <span class="c1"># sampling variability with N_ITEMS = 100.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_ratings</span><span class="p">(</span><span class="n">agree_prob</span><span class="o">=</span><span class="n">AGREE_PROB</span><span class="p">)</span>
-    <span class="n">table</span> <span class="o">=</span> <span class="n">contingency_table</span><span class="p">(</span>
-        <span class="n">df</span><span class="p">[</span><span class="s2">"rater_a"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">df</span><span class="p">[</span><span class="s2">"rater_b"</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">(),</span> <span class="n">N_CATS</span>
-    <span class="p">)</span>
-    <span class="n">kappa</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">cohen_kappa</span><span class="p">(</span><span class="n">table</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">kappa</span> <span class="o">-</span> <span class="n">AGREE_PROB</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mf">0.15</span>
-</code></pre></div>
-</div>
-<div class="forma-flashcard" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_agreement <span class="im">import</span> make_ratings, N_ITEMS, N_CATS, AGREE_PROB</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> agreement <span class="im">import</span> contingency_table, cohen_kappa</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_table_shape():</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Contingency table must be square with side equal to N_CATS.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_ratings()</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">"rater_a"</span>].to_numpy(), df[<span class="st">"rater_b"</span>].to_numpy(), N_CATS</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> table.shape <span class="op">==</span> (N_CATS, N_CATS)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_table_sum_equals_n_items():</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># All entries in the contingency table must sum to the total item count.</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_ratings()</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">"rater_a"</span>].to_numpy(), df[<span class="st">"rater_b"</span>].to_numpy(), N_CATS</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> table.<span class="bu">sum</span>() <span class="op">==</span> N_ITEMS</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_perfect_agreement_kappa_one():</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When both raters assign identical labels, every item lies on the diagonal</span></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># and kappa must equal 1.0 regardless of the marginal distribution.</span></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    labels <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">0</span>])</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(labels, labels, n_cats<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    kappa, _ <span class="op">=</span> cohen_kappa(table)</span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> kappa <span class="op">==</span> pytest.approx(<span class="fl">1.0</span>, <span class="bu">abs</span><span class="op">=</span><span class="fl">1e-9</span>)</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_chance_agreement_kappa_near_zero():</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Independent uniform labels have P_o ≈ P_e = 1/K, so kappa ≈ 0.</span></span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With 300 items the sampling error is small; tolerance 0.15 is conservative.</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(<span class="dv">0</span>)</span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    a <span class="op">=</span> rng.integers(<span class="dv">0</span>, <span class="dv">3</span>, size<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> rng.integers(<span class="dv">0</span>, <span class="dv">3</span>, size<span class="op">=</span><span class="dv">300</span>)</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(a, b, n_cats<span class="op">=</span><span class="dv">3</span>)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    kappa, _ <span class="op">=</span> cohen_kappa(table)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(kappa) <span class="op">&lt;</span> <span class="fl">0.15</span></span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_se_positive_and_finite():</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Standard error must be a positive finite number.</span></span>
+<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_ratings()</span>
+<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(</span>
+<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">"rater_a"</span>].to_numpy(), df[<span class="st">"rater_b"</span>].to_numpy(), N_CATS</span>
+<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    _, se <span class="op">=</span> cohen_kappa(table)</span>
+<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> se <span class="op">&gt;</span> <span class="fl">0.0</span></span>
+<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.isfinite(se)</span>
+<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_kappa_close_to_agree_prob():</span>
+<span id="cb5-57"><a href="#cb5-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Under the generation model, expected kappa equals agree_prob when</span></span>
+<span id="cb5-58"><a href="#cb5-58" aria-hidden="true" tabindex="-1"></a>    <span class="co"># marginals are uniform and N_CATS = 3.  Tolerance 0.15 accounts for</span></span>
+<span id="cb5-59"><a href="#cb5-59" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sampling variability with N_ITEMS = 100.</span></span>
+<span id="cb5-60"><a href="#cb5-60" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_ratings(agree_prob<span class="op">=</span>AGREE_PROB)</span>
+<span id="cb5-61"><a href="#cb5-61" aria-hidden="true" tabindex="-1"></a>    table <span class="op">=</span> contingency_table(</span>
+<span id="cb5-62"><a href="#cb5-62" aria-hidden="true" tabindex="-1"></a>        df[<span class="st">"rater_a"</span>].to_numpy(), df[<span class="st">"rater_b"</span>].to_numpy(), N_CATS</span>
+<span id="cb5-63"><a href="#cb5-63" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>    kappa, _ <span class="op">=</span> cohen_kappa(table)</span>
+<span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(kappa <span class="op">-</span> AGREE_PROB) <span class="op">&lt;</span> <span class="fl">0.15</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Inter-rater agreement key terms</p>
 <dl>
 <dt>Inter-rater agreement</dt>
-<dd>The degree to which two or more raters independently assign the same
-category to the same observations; raw percent agreement is easy to compute
-but is inflated by chance; Cohen's kappa corrects for this inflation</dd>
+<dd>
+The degree to which two or more raters independently assign the same category to the same observations; raw percent agreement is easy to compute but is inflated by chance; Cohen’s kappa corrects for this inflation
+</dd>
 <dt>Contingency table (raters)</dt>
-<dd>A K x K matrix whose entry C[i, j] counts the number of observations for
-which rater A assigned category i and rater B assigned category j; diagonal
-entries are agreements, off-diagonal entries are disagreements</dd>
-<dt>Cohen's kappa</dt>
-<dd>A chance-corrected measure of inter-rater agreement:
-kappa = (P_o - P_e) / (1 - P_e), where P_o is the observed agreement
-proportion and P_e is the agreement expected under independence; kappa = 0
-at chance, kappa = 1 at perfect agreement, kappa &lt; 0 below chance</dd>
+<dd>
+A K x K matrix whose entry C[i, j] counts the number of observations for which rater A assigned category i and rater B assigned category j; diagonal entries are agreements, off-diagonal entries are disagreements
+</dd>
+<dt>Cohen’s kappa</dt>
+<dd>
+A chance-corrected measure of inter-rater agreement: kappa = (P_o - P_e) / (1 - P_e), where P_o is the observed agreement proportion and P_e is the agreement expected under independence; kappa = 0 at chance, kappa = 1 at perfect agreement, kappa &lt; 0 below chance
+</dd>
 <dt>Expected agreement P_e</dt>
-<dd>The probability that two raters would agree purely by chance, computed as
-the sum over categories of the product of rater A's marginal probability
-and rater B's marginal probability for that category</dd>
+<dd>
+The probability that two raters would agree purely by chance, computed as the sum over categories of the product of rater A’s marginal probability and rater B’s marginal probability for that category
+</dd>
 </dl>
 </div>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<p>A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each
-off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?</p>
-<h3>Weighted kappa</h3>
-<p>In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the
-diagonal should be penalised less than disagreements far from it.
-Implement weighted kappa using linear weights:
-$w_{ij} = 1 - |i - j| / (K - 1)$.
-Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa.
-When does the difference between weighted and unweighted kappa matter most?</p>
-<h3>Confidence intervals across scenarios</h3>
-<p>For each of the five <code>SCENARIOS</code> in <code>agreement.py</code>, compute the 95% confidence
-interval for kappa using the standard error formula.
-Add error bars to the bar chart.
-Do the confidence intervals for adjacent scenarios overlap?</p>
-<h3>Three or more raters</h3>
-<p>Extend the generator to produce ratings from three raters.
-Compute all three pairwise kappa values and the mean pairwise kappa.
-How do pairwise kappas relate to each other when one rater is systematically
-more conservative than the others?</p>
-<h3>Category prevalence</h3>
-<p>The expected-agreement correction assumes the marginal distributions are
-determined by chance.
-Generate a dataset where rater A's marginals are highly skewed (e.g., 70%
-in category 0) and compute kappa.
-How does a skewed marginal affect kappa relative to percent agreement?</p>
+<section class="exercises">
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../sdt/">Signal Detection Theory Analysis</a>
-</div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../finale/">Conclusion</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+<section id="exercises" class="level2" data-number="19.9">
+<h2 data-number="19.9" class="anchored" data-anchor-id="exercises"><span class="header-section-number">19.9</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="19.9.1">
+<h3 data-number="19.9.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">19.9.1</span> Do the math</h3>
+<p>A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?</p>
+</section>
+<section id="weighted-kappa" class="level3" data-number="19.9.2">
+<h3 data-number="19.9.2" class="anchored" data-anchor-id="weighted-kappa"><span class="header-section-number">19.9.2</span> Weighted kappa</h3>
+<p>In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the diagonal should be penalised less than disagreements far from it. Implement weighted kappa using linear weights: <span class="math inline">\(w_{ij} = 1 - |i - j| / (K - 1)\)</span>. Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa. When does the difference between weighted and unweighted kappa matter most?</p>
+</section>
+<section id="confidence-intervals-across-scenarios" class="level3" data-number="19.9.3">
+<h3 data-number="19.9.3" class="anchored" data-anchor-id="confidence-intervals-across-scenarios"><span class="header-section-number">19.9.3</span> Confidence intervals across scenarios</h3>
+<p>For each of the five <code>SCENARIOS</code> in <code>agreement.py</code>, compute the 95% confidence interval for kappa using the standard error formula. Add error bars to the bar chart. Do the confidence intervals for adjacent scenarios overlap?</p>
+</section>
+<section id="three-or-more-raters" class="level3" data-number="19.9.4">
+<h3 data-number="19.9.4" class="anchored" data-anchor-id="three-or-more-raters"><span class="header-section-number">19.9.4</span> Three or more raters</h3>
+<p>Extend the generator to produce ratings from three raters. Compute all three pairwise kappa values and the mean pairwise kappa. How do pairwise kappas relate to each other when one rater is systematically more conservative than the others?</p>
+</section>
+<section id="category-prevalence" class="level3" data-number="19.9.5">
+<h3 data-number="19.9.5" class="anchored" data-anchor-id="category-prevalence"><span class="header-section-number">19.9.5</span> Category prevalence</h3>
+<p>The expected-agreement correction assumes the marginal distributions are determined by chance. Generate a dataset where rater A’s marginals are highly skewed (e.g., 70% in category 0) and compute kappa. How does a skewed marginal affect kappa relative to percent agreement?</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../interp/index.html" class="pagination-link" aria-label="Spatial Interpolation of Climate Data">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../wordshift/index.html" class="pagination-link" aria-label="Word Frequency Change Over Time">
+        <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/agreement/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/agreement/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

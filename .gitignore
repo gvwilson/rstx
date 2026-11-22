@@ -5,3 +5,6 @@
 .venv
 __pycache__
 dist/
+
+/.quarto/
+**/*.quarto_ipynb

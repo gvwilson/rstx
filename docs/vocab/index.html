@@ -1,391 +1,1168 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Vocabulary Richness in Historical Texts</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3&nbsp; Vocabulary Richness in Historical Texts – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../pollute/index.html" rel="next">
+<link href="../schelling/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a class="active" href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../vocab/index.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
-<main id="main-content">
-<h1>Vocabulary Richness in Historical Texts</h1>
-<h2>The Problem</h2>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">3.1</span> The Problem</a></li>
+  <li><a href="#type-token-ratio-and-mattr" id="toc-type-token-ratio-and-mattr" class="nav-link" data-scroll-target="#type-token-ratio-and-mattr"><span class="header-section-number">3.2</span> Type-Token Ratio and MATTR</a></li>
+  <li><a href="#generating-synthetic-texts" id="toc-generating-synthetic-texts" class="nav-link" data-scroll-target="#generating-synthetic-texts"><span class="header-section-number">3.3</span> Generating Synthetic Texts</a></li>
+  <li><a href="#computing-ttr-and-mattr" id="toc-computing-ttr-and-mattr" class="nav-link" data-scroll-target="#computing-ttr-and-mattr"><span class="header-section-number">3.4</span> Computing TTR and MATTR</a></li>
+  <li><a href="#aggregating-richness-scores" id="toc-aggregating-richness-scores" class="nav-link" data-scroll-target="#aggregating-richness-scores"><span class="header-section-number">3.5</span> Aggregating Richness Scores</a></li>
+  <li><a href="#visualizing-results" id="toc-visualizing-results" class="nav-link" data-scroll-target="#visualizing-results"><span class="header-section-number">3.6</span> Visualizing Results</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">3.7</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">3.8</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">3.8.1</span> Do the math</a></li>
+  <li><a href="#effect-of-window-width" id="toc-effect-of-window-width" class="nav-link" data-scroll-target="#effect-of-window-width"><span class="header-section-number">3.8.2</span> Effect of window width</a></li>
+  <li><a href="#ttr-length-dependence" id="toc-ttr-length-dependence" class="nav-link" data-scroll-target="#ttr-length-dependence"><span class="header-section-number">3.8.3</span> TTR length dependence</a></li>
+  <li><a href="#real-corpus-comparison" id="toc-real-corpus-comparison" class="nav-link" data-scroll-target="#real-corpus-comparison"><span class="header-section-number">3.8.4</span> Real corpus comparison</a></li>
+  <li><a href="#hapax-legomena-rate" id="toc-hapax-legomena-rate" class="nav-link" data-scroll-target="#hapax-legomena-rate"><span class="header-section-number">3.8.5</span> Hapax legomena rate</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/vocab/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/vocab/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">3.1</span> The Problem</h2>
 <ul>
-<li>Lexical richness — how varied an author's word choices are — is used in
-    authorship studies, language acquisition research, and digital humanities.</li>
-<li>The simplest measure is the <a class="gl-ref" href="../glossary/#type_token_ratio">type-token ratio</a> (TTR):
-    the number of distinct word types divided by the total number of word tokens.</li>
-<li>TTR has a well-known flaw: it falls as text length increases even when richness
-    is constant, because longer texts inevitably repeat high-frequency words.</li>
-<li>The <a class="gl-ref" href="../glossary/#mattr">Moving-Average Type-Token Ratio</a> (MATTR) fixes this by computing
-    TTR over fixed-width windows and averaging the results.</li>
-<li>The approach here:<ul>
-<li>Generate a synthetic corpus in which each author samples words from a
-    <a class="gl-ref" href="../glossary/#zipf_law">Zipfian distribution</a> with a different vocabulary size.</li>
+<li>Lexical richness — how varied an author’s word choices are — is used in authorship studies, language acquisition research, and digital humanities.</li>
+<li>The simplest measure is the <a href="../glossary/index.html#type_token_ratio">type-token ratio</a> (TTR): the number of distinct word types divided by the total number of word tokens.</li>
+<li>TTR has a well-known flaw: it falls as text length increases even when richness is constant, because longer texts inevitably repeat high-frequency words.</li>
+<li>The <a href="../glossary/index.html#mattr">Moving-Average Type-Token Ratio</a> (MATTR) fixes this by computing TTR over fixed-width windows and averaging the results.</li>
+<li>The approach here:
+<ul>
+<li>Generate a synthetic corpus in which each author samples words from a <a href="../glossary/index.html#zipf_law">Zipfian distribution</a> with a different vocabulary size.</li>
 <li>Compute TTR and MATTR for each text using Polars.</li>
 <li>Visualize and compare richness scores across authors with Vega-Altair.</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="forma-multiple-choice" data-lang="en">
-<p>Why does a 1000-word text typically have a lower TTR than a 100-word text
-from the same author?</p>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>Why does a 1000-word text typically have a lower TTR than a 100-word text from the same author?</p>
 <dl>
 <dt>Because longer texts contain fewer unique words.</dt>
-<dd>Wrong: longer texts contain more unique words in absolute terms; it is the
-ratio of unique words to total words that falls.</dd>
-<dt>Because words are reused more often as text length increases, reducing the</dt>
-<dt>proportion of unique word forms.</dt>
-<dd>Correct: common words such as "the" and "of" appear multiple times; as total
-tokens grow, repetitions account for a larger share of the count.</dd>
-<dt>Because the author's vocabulary is exhausted after 100 words.</dt>
-<dd>Wrong: the full vocabulary is available throughout; it is reuse frequency that
-changes the ratio.</dd>
+<dd>
+Wrong: longer texts contain more unique words in absolute terms; it is the ratio of unique words to total words that falls.
+</dd>
+</dl>
+<p>Because words are reused more often as text length increases, reducing the proportion of unique word forms. : Correct: common words such as “the” and “of” appear multiple times; as total tokens grow, repetitions account for a larger share of the count.</p>
+<dl>
+<dt>Because the author’s vocabulary is exhausted after 100 words.</dt>
+<dd>
+Wrong: the full vocabulary is available throughout; it is reuse frequency that changes the ratio.
+</dd>
 <dt>Because tokenisation introduces more errors in longer texts.</dt>
-<dd>Wrong: TTR is a purely statistical property of the token sequence and is
-independent of tokenisation quality.</dd>
+<dd>
+Wrong: TTR is a purely statistical property of the token sequence and is independent of tokenisation quality.
+</dd>
 </dl>
 </div>
-<h2>Type-Token Ratio and MATTR</h2>
+</section>
+<section id="type-token-ratio-and-mattr" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="type-token-ratio-and-mattr"><span class="header-section-number">3.2</span> Type-Token Ratio and MATTR</h2>
 <ul>
-<li>Given a text of $T$ tokens containing $V$ distinct word types, the TTR is:</li>
+<li>Given a text of <span class="math inline">\(T\)</span> tokens containing <span class="math inline">\(V\)</span> distinct word types, the TTR is:</li>
 </ul>
-<p>$$\text{TTR} = \frac{V}{T}$$</p>
+<p><span class="math display">\[\text{TTR} = \frac{V}{T}\]</span></p>
 <ul>
-<li>The MATTR with window width $w$ is:</li>
+<li>The MATTR with window width <span class="math inline">\(w\)</span> is:</li>
 </ul>
-<p>$$\text{MATTR} = \frac{1}{T - w + 1} \sum_{i=0}^{T-w} \text{TTR}(t_i, t_{i+1}, \ldots, t_{i+w-1})$$</p>
+<p><span class="math display">\[\text{MATTR} = \frac{1}{T - w + 1} \sum_{i=0}^{T-w} \text{TTR}(t_i, t_{i+1}, \ldots, t_{i+w-1})\]</span></p>
 <ul>
-<li>Each window has the same length $w$, so each window TTR is on the same scale;
-    averaging them gives a length-fair summary.</li>
-<li>When $T \leq w$ there is only one window and MATTR equals the global TTR.</li>
+<li>Each window has the same length <span class="math inline">\(w\)</span>, so each window TTR is on the same scale; averaging them gives a length-fair summary.</li>
+<li>When <span class="math inline">\(T \leq w\)</span> there is only one window and MATTR equals the global TTR.</li>
 </ul>
-<h2>Generating Synthetic Texts</h2>
+</section>
+<section id="generating-synthetic-texts" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="generating-synthetic-texts"><span class="header-section-number">3.3</span> Generating Synthetic Texts</h2>
 <ul>
-<li>Word frequencies in natural language follow <a class="gl-ref" href="../glossary/#zipf_law">Zipf's law</a>:
-    the $k$-th most common word appears with frequency proportional to $1/k$.</li>
-<li>Sampling from this distribution with different vocabulary sizes reproduces
-    the richness differences between authors with limited and extensive lexicons.</li>
+<li>Word frequencies in natural language follow Zipf’s law: the <span class="math inline">\(k\)</span>-th most common word appears with frequency proportional to <span class="math inline">\(1/k\)</span>.</li>
+<li>Sampling from this distribution with different vocabulary sizes reproduces the richness differences between authors with limited and extensive lexicons.</li>
 </ul>
-<div data-inc="generate_vocab.py" data-mark="generate"><span aria-label="Source: vocab/generate_vocab.py" class="inc-path" role="img" tabindex="0" title="vocab/generate_vocab.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_corpus</span><span class="p">(</span>
-    <span class="n">authors</span><span class="o">=</span><span class="n">AUTHORS</span><span class="p">,</span>
-    <span class="n">vocab_sizes</span><span class="o">=</span><span class="n">VOCAB_SIZES</span><span class="p">,</span>
-    <span class="n">texts_per_author</span><span class="o">=</span><span class="n">TEXTS_PER_AUTHOR</span><span class="p">,</span>
-    <span class="n">text_length</span><span class="o">=</span><span class="n">TEXT_LENGTH</span><span class="p">,</span>
-    <span class="n">zipf_exp</span><span class="o">=</span><span class="n">ZIPF_EXP</span><span class="p">,</span>
-    <span class="n">seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">,</span>
-<span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return a Polars DataFrame with columns text_id, author, word.</span>
-
-<span class="sd">    Each author has a distinct vocabulary size; words are sampled from</span>
-<span class="sd">    a Zipfian frequency distribution (frequency proportional to 1/rank^zipf_exp).</span>
-<span class="sd">    A larger vocabulary size produces more distinct words per token and thus</span>
-<span class="sd">    a higher type-token ratio.</span>
-<span class="sd">    """</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">records</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="n">text_id</span> <span class="o">=</span> <span class="mi">0</span>
-    <span class="k">for</span> <span class="n">author</span><span class="p">,</span> <span class="n">vocab_size</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">authors</span><span class="p">,</span> <span class="n">vocab_sizes</span><span class="p">):</span>
-        <span class="n">ranks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">vocab_size</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-        <span class="n">probs</span> <span class="o">=</span> <span class="n">ranks</span> <span class="o">**</span> <span class="p">(</span><span class="o">-</span><span class="n">zipf_exp</span><span class="p">)</span>
-        <span class="n">probs</span> <span class="o">/=</span> <span class="n">probs</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
-        <span class="n">word_forms</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"w</span><span class="si">{</span><span class="n">i</span><span class="si">:</span><span class="s2">04d</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">vocab_size</span><span class="p">)]</span>
-        <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">texts_per_author</span><span class="p">):</span>
-            <span class="n">sampled</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">word_forms</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="n">text_length</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="n">probs</span><span class="p">)</span>
-            <span class="k">for</span> <span class="n">w</span> <span class="ow">in</span> <span class="n">sampled</span><span class="p">:</span>
-                <span class="n">records</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">"text_id"</span><span class="p">:</span> <span class="n">text_id</span><span class="p">,</span> <span class="s2">"author"</span><span class="p">:</span> <span class="n">author</span><span class="p">,</span> <span class="s2">"word"</span><span class="p">:</span> <span class="n">w</span><span class="p">})</span>
-            <span class="n">text_id</span> <span class="o">+=</span> <span class="mi">1</span>
-    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">records</span><span class="p">)</span>
-</code></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="computing-ttr-and-mattr" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="computing-ttr-and-mattr"><span class="header-section-number">3.4</span> Computing TTR and MATTR</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="aggregating-richness-scores" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="aggregating-richness-scores"><span class="header-section-number">3.5</span> Aggregating Richness Scores</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="visualizing-results" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="visualizing-results"><span class="header-section-number">3.6</span> Visualizing Results</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-vocab-richness" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart with six bars. Author A bars are shortest, Author B bars are middle height, Author C bars are tallest.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-vocab-richness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="vocab-richness.svg" class="img-fluid figure-img" alt="Bar chart with six bars. Author A bars are shortest, Author B bars are middle height, Author C bars are tallest.">
 </div>
-<h2>Computing TTR and MATTR</h2>
-<div data-inc="vocab.py" data-mark="ttr"><span aria-label="Source: vocab/vocab.py" class="inc-path" role="img" tabindex="0" title="vocab/vocab.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return unique words / total words (type-token ratio, TTR).</span>
-
-<span class="sd">    TTR falls as text length increases even when vocabulary richness is</span>
-<span class="sd">    constant, because longer texts inevitably repeat high-frequency words.</span>
-<span class="sd">    Use MATTR for length-fair comparisons across texts of different sizes.</span>
-<span class="sd">    """</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">words</span><span class="p">:</span>
-        <span class="k">return</span> <span class="mf">0.0</span>
-    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">words</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">mattr</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">MATTR_WINDOW</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return the Moving-Average Type-Token Ratio.</span>
-
-<span class="sd">    Computes TTR over each consecutive window of width `window`, then</span>
-<span class="sd">    returns the mean of those window TTRs.  Because every window has the</span>
-<span class="sd">    same length, the result is length-independent and can fairly compare</span>
-<span class="sd">    texts of different sizes.  Falls back to global TTR when the text is</span>
-<span class="sd">    shorter than the window.</span>
-<span class="sd">    """</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">n</span> <span class="o">&lt;=</span> <span class="n">window</span><span class="p">:</span>
-        <span class="k">return</span> <span class="n">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">)</span>
-    <span class="n">window_ttrs</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="n">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">[</span><span class="n">i</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">window</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">window</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
-    <span class="p">]</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">window_ttrs</span><span class="p">))</span>
-</code></pre></div>
-</div>
-<h2>Aggregating Richness Scores</h2>
-<div data-inc="vocab.py" data-mark="richness"><span aria-label="Source: vocab/vocab.py" class="inc-path" role="img" tabindex="0" title="vocab/vocab.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">compute_richness</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="n">MATTR_WINDOW</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return a DataFrame with TTR and MATTR for each text.</span>
-
-<span class="sd">    Input df must have columns text_id, author, word.</span>
-<span class="sd">    Output has columns text_id, author, ttr, mattr.</span>
-<span class="sd">    """</span>
-    <span class="n">rows</span> <span class="o">=</span> <span class="p">[]</span>
-    <span class="k">for</span> <span class="n">text_id</span> <span class="ow">in</span> <span class="n">df</span><span class="p">[</span><span class="s2">"text_id"</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">sort</span><span class="p">():</span>
-        <span class="n">subset</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"text_id"</span><span class="p">)</span> <span class="o">==</span> <span class="n">text_id</span><span class="p">)</span>
-        <span class="n">author</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">"author"</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span>
-        <span class="n">words</span> <span class="o">=</span> <span class="n">subset</span><span class="p">[</span><span class="s2">"word"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-        <span class="n">rows</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-            <span class="p">{</span>
-                <span class="s2">"text_id"</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">text_id</span><span class="p">),</span>
-                <span class="s2">"author"</span><span class="p">:</span> <span class="n">author</span><span class="p">,</span>
-                <span class="s2">"ttr"</span><span class="p">:</span> <span class="n">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">),</span>
-                <span class="s2">"mattr"</span><span class="p">:</span> <span class="n">mattr</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">window</span><span class="p">),</span>
-            <span class="p">}</span>
-        <span class="p">)</span>
-    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">rows</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<h2>Visualizing Results</h2>
-<div data-inc="vocab.py" data-mark="plot"><span aria-label="Source: vocab/vocab.py" class="inc-path" role="img" tabindex="0" title="vocab/vocab.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot_richness</span><span class="p">(</span><span class="n">richness_df</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Save a bar chart of MATTR per text, coloured by author."""</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">richness_df</span><span class="o">.</span><span class="n">with_columns</span><span class="p">(</span>
-        <span class="n">pl</span><span class="o">.</span><span class="n">concat_str</span><span class="p">(</span>
-            <span class="p">[</span>
-                <span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"author"</span><span class="p">),</span>
-                <span class="n">pl</span><span class="o">.</span><span class="n">lit</span><span class="p">(</span><span class="s2">" </span><span class="se">\u2013</span><span class="s2"> text "</span><span class="p">),</span>
-                <span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"text_id"</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">cast</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">String</span><span class="p">),</span>
-            <span class="p">]</span>
-        <span class="p">)</span><span class="o">.</span><span class="n">alias</span><span class="p">(</span><span class="s2">"label"</span><span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">chart</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">mark_bar</span><span class="p">()</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"label:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Text"</span><span class="p">,</span> <span class="n">sort</span><span class="o">=</span><span class="kc">None</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"mattr:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"MATTR"</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Scale</span><span class="p">(</span><span class="n">zero</span><span class="o">=</span><span class="kc">False</span><span class="p">)),</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">"author:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Author"</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">properties</span><span class="p">(</span>
-            <span class="n">width</span><span class="o">=</span><span class="mi">320</span><span class="p">,</span>
-            <span class="n">height</span><span class="o">=</span><span class="mi">250</span><span class="p">,</span>
-            <span class="n">title</span><span class="o">=</span><span class="s2">"Moving-Average Type-Token Ratio by Text"</span><span class="p">,</span>
-        <span class="p">)</span>
-    <span class="p">)</span>
-    <span class="n">chart</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">filename</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<figure id="f:vocab-richness">
-<img alt="Bar chart with six bars. Author A bars are shortest, Author B bars are middle height, Author C bars are tallest." src="vocab-richness.svg"/>
-<figcaption>Figure 1: MATTR for each text in the synthetic corpus. Author A (vocabulary 200), Author B (400), and Author C (800) produce texts with MATTR of roughly 0.63, 0.68, and 0.72 respectively, confirming that the metric distinguishes authors by lexical richness regardless of text length.</figcaption>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vocab-richness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3.1: MATTR for each text in the synthetic corpus. Author A (vocabulary 200), Author B (400), and Author C (800) produce texts with MATTR of roughly 0.63, 0.68, and 0.72 respectively, confirming that the metric distinguishes authors by lexical richness regardless of text length.
+</figcaption>
 </figure>
-<h2>Testing</h2>
-<ul>
-<li>TTR edge cases<ul>
-<li>A text of all unique words has TTR exactly 1.0.</li>
-<li>A text where the same word is repeated $n$ times has TTR $1/n$.</li>
-<li>An empty word list returns 0.0 without raising an exception.</li>
-</ul>
-</li>
-<li>MATTR fallback<ul>
-<li>When the text is shorter than the window, MATTR returns the global TTR.</li>
-<li>When the text length equals the window width, there is exactly one window and
-    MATTR equals the global TTR.</li>
-</ul>
-</li>
-<li>Richness ordering<ul>
-<li>Author A (vocabulary 200), Author B (400), and Author C (800) are generated from
-    increasingly large Zipfian vocabularies.
-    Their mean MATTR values must increase in the same order.</li>
-</ul>
-</li>
-</ul>
-<div data-inc="test_vocab.py"><span aria-label="Source: vocab/test_vocab.py" class="inc-path" role="img" tabindex="0" title="vocab/test_vocab.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_vocab</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_corpus</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">vocab</span><span class="w"> </span><span class="kn">import</span> <span class="n">type_token_ratio</span><span class="p">,</span> <span class="n">mattr</span><span class="p">,</span> <span class="n">compute_richness</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">polars</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pl</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_ttr_all_unique</span><span class="p">():</span>
-    <span class="c1"># When every word is distinct the TTR is exactly 1.0.</span>
-    <span class="k">assert</span> <span class="n">type_token_ratio</span><span class="p">([</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="s2">"d"</span><span class="p">])</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_ttr_all_same</span><span class="p">():</span>
-    <span class="c1"># When the same word is repeated n times the TTR is 1/n.</span>
-    <span class="k">assert</span> <span class="n">type_token_ratio</span><span class="p">([</span><span class="s2">"x"</span><span class="p">]</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_ttr_empty</span><span class="p">():</span>
-    <span class="c1"># Empty input returns 0.0 without raising an exception.</span>
-    <span class="k">assert</span> <span class="n">type_token_ratio</span><span class="p">([])</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_mattr_short_text_equals_ttr</span><span class="p">():</span>
-    <span class="c1"># When the text is shorter than the window, MATTR falls back to global TTR.</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">mattr</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_mattr_window_equals_length</span><span class="p">():</span>
-    <span class="c1"># When text length equals the window width there is exactly one window,</span>
-    <span class="c1"># so MATTR equals TTR exactly.</span>
-    <span class="n">words</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"a"</span><span class="p">,</span> <span class="s2">"b"</span><span class="p">,</span> <span class="s2">"c"</span><span class="p">,</span> <span class="s2">"a"</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">mattr</span><span class="p">(</span><span class="n">words</span><span class="p">,</span> <span class="n">window</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="n">type_token_ratio</span><span class="p">(</span><span class="n">words</span><span class="p">))</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_richness_order_by_vocab_size</span><span class="p">():</span>
-    <span class="c1"># Mean MATTR must increase with vocabulary size: Author A (200) &lt;</span>
-    <span class="c1"># Author B (400) &lt; Author C (800).  The Zipfian generator guarantees</span>
-    <span class="c1"># that a larger vocabulary produces more distinct tokens per window.</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">make_corpus</span><span class="p">()</span>
-    <span class="n">richness</span> <span class="o">=</span> <span class="n">compute_richness</span><span class="p">(</span><span class="n">df</span><span class="p">)</span>
-    <span class="n">means</span> <span class="o">=</span> <span class="n">richness</span><span class="o">.</span><span class="n">group_by</span><span class="p">(</span><span class="s2">"author"</span><span class="p">)</span><span class="o">.</span><span class="n">agg</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">col</span><span class="p">(</span><span class="s2">"mattr"</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">())</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="s2">"author"</span><span class="p">)</span>
-    <span class="n">mattr_vals</span> <span class="o">=</span> <span class="n">means</span><span class="p">[</span><span class="s2">"mattr"</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
-    <span class="c1"># Authors sort alphabetically: A, B, C -- matching ascending vocab sizes.</span>
-    <span class="k">assert</span> <span class="n">mattr_vals</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">mattr_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">mattr_vals</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-</code></pre></div>
 </div>
-<div class="forma-flashcard" data-lang="en">
+</section>
+<section id="testing" class="level2" data-number="3.7">
+<h2 data-number="3.7" class="anchored" data-anchor-id="testing"><span class="header-section-number">3.7</span> Testing</h2>
+<ul>
+<li>TTR edge cases
+<ul>
+<li>A text of all unique words has TTR exactly 1.0.</li>
+<li>A text where the same word is repeated <span class="math inline">\(n\)</span> times has TTR <span class="math inline">\(1/n\)</span>.</li>
+<li>An empty word list returns 0.0 without raising an exception.</li>
+</ul></li>
+<li>MATTR fallback
+<ul>
+<li>When the text is shorter than the window, MATTR returns the global TTR.</li>
+<li>When the text length equals the window width, there is exactly one window and MATTR equals the global TTR.</li>
+</ul></li>
+<li>Richness ordering
+<ul>
+<li>Author A (vocabulary 200), Author B (400), and Author C (800) are generated from increasingly large Zipfian vocabularies. Their mean MATTR values must increase in the same order.</li>
+</ul></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_vocab <span class="im">import</span> make_corpus</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> vocab <span class="im">import</span> type_token_ratio, mattr, compute_richness</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> polars <span class="im">as</span> pl</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_ttr_all_unique():</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When every word is distinct the TTR is exactly 1.0.</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> type_token_ratio([<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"d"</span>]) <span class="op">==</span> pytest.approx(<span class="fl">1.0</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_ttr_all_same():</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When the same word is repeated n times the TTR is 1/n.</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> type_token_ratio([<span class="st">"x"</span>] <span class="op">*</span> <span class="dv">10</span>) <span class="op">==</span> pytest.approx(<span class="fl">0.1</span>)</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_ttr_empty():</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Empty input returns 0.0 without raising an exception.</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> type_token_ratio([]) <span class="op">==</span> pytest.approx(<span class="fl">0.0</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mattr_short_text_equals_ttr():</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When the text is shorter than the window, MATTR falls back to global TTR.</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>]</span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> mattr(words, window<span class="op">=</span><span class="dv">10</span>) <span class="op">==</span> pytest.approx(type_token_ratio(words))</span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_mattr_window_equals_length():</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When text length equals the window width there is exactly one window,</span></span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># so MATTR equals TTR exactly.</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    words <span class="op">=</span> [<span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>, <span class="st">"a"</span>]</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> mattr(words, window<span class="op">=</span><span class="dv">4</span>) <span class="op">==</span> pytest.approx(type_token_ratio(words))</span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_richness_order_by_vocab_size():</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Mean MATTR must increase with vocabulary size: Author A (200) &lt;</span></span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Author B (400) &lt; Author C (800).  The Zipfian generator guarantees</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># that a larger vocabulary produces more distinct tokens per window.</span></span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_corpus()</span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    richness <span class="op">=</span> compute_richness(df)</span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    means <span class="op">=</span> richness.group_by(<span class="st">"author"</span>).agg(pl.col(<span class="st">"mattr"</span>).mean()).sort(<span class="st">"author"</span>)</span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    mattr_vals <span class="op">=</span> means[<span class="st">"mattr"</span>].to_list()</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Authors sort alphabetically: A, B, C -- matching ascending vocab sizes.</span></span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> mattr_vals[<span class="dv">0</span>] <span class="op">&lt;</span> mattr_vals[<span class="dv">1</span>] <span class="op">&lt;</span> mattr_vals[<span class="dv">2</span>]</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Vocabulary richness key terms</p>
 <dl>
 <dt>Type-token ratio (TTR)</dt>
-<dd>$V/T$ where $V$ is the number of distinct word types and $T$ is the total
-token count; decreases with text length even at constant vocabulary richness</dd>
+<dd>
+<span class="math inline">\(V/T\)</span> where <span class="math inline">\(V\)</span> is the number of distinct word types and <span class="math inline">\(T\)</span> is the total token count; decreases with text length even at constant vocabulary richness
+</dd>
 <dt>Moving-average TTR (MATTR)</dt>
-<dd>Mean of window TTRs computed over overlapping fixed-width windows;
-length-independent because every window has the same size</dd>
-<dt>Zipf's law</dt>
-<dd>The empirical regularity that the $k$-th most frequent word in a corpus
-appears roughly $1/k$ times as often as the most frequent word; produces
-the characteristic long tail of rare words in natural language</dd>
+<dd>
+Mean of window TTRs computed over overlapping fixed-width windows; length-independent because every window has the same size
+</dd>
+<dt>Zipf’s law</dt>
+<dd>
+The empirical regularity that the <span class="math inline">\(k\)</span>-th most frequent word in a corpus appears roughly <span class="math inline">\(1/k\)</span> times as often as the most frequent word; produces the characteristic long tail of rare words in natural language
+</dd>
 <dt>Vocabulary richness</dt>
-<dd>A property of a text or author reflecting how varied word choices are;
-higher richness means proportionally more unique words per token</dd>
+<dd>
+A property of a text or author reflecting how varied word choices are; higher richness means proportionally more unique words per token
+</dd>
 <dt>Window width (MATTR)</dt>
-<dd>The fixed number of tokens in each local TTR window; must be short enough
-to keep window TTR below 1.0 but long enough to average out token-level noise</dd>
+<dd>
+The fixed number of tokens in each local TTR window; must be short enough to keep window TTR below 1.0 but long enough to average out token-level noise
+</dd>
 </dl>
 </div>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<p>A 100-word text contains 60 distinct word types.
-What is its type-token ratio?</p>
-<h3>Effect of window width</h3>
-<p>Compute MATTR for window widths of 10, 25, 50, 100, and 200 for one of the
-Author C texts.
-Plot MATTR against window width and explain why MATTR approaches the global TTR
-as the window grows toward the text length.</p>
-<h3>TTR length dependence</h3>
-<p>Generate texts of 100, 200, 400, and 800 tokens from the same Zipfian distribution
-(vocabulary size 400).
-Plot both TTR and MATTR against text length on the same axes.
-At what length does the difference between TTR and MATTR become noticeable?</p>
-<h3>Real corpus comparison</h3>
-<p>Download two public-domain texts of very different lengths from Project Gutenberg.
-Tokenise each into lowercase words (strip punctuation), then compute TTR and
-MATTR with a 50-word window.
-Does MATTR correct the length bias visible in TTR?</p>
-<h3>Hapax legomena rate</h3>
-<p>A hapax legomenon is a word that appears exactly once in a text.
-Implement <code>hapax_rate(words)</code> that returns the fraction of total tokens that are
-hapax legomena.
-Compare hapax rate with MATTR across the three synthetic authors and discuss
-whether hapax rate is also length-independent.</p>
+<section class="exercises">
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../schelling/">Schelling Segregation Model</a>
-</div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../topics/">Topic Modeling a Document Corpus</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+<section id="exercises" class="level2" data-number="3.8">
+<h2 data-number="3.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">3.8</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="3.8.1">
+<h3 data-number="3.8.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">3.8.1</span> Do the math</h3>
+<p>A 100-word text contains 60 distinct word types. What is its type-token ratio?</p>
+</section>
+<section id="effect-of-window-width" class="level3" data-number="3.8.2">
+<h3 data-number="3.8.2" class="anchored" data-anchor-id="effect-of-window-width"><span class="header-section-number">3.8.2</span> Effect of window width</h3>
+<p>Compute MATTR for window widths of 10, 25, 50, 100, and 200 for one of the Author C texts. Plot MATTR against window width and explain why MATTR approaches the global TTR as the window grows toward the text length.</p>
+</section>
+<section id="ttr-length-dependence" class="level3" data-number="3.8.3">
+<h3 data-number="3.8.3" class="anchored" data-anchor-id="ttr-length-dependence"><span class="header-section-number">3.8.3</span> TTR length dependence</h3>
+<p>Generate texts of 100, 200, 400, and 800 tokens from the same Zipfian distribution (vocabulary size 400). Plot both TTR and MATTR against text length on the same axes. At what length does the difference between TTR and MATTR become noticeable?</p>
+</section>
+<section id="real-corpus-comparison" class="level3" data-number="3.8.4">
+<h3 data-number="3.8.4" class="anchored" data-anchor-id="real-corpus-comparison"><span class="header-section-number">3.8.4</span> Real corpus comparison</h3>
+<p>Download two public-domain texts of very different lengths from Project Gutenberg. Tokenise each into lowercase words (strip punctuation), then compute TTR and MATTR with a 50-word window. Does MATTR correct the length bias visible in TTR?</p>
+</section>
+<section id="hapax-legomena-rate" class="level3" data-number="3.8.5">
+<h3 data-number="3.8.5" class="anchored" data-anchor-id="hapax-legomena-rate"><span class="header-section-number">3.8.5</span> Hapax legomena rate</h3>
+<p>A hapax legomenon is a word that appears exactly once in a text. Implement <code>hapax_rate(words)</code> that returns the fraction of total tokens that are hapax legomena. Compare hapax rate with MATTR across the three synthetic authors and discuss whether hapax rate is also length-independent.</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../schelling/index.html" class="pagination-link" aria-label="Schelling Segregation Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../pollute/index.html" class="pagination-link" aria-label="Pollutant Spread in a River Network">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/vocab/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/vocab/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -1,459 +1,1216 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Fitting an SIR Epidemic Model</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>24&nbsp; Fitting an SIR Epidemic Model – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../mineral/index.html" rel="next">
+<link href="../lotka/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a class="active" href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../sir/index.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
 </nav>
-<main id="main-content">
-<h1>Fitting an SIR Epidemic Model</h1>
-<h2>The Problem</h2>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">24.1</span> The Problem</a></li>
+  <li><a href="#the-sir-equations" id="toc-the-sir-equations" class="nav-link" data-scroll-target="#the-sir-equations"><span class="header-section-number">24.2</span> The SIR Equations</a></li>
+  <li><a href="#integrating-the-model" id="toc-integrating-the-model" class="nav-link" data-scroll-target="#integrating-the-model"><span class="header-section-number">24.3</span> Integrating the Model</a></li>
+  <li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data" class="nav-link" data-scroll-target="#generating-synthetic-data"><span class="header-section-number">24.4</span> Generating Synthetic Data</a></li>
+  <li><a href="#fitting-the-model" id="toc-fitting-the-model" class="nav-link" data-scroll-target="#fitting-the-model"><span class="header-section-number">24.5</span> Fitting the Model</a></li>
+  <li><a href="#visualizing-the-results" id="toc-visualizing-the-results" class="nav-link" data-scroll-target="#visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">24.7</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">24.8</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">24.8.1</span> Do the math</a></li>
+  <li><a href="#herd-immunity-threshold" id="toc-herd-immunity-threshold" class="nav-link" data-scroll-target="#herd-immunity-threshold"><span class="header-section-number">24.8.2</span> Herd immunity threshold</a></li>
+  <li><a href="#fitting-r_0-instead-of-beta-and-gamma" id="toc-fitting-r_0-instead-of-beta-and-gamma" class="nav-link" data-scroll-target="#fitting-r_0-instead-of-beta-and-gamma"><span class="header-section-number">24.8.3</span> Fitting <span class="math inline">\(R_0\)</span> instead of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span></a></li>
+  <li><a href="#seir-extension" id="toc-seir-extension" class="nav-link" data-scroll-target="#seir-extension"><span class="header-section-number">24.8.4</span> SEIR extension</a></li>
+  <li><a href="#sensitivity-analysis" id="toc-sensitivity-analysis" class="nav-link" data-scroll-target="#sensitivity-analysis"><span class="header-section-number">24.8.5</span> Sensitivity analysis</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/sir/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/sir/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="24.1">
+<h2 data-number="24.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">24.1</span> The Problem</h2>
 <ul>
-<li>During an outbreak,
-    public health officials observe daily case counts
-    but do not know the underlying transmission dynamics</li>
-<li>Estimating the transmission rate and recovery rate from the observed curve
-    allows prediction of the epidemic's peak and total size</li>
-<li>The <a class="gl-ref" href="../glossary/#sir_model">SIR model</a> is the simplest compartmental model that captures this</li>
+<li>During an outbreak, public health officials observe daily case counts but do not know the underlying transmission dynamics</li>
+<li>Estimating the transmission rate and recovery rate from the observed curve allows prediction of the epidemic’s peak and total size</li>
+<li>The <a href="../glossary/index.html#sir_model">SIR model</a> is the simplest compartmental model that captures this</li>
 <li>It divides a fixed population into Susceptible, Infectious, and Recovered (immune) individuals</li>
 </ul>
-<h2>The SIR Equations</h2>
+</section>
+<section id="the-sir-equations" class="level2" data-number="24.2">
+<h2 data-number="24.2" class="anchored" data-anchor-id="the-sir-equations"><span class="header-section-number">24.2</span> The SIR Equations</h2>
 <ul>
-<li>The population $N$ is constant; individuals move only from S to I to R:</li>
+<li>The population <span class="math inline">\(N\)</span> is constant; individuals move only from S to I to R:</li>
 </ul>
-<p>$$\frac{dS}{dt} = -\frac{\beta S I}{N} \qquad \frac{dI}{dt} = \frac{\beta S I}{N} - \gamma I \qquad \frac{dR}{dt} = \gamma I$$</p>
+<p><span class="math display">\[\frac{dS}{dt} = -\frac{\beta S I}{N} \qquad \frac{dI}{dt} = \frac{\beta S I}{N} - \gamma I \qquad \frac{dR}{dt} = \gamma I\]</span></p>
 <ul>
-<li>The transmission rate $\beta$ (day$^{-1}$) is
-    the average number of new infections one case generates per day when the whole population is susceptible</li>
-<li>The recovery rate $\gamma$ (day$^{-1}$) is the reciprocal of the mean infectious period</li>
-<li>The <a class="gl-ref" href="../glossary/#basic_reproduction_number">basic reproduction number</a> $R_0 = \beta/\gamma$
-    is the average number of secondary cases generated by one case in a fully susceptible population<ul>
-<li>If $R_0 &gt; 1$, the infectious class grows initially and an epidemic occurs</li>
-<li>If $R_0 \leq 1$, $I(t)$ decreases from the outset</li>
+<li>The transmission rate <span class="math inline">\(\beta\)</span> (day<span class="math inline">\(^{-1}\)</span>) is the average number of new infections one case generates per day when the whole population is susceptible</li>
+<li>The recovery rate <span class="math inline">\(\gamma\)</span> (day<span class="math inline">\(^{-1}\)</span>) is the reciprocal of the mean infectious period</li>
+<li>The <a href="../glossary/index.html#basic_reproduction_number">basic reproduction number</a> <span class="math inline">\(R_0 = \beta/\gamma\)</span> is the average number of secondary cases generated by one case in a fully susceptible population
+<ul>
+<li>If <span class="math inline">\(R_0 &gt; 1\)</span>, the infectious class grows initially and an epidemic occurs</li>
+<li>If <span class="math inline">\(R_0 \leq 1\)</span>, <span class="math inline">\(I(t)\)</span> decreases from the outset</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div class="forma-multiple-choice" data-lang="en">
-<p>A pathogen has $\beta = 0.30$ day$^{-1}$ and $\gamma = 0.10$ day$^{-1}$.
-What does $R_0 = 3$ mean for a fully susceptible population?</p>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>A pathogen has <span class="math inline">\(\beta = 0.30\)</span> day<span class="math inline">\(^{-1}\)</span> and <span class="math inline">\(\gamma = 0.10\)</span> day<span class="math inline">\(^{-1}\)</span>. What does <span class="math inline">\(R_0 = 3\)</span> mean for a fully susceptible population?</p>
 <dl>
 <dt>Each infected person is in contact with 3 susceptibles per day.</dt>
-<dd>Wrong: $R_0$ is the average number of secondary cases, not the number of contacts.</dd>
+<dd>
+Wrong: <span class="math inline">\(R_0\)</span> is the average number of secondary cases, not the number of contacts.
+</dd>
 <dt>The epidemic will peak in exactly 3 days.</dt>
-<dd>Wrong: $R_0$ says nothing about timing; the peak depends on $N$ and initial conditions.</dd>
+<dd>
+Wrong: <span class="math inline">\(R_0\)</span> says nothing about timing; the peak depends on <span class="math inline">\(N\)</span> and initial conditions.
+</dd>
 <dt>On average, each infectious person infects 3 others before recovering.</dt>
-<dd>Correct: $R_0 = \beta / \gamma$ counts secondary cases per primary case in a completely susceptible population.</dd>
+<dd>
+Correct: <span class="math inline">\(R_0 = \beta / \gamma\)</span> counts secondary cases per primary case in a completely susceptible population.
+</dd>
 <dt>The epidemic will infect exactly 3% of the population.</dt>
-<dd>Wrong: $R_0$ is not a percentage; final epidemic size depends on $R_0$ through a transcendental equation.</dd>
+<dd>
+Wrong: <span class="math inline">\(R_0\)</span> is not a percentage; final epidemic size depends on <span class="math inline">\(R_0\)</span> through a transcendental equation.
+</dd>
 </dl>
 </div>
-<h2>Integrating the Model</h2>
+</section>
+<section id="integrating-the-model" class="level2" data-number="24.3">
+<h2 data-number="24.3" class="anchored" data-anchor-id="integrating-the-model"><span class="header-section-number">24.3</span> Integrating the Model</h2>
 <ul>
-<li><code>scipy.integrate.solve_ivp</code> advances the ODE system from $t=0$ to $t_\text{max}$
-    using an adaptive <a class="gl-ref" href="../glossary/#runge_kutta">Runge-Kutta method</a></li>
-<li>The observable quantity is the daily incidence<ul>
-<li>The number of new infections per day, equal to $-dS/dt = \beta S I / N$</li>
+<li><code>scipy.integrate.solve_ivp</code> advances the ODE system from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t_\text{max}\)</span> using an adaptive <a href="../glossary/index.html#runge_kutta">Runge-Kutta method</a></li>
+<li>The observable quantity is the daily incidence
+<ul>
+<li>The number of new infections per day, equal to <span class="math inline">\(-dS/dt = \beta S I / N\)</span></li>
+</ul></li>
+<li>In discrete form, new_cases(<span class="math inline">\(t\)</span>) <span class="math inline">\(\approx S(t-1) - S(t)\)</span> when evaluated at integer days</li>
 </ul>
-</li>
-<li>In discrete form, new_cases($t$) $\approx S(t-1) - S(t)$ when evaluated at integer days</li>
-</ul>
-<div data-inc="sir.py" data-mark="sir-rhs"><span aria-label="Source: sir/sir.py" class="inc-path" role="img" tabindex="0" title="sir/sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sir_rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return [dS/dt, dI/dt, dR/dt] for the SIR epidemic model.</span>
-
-<span class="sd">    S, I, R are the numbers of susceptible, infectious, and recovered</span>
-<span class="sd">    individuals.  The force of infection beta * I / N uses</span>
-<span class="sd">    frequency-dependent (proportional) transmission: each susceptible</span>
-<span class="sd">    encounters a fixed fraction of the population per unit time.</span>
-<span class="sd">    The total N = S + I + R is conserved: dS/dt + dI/dt + dR/dt = 0.</span>
-<span class="sd">    """</span>
-    <span class="n">susc</span><span class="p">,</span> <span class="n">infect</span><span class="p">,</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">y</span>
-    <span class="n">force</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">susc</span> <span class="o">*</span> <span class="n">infect</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="k">return</span> <span class="p">[</span><span class="o">-</span><span class="n">force</span><span class="p">,</span> <span class="n">force</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">infect</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">infect</span><span class="p">]</span>
-</code></pre></div>
-</div>
-<div data-inc="sir.py" data-mark="model-cases"><span aria-label="Source: sir/sir.py" class="inc-path" role="img" tabindex="0" title="sir/sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">model_cases</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">N_POP</span><span class="p">,</span> <span class="n">i0</span><span class="o">=</span><span class="n">I0</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="n">T_MAX</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return modelled daily new cases for parameters beta and gamma.</span>
-
-<span class="sd">    Integrates the SIR ODEs at integer days and returns the daily incidence</span>
-<span class="sd">    new_cases(t) = S(t-1) - S(t), the number of new infections per day.</span>
-<span class="sd">    """</span>
-    <span class="n">t_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
-        <span class="n">sir_rhs</span><span class="p">,</span>
-        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_max</span><span class="p">)],</span>
-        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">i0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-        <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span>
-        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
-        <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<div class="forma-multiple-choice" data-lang="en">
-<p>The SIR equations satisfy $dS/dt + dI/dt + dR/dt = 0$ for all $t$.
-What does this imply about the numerical solution?</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
+<p>The SIR equations satisfy <span class="math inline">\(dS/dt + dI/dt + dR/dt = 0\)</span> for all <span class="math inline">\(t\)</span>. What does this imply about the numerical solution?</p>
 <dl>
-<dt>$S$, $I$, and $R$ are each individually conserved.</dt>
-<dd>Wrong: the individual compartments change continuously; only their sum is constant.</dd>
-<dt>$S + I + R = N$ at every time point, to within the solver's tolerance.</dt>
-<dd>Correct: the algebraic identity means the solver should preserve $N$ to within its error tolerance ($\sim \text{rtol} \times N$).</dd>
-<dt>The solver will automatically enforce $S, I, R \geq 0$.</dt>
-<dd>Wrong: standard ODE solvers do not impose positivity constraints; negative values are possible if the step size is too large.</dd>
-<dt>$R_0$ is conserved along every trajectory.</dt>
-<dd>Wrong: $R_0 = \beta/\gamma$ is a parameter, not a function of the state; it has the same value everywhere.</dd>
+<dt><span class="math inline">\(S\)</span>, <span class="math inline">\(I\)</span>, and <span class="math inline">\(R\)</span> are each individually conserved.</dt>
+<dd>
+Wrong: the individual compartments change continuously; only their sum is constant.
+</dd>
+<dt><span class="math inline">\(S + I + R = N\)</span> at every time point, to within the solver’s tolerance.</dt>
+<dd>
+Correct: the algebraic identity means the solver should preserve <span class="math inline">\(N\)</span> to within its error tolerance (<span class="math inline">\(\sim \text{rtol} \times N\)</span>).
+</dd>
+<dt>The solver will automatically enforce <span class="math inline">\(S, I, R \geq 0\)</span>.</dt>
+<dd>
+Wrong: standard ODE solvers do not impose positivity constraints; negative values are possible if the step size is too large.
+</dd>
+<dt><span class="math inline">\(R_0\)</span> is conserved along every trajectory.</dt>
+<dd>
+Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, not a function of the state; it has the same value everywhere.
+</dd>
 </dl>
 </div>
-<h2>Generating Synthetic Data</h2>
+</section>
+<section id="generating-synthetic-data" class="level2" data-number="24.4">
+<h2 data-number="24.4" class="anchored" data-anchor-id="generating-synthetic-data"><span class="header-section-number">24.4</span> Generating Synthetic Data</h2>
 <ul>
 <li>We generate 160 days of daily case counts from known parameters and add Poisson observation noise.</li>
-<li>Poisson noise models the stochasticity of real disease reporting<ul>
+<li>Poisson noise models the stochasticity of real disease reporting
+<ul>
 <li>The variance equals the mean</li>
+</ul></li>
 </ul>
-</li>
-</ul>
-<div data-inc="generate_sir.py" data-mark="constants"><span aria-label="Source: sir/generate_sir.py" class="inc-path" role="img" tabindex="0" title="sir/generate_sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="c1"># True SIR parameters used to generate synthetic outbreak data.</span>
-<span class="c1"># BETA_TRUE: number of contacts per day that lead to transmission.</span>
-<span class="c1"># GAMMA_TRUE: 1/GAMMA_TRUE is the mean infectious period (10 days here).</span>
-<span class="c1"># R0_TRUE = BETA_TRUE / GAMMA_TRUE = 3.0: each case generates 3 secondary</span>
-<span class="c1"># cases early in the outbreak, so an epidemic occurs (R0 &gt; 1).</span>
-<span class="n">BETA_TRUE</span> <span class="o">=</span> <span class="mf">0.30</span>  <span class="c1"># transmission rate (day^-1)</span>
-<span class="n">GAMMA_TRUE</span> <span class="o">=</span> <span class="mf">0.10</span>  <span class="c1"># recovery rate (day^-1)</span>
-<span class="n">N_POP</span> <span class="o">=</span> <span class="mi">10_000</span>  <span class="c1"># total population (constant; no births or deaths)</span>
-<span class="n">I0</span> <span class="o">=</span> <span class="mi">10</span>  <span class="c1"># initial number of infectious individuals</span>
-
-<span class="n">T_MAX</span> <span class="o">=</span> <span class="mi">160</span>  <span class="c1"># simulation length (days)</span>
-</code></pre></div>
-</div>
-<div data-inc="generate_sir.py" data-mark="generate"><span aria-label="Source: sir/generate_sir.py" class="inc-path" role="img" tabindex="0" title="sir/generate_sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">generate</span><span class="p">(</span><span class="n">beta</span><span class="o">=</span><span class="n">BETA_TRUE</span><span class="p">,</span> <span class="n">gamma</span><span class="o">=</span><span class="n">GAMMA_TRUE</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">N_POP</span><span class="p">,</span> <span class="n">i0</span><span class="o">=</span><span class="n">I0</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="n">T_MAX</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return daily new-case counts from an SIR model with Poisson observation noise.</span>
-
-<span class="sd">    Integrates the SIR ODEs from day 0 to day t_max and approximates the</span>
-<span class="sd">    daily incidence as the decrease in S between consecutive integer days:</span>
-<span class="sd">    new_cases(t) = S(t-1) - S(t).  Poisson noise is added to mimic</span>
-<span class="sd">    stochastic reporting; the Poisson mean is clipped to zero to avoid</span>
-<span class="sd">    negative arguments (can occur near the epidemic peak due to ODE</span>
-<span class="sd">    interpolation).</span>
-<span class="sd">    """</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">t_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">t_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span>
-    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
-        <span class="n">_sir_rhs</span><span class="p">,</span>
-        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">t_max</span><span class="p">)],</span>
-        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">i0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">i0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="p">),</span>
-        <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span>
-        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
-        <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="c1"># Daily incidence: drop in S from one day to the next.</span>
-    <span class="n">new_cases_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">maximum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">*</span> <span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">)</span>
-    <span class="n">new_cases_obs</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">poisson</span><span class="p">(</span><span class="n">new_cases_true</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s2">"day"</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">t_max</span> <span class="o">+</span> <span class="mi">1</span><span class="p">),</span> <span class="s2">"cases"</span><span class="p">:</span> <span class="n">new_cases_obs</span><span class="p">})</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">_sir_rhs</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="p">):</span>
-    <span class="n">susc</span><span class="p">,</span> <span class="n">infect</span><span class="p">,</span> <span class="n">rec</span> <span class="o">=</span> <span class="n">y</span>
-    <span class="n">force</span> <span class="o">=</span> <span class="n">beta</span> <span class="o">*</span> <span class="n">susc</span> <span class="o">*</span> <span class="n">infect</span> <span class="o">/</span> <span class="n">n</span>
-    <span class="k">return</span> <span class="p">[</span><span class="o">-</span><span class="n">force</span><span class="p">,</span> <span class="n">force</span> <span class="o">-</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">infect</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">*</span> <span class="n">infect</span><span class="p">]</span>
-</code></pre></div>
-</div>
-<div class="forma-ordering" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps in the correct order to generate a synthetic SIR outbreak with Poisson noise.</p>
-<ol>
+<ol type="1">
 <li>Integrate the SIR ODEs to obtain S(t) at each integer day</li>
 <li>Compute the daily incidence as new_cases(t) = S(t-1) - S(t)</li>
 <li>Clip negative incidence values to zero (numerical artefact near the peak)</li>
 <li>Draw Poisson samples with means equal to the clipped incidence values</li>
 </ol>
 </div>
-<h2>Fitting the Model</h2>
-<ul>
-<li><code>scipy.optimize.least_squares</code> minimises the sum of squared residuals $\sum_t (\hat{c}_t - c_t)^2$,
-    where $\hat{c}_t$ is the modelled incidence and $c_t$ is the observed count</li>
-<li>Both $\beta$ and $\gamma$ must be positive, so we impose box constraints with <code>bounds</code></li>
-</ul>
-<div data-inc="sir.py" data-mark="constants"><span aria-label="Source: sir/sir.py" class="inc-path" role="img" tabindex="0" title="sir/sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="c1"># Initial parameter guesses for the optimizer.  Starting near biologically</span>
-<span class="c1"># plausible values helps the solver converge; exact values do not matter</span>
-<span class="c1"># as long as residuals decrease monotonically from the starting point.</span>
-<span class="n">BETA_INIT</span> <span class="o">=</span> <span class="mf">0.3</span>
-<span class="n">GAMMA_INIT</span> <span class="o">=</span> <span class="mf">0.1</span>
-
-<span class="c1"># Both parameters must be positive; upper bounds are generous.</span>
-<span class="n">LOWER_BOUNDS</span> <span class="o">=</span> <span class="p">[</span><span class="mf">1e-6</span><span class="p">,</span> <span class="mf">1e-6</span><span class="p">]</span>
-<span class="n">UPPER_BOUNDS</span> <span class="o">=</span> <span class="p">[</span><span class="mf">2.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>
-</code></pre></div>
-</div>
-<div data-inc="sir.py" data-mark="fit"><span aria-label="Source: sir/sir.py" class="inc-path" role="img" tabindex="0" title="sir/sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="n">observed</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="n">N_POP</span><span class="p">,</span> <span class="n">i0</span><span class="o">=</span><span class="n">I0</span><span class="p">,</span> <span class="n">t_max</span><span class="o">=</span><span class="n">T_MAX</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Fit beta and gamma to observed daily case counts by least squares.</span>
-
-<span class="sd">    Minimises the sum of squared residuals between the modelled and observed</span>
-<span class="sd">    daily incidence.  Returns the fitted (beta, gamma) as a tuple.</span>
-<span class="sd">    """</span>
-
-    <span class="k">def</span><span class="w"> </span><span class="nf">residuals</span><span class="p">(</span><span class="n">params</span><span class="p">):</span>
-        <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span> <span class="o">=</span> <span class="n">params</span>
-        <span class="k">return</span> <span class="n">model_cases</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">,</span> <span class="n">n</span><span class="p">,</span> <span class="n">i0</span><span class="p">,</span> <span class="n">t_max</span><span class="p">)</span> <span class="o">-</span> <span class="n">observed</span>
-
-    <span class="n">result</span> <span class="o">=</span> <span class="n">least_squares</span><span class="p">(</span>
-        <span class="n">residuals</span><span class="p">,</span>
-        <span class="n">x0</span><span class="o">=</span><span class="p">[</span><span class="n">BETA_INIT</span><span class="p">,</span> <span class="n">GAMMA_INIT</span><span class="p">],</span>
-        <span class="n">bounds</span><span class="o">=</span><span class="p">(</span><span class="n">LOWER_BOUNDS</span><span class="p">,</span> <span class="n">UPPER_BOUNDS</span><span class="p">),</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]),</span> <span class="nb">float</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-</code></pre></div>
-</div>
-<h2>Visualizing the Results</h2>
-<div data-inc="sir.py" data-mark="plot"><span aria-label="Source: sir/sir.py" class="inc-path" role="img" tabindex="0" title="sir/sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">plot</span><span class="p">(</span><span class="n">days</span><span class="p">,</span> <span class="n">observed</span><span class="p">,</span> <span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return an Altair chart of observed cases and the fitted SIR model curve."""</span>
-    <span class="n">fitted</span> <span class="o">=</span> <span class="n">model_cases</span><span class="p">(</span><span class="n">beta</span><span class="p">,</span> <span class="n">gamma</span><span class="p">)</span>
-    <span class="n">df_obs</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">{</span><span class="s2">"day"</span><span class="p">:</span> <span class="n">days</span><span class="p">,</span> <span class="s2">"cases"</span><span class="p">:</span> <span class="n">observed</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span> <span class="s2">"source"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"observed"</span><span class="p">]</span> <span class="o">*</span> <span class="nb">len</span><span class="p">(</span><span class="n">days</span><span class="p">)}</span>
-    <span class="p">)</span>
-    <span class="n">df_fit</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span>
-        <span class="p">{</span>
-            <span class="s2">"day"</span><span class="p">:</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">T_MAX</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)),</span>
-            <span class="s2">"cases"</span><span class="p">:</span> <span class="n">fitted</span><span class="o">.</span><span class="n">tolist</span><span class="p">(),</span>
-            <span class="s2">"source"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"fitted"</span><span class="p">]</span> <span class="o">*</span> <span class="n">T_MAX</span><span class="p">,</span>
-        <span class="p">}</span>
-    <span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span>
-        <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_obs</span><span class="p">,</span> <span class="n">df_fit</span><span class="p">]))</span>
-        <span class="o">.</span><span class="n">mark_line</span><span class="p">()</span>
-        <span class="o">.</span><span class="n">encode</span><span class="p">(</span>
-            <span class="n">x</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">X</span><span class="p">(</span><span class="s2">"day:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"Day"</span><span class="p">),</span>
-            <span class="n">y</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Y</span><span class="p">(</span><span class="s2">"cases:Q"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">"New cases per day"</span><span class="p">),</span>
-            <span class="n">color</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">Color</span><span class="p">(</span><span class="s2">"source:N"</span><span class="p">,</span> <span class="n">title</span><span class="o">=</span><span class="s2">""</span><span class="p">),</span>
-            <span class="n">strokeDash</span><span class="o">=</span><span class="n">alt</span><span class="o">.</span><span class="n">StrokeDash</span><span class="p">(</span><span class="s2">"source:N"</span><span class="p">),</span>
-        <span class="p">)</span>
-        <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">width</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">280</span><span class="p">)</span>
-    <span class="p">)</span>
-</code></pre></div>
-</div>
-<figure id="f:sir-fit">
-<img alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely." src="sir.svg"/>
-<figcaption>Figure 1: Observed daily cases (with Poisson noise) and the fitted SIR model. The fitted curve recovers the epidemic shape despite the observation noise.</figcaption>
-</figure>
-<h2>Testing</h2>
-<ul>
-<li>
-<p>Population conservation</p>
-<ul>
-<li>The SIR equations satisfy $S + I + R = N$<ul>
-<li>The solver preserves this to within the specified tolerance</li>
-</ul>
-</li>
-<li>A relative tolerance of $10^{-4}$ is $10\times$ the measured numerical drift with <code>rtol=1e-8</code></li>
-</ul>
-</li>
-<li>
-<p>No transmission</p>
-<ul>
-<li>When $\beta = 0$ the force of infection is zero and $S$ is constant<ul>
-<li>Only $I$ decays</li>
-</ul>
-</li>
-<li>After <code>T_MAX</code> days, $S$ should differ from its initial value by less than $10^{-4}$ (relative)</li>
-</ul>
-</li>
-<li>
-<p>Single epidemic peak</p>
-<ul>
-<li>For $R_0 = 3$, the epidemic curve has exactly one maximum
-    that lies in the interior of $[1, T_\text{max}]$</li>
-<li>Two peaks would indicate a model error
-    or a parameter value that produces oscillations (which the SIR model cannot)</li>
-<li>Near-zero cases at <code>T_MAX</code> confirm the epidemic ended before the simulation did</li>
-</ul>
-</li>
-<li>
-<p>Parameter recovery</p>
-<ul>
-<li>Fitting to noiseless model output should recover $\beta$ and $\gamma$ to within 1%</li>
-<li>This is the best-case scenario for the optimizer:
-    1% is a generous tolerance for a well-conditioned least-squares problem</li>
-</ul>
-</li>
-</ul>
-<div data-inc="test_sir.py"><span aria-label="Source: sir/test_sir.py" class="inc-path" role="img" tabindex="0" title="sir/test_sir.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.integrate</span><span class="w"> </span><span class="kn">import</span> <span class="n">solve_ivp</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_sir</span><span class="w"> </span><span class="kn">import</span> <span class="n">BETA_TRUE</span><span class="p">,</span> <span class="n">GAMMA_TRUE</span><span class="p">,</span> <span class="n">I0</span><span class="p">,</span> <span class="n">N_POP</span><span class="p">,</span> <span class="n">T_MAX</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">sir</span><span class="w"> </span><span class="kn">import</span> <span class="n">fit</span><span class="p">,</span> <span class="n">model_cases</span><span class="p">,</span> <span class="n">sir_rhs</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_population_conserved</span><span class="p">():</span>
-    <span class="c1"># dS/dt + dI/dt + dR/dt = 0 is an algebraic identity for the SIR equations,</span>
-    <span class="c1"># so S + I + R = N for all t.  With rtol=1e-8, the integrator keeps the</span>
-    <span class="c1"># maximum deviation below 1e-5 (relative).  A tolerance of 1e-4 gives a</span>
-    <span class="c1"># 10x safety margin over the measured numerical drift.</span>
-    <span class="n">t_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">T_MAX</span><span class="p">),</span> <span class="mi">1000</span><span class="p">)</span>
-    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
-        <span class="n">sir_rhs</span><span class="p">,</span>
-        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">T_MAX</span><span class="p">)],</span>
-        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">N_POP</span> <span class="o">-</span> <span class="n">I0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">I0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="n">BETA_TRUE</span><span class="p">,</span> <span class="n">GAMMA_TRUE</span><span class="p">,</span> <span class="n">N_POP</span><span class="p">),</span>
-        <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span>
-        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
-        <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">total</span> <span class="o">=</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">total</span> <span class="o">-</span> <span class="n">N_POP</span><span class="p">))</span> <span class="o">/</span> <span class="n">N_POP</span> <span class="o">&lt;</span> <span class="mf">1e-4</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_no_transmission</span><span class="p">():</span>
-    <span class="c1"># When beta = 0 no new infections occur: S stays constant and I decays</span>
-    <span class="c1"># exponentially.  With rtol=1e-8, the departure from the initial S</span>
-    <span class="c1"># value should be below 1e-4 (relative) over T_MAX days.</span>
-    <span class="n">t_eval</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">T_MAX</span><span class="p">)])</span>
-    <span class="n">sol</span> <span class="o">=</span> <span class="n">solve_ivp</span><span class="p">(</span>
-        <span class="n">sir_rhs</span><span class="p">,</span>
-        <span class="p">[</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">float</span><span class="p">(</span><span class="n">T_MAX</span><span class="p">)],</span>
-        <span class="p">[</span><span class="nb">float</span><span class="p">(</span><span class="n">N_POP</span> <span class="o">-</span> <span class="n">I0</span><span class="p">),</span> <span class="nb">float</span><span class="p">(</span><span class="n">I0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">],</span>
-        <span class="n">args</span><span class="o">=</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">GAMMA_TRUE</span><span class="p">,</span> <span class="n">N_POP</span><span class="p">),</span>
-        <span class="n">t_eval</span><span class="o">=</span><span class="n">t_eval</span><span class="p">,</span>
-        <span class="n">rtol</span><span class="o">=</span><span class="mf">1e-8</span><span class="p">,</span>
-        <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">,</span>
-    <span class="p">)</span>
-    <span class="n">s_initial</span> <span class="o">=</span> <span class="n">N_POP</span> <span class="o">-</span> <span class="n">I0</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">sol</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">s_initial</span><span class="p">)</span> <span class="o">/</span> <span class="n">N_POP</span> <span class="o">&lt;</span> <span class="mf">1e-4</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_single_epidemic_peak</span><span class="p">():</span>
-    <span class="c1"># For R0 = BETA_TRUE / GAMMA_TRUE = 3 &gt; 1, the epidemic curve has exactly</span>
-    <span class="c1"># one maximum.  The peak is not at the boundary (it occurs after the</span>
-    <span class="c1"># outbreak begins and before it ends), and cases fall to near zero by T_MAX.</span>
-    <span class="n">cases</span> <span class="o">=</span> <span class="n">model_cases</span><span class="p">(</span><span class="n">BETA_TRUE</span><span class="p">,</span> <span class="n">GAMMA_TRUE</span><span class="p">)</span>
-    <span class="n">peak_idx</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">cases</span><span class="p">))</span>
-    <span class="k">assert</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">peak_idx</span> <span class="o">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="n">cases</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">"peak is at a boundary"</span>
-    <span class="k">assert</span> <span class="n">cases</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">cases</span><span class="p">[</span><span class="n">peak_idx</span><span class="p">]</span> <span class="o">*</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">"epidemic has not ended by T_MAX"</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_fit_recovers_parameters</span><span class="p">():</span>
-    <span class="c1"># Fitting to noiseless model output should recover beta and gamma to within</span>
-    <span class="c1"># 1%.  Noiseless data are the best case for the optimizer; this tolerance</span>
-    <span class="c1"># gives a 10x margin over the expected numerical precision of least_squares.</span>
-    <span class="n">noiseless</span> <span class="o">=</span> <span class="n">model_cases</span><span class="p">(</span><span class="n">BETA_TRUE</span><span class="p">,</span> <span class="n">GAMMA_TRUE</span><span class="p">)</span>
-    <span class="n">beta_fit</span><span class="p">,</span> <span class="n">gamma_fit</span> <span class="o">=</span> <span class="n">fit</span><span class="p">(</span><span class="n">noiseless</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">beta_fit</span> <span class="o">-</span> <span class="n">BETA_TRUE</span><span class="p">)</span> <span class="o">/</span> <span class="n">BETA_TRUE</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
-    <span class="k">assert</span> <span class="nb">abs</span><span class="p">(</span><span class="n">gamma_fit</span> <span class="o">-</span> <span class="n">GAMMA_TRUE</span><span class="p">)</span> <span class="o">/</span> <span class="n">GAMMA_TRUE</span> <span class="o">&lt;</span> <span class="mf">0.01</span>
-</code></pre></div>
-</div>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<p>Using <code>BETA_TRUE</code> = 0.30 day$^{-1}$ and <code>GAMMA_TRUE</code> = 0.10 day$^{-1}$,
-compute $R_0 = \beta / \gamma$.
-Give your answer to one decimal place.</p>
-<h3>Herd immunity threshold</h3>
-<p>The epidemic stops growing when $S/N$ falls below $1/R_0$ (the herd immunity threshold).
-For the true parameters, compute the fraction of the population that has been infected by the time
-$I(t)$ reaches its peak.
-Compare this to $1 - 1/R_0$.
-Are they the same?</p>
-<h3>Fitting $R_0$ instead of $\beta$ and $\gamma$</h3>
-<p>Instead of fitting $\beta$ and $\gamma$ separately, reparametrise the model with $R_0$ and $\gamma$ as the
-two parameters (so $\beta = R_0 \gamma$).
-Does the optimiser converge faster?
-Are the confidence intervals on $R_0$ narrower than when computing $R_0 = \hat{\beta}/\hat{\gamma}$
-from independently fitted parameters?</p>
-<h3>SEIR extension</h3>
-<p>Add an exposed (latent) compartment $E$ between $S$ and $I$:
-$dE/dt = \beta SI/N - \sigma E$ and $dI/dt = \sigma E - \gamma I$,
-where $\sigma^{-1}$ is the mean latent period.
-Generate synthetic data with $\sigma = 0.2$ day$^{-1}$ (mean 5-day latent period) and fit the four-parameter SEIR model.
-Does the SIR fit to SEIR data give biased estimates of $\beta$ and $\gamma$?</p>
-<h3>Sensitivity analysis</h3>
-<p>Vary $\beta$ from 0.1 to 0.5 (holding $\gamma = 0.1$ fixed) and plot the epidemic peak size and
-peak timing as functions of $\beta$.
-At what value of $\beta$ does the epidemic just barely cross the threshold (peak in $I$ is very small)?
-How close is this to the theoretical threshold $\beta = \gamma$?</p>
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../porous/">Percolation in a Porous Medium</a>
+<section id="fitting-the-model" class="level2" data-number="24.5">
+<h2 data-number="24.5" class="anchored" data-anchor-id="fitting-the-model"><span class="header-section-number">24.5</span> Fitting the Model</h2>
+<ul>
+<li><code>scipy.optimize.least_squares</code> minimises the sum of squared residuals <span class="math inline">\(\sum_t (\hat{c}_t - c_t)^2\)</span>, where <span class="math inline">\(\hat{c}_t\)</span> is the modelled incidence and <span class="math inline">\(c_t\)</span> is the observed count</li>
+<li>Both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> must be positive, so we impose box constraints with <code>bounds</code></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="visualizing-the-results" class="level2" data-number="24.6">
+<h2 data-number="24.6" class="anchored" data-anchor-id="visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div id="fig-sir-fit" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sir-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="sir.svg" class="img-fluid figure-img" alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely.">
 </div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sir-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;24.1: Observed daily cases (with Poisson noise) and the fitted SIR model. The fitted curve recovers the epidemic shape despite the observation noise.
+</figcaption>
+</figure>
 </div>
-<div class="col-3 right">
-<a href="../survival/">Survival Analysis with Kaplan-Meier</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+</section>
+<section id="testing" class="level2" data-number="24.7">
+<h2 data-number="24.7" class="anchored" data-anchor-id="testing"><span class="header-section-number">24.7</span> Testing</h2>
+<ul>
+<li>Population conservation
+<ul>
+<li>The SIR equations satisfy <span class="math inline">\(S + I + R = N\)</span>
+<ul>
+<li>The solver preserves this to within the specified tolerance</li>
+</ul></li>
+<li>A relative tolerance of <span class="math inline">\(10^{-4}\)</span> is <span class="math inline">\(10\times\)</span> the measured numerical drift with <code>rtol=1e-8</code></li>
+</ul></li>
+<li>No transmission
+<ul>
+<li>When <span class="math inline">\(\beta = 0\)</span> the force of infection is zero and <span class="math inline">\(S\)</span> is constant
+<ul>
+<li>Only <span class="math inline">\(I\)</span> decays</li>
+</ul></li>
+<li>After <code>T_MAX</code> days, <span class="math inline">\(S\)</span> should differ from its initial value by less than <span class="math inline">\(10^{-4}\)</span> (relative)</li>
+</ul></li>
+<li>Single epidemic peak
+<ul>
+<li>For <span class="math inline">\(R_0 = 3\)</span>, the epidemic curve has exactly one maximum that lies in the interior of <span class="math inline">\([1, T_\text{max}]\)</span></li>
+<li>Two peaks would indicate a model error or a parameter value that produces oscillations (which the SIR model cannot)</li>
+<li>Near-zero cases at <code>T_MAX</code> confirm the epidemic ended before the simulation did</li>
+</ul></li>
+<li>Parameter recovery
+<ul>
+<li>Fitting to noiseless model output should recover <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> to within 1%</li>
+<li>This is the best-case scenario for the optimizer: 1% is a generous tolerance for a well-conditioned least-squares problem</li>
+</ul></li>
+</ul>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_sir <span class="im">import</span> BETA_TRUE, GAMMA_TRUE, I0, N_POP, T_MAX</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sir <span class="im">import</span> fit, model_cases, sir_rhs</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_population_conserved():</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># dS/dt + dI/dt + dR/dt = 0 is an algebraic identity for the SIR equations,</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># so S + I + R = N for all t.  With rtol=1e-8, the integrator keeps the</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># maximum deviation below 1e-5 (relative).  A tolerance of 1e-4 gives a</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 10x safety margin over the measured numerical drift.</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    t_eval <span class="op">=</span> np.linspace(<span class="fl">0.0</span>, <span class="bu">float</span>(T_MAX), <span class="dv">1000</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        sir_rhs,</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="bu">float</span>(T_MAX)],</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        [<span class="bu">float</span>(N_POP <span class="op">-</span> I0), <span class="bu">float</span>(I0), <span class="fl">0.0</span>],</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        args<span class="op">=</span>(BETA_TRUE, GAMMA_TRUE, N_POP),</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>t_eval,</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-10</span>,</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    total <span class="op">=</span> sol.y[<span class="dv">0</span>] <span class="op">+</span> sol.y[<span class="dv">1</span>] <span class="op">+</span> sol.y[<span class="dv">2</span>]</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(total <span class="op">-</span> N_POP)) <span class="op">/</span> N_POP <span class="op">&lt;</span> <span class="fl">1e-4</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_no_transmission():</span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># When beta = 0 no new infections occur: S stays constant and I decays</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># exponentially.  With rtol=1e-8, the departure from the initial S</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># value should be below 1e-4 (relative) over T_MAX days.</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    t_eval <span class="op">=</span> np.array([<span class="fl">0.0</span>, <span class="bu">float</span>(T_MAX)])</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>        sir_rhs,</span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="bu">float</span>(T_MAX)],</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>        [<span class="bu">float</span>(N_POP <span class="op">-</span> I0), <span class="bu">float</span>(I0), <span class="fl">0.0</span>],</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>        args<span class="op">=</span>(<span class="fl">0.0</span>, GAMMA_TRUE, N_POP),</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>t_eval,</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-10</span>,</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    s_initial <span class="op">=</span> N_POP <span class="op">-</span> I0</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(sol.y[<span class="dv">0</span>, <span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> s_initial) <span class="op">/</span> N_POP <span class="op">&lt;</span> <span class="fl">1e-4</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_single_epidemic_peak():</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="co"># For R0 = BETA_TRUE / GAMMA_TRUE = 3 &gt; 1, the epidemic curve has exactly</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="co"># one maximum.  The peak is not at the boundary (it occurs after the</span></span>
+<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a>    <span class="co"># outbreak begins and before it ends), and cases fall to near zero by T_MAX.</span></span>
+<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a>    cases <span class="op">=</span> model_cases(BETA_TRUE, GAMMA_TRUE)</span>
+<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a>    peak_idx <span class="op">=</span> <span class="bu">int</span>(np.argmax(cases))</span>
+<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="dv">0</span> <span class="op">&lt;</span> peak_idx <span class="op">&lt;</span> <span class="bu">len</span>(cases) <span class="op">-</span> <span class="dv">1</span>, <span class="st">"peak is at a boundary"</span></span>
+<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> cases[<span class="op">-</span><span class="dv">1</span>] <span class="op">&lt;</span> cases[peak_idx] <span class="op">*</span> <span class="fl">0.01</span>, <span class="st">"epidemic has not ended by T_MAX"</span></span>
+<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_fit_recovers_parameters():</span>
+<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Fitting to noiseless model output should recover beta and gamma to within</span></span>
+<span id="cb8-56"><a href="#cb8-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># 1%.  Noiseless data are the best case for the optimizer; this tolerance</span></span>
+<span id="cb8-57"><a href="#cb8-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># gives a 10x margin over the expected numerical precision of least_squares.</span></span>
+<span id="cb8-58"><a href="#cb8-58" aria-hidden="true" tabindex="-1"></a>    noiseless <span class="op">=</span> model_cases(BETA_TRUE, GAMMA_TRUE)</span>
+<span id="cb8-59"><a href="#cb8-59" aria-hidden="true" tabindex="-1"></a>    beta_fit, gamma_fit <span class="op">=</span> fit(noiseless)</span>
+<span id="cb8-60"><a href="#cb8-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(beta_fit <span class="op">-</span> BETA_TRUE) <span class="op">/</span> BETA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span>
+<span id="cb8-61"><a href="#cb8-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(gamma_fit <span class="op">-</span> GAMMA_TRUE) <span class="op">/</span> GAMMA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<section class="exercises">
+</section>
+<section id="exercises" class="level2" data-number="24.8">
+<h2 data-number="24.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">24.8</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="24.8.1">
+<h3 data-number="24.8.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">24.8.1</span> Do the math</h3>
+<p>Using <code>BETA_TRUE</code> = 0.30 day<span class="math inline">\(^{-1}\)</span> and <code>GAMMA_TRUE</code> = 0.10 day<span class="math inline">\(^{-1}\)</span>, compute <span class="math inline">\(R_0 = \beta / \gamma\)</span>. Give your answer to one decimal place.</p>
+</section>
+<section id="herd-immunity-threshold" class="level3" data-number="24.8.2">
+<h3 data-number="24.8.2" class="anchored" data-anchor-id="herd-immunity-threshold"><span class="header-section-number">24.8.2</span> Herd immunity threshold</h3>
+<p>The epidemic stops growing when <span class="math inline">\(S/N\)</span> falls below <span class="math inline">\(1/R_0\)</span> (the herd immunity threshold). For the true parameters, compute the fraction of the population that has been infected by the time <span class="math inline">\(I(t)\)</span> reaches its peak. Compare this to <span class="math inline">\(1 - 1/R_0\)</span>. Are they the same?</p>
+</section>
+<section id="fitting-r_0-instead-of-beta-and-gamma" class="level3" data-number="24.8.3">
+<h3 data-number="24.8.3" class="anchored" data-anchor-id="fitting-r_0-instead-of-beta-and-gamma"><span class="header-section-number">24.8.3</span> Fitting <span class="math inline">\(R_0\)</span> instead of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span></h3>
+<p>Instead of fitting <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> separately, reparametrise the model with <span class="math inline">\(R_0\)</span> and <span class="math inline">\(\gamma\)</span> as the two parameters (so <span class="math inline">\(\beta = R_0 \gamma\)</span>). Does the optimiser converge faster? Are the confidence intervals on <span class="math inline">\(R_0\)</span> narrower than when computing <span class="math inline">\(R_0 = \hat{\beta}/\hat{\gamma}\)</span> from independently fitted parameters?</p>
+</section>
+<section id="seir-extension" class="level3" data-number="24.8.4">
+<h3 data-number="24.8.4" class="anchored" data-anchor-id="seir-extension"><span class="header-section-number">24.8.4</span> SEIR extension</h3>
+<p>Add an exposed (latent) compartment <span class="math inline">\(E\)</span> between <span class="math inline">\(S\)</span> and <span class="math inline">\(I\)</span>: <span class="math inline">\(dE/dt = \beta SI/N - \sigma E\)</span> and <span class="math inline">\(dI/dt = \sigma E - \gamma I\)</span>, where <span class="math inline">\(\sigma^{-1}\)</span> is the mean latent period. Generate synthetic data with <span class="math inline">\(\sigma = 0.2\)</span> day<span class="math inline">\(^{-1}\)</span> (mean 5-day latent period) and fit the four-parameter SEIR model. Does the SIR fit to SEIR data give biased estimates of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>?</p>
+</section>
+<section id="sensitivity-analysis" class="level3" data-number="24.8.5">
+<h3 data-number="24.8.5" class="anchored" data-anchor-id="sensitivity-analysis"><span class="header-section-number">24.8.5</span> Sensitivity analysis</h3>
+<p>Vary <span class="math inline">\(\beta\)</span> from 0.1 to 0.5 (holding <span class="math inline">\(\gamma = 0.1\)</span> fixed) and plot the epidemic peak size and peak timing as functions of <span class="math inline">\(\beta\)</span>. At what value of <span class="math inline">\(\beta\)</span> does the epidemic just barely cross the threshold (peak in <span class="math inline">\(I\)</span> is very small)? How close is this to the theoretical threshold <span class="math inline">\(\beta = \gamma\)</span>?</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../lotka/index.html" class="pagination-link" aria-label="Predator-Prey Dynamics">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../mineral/index.html" class="pagination-link" aria-label="Mineral Classification by Geochemistry">
+        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/sir/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/sir/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>

@@ -77,7 +77,7 @@ def same_neighbor_fraction(grid, row, col):
 
 
 # mccole: step
-def step(grid, step_num, threshold=THRESHOLD, rng=None):
+def step(grid, threshold=THRESHOLD, rng=None):
     """Return a new grid after moving all dissatisfied agents.
 
     Each dissatisfied agent is paired with a randomly chosen empty cell
@@ -93,7 +93,6 @@ def step(grid, step_num, threshold=THRESHOLD, rng=None):
         for c in range(size)
         if grid[r, c] != EMPTY and same_neighbor_fraction(grid, r, c) < threshold
     ]
-    print(f"{step_num:2d}: {len(dissatisfied):3d}")
     empties = [(r, c) for r in range(size) for c in range(size) if grid[r, c] == EMPTY]
     rng.shuffle(dissatisfied)
     rng.shuffle(empties)
@@ -138,7 +137,7 @@ def run(grid, n_steps=N_STEPS, threshold=THRESHOLD, seed=SEED):
     rng = np.random.default_rng(seed)
     snapshots = [grid.copy()]
     for i in range(n_steps):
-        grid = step(grid, i, threshold, rng)
+        grid = step(grid, threshold, rng)
         snapshots.append(grid.copy())
     return snapshots
 # mccole: /run

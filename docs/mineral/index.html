@@ -1,482 +1,1278 @@
 <!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
-<html lang="en">
-<head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Mineral Classification by Geochemistry</title>
-<meta content="Research Software Testing by Example" name="description"/>
-<link href="../_static/favicon.ico" rel="icon" type="image/x-icon"/>
-<link href="../_static/pygments.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/chota.css" rel="stylesheet" type="text/css"/>
-<link href="../_static/mccole.css" rel="stylesheet" type="text/css"/>
-<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/katex@0.15.1/dist/katex.min.css" integrity="sha384-R4558gYOUz8mP9YWpZJjofhk+zx0AS11p36HnD2ZKj/6JR5z27gSSULCNHIRReVs" rel="stylesheet"/>
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>25&nbsp; Mineral Classification by Geochemistry – Research Software Testing by Example</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../tumor/index.html" rel="next">
+<link href="../sir/index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../mccole/book.css">
 </head>
-<body>
-<a class="skip-link" href="#main-content">Skip to main content</a>
-<nav aria-label="Site navigation" class="nav">
-<div class="nav-left">
-<a class="brand" href="../">RSTX</a>
-<div class="dropdown">
-<button aria-controls="nav-lessons" aria-haspopup="true">Lessons</button>
-<ul class="dropdown-content" id="nav-lessons">
-<li><a href="../intro/">Introduction</a></li>
-<li><a href="../diffusion/">1D Diffusion Simulation</a></li>
-<li><a href="../lotka/">Predator-Prey Dynamics</a></li>
-<li><a href="../align/">Pairwise Sequence Alignment</a></li>
-<li><a href="../phylo/">Phylogenetic Tree Reconstruction</a></li>
-<li><a href="../massspec/">Peak Detection in Mass Spectra</a></li>
-<li><a href="../cellseg/">Cell Segmentation in Microscopy Images</a></li>
-<li><a href="../radvel/">Exoplanet Detection via Radial Velocity</a></li>
-<li><a class="active" href="../mineral/">Mineral Classification by Geochemistry</a></li>
-<li><a href="../heatwall/">Heat Conduction Through a Composite Wall</a></li>
-<li><a href="../pollute/">Pollutant Spread in a River Network</a></li>
-<li><a href="../flood/">Flood Frequency Analysis</a></li>
-<li><a href="../porous/">Percolation in a Porous Medium</a></li>
-<li><a href="../sir/">Fitting an SIR Epidemic Model</a></li>
-<li><a href="../survival/">Survival Analysis with Kaplan-Meier</a></li>
-<li><a href="../vitals/">Anomaly Detection in Patient Vital Signs</a></li>
-<li><a href="../tumor/">Tumor Classification by Logistic Regression</a></li>
-<li><a href="../elasticity/">Estimating Price Elasticity of Demand</a></li>
-<li><a href="../wealth/">Wealth Inequality in an Exchange Economy</a></li>
-<li><a href="../breakpoint/">Structural Break Detection in Economic Time Series</a></li>
-<li><a href="../schelling/">Schelling Segregation Model</a></li>
-<li><a href="../vocab/">Vocabulary Richness in Historical Texts</a></li>
-<li><a href="../topics/">Topic Modeling a Document Corpus</a></li>
-<li><a href="../authorship/">Authorship Attribution by N-gram Profiles</a></li>
-<li><a href="../wordshift/">Word Frequency Change Over Time</a></li>
-<li><a href="../stemma/">Manuscript Stemma Reconstruction</a></li>
-<li><a href="../leastcost/">Least-Cost Path Analysis for Trade Routes</a></li>
-<li><a href="../archcluster/">Spatial Clustering of Archaeological Sites</a></li>
-<li><a href="../interp/">Spatial Interpolation of Climate Data</a></li>
-<li><a href="../learning/">Fitting a Learning Curve to Experimental Data</a></li>
-<li><a href="../sdt/">Signal Detection Theory Analysis</a></li>
-<li><a href="../agreement/">Inter-Rater Agreement</a></li>
-<li><a href="../finale/">Conclusion</a></li>
-</ul>
+
+<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav" aria-label="Toolbar">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../mineral/index.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></a></li></ol></nav>
+        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Research Software Testing by Example</a> 
+        <div class="sidebar-tools-main">
+    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
-<div class="dropdown">
-<button aria-controls="nav-appendices" aria-haspopup="true">Appendices</button>
-<ul class="dropdown-content" id="nav-appendices">
-<li><a href="../license/">License</a></li>
-<li><a href="../conduct/">Code of Conduct</a></li>
-<li><a href="../contributing/">Contributing</a></li>
-<li><a href="../bibliography/">Bibliography</a></li>
-<li><a href="../glossary/">Glossary</a></li>
-</ul>
-</div>
-<a href="https://github.com/gvwilson/rstx">Repository</a>
-</div>
-</nav>
-<main id="main-content">
-<h1>Mineral Classification by Geochemistry</h1>
-<h2>The Problem</h2>
-<ul>
-<li>Geochemists measure rock samples as oxide weight percentages (wt%),
-    which is the fraction of each chemical compound in the rock</li>
-<li>A classifier that assigns samples to mineral classes from their chemistry
-    automates a task that otherwise requires expert visual inspection of thin sections under a microscope</li>
-<li>We train a <a class="gl-ref" href="../glossary/#logistic_regression">logistic regression</a> model on
-    $\text{SiO}_2$ (silica) and $\text{Al}_2\text{O}_3$ (alumina)
-    to separate felsic rocks (granite-like, silica-rich) from mafic rocks (basalt-like, silica-poor)</li>
-</ul>
-<h2>Generating Synthetic Geochemical Data</h2>
-<ul>
-<li>We start with synthetic data drawn from two Gaussian distributions
-    that mimic the composition ranges reported in igneous petrology textbooks</li>
-<li>Felsic rocks average 70 wt% $\text{SiO}_2$ and 14 wt% $\text{Al}_2\text{O}_3$<ul>
-<li>Mafic rocks average 50 wt% $\text{SiO}_2$ and 9 wt% $\text{Al}_2\text{O}_3$</li>
-</ul>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Overview</span></a>
+  </div>
 </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
+      </div>
+      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">25.1</span> The Problem</a></li>
+  <li><a href="#generating-synthetic-geochemical-data" id="toc-generating-synthetic-geochemical-data" class="nav-link" data-scroll-target="#generating-synthetic-geochemical-data"><span class="header-section-number">25.2</span> Generating Synthetic Geochemical Data</a></li>
+  <li><a href="#the-logistic-regression-model" id="toc-the-logistic-regression-model" class="nav-link" data-scroll-target="#the-logistic-regression-model"><span class="header-section-number">25.3</span> The Logistic Regression Model</a></li>
+  <li><a href="#training-by-gradient-descent" id="toc-training-by-gradient-descent" class="nav-link" data-scroll-target="#training-by-gradient-descent"><span class="header-section-number">25.4</span> Training by Gradient Descent</a></li>
+  <li><a href="#decision-boundary-and-classification" id="toc-decision-boundary-and-classification" class="nav-link" data-scroll-target="#decision-boundary-and-classification"><span class="header-section-number">25.5</span> Decision Boundary and Classification</a></li>
+  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">25.6</span> Testing</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">25.7</span> Exercises</a>
+  <ul class="collapse">
+  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">25.7.1</span> Do the math</a></li>
+  <li><a href="#three-class-classification" id="toc-three-class-classification" class="nav-link" data-scroll-target="#three-class-classification"><span class="header-section-number">25.7.2</span> Three-class classification</a></li>
+  <li><a href="#learning-rate-sensitivity" id="toc-learning-rate-sensitivity" class="nav-link" data-scroll-target="#learning-rate-sensitivity"><span class="header-section-number">25.7.3</span> Learning-rate sensitivity</a></li>
+  <li><a href="#decision-boundary-as-a-function-of-iteration-count" id="toc-decision-boundary-as-a-function-of-iteration-count" class="nav-link" data-scroll-target="#decision-boundary-as-a-function-of-iteration-count"><span class="header-section-number">25.7.4</span> Decision boundary as a function of iteration count</a></li>
+  <li><a href="#effect-of-class-imbalance" id="toc-effect-of-class-imbalance" class="nav-link" data-scroll-target="#effect-of-class-imbalance"><span class="header-section-number">25.7.5</span> Effect of class imbalance</a></li>
+  </ul></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/mineral/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/mineral/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content" tabindex="-1">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="the-problem" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">25.1</span> The Problem</h2>
+<ul>
+<li>Geochemists measure rock samples as oxide weight percentages (wt%), which is the fraction of each chemical compound in the rock</li>
+<li>A classifier that assigns samples to mineral classes from their chemistry automates a task that otherwise requires expert visual inspection of thin sections under a microscope</li>
+<li>We train a <a href="../glossary/index.html#logistic_regression">logistic regression</a> model on <span class="math inline">\(\text{SiO}_2\)</span> (silica) and <span class="math inline">\(\text{Al}_2\text{O}_3\)</span> (alumina) to separate felsic rocks (granite-like, silica-rich) from mafic rocks (basalt-like, silica-poor)</li>
+</ul>
+</section>
+<section id="generating-synthetic-geochemical-data" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="generating-synthetic-geochemical-data"><span class="header-section-number">25.2</span> Generating Synthetic Geochemical Data</h2>
+<ul>
+<li>We start with synthetic data drawn from two Gaussian distributions that mimic the composition ranges reported in igneous petrology textbooks</li>
+<li>Felsic rocks average 70 wt% <span class="math inline">\(\text{SiO}_2\)</span> and 14 wt% <span class="math inline">\(\text{Al}_2\text{O}_3\)</span>
+<ul>
+<li>Mafic rocks average 50 wt% <span class="math inline">\(\text{SiO}_2\)</span> and 9 wt% <span class="math inline">\(\text{Al}_2\text{O}_3\)</span></li>
+</ul></li>
 <li>The two distributions overlap because real mineral classification is never perfectly clean</li>
 </ul>
-<div data-inc="generate_mineral.py" data-mark="constants"><span aria-label="Source: mineral/generate_mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/generate_mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="c1"># Synthetic geochemical data: two mineral classes distinguished by oxide concentrations.</span>
-<span class="c1"># Felsic rocks (e.g. granite) are silica-rich; mafic rocks (e.g. basalt) are silica-poor.</span>
-<span class="c1"># Feature 0: SiO2 concentration (wt%)</span>
-<span class="c1"># Feature 1: Al2O3 concentration (wt%)</span>
-<span class="n">SEED</span> <span class="o">=</span> <span class="mi">7493418</span>  <span class="c1"># RNG seed</span>
-<span class="n">FELSIC_MEAN</span> <span class="o">=</span> <span class="p">[</span><span class="mf">70.0</span><span class="p">,</span> <span class="mf">14.0</span><span class="p">]</span>  <span class="c1"># granite-like: high silica, moderate alumina</span>
-<span class="n">FELSIC_STD</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
-<span class="n">MAFIC_MEAN</span> <span class="o">=</span> <span class="p">[</span><span class="mf">50.0</span><span class="p">,</span> <span class="mf">9.0</span><span class="p">]</span>  <span class="c1"># basalt-like: lower silica, lower alumina</span>
-<span class="n">MAFIC_STD</span> <span class="o">=</span> <span class="p">[</span><span class="mf">3.0</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">]</span>
-<span class="n">N_FELSIC</span> <span class="o">=</span> <span class="mi">80</span>  <span class="c1"># training + test samples per class</span>
-<span class="n">N_MAFIC</span> <span class="o">=</span> <span class="mi">80</span>
-<span class="n">TRAIN_FRAC</span> <span class="o">=</span> <span class="mf">0.75</span>  <span class="c1"># fraction used for training</span>
-</code></pre></div>
-</div>
-<div data-inc="generate_mineral.py" data-mark="make-data"><span aria-label="Source: mineral/generate_mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/generate_mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">make_mineral_data</span><span class="p">(</span><span class="n">n_felsic</span><span class="o">=</span><span class="n">N_FELSIC</span><span class="p">,</span> <span class="n">n_mafic</span><span class="o">=</span><span class="n">N_MAFIC</span><span class="p">,</span> <span class="n">seed</span><span class="o">=</span><span class="n">SEED</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return (X, y) for a two-class geochemical dataset.</span>
-
-<span class="sd">    X is (n_felsic + n_mafic, 2): columns are SiO2 and Al2O3 wt%.</span>
-<span class="sd">    y is (n_felsic + n_mafic,): 0 for felsic, 1 for mafic.</span>
-<span class="sd">    Rows are shuffled so classes are interleaved.</span>
-<span class="sd">    """</span>
-    <span class="n">rng</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">default_rng</span><span class="p">(</span><span class="n">seed</span><span class="p">)</span>
-    <span class="n">X_felsic</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">FELSIC_MEAN</span><span class="p">,</span> <span class="n">FELSIC_STD</span><span class="p">,</span> <span class="p">(</span><span class="n">n_felsic</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">X_mafic</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">MAFIC_MEAN</span><span class="p">,</span> <span class="n">MAFIC_STD</span><span class="p">,</span> <span class="p">(</span><span class="n">n_mafic</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X_felsic</span><span class="p">,</span> <span class="n">X_mafic</span><span class="p">])</span>
-    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n_felsic</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n_mafic</span><span class="p">)])</span>
-    <span class="n">idx</span> <span class="o">=</span> <span class="n">rng</span><span class="o">.</span><span class="n">permutation</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">X</span><span class="p">[</span><span class="n">idx</span><span class="p">],</span> <span class="n">y</span><span class="p">[</span><span class="n">idx</span><span class="p">]</span>
-</code></pre></div>
-</div>
-<h2>The Logistic Regression Model</h2>
+<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+</section>
+<section id="the-logistic-regression-model" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="the-logistic-regression-model"><span class="header-section-number">25.3</span> The Logistic Regression Model</h2>
 <ul>
 <li>The model predicts the probability that a sample is mafic (class 1):</li>
 </ul>
-<p>$$p = \sigma(w_0 \cdot x_0 + w_1 \cdot x_1 + b) = \frac{1}{1 + e^{-(w_0 x_0 + w_1 x_1 + b)}}$$</p>
+<p><span class="math display">\[p = \sigma(w_0 \cdot x_0 + w_1 \cdot x_1 + b) = \frac{1}{1 + e^{-(w_0 x_0 + w_1 x_1 + b)}}\]</span></p>
 <ul>
-<li>$\sigma$ is the <a class="gl-ref" href="../glossary/#sigmoid_function">sigmoid function</a>, which maps any real number to $(0, 1)$</li>
-<li>$x_0$ and $x_1$ are the (normalised) $\text{SiO}_2$ and $\text{Al}_2\text{O}_3$ concentrations</li>
-<li>$w_0$, $w_1$, and $b$ are learned from data</li>
+<li><span class="math inline">\(\sigma\)</span> is the <a href="../glossary/index.html#sigmoid_function">sigmoid function</a>, which maps any real number to <span class="math inline">\((0, 1)\)</span></li>
+<li><span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_1\)</span> are the (normalised) <span class="math inline">\(\text{SiO}_2\)</span> and <span class="math inline">\(\text{Al}_2\text{O}_3\)</span> concentrations</li>
+<li><span class="math inline">\(w_0\)</span>, <span class="math inline">\(w_1\)</span>, and <span class="math inline">\(b\)</span> are learned from data</li>
 </ul>
-<div data-inc="mineral.py" data-mark="sigmoid"><span aria-label="Source: mineral/mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Map any real number to (0, 1): sigma(z) = 1 / (1 + exp(-z))."""</span>
-    <span class="k">return</span> <span class="mf">1.0</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
-</code></pre></div>
-</div>
-<div class="forma-multiple-choice" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>Why must features be normalized before training logistic regression with gradient descent?</p>
 <dl>
 <dt>Normalisation makes the sigmoid output exactly 0.5 at the start of training.</dt>
-<dd>Wrong: initial weights are zero, so $z = 0$ and $\sigma(0) = 0.5$ regardless of feature scale.</dd>
-<dt>Features on very different scales cause gradient descent to take very small steps along</dt>
-<dt>one axis and large steps along another, slowing convergence.</dt>
-<dd>Correct: unnormalized gradients have components proportional to feature magnitude,
-creating an elongated loss surface that makes convergence slow and erratic.</dd>
+<dd>
+Wrong: initial weights are zero, so <span class="math inline">\(z = 0\)</span> and <span class="math inline">\(\sigma(0) = 0.5\)</span> regardless of feature scale.
+</dd>
+</dl>
+<p>Features on very different scales cause gradient descent to take very small steps along one axis and large steps along another, slowing convergence. : Correct: unnormalized gradients have components proportional to feature magnitude, creating an elongated loss surface that makes convergence slow and erratic.</p>
+<dl>
 <dt>Normalization ensures the model cannot overfit by constraining the weight magnitudes.</dt>
-<dd>Wrong: normalization changes the input scale, not the weight values; regularization
-is the standard tool for constraining weights.</dd>
-<dt>The sigmoid function is only defined for inputs in $[0, 1]$.</dt>
-<dd>Wrong: the sigmoid is defined for all real numbers; the $[0, 1]$ interval is its output range.</dd>
+<dd>
+Wrong: normalization changes the input scale, not the weight values; regularization is the standard tool for constraining weights.
+</dd>
+<dt>The sigmoid function is only defined for inputs in <span class="math inline">\([0, 1]\)</span>.</dt>
+<dd>
+Wrong: the sigmoid is defined for all real numbers; the <span class="math inline">\([0, 1]\)</span> interval is its output range.
+</dd>
 </dl>
 </div>
-<div data-inc="mineral.py" data-mark="normalize"><span aria-label="Source: mineral/mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">mean</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">std</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Standardize X to zero mean and unit standard deviation.</span>
-
-<span class="sd">    If mean and std are supplied (from the training set), apply them to X</span>
-<span class="sd">    without recomputing — this ensures test data is scaled identically.</span>
-<span class="sd">    """</span>
-    <span class="k">if</span> <span class="n">mean</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">mean</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">if</span> <span class="n">std</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">std</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">X</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span>
-</code></pre></div>
-</div>
-<h2>Training by Gradient Descent</h2>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</section>
+<section id="training-by-gradient-descent" class="level2" data-number="25.4">
+<h2 data-number="25.4" class="anchored" data-anchor-id="training-by-gradient-descent"><span class="header-section-number">25.4</span> Training by Gradient Descent</h2>
 <ul>
-<li>At each iteration, the model computes the <a class="gl-ref" href="../glossary/#cross_entropy">binary cross-entropy</a> loss:</li>
+<li>At each iteration, the model computes the <a href="../glossary/index.html#cross_entropy">binary cross-entropy</a> loss:</li>
 </ul>
-<p>$$\mathcal{L} = -\frac{1}{n}\sum_{i=1}^n \left[ y_i \log p_i + (1 - y_i) \log(1 - p_i) \right]$$</p>
+<p><span class="math display">\[\mathcal{L} = -\frac{1}{n}\sum_{i=1}^n \left[ y_i \log p_i + (1 - y_i) \log(1 - p_i) \right]\]</span></p>
 <ul>
-<li>The gradient of $\mathcal{L}$ with respect to the weights is $\mathbf{X}^\top (\mathbf{p} - \mathbf{y}) / n$,
-    and with respect to the bias is $\text{mean}(\mathbf{p} - \mathbf{y})$</li>
+<li>The gradient of <span class="math inline">\(\mathcal{L}\)</span> with respect to the weights is <span class="math inline">\(\mathbf{X}^\top (\mathbf{p} - \mathbf{y}) / n\)</span>, and with respect to the bias is <span class="math inline">\(\text{mean}(\mathbf{p} - \mathbf{y})\)</span></li>
 <li>Each gradient-descent step subtracts the gradient scaled by the learning rate</li>
 </ul>
-<div data-inc="mineral.py" data-mark="train"><span aria-label="Source: mineral/mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">train</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">lr</span><span class="o">=</span><span class="n">LEARNING_RATE</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="n">N_ITER</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Fit a logistic regression model by gradient descent.</span>
-
-<span class="sd">    Parameters</span>
-<span class="sd">    ----------</span>
-<span class="sd">    X : (n, p) array of features (should be normalized)</span>
-<span class="sd">    y : (n,) array of labels, 0 or 1</span>
-<span class="sd">    lr : learning rate</span>
-<span class="sd">    n_iter : number of full-batch gradient steps</span>
-
-<span class="sd">    Returns</span>
-<span class="sd">    -------</span>
-<span class="sd">    w : (p,) weight vector</span>
-<span class="sd">    b : scalar bias</span>
-<span class="sd">    losses : list of binary cross-entropy loss at each iteration</span>
-<span class="sd">    """</span>
-    <span class="n">n</span><span class="p">,</span> <span class="n">p</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">losses</span> <span class="o">=</span> <span class="p">[]</span>
-
-    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_iter</span><span class="p">):</span>
-        <span class="n">z</span> <span class="o">=</span> <span class="n">X</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span>
-        <span class="n">p_hat</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-        <span class="c1"># Binary cross-entropy; clip to avoid log(0)</span>
-        <span class="n">p_hat_clipped</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">clip</span><span class="p">(</span><span class="n">p_hat</span><span class="p">,</span> <span class="mf">1e-12</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="mf">1e-12</span><span class="p">)</span>
-        <span class="n">loss</span> <span class="o">=</span> <span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">p_hat_clipped</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">y</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">p_hat_clipped</span><span class="p">))</span>
-        <span class="n">losses</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-        <span class="c1"># Gradients</span>
-        <span class="n">err</span> <span class="o">=</span> <span class="n">p_hat</span> <span class="o">-</span> <span class="n">y</span>
-        <span class="n">dw</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">T</span> <span class="o">@</span> <span class="n">err</span> <span class="o">/</span> <span class="n">n</span>
-        <span class="n">db</span> <span class="o">=</span> <span class="n">err</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
-        <span class="n">w</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">dw</span>
-        <span class="n">b</span> <span class="o">-=</span> <span class="n">lr</span> <span class="o">*</span> <span class="n">db</span>
-
-    <span class="k">return</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">losses</span>
-</code></pre></div>
-</div>
-<div class="forma-ordering" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put the steps of one gradient-descent iteration in the correct order.</p>
-<ol>
-<li>Compute the linear combination $z = X w + b$</li>
-<li>Apply the sigmoid to get predicted probabilities $\hat{p} = \sigma(z)$</li>
+<ol type="1">
+<li>Compute the linear combination <span class="math inline">\(z = X w + b\)</span></li>
+<li>Apply the sigmoid to get predicted probabilities <span class="math inline">\(\hat{p} = \sigma(z)\)</span></li>
 <li>Evaluate the binary cross-entropy loss</li>
-<li>Compute gradients $\partial \mathcal{L}/\partial w$ and $\partial \mathcal{L}/\partial b$</li>
-<li>Update weights: $w \leftarrow w - \alpha \cdot \partial \mathcal{L}/\partial w$</li>
+<li>Compute gradients <span class="math inline">\(\partial \mathcal{L}/\partial w\)</span> and <span class="math inline">\(\partial \mathcal{L}/\partial b\)</span></li>
+<li>Update weights: <span class="math inline">\(w \leftarrow w - \alpha \cdot \partial \mathcal{L}/\partial w\)</span></li>
 </ol>
 </div>
-<h2>Decision Boundary and Classification</h2>
+</section>
+<section id="decision-boundary-and-classification" class="level2" data-number="25.5">
+<h2 data-number="25.5" class="anchored" data-anchor-id="decision-boundary-and-classification"><span class="header-section-number">25.5</span> Decision Boundary and Classification</h2>
 <ul>
-<li>The decision boundary is the line where $p = 0.5$, i.e., where $w_0 x_0 + w_1 x_1 + b = 0$</li>
-<li>Rearranging for $x_1$ ($\text{Al}_2\text{O}_3$) as a function of $x_0$ ($\text{SiO}_2$) gives:</li>
+<li>The decision boundary is the line where <span class="math inline">\(p = 0.5\)</span>, i.e., where <span class="math inline">\(w_0 x_0 + w_1 x_1 + b = 0\)</span></li>
+<li>Rearranging for <span class="math inline">\(x_1\)</span> (<span class="math inline">\(\text{Al}_2\text{O}_3\)</span>) as a function of <span class="math inline">\(x_0\)</span> (<span class="math inline">\(\text{SiO}_2\)</span>) gives:</li>
 </ul>
-<p>$$x_1 = -\frac{w_0 x_0 + b}{w_1}$$</p>
+<p><span class="math display">\[x_1 = -\frac{w_0 x_0 + b}{w_1}\]</span></p>
 <ul>
-<li>Because features were normalised during training,
-    the boundary must be mapped back to original units before plotting</li>
+<li>Because features were normalised during training, the boundary must be mapped back to original units before plotting</li>
 </ul>
-<div data-inc="mineral.py" data-mark="boundary"><span aria-label="Source: mineral/mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">decision_boundary_line</span><span class="p">(</span><span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">,</span> <span class="n">x_range</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return (x_vals, y_vals) for the decision boundary in original feature space.</span>
-
-<span class="sd">    The boundary satisfies w[0]*x_norm + w[1]*y_norm + b = 0.</span>
-<span class="sd">    Re-expressing in un-normalized coordinates:</span>
-<span class="sd">        w[0]*(x - mean[0])/std[0] + w[1]*(y - mean[1])/std[1] + b = 0</span>
-<span class="sd">    Solving for y:</span>
-<span class="sd">        y = mean[1] - std[1]/w[1] * (w[0]*(x - mean[0])/std[0] + b)</span>
-<span class="sd">    """</span>
-    <span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">*</span><span class="n">x_range</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
-    <span class="n">y_vals</span> <span class="o">=</span> <span class="n">mean</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="n">std</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span> <span class="o">*</span> <span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_vals</span> <span class="o">-</span> <span class="n">mean</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="o">/</span> <span class="n">std</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span>
-</code></pre></div>
+<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+<div id="fig-mineral-boundary" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot of SiO₂ vs Al₂O₃ with felsic (blue circles) and mafic (red triangles) training samples and a dashed decision boundary.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mineral-boundary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="mineral.svg" class="img-fluid figure-img" alt="Scatter plot of SiO₂ vs Al₂O₃ with felsic (blue circles) and mafic (red triangles) training samples and a dashed decision boundary.">
 </div>
-<div data-inc="mineral.py" data-mark="predict"><span aria-label="Source: mineral/mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="k">def</span><span class="w"> </span><span class="nf">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">threshold</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return binary class predictions (0 or 1) for each row of X."""</span>
-    <span class="k">return</span> <span class="p">(</span><span class="n">sigmoid</span><span class="p">(</span><span class="n">X</span> <span class="o">@</span> <span class="n">w</span> <span class="o">+</span> <span class="n">b</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">threshold</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">accuracy</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
-<span class="w">    </span><span class="sd">"""Return fraction of correct predictions."""</span>
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_true</span> <span class="o">==</span> <span class="n">y_pred</span><span class="p">)</span>
-</code></pre></div>
-</div>
-<figure id="f:mineral-boundary">
-<img alt="Scatter plot of SiO₂ vs Al₂O₃ with felsic (blue circles) and mafic (red triangles) training samples and a dashed decision boundary." src="mineral.svg"/>
-<figcaption>Figure 1: Training data for 120 samples (80% of 160 total). The dashed line is the learned decision boundary. The two classes are well separated in SiO₂ but overlap slightly in Al₂O₃.</figcaption>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mineral-boundary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;25.1: Training data for 120 samples (80% of 160 total). The dashed line is the learned decision boundary. The two classes are well separated in SiO₂ but overlap slightly in Al₂O₃.
+</figcaption>
 </figure>
-<div class="forma-matching" data-lang="en">
+</div>
+<div class="forma-matching" data-lang="en" data-markdown="1">
 <p>Match each component of the logistic regression model to its role.</p>
-<table>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 69%">
+<col style="width: 30%">
+</colgroup>
 <thead>
-<tr>
-<th scope="col">Component</th>
-<th scope="col">Role</th>
+<tr class="header">
+<th>Component</th>
+<th>Role</th>
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>$w_0 x_0 + w_1 x_1 + b$</td>
+<tr class="odd">
+<td><span class="math inline">\(w_0 x_0 + w_1 x_1 + b\)</span></td>
 <td>Separating hyperplane in feature space</td>
 </tr>
-<tr>
-<td>$\sigma(\cdot)$</td>
+<tr class="even">
+<td><span class="math inline">\(\sigma(\cdot)\)</span></td>
 <td>Maps the linear score to a probability</td>
 </tr>
-<tr>
-<td>$\mathcal{L}$</td>
+<tr class="odd">
+<td><span class="math inline">\(\mathcal{L}\)</span></td>
 <td>Penalises confident wrong predictions more heavily than uncertain ones</td>
 </tr>
-<tr>
+<tr class="even">
 <td>Decision boundary</td>
-<td>The surface where the model is maximally uncertain ($p = 0.5$)</td>
+<td>The surface where the model is maximally uncertain (<span class="math inline">\(p = 0.5\)</span>)</td>
 </tr>
 </tbody>
 </table>
 </div>
-<h2>Testing</h2>
+</section>
+<section id="testing" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="testing"><span class="header-section-number">25.6</span> Testing</h2>
 <dl>
 <dt>Sigmoid known values</dt>
-<dd>$\sigma(0) = 0.5$ exactly,
-$\sigma(z) \to 1$ as $z \to +\infty$,
-and $\sigma(z) \to 0$ as $z \to -\infty$.
-These are identities that must hold regardless of the training data.</dd>
+<dd>
+<span class="math inline">\(\sigma(0) = 0.5\)</span> exactly, <span class="math inline">\(\sigma(z) \to 1\)</span> as <span class="math inline">\(z \to +\infty\)</span>, and <span class="math inline">\(\sigma(z) \to 0\)</span> as <span class="math inline">\(z \to -\infty\)</span>. These are identities that must hold regardless of the training data.
+</dd>
 <dt>Normalization properties</dt>
-<dd>After normalization, each feature column must have mean 0 and standard deviation 1.
-Applying training statistics to test data must reproduce $(\mathbf{x} - \mu) / \sigma$
-without recomputing $\mu$ or $\sigma$ from the test set.</dd>
+<dd>
+After normalization, each feature column must have mean 0 and standard deviation 1. Applying training statistics to test data must reproduce <span class="math inline">\((\mathbf{x} - \mu) / \sigma\)</span> without recomputing <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma\)</span> from the test set.
+</dd>
 <dt>Loss decreases during training</dt>
-<dd>A correct gradient-descent implementation
-must reduce the cross-entropy loss monotonically over the first 100 iterations.
-An increase would indicate a sign error in the gradient or an excessively large learning rate.</dd>
+<dd>
+A correct gradient-descent implementation must reduce the cross-entropy loss monotonically over the first 100 iterations. An increase would indicate a sign error in the gradient or an excessively large learning rate.
+</dd>
 <dt>Accuracy on well-separated data</dt>
-<dd>The two classes are separated by roughly 6.7 standard deviations in $\text{SiO}_2$.
-A correctly trained classifier must achieve at least 95% accuracy; a lower score indicates a bug.</dd>
+<dd>
+The two classes are separated by roughly 6.7 standard deviations in <span class="math inline">\(\text{SiO}_2\)</span>. A correctly trained classifier must achieve at least 95% accuracy; a lower score indicates a bug.
+</dd>
 <dt>Accuracy with seed=42</dt>
-<dd>With default parameters, held-out test accuracy must reach at least 95%.
-The tolerance of 5% is wide enough to accommodate small variations between random seeds
-while still catching a failed classifier.</dd>
+<dd>
+With default parameters, held-out test accuracy must reach at least 95%. The tolerance of 5% is wide enough to accommodate small variations between random seeds while still catching a failed classifier.
+</dd>
 <dt>Predict with known weights</dt>
-<dd>With $w = [10, 0]$ and $b = 0$, the boundary is at $x_0 = 0$.
-A sample with $x_0 = 1$ must be predicted class 1
-and a sample with $x_0 = -1$ must be predicted class 0.</dd>
+<dd>
+With <span class="math inline">\(w = [10, 0]\)</span> and <span class="math inline">\(b = 0\)</span>, the boundary is at <span class="math inline">\(x_0 = 0\)</span>. A sample with <span class="math inline">\(x_0 = 1\)</span> must be predicted class 1 and a sample with <span class="math inline">\(x_0 = -1\)</span> must be predicted class 0.
+</dd>
 </dl>
-<div data-inc="test_mineral.py"><span aria-label="Source: mineral/test_mineral.py" class="inc-path" role="img" tabindex="0" title="mineral/test_mineral.py">i</span><div class="codehilite"><pre class="" tabindex="0"><span></span><code><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
-<span class="kn">import</span><span class="w"> </span><span class="nn">pytest</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">generate_mineral</span><span class="w"> </span><span class="kn">import</span> <span class="n">make_mineral_data</span><span class="p">,</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">TRAIN_FRAC</span>
-<span class="kn">from</span><span class="w"> </span><span class="nn">mineral</span><span class="w"> </span><span class="kn">import</span> <span class="n">sigmoid</span><span class="p">,</span> <span class="n">normalize</span><span class="p">,</span> <span class="n">train</span><span class="p">,</span> <span class="n">predict</span><span class="p">,</span> <span class="n">accuracy</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_sigmoid_at_zero</span><span class="p">():</span>
-    <span class="c1"># sigmoid(0) = 0.5 by definition.</span>
-    <span class="k">assert</span> <span class="n">sigmoid</span><span class="p">(</span><span class="mf">0.0</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_sigmoid_large_positive</span><span class="p">():</span>
-    <span class="c1"># sigmoid(z) → 1 as z → +∞; at z=100 the deviation from 1 is negligible.</span>
-    <span class="k">assert</span> <span class="n">sigmoid</span><span class="p">(</span><span class="mf">100.0</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="nb">abs</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_sigmoid_large_negative</span><span class="p">():</span>
-    <span class="c1"># sigmoid(z) → 0 as z → -∞.</span>
-    <span class="k">assert</span> <span class="n">sigmoid</span><span class="p">(</span><span class="o">-</span><span class="mf">100.0</span><span class="p">)</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="nb">abs</span><span class="o">=</span><span class="mf">1e-6</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_normalize_zero_mean_unit_std</span><span class="p">():</span>
-    <span class="c1"># Normalized training data must have mean ≈ 0 and std ≈ 1 for each feature.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_mineral_data</span><span class="p">()</span>
-    <span class="n">X_n</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_n</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mf">0.0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_n</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">),</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">atol</span><span class="o">=</span><span class="mf">1e-10</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_normalize_applies_training_stats</span><span class="p">():</span>
-    <span class="c1"># Normalizing test data with training mean/std must not recompute stats.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">make_mineral_data</span><span class="p">()</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">X</span><span class="p">[:</span> <span class="n">n</span> <span class="o">//</span> <span class="mi">2</span><span class="p">],</span> <span class="n">X</span><span class="p">[</span><span class="n">n</span> <span class="o">//</span> <span class="mi">2</span> <span class="p">:]</span>
-    <span class="n">X_n</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-    <span class="n">X_test_n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
-    <span class="n">expected</span> <span class="o">=</span> <span class="p">(</span><span class="n">X_test</span> <span class="o">-</span> <span class="n">mean</span><span class="p">)</span> <span class="o">/</span> <span class="n">std</span>
-    <span class="k">assert</span> <span class="n">np</span><span class="o">.</span><span class="n">allclose</span><span class="p">(</span><span class="n">X_test_n</span><span class="p">,</span> <span class="n">expected</span><span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_training_loss_decreases</span><span class="p">():</span>
-    <span class="c1"># The binary cross-entropy loss must decrease over the first 100 iterations.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_mineral_data</span><span class="p">()</span>
-    <span class="n">X_n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">_</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">losses</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X_n</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">losses</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">losses</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_perfect_separation</span><span class="p">():</span>
-    <span class="c1"># Two perfectly separated clusters must achieve 100% training accuracy.</span>
-    <span class="c1"># Felsic centred at (70, 14), mafic at (50, 9) — 6-sigma apart in SiO2.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_mineral_data</span><span class="p">()</span>
-    <span class="n">X_n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
-    <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X_n</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">n_iter</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X_n</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="c1"># The two classes are well-separated; expect ≥ 95% training accuracy.</span>
-    <span class="k">assert</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.95</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_test_accuracy</span><span class="p">():</span>
-    <span class="c1"># With default parameters, test accuracy must be ≥ 95%.</span>
-    <span class="c1"># The two classes differ by ~6.7 std devs in SiO2; the boundary should be sharp.</span>
-    <span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_mineral_data</span><span class="p">()</span>
-    <span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">TRAIN_FRAC</span><span class="p">)</span>
-    <span class="n">X_train_n</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
-    <span class="n">X_test_n</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">normalize</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">)</span>
-    <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">train</span><span class="p">(</span><span class="n">X_train_n</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X_test_n</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="mf">0.95</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_accuracy_all_correct</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]))</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span>
-        <span class="mf">1.0</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_accuracy_all_wrong</span><span class="p">():</span>
-    <span class="k">assert</span> <span class="n">accuracy</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]))</span> <span class="o">==</span> <span class="n">pytest</span><span class="o">.</span><span class="n">approx</span><span class="p">(</span>
-        <span class="mf">0.0</span>
-    <span class="p">)</span>
-
-
-<span class="k">def</span><span class="w"> </span><span class="nf">test_predict_known_weights</span><span class="p">():</span>
-    <span class="c1"># With w=[10, 0], b=0: samples with X[:,0] &gt; 0 should be predicted class 1.</span>
-    <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">]])</span>
-    <span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">10.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">])</span>
-    <span class="n">b</span> <span class="o">=</span> <span class="mf">0.0</span>
-    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">)</span>
-    <span class="k">assert</span> <span class="n">y_pred</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">1</span>
-    <span class="k">assert</span> <span class="n">y_pred</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span>
-</code></pre></div>
-</div>
-<div class="forma-flashcard" data-lang="en">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_mineral <span class="im">import</span> make_mineral_data, train_test_split, TRAIN_FRAC</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> mineral <span class="im">import</span> sigmoid, normalize, train, predict, accuracy</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_sigmoid_at_zero():</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sigmoid(0) = 0.5 by definition.</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> sigmoid(<span class="fl">0.0</span>) <span class="op">==</span> pytest.approx(<span class="fl">0.5</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_sigmoid_large_positive():</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sigmoid(z) → 1 as z → +∞; at z=100 the deviation from 1 is negligible.</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> sigmoid(<span class="fl">100.0</span>) <span class="op">==</span> pytest.approx(<span class="fl">1.0</span>, <span class="bu">abs</span><span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_sigmoid_large_negative():</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sigmoid(z) → 0 as z → -∞.</span></span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> sigmoid(<span class="op">-</span><span class="fl">100.0</span>) <span class="op">==</span> pytest.approx(<span class="fl">0.0</span>, <span class="bu">abs</span><span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_normalize_zero_mean_unit_std():</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalized training data must have mean ≈ 0 and std ≈ 1 for each feature.</span></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    X, _ <span class="op">=</span> make_mineral_data()</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>    X_n, mean, std <span class="op">=</span> normalize(X)</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.allclose(X_n.mean(axis<span class="op">=</span><span class="dv">0</span>), <span class="fl">0.0</span>, atol<span class="op">=</span><span class="fl">1e-10</span>)</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.allclose(X_n.std(axis<span class="op">=</span><span class="dv">0</span>), <span class="fl">1.0</span>, atol<span class="op">=</span><span class="fl">1e-10</span>)</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_normalize_applies_training_stats():</span>
+<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normalizing test data with training mean/std must not recompute stats.</span></span>
+<span id="cb4-32"><a href="#cb4-32" aria-hidden="true" tabindex="-1"></a>    X, _ <span class="op">=</span> make_mineral_data()</span>
+<span id="cb4-33"><a href="#cb4-33" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(X)</span>
+<span id="cb4-34"><a href="#cb4-34" aria-hidden="true" tabindex="-1"></a>    X_train, X_test <span class="op">=</span> X[: n <span class="op">//</span> <span class="dv">2</span>], X[n <span class="op">//</span> <span class="dv">2</span> :]</span>
+<span id="cb4-35"><a href="#cb4-35" aria-hidden="true" tabindex="-1"></a>    X_n, mean, std <span class="op">=</span> normalize(X_train)</span>
+<span id="cb4-36"><a href="#cb4-36" aria-hidden="true" tabindex="-1"></a>    X_test_n, _, _ <span class="op">=</span> normalize(X_test, mean, std)</span>
+<span id="cb4-37"><a href="#cb4-37" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> (X_test <span class="op">-</span> mean) <span class="op">/</span> std</span>
+<span id="cb4-38"><a href="#cb4-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.allclose(X_test_n, expected)</span>
+<span id="cb4-39"><a href="#cb4-39" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-40"><a href="#cb4-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-41"><a href="#cb4-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_training_loss_decreases():</span>
+<span id="cb4-42"><a href="#cb4-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The binary cross-entropy loss must decrease over the first 100 iterations.</span></span>
+<span id="cb4-43"><a href="#cb4-43" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> make_mineral_data()</span>
+<span id="cb4-44"><a href="#cb4-44" aria-hidden="true" tabindex="-1"></a>    X_n, _, _ <span class="op">=</span> normalize(X)</span>
+<span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    _, _, losses <span class="op">=</span> train(X_n, y, n_iter<span class="op">=</span><span class="dv">100</span>)</span>
+<span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> losses[<span class="op">-</span><span class="dv">1</span>] <span class="op">&lt;</span> losses[<span class="dv">0</span>]</span>
+<span id="cb4-47"><a href="#cb4-47" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_perfect_separation():</span>
+<span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Two perfectly separated clusters must achieve 100% training accuracy.</span></span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Felsic centred at (70, 14), mafic at (50, 9) — 6-sigma apart in SiO2.</span></span>
+<span id="cb4-52"><a href="#cb4-52" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> make_mineral_data()</span>
+<span id="cb4-53"><a href="#cb4-53" aria-hidden="true" tabindex="-1"></a>    X_n, _, _ <span class="op">=</span> normalize(X)</span>
+<span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a>    w, b, _ <span class="op">=</span> train(X_n, y, n_iter<span class="op">=</span><span class="dv">1000</span>)</span>
+<span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> predict(X_n, w, b)</span>
+<span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The two classes are well-separated; expect ≥ 95% training accuracy.</span></span>
+<span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> accuracy(y, y_pred) <span class="op">&gt;=</span> <span class="fl">0.95</span></span>
+<span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_test_accuracy():</span>
+<span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With default parameters, test accuracy must be ≥ 95%.</span></span>
+<span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The two classes differ by ~6.7 std devs in SiO2; the boundary should be sharp.</span></span>
+<span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a>    X, y <span class="op">=</span> make_mineral_data()</span>
+<span id="cb4-64"><a href="#cb4-64" aria-hidden="true" tabindex="-1"></a>    X_train, y_train, X_test, y_test <span class="op">=</span> train_test_split(X, y, TRAIN_FRAC)</span>
+<span id="cb4-65"><a href="#cb4-65" aria-hidden="true" tabindex="-1"></a>    X_train_n, mean, std <span class="op">=</span> normalize(X_train)</span>
+<span id="cb4-66"><a href="#cb4-66" aria-hidden="true" tabindex="-1"></a>    X_test_n, _, _ <span class="op">=</span> normalize(X_test, mean, std)</span>
+<span id="cb4-67"><a href="#cb4-67" aria-hidden="true" tabindex="-1"></a>    w, b, _ <span class="op">=</span> train(X_train_n, y_train)</span>
+<span id="cb4-68"><a href="#cb4-68" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> predict(X_test_n, w, b)</span>
+<span id="cb4-69"><a href="#cb4-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> accuracy(y_test, y_pred) <span class="op">&gt;=</span> <span class="fl">0.95</span></span>
+<span id="cb4-70"><a href="#cb4-70" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-71"><a href="#cb4-71" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-72"><a href="#cb4-72" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_accuracy_all_correct():</span>
+<span id="cb4-73"><a href="#cb4-73" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> accuracy(np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>]), np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>])) <span class="op">==</span> pytest.approx(</span>
+<span id="cb4-74"><a href="#cb4-74" aria-hidden="true" tabindex="-1"></a>        <span class="fl">1.0</span></span>
+<span id="cb4-75"><a href="#cb4-75" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-76"><a href="#cb4-76" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-77"><a href="#cb4-77" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-78"><a href="#cb4-78" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_accuracy_all_wrong():</span>
+<span id="cb4-79"><a href="#cb4-79" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> accuracy(np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>]), np.array([<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>])) <span class="op">==</span> pytest.approx(</span>
+<span id="cb4-80"><a href="#cb4-80" aria-hidden="true" tabindex="-1"></a>        <span class="fl">0.0</span></span>
+<span id="cb4-81"><a href="#cb4-81" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-82"><a href="#cb4-82" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-83"><a href="#cb4-83" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-84"><a href="#cb4-84" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_predict_known_weights():</span>
+<span id="cb4-85"><a href="#cb4-85" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With w=[10, 0], b=0: samples with X[:,0] &gt; 0 should be predicted class 1.</span></span>
+<span id="cb4-86"><a href="#cb4-86" aria-hidden="true" tabindex="-1"></a>    X <span class="op">=</span> np.array([[<span class="fl">1.0</span>, <span class="fl">0.0</span>], [<span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>]])</span>
+<span id="cb4-87"><a href="#cb4-87" aria-hidden="true" tabindex="-1"></a>    w <span class="op">=</span> np.array([<span class="fl">10.0</span>, <span class="fl">0.0</span>])</span>
+<span id="cb4-88"><a href="#cb4-88" aria-hidden="true" tabindex="-1"></a>    b <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb4-89"><a href="#cb4-89" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> predict(X, w, b)</span>
+<span id="cb4-90"><a href="#cb4-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> y_pred[<span class="dv">0</span>] <span class="op">==</span> <span class="dv">1</span></span>
+<span id="cb4-91"><a href="#cb4-91" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> y_pred[<span class="dv">1</span>] <span class="op">==</span> <span class="dv">0</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Mineral classification key terms</p>
 <dl>
 <dt>Felsic rock</dt>
-<dd>Silica-rich igneous rock (granite, rhyolite); typically $\text{SiO}_2 &gt; 63$ wt%</dd>
+<dd>
+Silica-rich igneous rock (granite, rhyolite); typically <span class="math inline">\(\text{SiO}_2 &gt; 63\)</span> wt%
+</dd>
 <dt>Mafic rock</dt>
-<dd>Silica-poor, magnesium- and iron-rich igneous rock (basalt, gabbro); typically $\text{SiO}_2 &lt; 52$ wt%</dd>
+<dd>
+Silica-poor, magnesium- and iron-rich igneous rock (basalt, gabbro); typically <span class="math inline">\(\text{SiO}_2 &lt; 52\)</span> wt%
+</dd>
 <dt>Sigmoid function</dt>
-<dd>$\sigma(z) = 1/(1 + e^{-z})$; maps any real number to the open interval $(0, 1)$ for use as a probability</dd>
+<dd>
+<span class="math inline">\(\sigma(z) = 1/(1 + e^{-z})\)</span>; maps any real number to the open interval <span class="math inline">\((0, 1)\)</span> for use as a probability
+</dd>
 <dt>Binary cross-entropy</dt>
-<dd>$-[y \log p + (1-y)\log(1-p)]$; loss function that penalises confident wrong predictions</dd>
+<dd>
+<span class="math inline">\(-[y \log p + (1-y)\log(1-p)]\)</span>; loss function that penalises confident wrong predictions
+</dd>
 <dt>Decision boundary</dt>
-<dd>The surface in feature space where the model assigns equal probability to both classes; a line for two features</dd>
+<dd>
+The surface in feature space where the model assigns equal probability to both classes; a line for two features
+</dd>
 <dt>Gradient descent</dt>
-<dd>Iterative optimisation that moves weights in the direction that most rapidly decreases the loss</dd>
+<dd>
+Iterative optimisation that moves weights in the direction that most rapidly decreases the loss
+</dd>
 </dl>
 </div>
-<section aria-label="Exercises" class="exercises">
-<h2>Exercises</h2>
-<h3>Do the math</h3>
-<p>The Mahalanobis distance between two univariate Gaussians with means $\mu_1$, $\mu_2$ and
-equal standard deviation $\sigma$ is $|\mu_1 - \mu_2| / \sigma$.
-Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>,
-what fraction of the $\text{SiO}_2$ distributions overlap?
-(Hint: use the 68-95-99.7 rule: the distance is about $6.7\sigma$, so overlap $\approx 0$.)</p>
-<h3>Three-class classification</h3>
-<p>Add a third class (ultramafic rocks, e.g. peridotite, with $\text{SiO}_2 \approx 42$ wt% and $\text{Al}_2\text{O}_3 \approx 3$ wt%).
-Extend <code>train</code> to use the softmax function and categorical cross-entropy loss instead of the
-binary formulation.  Report per-class precision and recall on a held-out test set.</p>
-<h3>Learning-rate sensitivity</h3>
-<p>Run <code>train</code> with learning rates $\alpha \in {0.001, 0.01, 0.1, 1.0, 10.0}$ for 500
-iterations each.  Plot the final training loss as a function of $\alpha$ and identify the
-range where gradient descent converges reliably.  Explain why very large learning rates
-cause divergence.</p>
-<h3>Decision boundary as a function of iteration count</h3>
-<p>Save the weights $w$ and bias $b$ every 50 iterations during training.  Plot the decision
-boundary at each checkpoint on the same scatter plot.  Show that the boundary rotates and
-shifts as training progresses and stabilises near the optimum.</p>
-<h3>Effect of class imbalance</h3>
-<p>Generate a dataset with 160 felsic samples and 20 mafic samples.  Train the classifier and
-report the confusion matrix.  Show that the model achieves high overall accuracy by
-predicting felsic almost everywhere, then implement class-weighted cross-entropy loss
-(multiply the mafic term by <code>n_felsic / n_mafic</code>) and show that it recovers better
-detection of the minority class.</p>
+<section class="exercises">
 </section>
-</main>
-<footer aria-label="Page navigation">
-<div class="row">
-<div class="col-3 left">
-<span aria-hidden="true">⇐</span> <a href="../radvel/">Exoplanet Detection via Radial Velocity</a>
-</div>
-<div class="col-6 center">
-<a href="../">RSTX</a>
-	  ©
-	  <a href="../#acknowledgments">the authors</a>
-</div>
-<div class="col-3 right">
-<a href="../heatwall/">Heat Conduction Through a Composite Wall</a> <span aria-hidden="true">⇒</span>
-</div>
-</div>
-</footer>
-<script src="https://cdn.jsdelivr.net/npm/@gvwilson/forma" type="module"></script>
-<script crossorigin="anonymous" defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
-<script crossorigin="anonymous" defer="" onload="renderMathInElement(document.body, {
-        delimiters: [
-          {left: '$$', right: '$$', display: true},
-          {left: '$',  right: '$',  display: false}
-        ]
-      });" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
-</body>
-</html>
+<section id="exercises" class="level2" data-number="25.7">
+<h2 data-number="25.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">25.7</span> Exercises</h2>
+<section id="do-the-math" class="level3" data-number="25.7.1">
+<h3 data-number="25.7.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">25.7.1</span> Do the math</h3>
+<p>The Mahalanobis distance between two univariate Gaussians with means <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span> and equal standard deviation <span class="math inline">\(\sigma\)</span> is <span class="math inline">\(|\mu_1 - \mu_2| / \sigma\)</span>. Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>, what fraction of the <span class="math inline">\(\text{SiO}_2\)</span> distributions overlap? (Hint: use the 68-95-99.7 rule: the distance is about <span class="math inline">\(6.7\sigma\)</span>, so overlap <span class="math inline">\(\approx 0\)</span>.)</p>
+</section>
+<section id="three-class-classification" class="level3" data-number="25.7.2">
+<h3 data-number="25.7.2" class="anchored" data-anchor-id="three-class-classification"><span class="header-section-number">25.7.2</span> Three-class classification</h3>
+<p>Add a third class (ultramafic rocks, e.g.&nbsp;peridotite, with <span class="math inline">\(\text{SiO}_2 \approx 42\)</span> wt% and <span class="math inline">\(\text{Al}_2\text{O}_3 \approx 3\)</span> wt%). Extend <code>train</code> to use the softmax function and categorical cross-entropy loss instead of the binary formulation. Report per-class precision and recall on a held-out test set.</p>
+</section>
+<section id="learning-rate-sensitivity" class="level3" data-number="25.7.3">
+<h3 data-number="25.7.3" class="anchored" data-anchor-id="learning-rate-sensitivity"><span class="header-section-number">25.7.3</span> Learning-rate sensitivity</h3>
+<p>Run <code>train</code> with learning rates <span class="math inline">\(\alpha \in \{0.001, 0.01, 0.1, 1.0, 10.0\}\)</span> for 500 iterations each. Plot the final training loss as a function of <span class="math inline">\(\alpha\)</span> and identify the range where gradient descent converges reliably. Explain why very large learning rates cause divergence.</p>
+</section>
+<section id="decision-boundary-as-a-function-of-iteration-count" class="level3" data-number="25.7.4">
+<h3 data-number="25.7.4" class="anchored" data-anchor-id="decision-boundary-as-a-function-of-iteration-count"><span class="header-section-number">25.7.4</span> Decision boundary as a function of iteration count</h3>
+<p>Save the weights <span class="math inline">\(w\)</span> and bias <span class="math inline">\(b\)</span> every 50 iterations during training. Plot the decision boundary at each checkpoint on the same scatter plot. Show that the boundary rotates and shifts as training progresses and stabilises near the optimum.</p>
+</section>
+<section id="effect-of-class-imbalance" class="level3" data-number="25.7.5">
+<h3 data-number="25.7.5" class="anchored" data-anchor-id="effect-of-class-imbalance"><span class="header-section-number">25.7.5</span> Effect of class imbalance</h3>
+<p>Generate a dataset with 160 felsic samples and 20 mafic samples. Train the classifier and report the confusion matrix. Show that the model achieves high overall accuracy by predicting felsic almost everywhere, then implement class-weighted cross-entropy loss (multiply the mafic term by <code>n_felsic / n_mafic</code>) and show that it recovers better detection of the minority class.</p>
+</section>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+<nav class="page-navigation" aria-label="Page">
+  <div class="nav-page nav-page-previous">
+      <a href="../sir/index.html" class="pagination-link" aria-label="Fitting an SIR Epidemic Model">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../tumor/index.html" class="pagination-link" aria-label="Tumor Classification by Logistic Regression">
+        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/mineral/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/mineral/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
