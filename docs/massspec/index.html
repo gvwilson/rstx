@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Peak Detection in Mass Spectra</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -44,38 +61,38 @@
 <ul>
 <li>A synthetic spectrum is a sum of Gaussian peaks at known m/z values plus Gaussian noise:</li>
 </ul>
-<p><span class="math display">$$I(m) = \sum_k h_k \exp\!\left(-\frac{(m - \mu_k)^2}{2\sigma_k^2}\right) + \varepsilon, \qquad \varepsilon \sim \mathcal{N}(0,\,\sigma_\text{noise}^2)$$</span></p>
+<p><span class="math display">\[I(m) = \sum_k h_k \exp\!\left(-\frac{(m - \mu_k)^2}{2\sigma_k^2}\right) + \varepsilon, \qquad \varepsilon \sim \mathcal{N}(0,\,\sigma_\text{noise}^2)\]</span></p>
 <ul>
-<li><span class="math inline"><em>μ</em><sub><em>k</em></sub></span>, <span class="math inline"><em>h</em><sub><em>k</em></sub></span>, and <span class="math inline"><em>σ</em><sub><em>k</em></sub></span> are the center, height, and width of peak <span class="math inline"><em>k</em></span></li>
+<li><span class="math inline">\(\mu_k\)</span>, <span class="math inline">\(h_k\)</span>, and <span class="math inline">\(\sigma_k\)</span> are the center, height, and width of peak <span class="math inline">\(k\)</span></li>
 <li>Intensities are clipped to zero because a negative ion count has no physical meaning</li>
 </ul>
 <p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
 <h2 data-number="13.3" id="smoothing"><span class="header-section-number">13.3</span> Smoothing</h2>
 <ul>
 <li>Noise causes random local maxima that look like peaks but carry no chemical information</li>
-<li>A <a href="../glossary/index.html#moving_average">moving-average</a> filter replaces each point with the mean of its <span class="math inline"><em>w</em></span> nearest neighbours, reducing point-to-point variance by a factor of <span class="math inline"><em>w</em></span>:</li>
+<li>A <a href="../glossary/index.html#moving_average">moving-average</a> filter replaces each point with the mean of its <span class="math inline">\(w\)</span> nearest neighbours, reducing point-to-point variance by a factor of <span class="math inline">\(w\)</span>:</li>
 </ul>
-<p><span class="math display">$$\hat{I}_i = \frac{1}{w} \sum_{j=i-\lfloor w/2 \rfloor}^{i+\lfloor w/2 \rfloor} I_j$$</span></p>
+<p><span class="math display">\[\hat{I}_i = \frac{1}{w} \sum_{j=i-\lfloor w/2 \rfloor}^{i+\lfloor w/2 \rfloor} I_j\]</span></p>
 <ul>
-<li>Smoothing attenuates noise without shifting peak positions as long as <span class="math inline"><em>w</em></span> is small relative to the peak width</li>
+<li>Smoothing attenuates noise without shifting peak positions as long as <span class="math inline">\(w\)</span> is small relative to the peak width</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>The noise standard deviation before smoothing is <span class="math inline"><em>σ</em><sub>noise</sub> = 0.05</span>. After applying a moving-average filter with window w = 5, what is the approximate standard deviation of the smoothed noise?</p>
+<p>The noise standard deviation before smoothing is <span class="math inline">\(\sigma_\text{noise} = 0.05\)</span>. After applying a moving-average filter with window w = 5, what is the approximate standard deviation of the smoothed noise?</p>
 <dl>
 <dt>0.05 (unchanged)</dt>
 <dd>
 Wrong: averaging reduces variance — a filter that left noise unchanged would be useless.
 </dd>
-<dt><span class="math inline">$0.05 / \sqrt{5} \approx 0.022$</span></dt>
+<dt><span class="math inline">\(0.05 / \sqrt{5} \approx 0.022\)</span></dt>
 <dd>
-Correct: averaging w independent values reduces variance by <span class="math inline">1/<em>w</em></span>, so standard deviation by <span class="math inline">$1/\sqrt{w}$</span>.
+Correct: averaging w independent values reduces variance by <span class="math inline">\(1/w\)</span>, so standard deviation by <span class="math inline">\(1/\sqrt{w}\)</span>.
 </dd>
 <dt>0.05 / 5 = 0.010</dt>
 <dd>
-Wrong: the variance (not the standard deviation) is divided by w; the std dev is divided by <span class="math inline">$\sqrt{w}$</span>.
+Wrong: the variance (not the standard deviation) is divided by w; the std dev is divided by <span class="math inline">\(\sqrt{w}\)</span>.
 </dd>
-<dt><span class="math inline">$0.05 \times \sqrt{5} \approx 0.112$</span></dt>
+<dt><span class="math inline">\(0.05 \times \sqrt{5} \approx 0.112\)</span></dt>
 <dd>
 Wrong: smoothing reduces noise, not increases it.
 </dd>
@@ -153,12 +170,12 @@ Figure&nbsp;13.2: Pure Gaussian noise (no signal) smoothed and searched with a t
 </figure>
 </div>
 <ul>
-<li>With noise standard deviation <span class="math inline"><em>σ</em><sub>noise</sub> = 0.05</span> and window <span class="math inline"><em>w</em> = 5</span>, the smoothed noise has standard deviation <span class="math inline">$0.05 / \sqrt{5} \approx 0.022$</span></li>
-<li>A threshold of 0.04 is roughly <span class="math inline">1.8<em>σ</em></span>
+<li>With noise standard deviation <span class="math inline">\(\sigma_\text{noise} = 0.05\)</span> and window <span class="math inline">\(w = 5\)</span>, the smoothed noise has standard deviation <span class="math inline">\(0.05 / \sqrt{5} \approx 0.022\)</span></li>
+<li>A threshold of 0.04 is roughly <span class="math inline">\(1.8\sigma\)</span>
 <ul>
 <li>Roughly 7% of smoothed values exceed it, so several local maxima among them are expected</li>
 </ul></li>
-<li>The operating threshold of 0.10 is <span class="math inline">4.5<em>σ</em></span>
+<li>The operating threshold of 0.10 is <span class="math inline">\(4.5\sigma\)</span>
 <ul>
 <li>Fewer than one point in 100,000 exceeds it by chance, making false positives negligible for a 500-point spectrum</li>
 </ul></li>
@@ -177,7 +194,7 @@ Wrong: the right threshold depends on the noise level and peak heights; 0.10 is 
 </dd>
 <dt>The threshold must be set well above the smoothed noise floor to suppress false positives</dt>
 <dd>
-Correct: at 0.04 <span class="math inline"> ≈ 1.8<em>σ</em></span> roughly 7% of smoothed noise exceeds the threshold; at 0.10 <span class="math inline"> ≈ 4.5<em>σ</em></span> fewer than 1 in 100 000 values do.
+Correct: at 0.04 <span class="math inline">\(\approx 1.8\sigma\)</span> roughly 7% of smoothed noise exceeds the threshold; at 0.10 <span class="math inline">\(\approx 4.5\sigma\)</span> fewer than 1 in 100 000 values do.
 </dd>
 <dt>Increasing the smoothing window eliminates false positives at any threshold</dt>
 <dd>
@@ -286,9 +303,9 @@ Running the detector on pure noise at a low threshold must return at least one f
 <h3 data-number="13.7.1" id="savitzky-golay-filter"><span class="header-section-number">13.7.1</span> Savitzky-Golay filter</h3>
 <p>Replace the moving-average smoother with a Savitzky-Golay filter, which fits a low-degree polynomial to each window rather than taking a plain mean. The advantage is that the filter preserves peak heights more accurately. Use <code>scipy.signal.savgol_filter</code> and compare the peak positions and heights it reports to those from the moving-average filter on the same synthetic spectrum.</p>
 <h3 data-number="13.7.2" id="baseline-correction"><span class="header-section-number">13.7.2</span> Baseline correction</h3>
-<p>Real spectra often have a slowly varying baseline (background signal) that shifts all intensities upward. Simulate this by adding a low-frequency sinusoid <span class="math inline"><em>B</em>(<em>m</em>) = 0.3sin (2<em>π</em><em>m</em>/800)</span> to the synthetic spectrum before adding noise. Implement <code>subtract_baseline(mz, intensity, window)</code> that uses a moving minimum over a large window to estimate and remove the baseline, then show that peak detection on the corrected spectrum recovers the same four compounds.</p>
+<p>Real spectra often have a slowly varying baseline (background signal) that shifts all intensities upward. Simulate this by adding a low-frequency sinusoid <span class="math inline">\(B(m) = 0.3 \sin(2\pi m / 800)\)</span> to the synthetic spectrum before adding noise. Implement <code>subtract_baseline(mz, intensity, window)</code> that uses a moving minimum over a large window to estimate and remove the baseline, then show that peak detection on the corrected spectrum recovers the same four compounds.</p>
 <h3 data-number="13.7.3" id="peak-area"><span class="header-section-number">13.7.3</span> Peak area</h3>
-<p>The area under a Gaussian peak is <span class="math inline">$h \sigma \sqrt{2\pi}$</span> and is proportional to compound abundance. After detecting each peak, fit a Gaussian to the smoothed signal in a small window around it using <code>scipy.optimize.curve_fit</code> and report the fitted height, center, and area. Compare the fitted values to the ground truth in <code>PEAKS</code>.</p>
+<p>The area under a Gaussian peak is <span class="math inline">\(h \sigma \sqrt{2\pi}\)</span> and is proportional to compound abundance. After detecting each peak, fit a Gaussian to the smoothed signal in a small window around it using <code>scipy.optimize.curve_fit</code> and report the fitted height, center, and area. Compare the fitted values to the ground truth in <code>PEAKS</code>.</p>
 <h3 data-number="13.7.4" id="receiver-operating-characteristic"><span class="header-section-number">13.7.4</span> Receiver operating characteristic</h3>
 <p>Use <code>make_pure_noise</code> to generate 200 noise-only spectra and <code>make_spectrum</code> to generate 200 signal spectra. For each, record whether the detector finds at least one peak. Sweep the threshold from 0.01 to 0.30 and plot the ROC curve (true positive rate vs. false positive rate). Report the threshold that maximises the F1 score.</p>
 </section>

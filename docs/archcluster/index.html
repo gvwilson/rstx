@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Spatial Clustering of Archaeological Sites</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -74,11 +91,11 @@ Wrong: in the synthetic data there are 20 noise points and 60 cluster sites, but
 </div>
 <h2 data-number="6.2" id="dividing-the-region-into-a-grid"><span class="header-section-number">6.2</span> Dividing the Region into a Grid</h2>
 <ul>
-<li>The survey region spans <span class="math inline">[region_min, region_max]</span> in both easting and northing</li>
-<li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline"><em>w</em> = (region_max − region_min)/grid_size</span></li>
-<li>The cell index along one axis for a coordinate <span class="math inline"><em>v</em></span> is:</li>
+<li>The survey region spans <span class="math inline">\([\text{region\_min}, \text{region\_max}]\)</span> in both easting and northing</li>
+<li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline">\(w = (\text{region\_max} - \text{region\_min}) / \text{grid\_size}\)</span></li>
+<li>The cell index along one axis for a coordinate <span class="math inline">\(v\)</span> is:</li>
 </ul>
-<p><span class="math display">$$\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor$$</span></p>
+<p><span class="math display">\[\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor\]</span></p>
 <ul>
 <li>Sites exactly on the upper boundary would map to index <code>grid_size</code>
 <ul>
@@ -137,7 +154,7 @@ Wrong: larger cells aggregate more sites; the tendency is to merge clusters, not
 <ul>
 <li>Only hot cells receive a non-negative label</li>
 </ul></li>
-<li>Each cell is pushed onto the stack at most once (when first labelled), so the algorithm runs in <span class="math inline"><em>O</em>(grid_size<sup>2</sup>)</span> time</li>
+<li>Each cell is pushed onto the stack at most once (when first labelled), so the algorithm runs in <span class="math inline">\(O(\text{grid\_size}^2)\)</span> time</li>
 </ul>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps of the DFS connected-component labelling in the correct order.</p>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Word Frequency Change Over Time</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -69,21 +86,21 @@ Wrong: normalization corrects for corpus size differences but cannot remove the 
 </div>
 <h2 data-number="20.2" id="normalized-frequency"><span class="header-section-number">20.2</span> Normalized Frequency</h2>
 <ul>
-<li>For word <span class="math inline"><em>w</em></span> in decade <span class="math inline"><em>d</em></span> with raw count <span class="math inline"><em>c</em><sub><em>w</em>, <em>d</em></sub></span> and total token count <span class="math inline"><em>N</em><sub><em>d</em></sub> = ∑<sub><em>w</em><sup>′</sup></sub><em>c</em><sub><em>w</em><sup>′</sup>, <em>d</em></sub></span>, the normalized frequency is:</li>
+<li>For word <span class="math inline">\(w\)</span> in decade <span class="math inline">\(d\)</span> with raw count <span class="math inline">\(c_{w,d}\)</span> and total token count <span class="math inline">\(N_d = \sum_{w'} c_{w',d}\)</span>, the normalized frequency is:</li>
 </ul>
-<p><span class="math display">$$f_{w,d} = \frac{c_{w,d}}{N_d}$$</span></p>
+<p><span class="math display">\[f_{w,d} = \frac{c_{w,d}}{N_d}\]</span></p>
 <ul>
 <li>All normalized frequencies in a decade sum to 1, making them comparable across decades regardless of how many texts were digitized or produced.</li>
 </ul>
 <h2 data-number="20.3" id="linear-trend"><span class="header-section-number">20.3</span> Linear Trend</h2>
 <ul>
-<li>A linear trend assumes that the normalized frequency changes by a constant amount per decade: <span class="math inline"><em>f</em><sub><em>w</em>, <em>d</em></sub> = <em>α</em><sub><em>w</em></sub> + <em>β</em><sub><em>w</em></sub> ⋅ <em>d</em><sub>idx</sub></span>, where <span class="math inline"><em>d</em><sub>idx</sub></span> is the decade index (0 for the earliest decade, 1 for the next, and so on).</li>
+<li>A linear trend assumes that the normalized frequency changes by a constant amount per decade: <span class="math inline">\(f_{w,d} = \alpha_w + \beta_w \cdot d_{\text{idx}}\)</span>, where <span class="math inline">\(d_{\text{idx}}\)</span> is the decade index (0 for the earliest decade, 1 for the next, and so on).</li>
 <li>The OLS slope estimator is:</li>
 </ul>
-<p><span class="math display">$$\hat{\beta}_w = \frac{\displaystyle\sum_d (d_{\text{idx}} - \bar{d})(f_{w,d} - \bar{f}_w)} {\displaystyle\sum_d (d_{\text{idx}} - \bar{d})^2}$$</span></p>
+<p><span class="math display">\[\hat{\beta}_w = \frac{\displaystyle\sum_d (d_{\text{idx}} - \bar{d})(f_{w,d} - \bar{f}_w)} {\displaystyle\sum_d (d_{\text{idx}} - \bar{d})^2}\]</span></p>
 <ul>
-<li>A positive <span class="math inline"><em>β̂</em><sub><em>w</em></sub></span> means the word’s share of tokens rose over time; a negative slope means it fell.</li>
-<li>The units of <span class="math inline"><em>β̂</em><sub><em>w</em></sub></span> are normalized-frequency change per 10-year period.</li>
+<li>A positive <span class="math inline">\(\hat{\beta}_w\)</span> means the word’s share of tokens rose over time; a negative slope means it fell.</li>
+<li>The units of <span class="math inline">\(\hat{\beta}_w\)</span> are normalized-frequency change per 10-year period.</li>
 </ul>
 <h2 data-number="20.4" id="generating-synthetic-data"><span class="header-section-number">20.4</span> Generating Synthetic Data</h2>
 <ul>
@@ -214,7 +231,7 @@ A change in the relative frequency of a word over time; a positive shift indicat
 </dd>
 <dt>OLS slope</dt>
 <dd>
-In this context, <span class="math inline"><em>β̂</em><sub><em>w</em></sub> = ∑<sub><em>d</em></sub>(<em>d</em> − <em>d̄</em>)(<em>f</em> − <em>f̄</em>)/∑<sub><em>d</em></sub>(<em>d</em> − <em>d̄</em>)<sup>2</sup></span>; the rate of change of normalized frequency per decade estimated by ordinary least squares
+In this context, <span class="math inline">\(\hat{\beta}_w = \sum_d (d-\bar{d})(f-\bar{f}) / \sum_d (d-\bar{d})^2\)</span>; the rate of change of normalized frequency per decade estimated by ordinary least squares
 </dd>
 </dl>
 </div>
@@ -226,7 +243,7 @@ In this context, <span class="math inline"><em>β̂</em><sub><em>w</em></sub> 
 <li><p>A word has normalized frequency 0.010 at decade index 0 and 0.020 at decade index 1 (two data points only). The mean decade index is 0.5 and the mean frequency is 0.015. What is the OLS slope?</p></li>
 </ol>
 <h3 data-number="20.9.2" id="confidence-interval-on-the-slope"><span class="header-section-number">20.9.2</span> Confidence interval on the slope</h3>
-<p>Extend <code>linear_trend</code> to return both the slope and its standard error <span class="math inline">$\text{SE}(\hat{\beta}) = \hat{\sigma} / \sqrt{\sum_d (d - \bar{d})^2}$</span>, where <span class="math inline"><em>σ̂</em><sup>2</sup> = ∑<sub><em>d</em></sub>(<em>f</em><sub><em>w</em>, <em>d</em></sub> − <em>f̂</em><sub><em>w</em>, <em>d</em></sub>)<sup>2</sup>/(<em>n</em> − 2)</span> is the residual variance. Report a 95% confidence interval for each target word and check whether the interval for “steam” contains zero.</p>
+<p>Extend <code>linear_trend</code> to return both the slope and its standard error <span class="math inline">\(\text{SE}(\hat{\beta}) = \hat{\sigma} / \sqrt{\sum_d (d - \bar{d})^2}\)</span>, where <span class="math inline">\(\hat{\sigma}^2 = \sum_d (f_{w,d} - \hat{f}_{w,d})^2 / (n - 2)\)</span> is the residual variance. Report a 95% confidence interval for each target word and check whether the interval for “steam” contains zero.</p>
 <h3 data-number="20.9.3" id="detecting-non-linear-change"><span class="header-section-number">20.9.3</span> Detecting non-linear change</h3>
 <p>The linear model assumes a constant rate of change. Add a word “flash” to the generator whose frequency rises steeply from 1850 to 1900 and then falls back to its starting level from 1900 to 1950 (an inverted V shape). Compute its OLS slope and explain why the slope is near zero even though the word’s usage clearly changed. What alternative measure would capture the inverted-V pattern?</p>
 <h3 data-number="20.9.4" id="rank-shift"><span class="header-section-number">20.9.4</span> Rank shift</h3>

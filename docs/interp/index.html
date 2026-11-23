@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Spatial Interpolation of Climate Data</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -68,21 +85,21 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 </div>
 <h2 data-number="18.2" id="inverse-distance-weighting"><span class="header-section-number">18.2</span> Inverse-Distance Weighting</h2>
 <ul>
-<li>For a query point <span class="math inline"><strong>q</strong></span>, let <span class="math inline"><em>d</em><sub><em>i</em></sub> = ∥<strong>q</strong> − <strong>s</strong><sub><em>i</em></sub>∥</span> be the Euclidean distance to station <span class="math inline"><em>i</em></span> with observed value <span class="math inline"><em>z</em><sub><em>i</em></sub></span></li>
+<li>For a query point <span class="math inline">\(\mathbf{q}\)</span>, let <span class="math inline">\(d_i = \|\mathbf{q} - \mathbf{s}_i\|\)</span> be the Euclidean distance to station <span class="math inline">\(i\)</span> with observed value <span class="math inline">\(z_i\)</span></li>
 <li>The IDW estimate is:</li>
 </ul>
-<p><span class="math display">$$\hat{z}(\mathbf{q}) = \frac{\displaystyle\sum_{i=1}^{n} w_i\, z_i}{\displaystyle\sum_{i=1}^{n} w_i}, \qquad w_i = d_i^{-p}$$</span></p>
+<p><span class="math display">\[\hat{z}(\mathbf{q}) = \frac{\displaystyle\sum_{i=1}^{n} w_i\, z_i}{\displaystyle\sum_{i=1}^{n} w_i}, \qquad w_i = d_i^{-p}\]</span></p>
 <ul>
-<li>The power parameter <span class="math inline"><em>p</em></span> controls how fast influence falls off with distance
+<li>The power parameter <span class="math inline">\(p\)</span> controls how fast influence falls off with distance
 <ul>
-<li><span class="math inline"><em>p</em> = 2</span> is standard in environmental science</li>
+<li><span class="math inline">\(p = 2\)</span> is standard in environmental science</li>
 </ul></li>
-<li>A small constant <span class="math inline"><em>ε</em> = 10<sup>−10</sup></span> is added to each <span class="math inline"><em>d</em><sub><em>i</em></sub></span> to prevent division by zero when a query point coincides with a station</li>
-<li>Because the weights are non-negative and sum to one after normalization, IDW is a <a href="../glossary/index.html#convexity">convex combination</a>: all estimates lie within <span class="math inline">[min<sub><em>i</em></sub><em>z</em><sub><em>i</em></sub>, max<sub><em>i</em></sub><em>z</em><sub><em>i</em></sub>]</span></li>
+<li>A small constant <span class="math inline">\(\varepsilon = 10^{-10}\)</span> is added to each <span class="math inline">\(d_i\)</span> to prevent division by zero when a query point coincides with a station</li>
+<li>Because the weights are non-negative and sum to one after normalization, IDW is a <a href="../glossary/index.html#convexity">convex combination</a>: all estimates lie within <span class="math inline">\([\min_i z_i,\, \max_i z_i]\)</span></li>
 </ul>
 <h2 data-number="18.3" id="generating-synthetic-station-data"><span class="header-section-number">18.3</span> Generating Synthetic Station Data</h2>
 <ul>
-<li>The true temperature field is <span class="math inline"><em>T</em>(<em>x</em>, <em>y</em>) = sin (3<em>π</em><em>x</em>)cos (2<em>π</em><em>y</em>)</span> on <span class="math inline">[0, 1]<sup>2</sup></span>, producing three warm-cool bands in <span class="math inline"><em>x</em></span> and two in <span class="math inline"><em>y</em></span></li>
+<li>The true temperature field is <span class="math inline">\(T(x, y) = \sin(3\pi x)\cos(2\pi y)\)</span> on <span class="math inline">\([0,1]^2\)</span>, producing three warm-cool bands in <span class="math inline">\(x\)</span> and two in <span class="math inline">\(y\)</span></li>
 <li>Station locations are drawn uniformly at random
 <ul>
 <li>Values are exact samples from this field with no added noise</li>
@@ -93,8 +110,8 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 <h2 data-number="18.4" id="computing-the-idw-grid"><span class="header-section-number">18.4</span> Computing the IDW Grid</h2>
 <ul>
 <li>Each of the grid points is treated as an independent query</li>
-<li>All <span class="math inline">(<em>m</em> × <em>n</em>)</span> distances are computed at once by broadcasting: <code>diff = query_xy[:, newaxis, :] - station_xy[newaxis, :, :]</code> yields an <span class="math inline">(<em>m</em>, <em>n</em>, 2)</span> array</li>
-<li>Summing squared differences along the last axis gives the <span class="math inline">(<em>m</em>, <em>n</em>)</span> distance matrix in a single expression</li>
+<li>All <span class="math inline">\((m \times n)\)</span> distances are computed at once by broadcasting: <code>diff = query_xy[:, newaxis, :] - station_xy[newaxis, :, :]</code> yields an <span class="math inline">\((m, n, 2)\)</span> array</li>
+<li>Summing squared differences along the last axis gives the <span class="math inline">\((m, n)\)</span> distance matrix in a single expression</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -117,13 +134,13 @@ Figure&nbsp;18.1: True temperature field (left) and IDW interpolation from 30 sy
 <h2 data-number="18.6" id="cross-validation"><span class="header-section-number">18.6</span> Cross-Validation</h2>
 <ul>
 <li>Leave-one-out cross-validation (LOO-CV) measures how well the interpolation predicts the value at a completely unsampled location</li>
-<li>For each of the <span class="math inline"><em>n</em></span> stations:
+<li>For each of the <span class="math inline">\(n\)</span> stations:
 <ul>
 <li>Remove it</li>
-<li>Interpolate its value from the remaining <span class="math inline"><em>n</em> − 1</span> stations</li>
+<li>Interpolate its value from the remaining <span class="math inline">\(n - 1\)</span> stations</li>
 <li>Record the absolute error</li>
 </ul></li>
-<li>The mean of the <span class="math inline"><em>n</em></span> absolute errors (the LOO-CV MAE) estimates the expected prediction error at a new station location</li>
+<li>The mean of the <span class="math inline">\(n\)</span> absolute errors (the LOO-CV MAE) estimates the expected prediction error at a new station location</li>
 <li>LOO-CV is necessary because IDW nearly reproduces the training value at any station included in the computation
 <ul>
 <li>Evaluating accuracy on training data would systematically underestimate the true prediction error</li>
@@ -137,15 +154,15 @@ Figure&nbsp;18.1: True temperature field (left) and IDW interpolation from 30 sy
 </dd>
 <dt>Exact recovery at station location</dt>
 <dd>
-IDW at a station’s own coordinates must return approximately that station’s value. The tolerance <span class="math inline">10<sup>−4</sup></span> is justified by the EPSILON perturbation, which gives the co-located station a weight ratio of roughly <span class="math inline">10<sup>20</sup></span>:1.
+IDW at a station’s own coordinates must return approximately that station’s value. The tolerance <span class="math inline">\(10^{-4}\)</span> is justified by the EPSILON perturbation, which gives the co-located station a weight ratio of roughly <span class="math inline">\(10^{20}\)</span>:1.
 </dd>
 <dt>Grid shape</dt>
 <dd>
-<code>interpolate_grid</code> with <code>rows=10, cols=15</code> must return an array of shape <span class="math inline">(10, 15)</span>.
+<code>interpolate_grid</code> with <code>rows=10, cols=15</code> must return an array of shape <span class="math inline">\((10, 15)\)</span>.
 </dd>
 <dt>Interpolated values in range</dt>
 <dd>
-Every IDW estimate must lie within <span class="math inline">[min <em>z</em><sub><em>i</em></sub>, max <em>z</em><sub><em>i</em></sub>]</span>. This is a consequence of IDW being a convex combination of the station values.
+Every IDW estimate must lie within <span class="math inline">\([\min z_i, \max z_i]\)</span>. This is a consequence of IDW being a convex combination of the station values.
 </dd>
 <dt>Weights decrease with distance</dt>
 <dd>
@@ -244,13 +261,13 @@ A model-evaluation procedure in which each observation is held out in turn, the 
 <h3 data-number="18.8.1" id="do-the-math"><span class="header-section-number">18.8.1</span> Do the math</h3>
 <p>Station A is 1 unit from the query point and has value 1.0. Station B is 2 units away and has value 0.0. Using p = 2, what is the IDW estimate at the query point?</p>
 <h3 data-number="18.8.2" id="effect-of-the-power-parameter"><span class="header-section-number">18.8.2</span> Effect of the power parameter</h3>
-<p>Run IDW with <span class="math inline"><em>p</em></span> values of 1, 2, 4, and 8 on the synthetic station data. For each value compute the LOO-CV MAE and plot the interpolated field. How does the surface change as <span class="math inline"><em>p</em></span> increases? Which <span class="math inline"><em>p</em></span> minimises LOO-CV error on this dataset?</p>
+<p>Run IDW with <span class="math inline">\(p\)</span> values of 1, 2, 4, and 8 on the synthetic station data. For each value compute the LOO-CV MAE and plot the interpolated field. How does the surface change as <span class="math inline">\(p\)</span> increases? Which <span class="math inline">\(p\)</span> minimises LOO-CV error on this dataset?</p>
 <h3 data-number="18.8.3" id="nearest-neighbour-interpolation"><span class="header-section-number">18.8.3</span> Nearest-neighbour interpolation</h3>
-<p>Implement nearest-neighbour interpolation: assign each grid point the value of its closest station, equivalent to IDW as <span class="math inline"><em>p</em> → ∞</span>. Compare the MAE and visual appearance of the nearest-neighbour field to the IDW field at <span class="math inline"><em>p</em> = 2</span>.</p>
+<p>Implement nearest-neighbour interpolation: assign each grid point the value of its closest station, equivalent to IDW as <span class="math inline">\(p \to \infty\)</span>. Compare the MAE and visual appearance of the nearest-neighbour field to the IDW field at <span class="math inline">\(p = 2\)</span>.</p>
 <h3 data-number="18.8.4" id="station-density-sensitivity"><span class="header-section-number">18.8.4</span> Station density sensitivity</h3>
 <p>Generate station sets of size 5, 15, 30, and 60, each with a different random seed, and compute the LOO-CV MAE for each. Plot MAE as a function of station count. Does the error halve when the station count doubles?</p>
 <h3 data-number="18.8.5" id="measurement-noise"><span class="header-section-number">18.8.5</span> Measurement noise</h3>
-<p>Modify the generator to add Gaussian noise with standard deviation 0.1 to each station’s observed value. How does the LOO-CV MAE change compared to the noise-free case? Is there an optimal <span class="math inline"><em>p</em></span> that reduces the impact of measurement noise?</p>
+<p>Modify the generator to add Gaussian noise with standard deviation 0.1 to each station’s observed value. How does the LOO-CV MAE change compared to the noise-free case? Is there an optimal <span class="math inline">\(p\)</span> that reduces the impact of measurement noise?</p>
 </section>
 
 </main>

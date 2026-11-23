@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Flood Frequency Analysis</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -44,31 +61,31 @@
 <h2 data-number="30.2" id="the-log-normal-distribution"><span class="header-section-number">30.2</span> The Log-Normal Distribution</h2>
 <ul>
 <li>Annual maximum flows are positive and right-skewed, so a <a href="../glossary/index.html#log_normal_distribution">log-normal distribution</a> is a natural starting point</li>
-<li>A random variable <span class="math inline"><em>X</em></span> is log-normally distributed if <span class="math inline"><em>Y</em> = ln <em>X</em></span> follows a normal distribution</li>
+<li>A random variable <span class="math inline">\(X\)</span> is log-normally distributed if <span class="math inline">\(Y = \ln X\)</span> follows a normal distribution</li>
 <li>The log-normal distribution is characterised by two parameters:
 <ul>
-<li><span class="math inline"><em>μ</em><sub><em>y</em></sub></span> (the mean of <span class="math inline">ln <em>X</em></span>)</li>
-<li><span class="math inline"><em>σ</em><sub><em>y</em></sub> &gt; 0</span> (the standard deviation of <span class="math inline">ln <em>X</em></span>)</li>
+<li><span class="math inline">\(\mu_y\)</span> (the mean of <span class="math inline">\(\ln X\)</span>)</li>
+<li><span class="math inline">\(\sigma_y &gt; 0\)</span> (the standard deviation of <span class="math inline">\(\ln X\)</span>)</li>
 </ul></li>
-<li>If <span class="math inline"><em>Φ</em></span> is the standard normal CDF, the log-normal’s cumulative distribution function is:</li>
+<li>If <span class="math inline">\(\Phi\)</span> is the standard normal CDF, the log-normal’s cumulative distribution function is:</li>
 </ul>
-<p><span class="math display">$$F(x) = \Phi\!\left(\frac{\ln x - \mu_y}{\sigma_y}\right), \quad x &gt; 0$$</span></p>
+<p><span class="math display">\[F(x) = \Phi\!\left(\frac{\ln x - \mu_y}{\sigma_y}\right), \quad x &gt; 0\]</span></p>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>A dataset of 50 annual maximum flows has sample mean log-flow <span class="math inline"><em>ȳ</em> = 4.80</span> and sample standard deviation of log-flows <span class="math inline"><em>s</em><sub><em>y</em></sub> = 0.40</span>. Using the log-normal model, what is <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span>?</p>
+<p>A dataset of 50 annual maximum flows has sample mean log-flow <span class="math inline">\(\bar{y} = 4.80\)</span> and sample standard deviation of log-flows <span class="math inline">\(s_y = 0.40\)</span>. Using the log-normal model, what is <span class="math inline">\(\hat{\mu}_y\)</span>?</p>
 <dl>
 <dt>4.80</dt>
 <dd>
-Correct: the method-of-moments estimate of <span class="math inline"><em>μ</em><sub><em>y</em></sub></span> is simply the sample mean of the log-flows.
+Correct: the method-of-moments estimate of <span class="math inline">\(\mu_y\)</span> is simply the sample mean of the log-flows.
 </dd>
 <dt>0.40</dt>
 <dd>
-Wrong: 0.40 is <span class="math inline"><em>s</em><sub><em>y</em></sub></span>, the estimate of <span class="math inline"><em>σ</em><sub><em>y</em></sub></span>, not of <span class="math inline"><em>μ</em><sub><em>y</em></sub></span>.
+Wrong: 0.40 is <span class="math inline">\(s_y\)</span>, the estimate of <span class="math inline">\(\sigma_y\)</span>, not of <span class="math inline">\(\mu_y\)</span>.
 </dd>
-<dt><span class="math inline"><em>e</em><sup>4.80</sup> ≈ 121</span></dt>
+<dt><span class="math inline">\(e^{4.80} \approx 121\)</span></dt>
 <dd>
-Wrong: exponentiating <span class="math inline"><em>ȳ</em></span> gives the estimated median flow in m^3/s, not the log-mean parameter.
+Wrong: exponentiating <span class="math inline">\(\bar{y}\)</span> gives the estimated median flow in m^3/s, not the log-mean parameter.
 </dd>
-<dt><span class="math inline">4.80/0.40 = 12</span></dt>
+<dt><span class="math inline">\(4.80 / 0.40 = 12\)</span></dt>
 <dd>
 Wrong: dividing the log-mean by the log-standard-deviation has no statistical interpretation here.
 </dd>
@@ -77,38 +94,38 @@ Wrong: dividing the log-mean by the log-standard-deviation has no statistical in
 <h2 data-number="30.3" id="generating-synthetic-data"><span class="header-section-number">30.3</span> Generating Synthetic Data</h2>
 <ul>
 <li>We draw 50 years of annual maximum flows from a known log-normal distribution so that we can verify our estimator</li>
-<li>Drawing <span class="math inline"><em>Y</em> ∼ Normal(<em>μ</em><sub><em>y</em></sub>, <em>σ</em><sub><em>y</em></sub>)</span> and setting <span class="math inline"><em>X</em> = <em>e</em><sup><em>Y</em></sup></span> gives <span class="math inline"><em>X</em> ∼ LogNormal(<em>μ</em><sub><em>y</em></sub>, <em>σ</em><sub><em>y</em></sub>)</span></li>
+<li>Drawing <span class="math inline">\(Y \sim \text{Normal}(\mu_y, \sigma_y)\)</span> and setting <span class="math inline">\(X = e^Y\)</span> gives <span class="math inline">\(X \sim \text{LogNormal}(\mu_y, \sigma_y)\)</span></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="30.4" id="fitting-by-the-method-of-moments"><span class="header-section-number">30.4</span> Fitting by the Method of Moments</h2>
 <ul>
 <li>The <a href="../glossary/index.html#method_of_moments">method of moments</a> sets the distribution’s theoretical moments equal to the sample moments and solves for the parameters</li>
-<li>For the log-normal distribution the moments of <span class="math inline"><em>Y</em> = ln <em>X</em></span> are exactly <span class="math inline"><em>μ</em><sub><em>y</em></sub></span> and <span class="math inline"><em>σ</em><sub><em>y</em></sub></span>, so the estimates are:</li>
+<li>For the log-normal distribution the moments of <span class="math inline">\(Y = \ln X\)</span> are exactly <span class="math inline">\(\mu_y\)</span> and <span class="math inline">\(\sigma_y\)</span>, so the estimates are:</li>
 </ul>
-<p><span class="math display">$$\hat{\mu}_y = \bar{y} = \frac{1}{n}\sum_{i=1}^n \ln x_i \qquad \hat{\sigma}_y = s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (\ln x_i - \bar{y})^2}$$</span></p>
+<p><span class="math display">\[\hat{\mu}_y = \bar{y} = \frac{1}{n}\sum_{i=1}^n \ln x_i \qquad \hat{\sigma}_y = s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (\ln x_i - \bar{y})^2}\]</span></p>
 <ul>
-<li>Here, the <span class="math inline"><em>n</em> − 1</span> denominator applies <a href="../glossary/index.html#bessel_correction">Bessel's correction</a> for the sample standard deviation</li>
+<li>Here, the <span class="math inline">\(n-1\)</span> denominator applies <a href="../glossary/index.html#bessel_correction">Bessel's correction</a> for the sample standard deviation</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps in the correct order for method-of-moments estimation of log-normal parameters.</p>
 <ol type="1">
-<li>Take the natural logarithm of each annual maximum flow to get <span class="math inline"><em>y</em><sub><em>i</em></sub> = ln <em>x</em><sub><em>i</em></sub></span></li>
-<li>Compute <span class="math inline"><em>μ̂</em><sub><em>y</em></sub> = <em>ȳ</em></span>, the sample mean of the log-flows</li>
-<li>Compute <span class="math inline"><em>σ̂</em><sub><em>y</em></sub> = <em>s</em><sub><em>y</em></sub></span>, the sample standard deviation of the log-flows (with <span class="math inline"><em>n</em> − 1</span> denominator)</li>
-<li>Use <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span> and <span class="math inline"><em>σ̂</em><sub><em>y</em></sub></span> to compute return levels or plot the fitted distribution</li>
+<li>Take the natural logarithm of each annual maximum flow to get <span class="math inline">\(y_i = \ln x_i\)</span></li>
+<li>Compute <span class="math inline">\(\hat{\mu}_y = \bar{y}\)</span>, the sample mean of the log-flows</li>
+<li>Compute <span class="math inline">\(\hat{\sigma}_y = s_y\)</span>, the sample standard deviation of the log-flows (with <span class="math inline">\(n-1\)</span> denominator)</li>
+<li>Use <span class="math inline">\(\hat{\mu}_y\)</span> and <span class="math inline">\(\hat{\sigma}_y\)</span> to compute return levels or plot the fitted distribution</li>
 </ol>
 </div>
 <h2 data-number="30.5" id="return-periods"><span class="header-section-number">30.5</span> Return Periods</h2>
 <ul>
-<li>The <span class="math inline"><em>T</em></span>-year return level <span class="math inline"><em>x</em><sub><em>T</em></sub></span> is the flow magnitude exceeded with probability <span class="math inline">1/<em>T</em></span> in any given year.</li>
-<li>Setting <span class="math inline"><em>F</em>(<em>x</em><sub><em>T</em></sub>) = 1 − 1/<em>T</em></span> and inverting the log-normal CDF:</li>
+<li>The <span class="math inline">\(T\)</span>-year return level <span class="math inline">\(x_T\)</span> is the flow magnitude exceeded with probability <span class="math inline">\(1/T\)</span> in any given year.</li>
+<li>Setting <span class="math inline">\(F(x_T) = 1 - 1/T\)</span> and inverting the log-normal CDF:</li>
 </ul>
-<p><span class="math display">$$x_T = \exp\!\left(\hat{\mu}_y + z_p\, \hat{\sigma}_y\right), \quad p = 1 - \frac{1}{T}$$</span></p>
+<p><span class="math display">\[x_T = \exp\!\left(\hat{\mu}_y + z_p\, \hat{\sigma}_y\right), \quad p = 1 - \frac{1}{T}\]</span></p>
 <ul>
-<li>Here, <span class="math inline"><em>z</em><sub><em>p</em></sub> = <em>Φ</em><sup>−1</sup>(<em>p</em>)</span> is the standard normal quantile at probability <span class="math inline"><em>p</em></span>, computed with <code>scipy.stats.norm.ppf</code>.</li>
+<li>Here, <span class="math inline">\(z_p = \Phi^{-1}(p)\)</span> is the standard normal quantile at probability <span class="math inline">\(p\)</span>, computed with <code>scipy.stats.norm.ppf</code>.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
@@ -135,8 +152,8 @@ Wrong: the return period T such that P(at least one exceedance in T years) = 0.5
 <h2 data-number="30.6" id="normal-probability-plot"><span class="header-section-number">30.6</span> Normal Probability Plot</h2>
 <ul>
 <li>Plotting data on a normal probability plot (<a href="../glossary/index.html#q_q_plot">Q-Q plot</a>) provides a visual check on whether the log-normal distribution fits</li>
-<li>The <a href="../glossary/index.html#weibull_plotting_position">Weibull plotting position</a> <span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1)</span> assigns a non-exceedance probability to each ranked observation without assuming a specific distribution</li>
-<li>The theoretical normal quantile <span class="math inline"><em>z</em><sub><em>i</em></sub> = <em>Φ</em><sup>−1</sup>(<em>p</em><sub><em>i</em></sub>)</span> linearises the log-normal CDF: if <span class="math inline">ln <em>X</em></span> is normally distributed, plotting <span class="math inline">(<em>z</em><sub><em>i</em></sub>, ln <em>x</em><sub>(<em>i</em>)</sub>)</span> gives a straight line</li>
+<li>The <a href="../glossary/index.html#weibull_plotting_position">Weibull plotting position</a> <span class="math inline">\(p_i = i/(n+1)\)</span> assigns a non-exceedance probability to each ranked observation without assuming a specific distribution</li>
+<li>The theoretical normal quantile <span class="math inline">\(z_i = \Phi^{-1}(p_i)\)</span> linearises the log-normal CDF: if <span class="math inline">\(\ln X\)</span> is normally distributed, plotting <span class="math inline">\((z_i, \ln x_{(i)})\)</span> gives a straight line</li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -154,22 +171,22 @@ Figure&nbsp;30.1: Normal probability plot of log-flows. Points are ranked log-ob
 <ul>
 <li>Parameter recovery on a large sample
 <ul>
-<li>With <span class="math inline"><em>n</em> = 10 000</span> the central-limit theorem says that the standard error of <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span> is roughly <span class="math inline">$\sigma_y / \sqrt{n} \approx 0.004$</span>, well under 1%</li>
-<li>A relative tolerance of 5% gives a safety factor of <span class="math inline"> ∼ 50</span> over the expected sampling error</li>
+<li>With <span class="math inline">\(n = 10\,000\)</span> the central-limit theorem says that the standard error of <span class="math inline">\(\hat{\mu}_y\)</span> is roughly <span class="math inline">\(\sigma_y / \sqrt{n} \approx 0.004\)</span>, well under 1%</li>
+<li>A relative tolerance of 5% gives a safety factor of <span class="math inline">\(\sim 50\)</span> over the expected sampling error</li>
 </ul></li>
 <li>Monotone return levels
 <ul>
-<li>The log-normal quantile <span class="math inline"><em>x</em><sub><em>T</em></sub> = exp (<em>μ</em><sub><em>y</em></sub> + <em>z</em><sub><em>p</em></sub><em>σ</em><sub><em>y</em></sub>)</span> is strictly increasing in <span class="math inline"><em>T</em></span> because <span class="math inline"><em>σ</em><sub><em>y</em></sub> &gt; 0</span> and <span class="math inline"><em>z</em><sub><em>p</em></sub> = <em>Φ</em><sup>−1</sup>(1 − 1/<em>T</em>)</span> is strictly increasing in <span class="math inline"><em>T</em></span></li>
+<li>The log-normal quantile <span class="math inline">\(x_T = \exp(\mu_y + z_p \sigma_y)\)</span> is strictly increasing in <span class="math inline">\(T\)</span> because <span class="math inline">\(\sigma_y &gt; 0\)</span> and <span class="math inline">\(z_p = \Phi^{-1}(1 - 1/T)\)</span> is strictly increasing in <span class="math inline">\(T\)</span></li>
 <li>Any violation would indicate an error in the formula or the sign conventions</li>
 </ul></li>
 <li>Algebraic consistency
 <ul>
-<li><span class="math inline"><em>F</em>(<em>x</em><sub><em>T</em></sub>) = 1 − 1/<em>T</em></span> is the definition of the return level</li>
-<li>it must hold to numerical precision (<span class="math inline"> &lt; 10<sup>−10</sup></span>)</li>
+<li><span class="math inline">\(F(x_T) = 1 - 1/T\)</span> is the definition of the return level</li>
+<li>it must hold to numerical precision (<span class="math inline">\(&lt; 10^{-10}\)</span>)</li>
 </ul></li>
 <li>Valid plotting positions
 <ul>
-<li><span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1) ∈ (0, 1)</span> guarantees finite normal quantiles</li>
+<li><span class="math inline">\(p_i = i/(n+1) \in (0,1)\)</span> guarantees finite normal quantiles</li>
 <li>sorted log-flows must be non-decreasing</li>
 </ul></li>
 </ul>
@@ -222,15 +239,15 @@ Figure&nbsp;30.1: Normal probability plot of log-flows. Points are ranked log-ob
 <section class="exercises">
 <h2 data-number="30.8" id="exercises"><span class="header-section-number">30.8</span> Exercises</h2>
 <h3 data-number="30.8.1" id="do-the-math"><span class="header-section-number">30.8.1</span> Do the math</h3>
-<p>Using <span class="math inline"><em>μ̂</em><sub><em>y</em></sub> = 4.80</span> and <span class="math inline"><em>σ̂</em><sub><em>y</em></sub> = 0.40</span>, the standard normal quantile at <span class="math inline"><em>p</em> = 0.99</span> is <span class="math inline"><em>z</em><sub>0.99</sub> ≈ 2.3263</span>. Compute the 100-year return level <span class="math inline"><em>x</em><sub>100</sub> = exp (4.80 + 2.3263 × 0.40)</span>. Give your answer in m^3/s, rounded to one decimal place.</p>
+<p>Using <span class="math inline">\(\hat{\mu}_y = 4.80\)</span> and <span class="math inline">\(\hat{\sigma}_y = 0.40\)</span>, the standard normal quantile at <span class="math inline">\(p = 0.99\)</span> is <span class="math inline">\(z_{0.99} \approx 2.3263\)</span>. Compute the 100-year return level <span class="math inline">\(x_{100} = \exp(4.80 + 2.3263 \times 0.40)\)</span>. Give your answer in m^3/s, rounded to one decimal place.</p>
 <h3 data-number="30.8.2" id="confidence-intervals-by-bootstrap"><span class="header-section-number">30.8.2</span> Confidence intervals by bootstrap</h3>
 <p>Estimate 95% confidence intervals for the 100-year return level using the bootstrap: draw 1000 samples of size 50 with replacement from the original data, fit the log-normal distribution to each, and compute the 100-year return level. Report the 2.5th and 97.5th percentiles of the 1000 estimates. How wide is the interval relative to the point estimate?</p>
 <h3 data-number="30.8.3" id="hazen-plotting-positions"><span class="header-section-number">30.8.3</span> Hazen plotting positions</h3>
-<p>Replace the Weibull plotting position <span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1)</span> with the Hazen position <span class="math inline"><em>p</em><sub><em>i</em></sub> = (<em>i</em> − 0.5)/<em>n</em></span>, which places each observation at the midpoint of its probability interval. How much do the plotted points shift on the normal probability plot? Does the fitted line change?</p>
+<p>Replace the Weibull plotting position <span class="math inline">\(p_i = i/(n+1)\)</span> with the Hazen position <span class="math inline">\(p_i = (i - 0.5) / n\)</span>, which places each observation at the midpoint of its probability interval. How much do the plotted points shift on the normal probability plot? Does the fitted line change?</p>
 <h3 data-number="30.8.4" id="comparing-distributions"><span class="header-section-number">30.8.4</span> Comparing distributions</h3>
 <p>The log-normal is one of several distributions used in hydrology; the Pearson Type III (a three-parameter gamma family) is another common choice. Use <code>scipy.stats.pearson3.fit</code> to fit the Pearson Type III distribution to the log-flows and compare its 100-year return level with the log-normal estimate. Which distribution fits the Q-Q plot more closely?</p>
 <h3 data-number="30.8.5" id="annual-maxima-from-daily-data"><span class="header-section-number">30.8.5</span> Annual maxima from daily data</h3>
-<p>Generate a synthetic series of daily flows for 50 years as the exponent of a first-order autoregressive process: <span class="math inline">ln <em>Q</em><sub><em>t</em></sub> = <em>ϕ</em>ln <em>Q</em><sub><em>t</em> − 1</sub> + <em>ε</em><sub><em>t</em></sub></span> with <span class="math inline"><em>ϕ</em> = 0.8</span> and <span class="math inline"><em>ε</em><sub><em>t</em></sub> ∼ Normal(0, 0.2)</span>. Extract the annual maximum from each year. Fit the log-normal distribution to the maxima and plot the result on a normal probability plot. How does the quality of the fit compare to the case where the data were drawn directly from a log-normal distribution?</p>
+<p>Generate a synthetic series of daily flows for 50 years as the exponent of a first-order autoregressive process: <span class="math inline">\(\ln Q_t = \phi \ln Q_{t-1} + \varepsilon_t\)</span> with <span class="math inline">\(\phi = 0.8\)</span> and <span class="math inline">\(\varepsilon_t \sim \text{Normal}(0, 0.2)\)</span>. Extract the annual maximum from each year. Fit the log-normal distribution to the maxima and plot the result on a normal probability plot. How does the quality of the fit compare to the case where the data were drawn directly from a log-normal distribution?</p>
 </section>
 
 </main>

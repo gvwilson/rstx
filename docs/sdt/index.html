@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Signal Detection Theory Analysis</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -167,9 +184,9 @@ Intermediate hit rate and false alarm rate (moderate operating point).
 <li>Interpretation: AUC equals the probability that a randomly chosen signal trial receives a higher evidence score than a randomly chosen noise trial</li>
 <li>The <a href="../glossary/index.html#trapezoidal_rule">trapezoidal rule</a> approximates AUC from the arrays of (FAR, HR) points:</li>
 </ul>
-<p><span class="math display">$$\text{AUC} \approx \sum_i \tfrac{1}{2}(\text{HR}_i + \text{HR}_{i+1}) \cdot |\text{FAR}_i - \text{FAR}_{i+1}|$$</span></p>
+<p><span class="math display">\[\text{AUC} \approx \sum_i \tfrac{1}{2}(\text{HR}_i + \text{HR}_{i+1}) \cdot |\text{FAR}_i - \text{FAR}_{i+1}|\]</span></p>
 <ul>
-<li>Each term is the area of a trapezoid whose parallel sides are <span class="math inline">HR<sub><em>i</em></sub></span> and <span class="math inline">HR<sub><em>i</em> + 1</sub></span> and whose width is the step in FAR
+<li>Each term is the area of a trapezoid whose parallel sides are <span class="math inline">\(\text{HR}_i\)</span> and <span class="math inline">\(\text{HR}_{i+1}\)</span> and whose width is the step in FAR
 <ul>
 <li>A <a href="../glossary/index.html#riemann_sum">Riemann sum</a></li>
 </ul></li>
@@ -348,7 +365,7 @@ A summary of ROC performance computed using the trapezoidal rule; AUC = 0.5 for 
 </div>
 <h2 data-number="17.7" id="note-on-the-gaussian-model"><span class="header-section-number">17.7</span> Note on the Gaussian Model</h2>
 <ul>
-<li>The equal-variance Gaussian model summarizes performance compactly via <span class="math inline"><em>d</em><sup>′</sup> = <em>Φ</em><sup>−1</sup>(HR) − <em>Φ</em><sup>−1</sup>(FAR)</span>, where <span class="math inline"><em>Φ</em><sup>−1</sup></span> is the inverse of the standard normal CDF</li>
+<li>The equal-variance Gaussian model summarizes performance compactly via <span class="math inline">\(d' = \Phi^{-1}(\text{HR}) - \Phi^{-1}(\text{FAR})\)</span>, where <span class="math inline">\(\Phi^{-1}\)</span> is the inverse of the standard normal CDF</li>
 <li>This assumes both the noise distribution and the signal distribution are normal with equal variance
 <ul>
 <li>Only their means differ</li>

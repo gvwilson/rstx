@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Vocabulary Richness in Historical Texts</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -69,20 +86,20 @@ Wrong: TTR is a purely statistical property of the token sequence and is indepen
 </div>
 <h2 data-number="3.2" id="type-token-ratio-and-mattr"><span class="header-section-number">3.2</span> Type-Token Ratio and MATTR</h2>
 <ul>
-<li>Given a text of <span class="math inline"><em>T</em></span> tokens containing <span class="math inline"><em>V</em></span> distinct word types, the TTR is:</li>
+<li>Given a text of <span class="math inline">\(T\)</span> tokens containing <span class="math inline">\(V\)</span> distinct word types, the TTR is:</li>
 </ul>
-<p><span class="math display">$$\text{TTR} = \frac{V}{T}$$</span></p>
+<p><span class="math display">\[\text{TTR} = \frac{V}{T}\]</span></p>
 <ul>
-<li>The MATTR with window width <span class="math inline"><em>w</em></span> is:</li>
+<li>The MATTR with window width <span class="math inline">\(w\)</span> is:</li>
 </ul>
-<p><span class="math display">$$\text{MATTR} = \frac{1}{T - w + 1} \sum_{i=0}^{T-w} \text{TTR}(t_i, t_{i+1}, \ldots, t_{i+w-1})$$</span></p>
+<p><span class="math display">\[\text{MATTR} = \frac{1}{T - w + 1} \sum_{i=0}^{T-w} \text{TTR}(t_i, t_{i+1}, \ldots, t_{i+w-1})\]</span></p>
 <ul>
-<li>Each window has the same length <span class="math inline"><em>w</em></span>, so each window TTR is on the same scale; averaging them gives a length-fair summary.</li>
-<li>When <span class="math inline"><em>T</em> ≤ <em>w</em></span> there is only one window and MATTR equals the global TTR.</li>
+<li>Each window has the same length <span class="math inline">\(w\)</span>, so each window TTR is on the same scale; averaging them gives a length-fair summary.</li>
+<li>When <span class="math inline">\(T \leq w\)</span> there is only one window and MATTR equals the global TTR.</li>
 </ul>
 <h2 data-number="3.3" id="generating-synthetic-texts"><span class="header-section-number">3.3</span> Generating Synthetic Texts</h2>
 <ul>
-<li>Word frequencies in natural language follow Zipf’s law: the <span class="math inline"><em>k</em></span>-th most common word appears with frequency proportional to <span class="math inline">1/<em>k</em></span>.</li>
+<li>Word frequencies in natural language follow Zipf’s law: the <span class="math inline">\(k\)</span>-th most common word appears with frequency proportional to <span class="math inline">\(1/k\)</span>.</li>
 <li>Sampling from this distribution with different vocabulary sizes reproduces the richness differences between authors with limited and extensive lexicons.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -107,7 +124,7 @@ Figure&nbsp;3.1: MATTR for each text in the synthetic corpus. Author A (vocabula
 <li>TTR edge cases
 <ul>
 <li>A text of all unique words has TTR exactly 1.0.</li>
-<li>A text where the same word is repeated <span class="math inline"><em>n</em></span> times has TTR <span class="math inline">1/<em>n</em></span>.</li>
+<li>A text where the same word is repeated <span class="math inline">\(n\)</span> times has TTR <span class="math inline">\(1/n\)</span>.</li>
 <li>An empty word list returns 0.0 without raising an exception.</li>
 </ul></li>
 <li>MATTR fallback
@@ -157,7 +174,7 @@ Figure&nbsp;3.1: MATTR for each text in the synthetic corpus. Author A (vocabula
 <dl>
 <dt>Type-token ratio (TTR)</dt>
 <dd>
-<span class="math inline"><em>V</em>/<em>T</em></span> where <span class="math inline"><em>V</em></span> is the number of distinct word types and <span class="math inline"><em>T</em></span> is the total token count; decreases with text length even at constant vocabulary richness
+<span class="math inline">\(V/T\)</span> where <span class="math inline">\(V\)</span> is the number of distinct word types and <span class="math inline">\(T\)</span> is the total token count; decreases with text length even at constant vocabulary richness
 </dd>
 <dt>Moving-average TTR (MATTR)</dt>
 <dd>
@@ -165,7 +182,7 @@ Mean of window TTRs computed over overlapping fixed-width windows; length-indepe
 </dd>
 <dt>Zipf’s law</dt>
 <dd>
-The empirical regularity that the <span class="math inline"><em>k</em></span>-th most frequent word in a corpus appears roughly <span class="math inline">1/<em>k</em></span> times as often as the most frequent word; produces the characteristic long tail of rare words in natural language
+The empirical regularity that the <span class="math inline">\(k\)</span>-th most frequent word in a corpus appears roughly <span class="math inline">\(1/k\)</span> times as often as the most frequent word; produces the characteristic long tail of rare words in natural language
 </dd>
 <dt>Vocabulary richness</dt>
 <dd>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Heat Conduction Through a Composite Wall</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -44,27 +61,27 @@
 </ul>
 <h2 data-number="22.2" id="the-physics"><span class="header-section-number">22.2</span> The Physics</h2>
 <ul>
-<li>In steady state the temperature <span class="math inline"><em>T</em>(<em>x</em>)</span> no longer changes with time, so the heat equation reduces to:</li>
+<li>In steady state the temperature <span class="math inline">\(T(x)\)</span> no longer changes with time, so the heat equation reduces to:</li>
 </ul>
-<p><span class="math display">$$\frac{d}{dx}\!\left(k(x)\,\frac{dT}{dx}\right) = 0$$</span></p>
+<p><span class="math display">\[\frac{d}{dx}\!\left(k(x)\,\frac{dT}{dx}\right) = 0\]</span></p>
 <ul>
-<li><span class="math inline"><em>k</em>(<em>x</em>)</span> is the thermal conductivity at position <span class="math inline"><em>x</em></span></li>
+<li><span class="math inline">\(k(x)\)</span> is the thermal conductivity at position <span class="math inline">\(x\)</span></li>
 <li>It is piecewise constant, i.e., has one value per layer</li>
-<li>Within each uniform layer <span class="math inline"><em>d</em><sup>2</sup><em>T</em>/<em>d</em><em>x</em><sup>2</sup> = 0</span>, so <span class="math inline"><em>T</em></span> is linear
+<li>Within each uniform layer <span class="math inline">\(d^2T/dx^2 = 0\)</span>, so <span class="math inline">\(T\)</span> is linear
 <ul>
 <li>The slope (and therefore the flux) is constant within any single material</li>
 </ul></li>
-<li>At every layer interface both the temperature and the heat flux must be continuous: <span class="math inline"><em>T</em></span> does not jump and <span class="math inline"><em>k</em><sub><em>L</em></sub> <em>d</em><em>T</em>/<em>d</em><em>x</em></span> on the left equals <span class="math inline"><em>k</em><sub><em>R</em></sub> <em>d</em><em>T</em>/<em>d</em><em>x</em></span> on the right</li>
+<li>At every layer interface both the temperature and the heat flux must be continuous: <span class="math inline">\(T\)</span> does not jump and <span class="math inline">\(k_L\,dT/dx\)</span> on the left equals <span class="math inline">\(k_R\,dT/dx\)</span> on the right</li>
 </ul>
 <h2 data-number="22.3" id="thermal-resistance"><span class="header-section-number">22.3</span> Thermal Resistance</h2>
 <ul>
-<li>The <a href="../glossary/index.html#thermal_resistance">thermal resistance</a> of a uniform layer is <span class="math inline"><em>R</em><sub><em>i</em></sub> = <em>L</em><sub><em>i</em></sub>/<em>k</em><sub><em>i</em></sub></span> (<span class="math inline">m<sup>2</sup> K W<sup>−1</sup></span>)</li>
-<li>For layers in series the resistances add: <span class="math inline"><em>R</em><sub>total</sub> = ∑<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span>.</li>
+<li>The <a href="../glossary/index.html#thermal_resistance">thermal resistance</a> of a uniform layer is <span class="math inline">\(R_i = L_i / k_i\)</span> (<span class="math inline">\(\text{m}^2\,\text{K}\,\text{W}^{-1}\)</span>)</li>
+<li>For layers in series the resistances add: <span class="math inline">\(R_\text{total} = \sum_i R_i\)</span>.</li>
 <li>The uniform heat flux through the wall is:</li>
 </ul>
-<p><span class="math display">$$q = \frac{T_\text{left} - T_\text{right}}{R_\text{total}}$$</span></p>
+<p><span class="math display">\[q = \frac{T_\text{left} - T_\text{right}}{R_\text{total}}\]</span></p>
 <ul>
-<li>The temperature at each interface follows by subtracting <span class="math inline"><em>q</em> <em>R</em><sub><em>i</em></sub></span> from the previous value</li>
+<li>The temperature at each interface follows by subtracting <span class="math inline">\(q\,R_i\)</span> from the previous value</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-matching" data-lang="en" data-markdown="1">
@@ -82,29 +99,29 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td>Thermal conductivity <span class="math inline"><em>k</em></span></td>
-<td>Material property: heat flow per unit area per unit temperature gradient (<span class="math inline">W m<sup>−1</sup> K<sup>−1</sup></span>)</td>
+<td>Thermal conductivity <span class="math inline">\(k\)</span></td>
+<td>Material property: heat flow per unit area per unit temperature gradient (<span class="math inline">\(\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>)</td>
 </tr>
 <tr class="even">
-<td>Thermal resistance <span class="math inline"><em>R</em></span></td>
-<td>Geometry + material: temperature drop per unit flux for one layer (<span class="math inline">m<sup>2</sup> K W<sup>−1</sup></span>)</td>
+<td>Thermal resistance <span class="math inline">\(R\)</span></td>
+<td>Geometry + material: temperature drop per unit flux for one layer (<span class="math inline">\(\text{m}^2\,\text{K}\,\text{W}^{-1}\)</span>)</td>
 </tr>
 <tr class="odd">
-<td>Heat flux <span class="math inline"><em>q</em></span></td>
-<td>Power per unit wall area flowing through the wall in steady state (<span class="math inline">W m<sup>−2</sup></span>)</td>
+<td>Heat flux <span class="math inline">\(q\)</span></td>
+<td>Power per unit wall area flowing through the wall in steady state (<span class="math inline">\(\text{W}\,\text{m}^{-2}\)</span>)</td>
 </tr>
 <tr class="even">
 <td>Steady state</td>
-<td>Condition where <span class="math inline">∂<em>T</em>/∂<em>t</em> = 0</span> everywhere in the wall</td>
+<td>Condition where <span class="math inline">\(\partial T/\partial t = 0\)</span> everywhere in the wall</td>
 </tr>
 </tbody>
 </table>
 </div>
 <h2 data-number="22.4" id="discretizing-the-wall"><span class="header-section-number">22.4</span> Discretizing the Wall</h2>
 <ul>
-<li>We place <span class="math inline"><em>n</em><sub>per layer</sub></span> cells in each layer
+<li>We place <span class="math inline">\(n_\text{per layer}\)</span> cells in each layer
 <ul>
-<li>Nodes sit at cell boundaries, including the shared interface between adjacent layers), giving <span class="math inline"><em>n</em><sub>layers</sub> × <em>n</em><sub>per layer</sub> + 1</span> nodes in total</li>
+<li>Nodes sit at cell boundaries, including the shared interface between adjacent layers), giving <span class="math inline">\(n_\text{layers} \times n_\text{per layer} + 1\)</span> nodes in total</li>
 </ul></li>
 <li>Because every segment between neighbouring nodes lies entirely inside one material, each segment has a well-defined conductivity
 <ul>
@@ -125,40 +142,40 @@
 <ul>
 <li>Rather than assembling and solving a linear system, we find the steady-state temperatures by repeatedly applying a simple averaging rule until the profile stops changing</li>
 <li>This is the same “keep updating until convergence” strategy as <a href="../glossary/index.html#eulers_method">Euler's method</a> for ordinary differential equations.</li>
-<li>At each interior node <span class="math inline"><em>i</em></span>, the steady-state heat balance requires:</li>
+<li>At each interior node <span class="math inline">\(i\)</span>, the steady-state heat balance requires:</li>
 </ul>
-<p><span class="math display">$$k_{i-1}\,\frac{T_{i-1} - T_i}{\Delta x_\text{left}} + k_i\,\frac{T_{i+1} - T_i}{\Delta x_\text{right}} = 0$$</span></p>
+<p><span class="math display">\[k_{i-1}\,\frac{T_{i-1} - T_i}{\Delta x_\text{left}} + k_i\,\frac{T_{i+1} - T_i}{\Delta x_\text{right}} = 0\]</span></p>
 <ul>
-<li>Solving for <span class="math inline"><em>T</em><sub><em>i</em></sub></span> gives an update rule that is a weighted average of the two neighbours:</li>
+<li>Solving for <span class="math inline">\(T_i\)</span> gives an update rule that is a weighted average of the two neighbours:</li>
 </ul>
-<p><span class="math display">$$a = \frac{k_{i-1}}{\Delta x_\text{left}}, \quad b = \frac{k_i}{\Delta x_\text{right}}, \quad T_i \leftarrow \frac{a\,T_{i-1} + b\,T_{i+1}}{a + b}$$</span></p>
+<p><span class="math display">\[a = \frac{k_{i-1}}{\Delta x_\text{left}}, \quad b = \frac{k_i}{\Delta x_\text{right}}, \quad T_i \leftarrow \frac{a\,T_{i-1} + b\,T_{i+1}}{a + b}\]</span></p>
 <ul>
-<li><span class="math inline"><em>k</em><sub><em>i</em> − 1</sub></span> is the conductivity of the segment to the left of node <span class="math inline"><em>i</em></span>, <span class="math inline"><em>k</em><sub><em>i</em></sub></span> is the conductivity of the segment to the right, and <span class="math inline"><em>Δ</em><em>x</em><sub>left</sub></span> and <span class="math inline"><em>Δ</em><em>x</em><sub>right</sub></span> are the distances to the neighbouring nodes</li>
+<li><span class="math inline">\(k_{i-1}\)</span> is the conductivity of the segment to the left of node <span class="math inline">\(i\)</span>, <span class="math inline">\(k_i\)</span> is the conductivity of the segment to the right, and <span class="math inline">\(\Delta x_\text{left}\)</span> and <span class="math inline">\(\Delta x_\text{right}\)</span> are the distances to the neighbouring nodes</li>
 <li>Both conductivity and spacing appear in the weights
 <ul>
 <li>A high-conductivity or narrow segment “pulls” the node temperature toward the neighbour on that side more strongly</li>
 </ul></li>
-<li>The two boundary temperatures <span class="math inline"><em>T</em><sub>0</sub> = <em>T</em><sub>left</sub></span> and <span class="math inline"><em>T</em><sub><em>N</em></sub> = <em>T</em><sub>right</sub></span> are fixed throughout</li>
+<li>The two boundary temperatures <span class="math inline">\(T_0 = T_\text{left}\)</span> and <span class="math inline">\(T_N = T_\text{right}\)</span> are fixed throughout</li>
 <li>After each full sweep over all interior nodes, we check the maximum change
 <ul>
-<li>If <span class="math inline">max<sub><em>i</em></sub>|<em>T</em><sub><em>i</em></sub><sup>new</sup> − <em>T</em><sub><em>i</em></sub><sup>old</sup>| &lt; <em>ε</em></span> we stop</li>
+<li>If <span class="math inline">\(\max_i |T_i^\text{new} - T_i^\text{old}| &lt; \varepsilon\)</span> we stop</li>
 </ul></li>
-<li>The threshold <span class="math inline"><em>ε</em></span> (<code>TOLERANCE</code>) is set to <span class="math inline">10<sup>−6</sup></span> °C, which is far smaller than any physical measurement uncertainty</li>
+<li>The threshold <span class="math inline">\(\varepsilon\)</span> (<code>TOLERANCE</code>) is set to <span class="math inline">\(10^{-6}\)</span> °C, which is far smaller than any physical measurement uncertainty</li>
 <li>This method is called <a href="../glossary/index.html#jacobi_iteration">Jacobi iteration</a></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>After many Jacobi sweeps on a single uniform layer (one conductivity, equal node spacing throughout), what temperature profile does the solution converge to?</p>
 <dl>
-<dt>A straight line from <span class="math inline"><em>T</em><sub>left</sub></span> to <span class="math inline"><em>T</em><sub>right</sub></span>.</dt>
+<dt>A straight line from <span class="math inline">\(T_\text{left}\)</span> to <span class="math inline">\(T_\text{right}\)</span>.</dt>
 <dd>
-Correct: with equal conductivities and equal spacing, the weights <span class="math inline"><em>a</em> = <em>b</em> = <em>k</em>/<em>Δ</em><em>x</em></span> cancel and the update rule reduces to <span class="math inline"><em>T</em><sub><em>i</em></sub> ← (<em>T</em><sub><em>i</em> − 1</sub> + <em>T</em><sub><em>i</em> + 1</sub>)/2</span>, so every interior node ends up exactly halfway between its two neighbours — the discrete condition for a linear profile.
+Correct: with equal conductivities and equal spacing, the weights <span class="math inline">\(a = b = k/\Delta x\)</span> cancel and the update rule reduces to <span class="math inline">\(T_i \leftarrow (T_{i-1} + T_{i+1})/2\)</span>, so every interior node ends up exactly halfway between its two neighbours — the discrete condition for a linear profile.
 </dd>
 <dt>The temperature of the warmer boundary at every interior node.</dt>
 <dd>
 Wrong: the boundary conditions fix only the two end nodes; interior nodes are updated by averaging neighbours, which pulls them toward an intermediate value.
 </dd>
-<dt>An exponential decay from <span class="math inline"><em>T</em><sub>left</sub></span> to <span class="math inline"><em>T</em><sub>right</sub></span>.</dt>
+<dt>An exponential decay from <span class="math inline">\(T_\text{left}\)</span> to <span class="math inline">\(T_\text{right}\)</span>.</dt>
 <dd>
 Wrong: exponential profiles arise in transient (time-dependent) heat conduction, not in the steady state of a uniform material.
 </dd>
@@ -171,7 +188,7 @@ Wrong: Jacobi iteration converges to the same steady-state solution regardless o
 <h2 data-number="22.6" id="convergence-behaviour"><span class="header-section-number">22.6</span> Convergence Behaviour</h2>
 <ul>
 <li>A good starting guess speeds convergence</li>
-<li>We use a linear profile from <span class="math inline"><em>T</em><sub>left</sub></span> to <span class="math inline"><em>T</em><sub>right</sub></span>, which is already the exact answer for a uniform wall</li>
+<li>We use a linear profile from <span class="math inline">\(T_\text{left}\)</span> to <span class="math inline">\(T_\text{right}\)</span>, which is already the exact answer for a uniform wall</li>
 <li>For the three-layer wall the iteration typically converges in a few hundred sweeps</li>
 <li>The figure below shows snapshots at iterations 0, 10, 100, and the converged solution</li>
 </ul>
@@ -193,13 +210,13 @@ Figure&nbsp;22.1: Convergence of Jacobi iteration for a brick-insulation-concret
 <img src="heatwall.svg" alt="Temperature profile through a three-layer wall. The slope is gentle in the high-conductivity layers and steep in the insulation layer.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-heatwall-profile-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;22.2: Steady-state temperature profile for a brick-insulation-concrete wall with inner surface at 20°C and outer surface at −10°C. Grey dashed lines mark the layer interfaces. The steep slope in the insulation (<span class="math inline">0.04 W m<sup>−1</sup> K<sup>−1</sup></span>) reflects its high thermal resistance.
+Figure&nbsp;22.2: Steady-state temperature profile for a brick-insulation-concrete wall with inner surface at 20°C and outer surface at −10°C. Grey dashed lines mark the layer interfaces. The steep slope in the insulation (<span class="math inline">\(0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>) reflects its high thermal resistance.
 </figcaption>
 </figure>
 </div>
 <h2 data-number="22.8" id="heat-flux-through-each-layer"><span class="header-section-number">22.8</span> Heat Flux Through Each Layer</h2>
 <ul>
-<li>In steady state the heat flux <span class="math inline"><em>q</em> = −<em>k</em> <em>d</em><em>T</em>/<em>d</em><em>x</em></span> is the same in every layer</li>
+<li>In steady state the heat flux <span class="math inline">\(q = -k\,dT/dx\)</span> is the same in every layer</li>
 <li>We compute it directly from the numerical temperature gradient in each layer’s segments</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -207,11 +224,11 @@ Figure&nbsp;22.2: Steady-state temperature profile for a brick-insulation-concre
 <dl>
 <dt>Grid node count</dt>
 <dd>
-With <span class="math inline"><em>n</em></span> layers and <span class="math inline"><em>n</em><sub>per layer</sub></span> cells each, the grid must contain exactly <span class="math inline"><em>n</em> × <em>n</em><sub>per layer</sub> + 1</span> nodes. The <span class="math inline">+1</span> accounts for the shared right-boundary node.
+With <span class="math inline">\(n\)</span> layers and <span class="math inline">\(n_\text{per layer}\)</span> cells each, the grid must contain exactly <span class="math inline">\(n \times n_\text{per layer} + 1\)</span> nodes. The <span class="math inline">\(+1\)</span> accounts for the shared right-boundary node.
 </dd>
 <dt>Grid extent</dt>
 <dd>
-The first node must be at <span class="math inline"><em>x</em> = 0</span> and the last at <span class="math inline"><em>x</em> = ∑<sub><em>i</em></sub><em>L</em><sub><em>i</em></sub></span>. An off-by-one in the grid construction would violate this.
+The first node must be at <span class="math inline">\(x = 0\)</span> and the last at <span class="math inline">\(x = \sum_i L_i\)</span>. An off-by-one in the grid construction would violate this.
 </dd>
 <dt>Boundary temperatures</dt>
 <dd>
@@ -219,7 +236,7 @@ The solver must return exactly <code>T_LEFT</code> and <code>T_RIGHT</code> at t
 </dd>
 <dt>Single layer is linear</dt>
 <dd>
-For a single uniform layer the exact solution is a straight line from <span class="math inline"><em>T</em><sub>left</sub></span> to <span class="math inline"><em>T</em><sub>right</sub></span>. Jacobi iteration converges to this profile because the update rule <span class="math inline"><em>T</em><sub><em>i</em></sub> ← (<em>T</em><sub><em>i</em> − 1</sub> + <em>T</em><sub><em>i</em> + 1</sub>)/2</span> has the linear profile as its only fixed point.
+For a single uniform layer the exact solution is a straight line from <span class="math inline">\(T_\text{left}\)</span> to <span class="math inline">\(T_\text{right}\)</span>. Jacobi iteration converges to this profile because the update rule <span class="math inline">\(T_i \leftarrow (T_{i-1} + T_{i+1})/2\)</span> has the linear profile as its only fixed point.
 </dd>
 <dt>Convergence is reached</dt>
 <dd>
@@ -231,15 +248,15 @@ Conservation of energy in steady state requires the same heat flux in every laye
 </dd>
 <dt>Interface temperature matches analytic</dt>
 <dd>
-The temperatures at the layer boundaries returned by the solver must match the analytic values from the thermal-resistance formula to better than <span class="math inline">10<sup>−3</sup></span> °C. The remaining error is dominated by the finite node spacing, not by iteration error, so any deviation larger than this indicates a conductivity-assignment or grid-construction bug.
+The temperatures at the layer boundaries returned by the solver must match the analytic values from the thermal-resistance formula to better than <span class="math inline">\(10^{-3}\)</span> °C. The remaining error is dominated by the finite node spacing, not by iteration error, so any deviation larger than this indicates a conductivity-assignment or grid-construction bug.
 </dd>
-<dt>Linearity in <span class="math inline"><em>Δ</em><em>T</em></span></dt>
+<dt>Linearity in <span class="math inline">\(\Delta T\)</span></dt>
 <dd>
 Doubling the temperature difference across the wall must double the heat flux. This tests that <code>analytic_solution</code> is free of any nonlinear terms.
 </dd>
 <dt>Flux continuity at interfaces</dt>
 <dd>
-At every layer interface, the heat flux computed from the last segment of the left layer must equal the flux computed from the first segment of the right layer to within 0.1% of the analytic flux. This verifies that Jacobi iteration correctly enforces <span class="math inline"><em>k</em><sub>1</sub> <em>Δ</em><em>T</em><sub>1</sub>/<em>Δ</em><em>x</em><sub>1</sub> = <em>k</em><sub>2</sub> <em>Δ</em><em>T</em><sub>2</sub>/<em>Δ</em><em>x</em><sub>2</sub></span> at each boundary.
+At every layer interface, the heat flux computed from the last segment of the left layer must equal the flux computed from the first segment of the right layer to within 0.1% of the analytic flux. This verifies that Jacobi iteration correctly enforces <span class="math inline">\(k_1\,\Delta T_1 / \Delta x_1 = k_2\,\Delta T_2 / \Delta x_2\)</span> at each boundary.
 </dd>
 </dl>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -369,21 +386,21 @@ At every layer interface, the heat flux computed from the last segment of the le
 <div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Heat conduction key terms</p>
 <dl>
-<dt>Thermal conductivity <span class="math inline"><em>k</em></span></dt>
+<dt>Thermal conductivity <span class="math inline">\(k\)</span></dt>
 <dd>
-Material property giving heat flux per unit temperature gradient; high <span class="math inline"><em>k</em></span> means heat flows easily (<span class="math inline">W m<sup>−1</sup> K<sup>−1</sup></span>)
+Material property giving heat flux per unit temperature gradient; high <span class="math inline">\(k\)</span> means heat flows easily (<span class="math inline">\(\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>)
 </dd>
-<dt>Thermal resistance <span class="math inline"><em>R</em> = <em>L</em>/<em>k</em></span></dt>
+<dt>Thermal resistance <span class="math inline">\(R = L/k\)</span></dt>
 <dd>
-Layer property: larger <span class="math inline"><em>R</em></span> means a greater temperature drop for the same flux; used to design insulation (<span class="math inline">m<sup>2</sup> K W<sup>−1</sup></span>)
+Layer property: larger <span class="math inline">\(R\)</span> means a greater temperature drop for the same flux; used to design insulation (<span class="math inline">\(\text{m}^2\,\text{K}\,\text{W}^{-1}\)</span>)
 </dd>
-<dt>Heat flux <span class="math inline"><em>q</em></span></dt>
+<dt>Heat flux <span class="math inline">\(q\)</span></dt>
 <dd>
-Power flowing through a unit area of wall (<span class="math inline">W m<sup>−2</sup></span>); uniform throughout the wall in steady state
+Power flowing through a unit area of wall (<span class="math inline">\(\text{W}\,\text{m}^{-2}\)</span>); uniform throughout the wall in steady state
 </dd>
 <dt>Steady state</dt>
 <dd>
-Condition where <span class="math inline">∂<em>T</em>/∂<em>t</em> = 0</span> everywhere; temperatures are constant in time
+Condition where <span class="math inline">\(\partial T/\partial t = 0\)</span> everywhere; temperatures are constant in time
 </dd>
 <dt>Jacobi iteration</dt>
 <dd>
@@ -395,19 +412,19 @@ An iterative relaxation method in which each interior node is repeatedly updated
 <h2 data-number="22.10" id="exercises"><span class="header-section-number">22.10</span> Exercises</h2>
 <h3 data-number="22.10.1" id="do-the-math"><span class="header-section-number">22.10.1</span> Do the math</h3>
 <ol type="1">
-<li><p>Compute the total thermal resistance (<span class="math inline">m<sup>2</sup> K W<sup>−1</sup></span>) of a three-layer wall with: brick 0.10 m at <span class="math inline">0.72 W m<sup>−1</sup> K<sup>−1</sup></span>, insulation 0.05 m at <span class="math inline">0.04 W m<sup>−1</sup> K<sup>−1</sup></span>, concrete 0.15 m at <span class="math inline">1.20 W m<sup>−1</sup> K<sup>−1</sup></span>. Use <span class="math inline"><em>R</em> = ∑<sub><em>i</em></sub><em>L</em><sub><em>i</em></sub>/<em>k</em><sub><em>i</em></sub></span> and give your answer to three decimal places.</p></li>
-<li><p>Using the thermal resistance formula with the constants defined above (<span class="math inline"><em>L</em><sub>brick</sub> = 0.10</span> m, <span class="math inline"><em>k</em><sub>brick</sub> = 0.72 W m<sup>−1</sup> K<sup>−1</sup></span>; <span class="math inline"><em>L</em><sub>ins</sub> = 0.05</span> m, <span class="math inline"><em>k</em><sub>ins</sub> = 0.04 W m<sup>−1</sup> K<sup>−1</sup></span>; <span class="math inline"><em>L</em><sub>conc</sub> = 0.15</span> m, <span class="math inline"><em>k</em><sub>conc</sub> = 1.20 W m<sup>−1</sup> K<sup>−1</sup></span>; <span class="math inline"><em>T</em><sub>left</sub> = 20</span>°C, <span class="math inline"><em>T</em><sub>right</sub> = −10</span>°C), what is the heat flux <span class="math inline"><em>q</em></span> in <span class="math inline">W m<sup>−2</sup></span>? Give your answer to two decimal places.</p></li>
+<li><p>Compute the total thermal resistance (<span class="math inline">\(\text{m}^2\,\text{K}\,\text{W}^{-1}\)</span>) of a three-layer wall with: brick 0.10 m at <span class="math inline">\(0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>, insulation 0.05 m at <span class="math inline">\(0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>, concrete 0.15 m at <span class="math inline">\(1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>. Use <span class="math inline">\(R = \sum_i L_i / k_i\)</span> and give your answer to three decimal places.</p></li>
+<li><p>Using the thermal resistance formula with the constants defined above (<span class="math inline">\(L_\text{brick} = 0.10\)</span> m, <span class="math inline">\(k_\text{brick} = 0.72\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>; <span class="math inline">\(L_\text{ins} = 0.05\)</span> m, <span class="math inline">\(k_\text{ins} = 0.04\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>; <span class="math inline">\(L_\text{conc} = 0.15\)</span> m, <span class="math inline">\(k_\text{conc} = 1.20\,\text{W}\,\text{m}^{-1}\,\text{K}^{-1}\)</span>; <span class="math inline">\(T_\text{left} = 20\)</span>°C, <span class="math inline">\(T_\text{right} = -10\)</span>°C), what is the heat flux <span class="math inline">\(q\)</span> in <span class="math inline">\(\text{W}\,\text{m}^{-2}\)</span>? Give your answer to two decimal places.</p></li>
 </ol>
 <h3 data-number="22.10.2" id="grid-refinement-study"><span class="header-section-number">22.10.2</span> Grid refinement study</h3>
 <p>Double <code>N_PER_LAYER</code> four times (from 5 to 80) and record the maximum absolute difference between the numerical and analytic interface temperatures at each refinement level. Plot the error versus <code>N_PER_LAYER</code> on a log-log scale. Explain the observed convergence order.</p>
 <h3 data-number="22.10.3" id="radiation-and-convection-boundary-conditions"><span class="header-section-number">22.10.3</span> Radiation and convection boundary conditions</h3>
 <p>Real walls exchange heat with the air by convection, not at a fixed surface temperature. The convective boundary condition on the inner surface is:</p>
-<p><span class="math display"><em>q</em> = <em>h</em> (<em>T</em><sub>air,in</sub> − <em>T</em><sub>0</sub>)</span></p>
-<p>where <span class="math inline"><em>h</em></span> is the convective heat-transfer coefficient (<span class="math inline">W m<sup>−2</sup> K<sup>−1</sup></span>). Modify <code>jacobi_solve</code> to accept inner and outer convective coefficients instead of fixed temperatures by updating the boundary nodes using this relation at each sweep, and verify that as <span class="math inline"><em>h</em> → ∞</span> the solution approaches the fixed-temperature result.</p>
+<p><span class="math display">\[q = h\,(T_\text{air,in} - T_0)\]</span></p>
+<p>where <span class="math inline">\(h\)</span> is the convective heat-transfer coefficient (<span class="math inline">\(\text{W}\,\text{m}^{-2}\,\text{K}^{-1}\)</span>). Modify <code>jacobi_solve</code> to accept inner and outer convective coefficients instead of fixed temperatures by updating the boundary nodes using this relation at each sweep, and verify that as <span class="math inline">\(h \to \infty\)</span> the solution approaches the fixed-temperature result.</p>
 <h3 data-number="22.10.4" id="transient-heat-conduction"><span class="header-section-number">22.10.4</span> Transient heat conduction</h3>
-<p>Remove the steady-state assumption and discretize the full 1D heat equation <span class="math inline"><em>ρ</em><em>c</em><sub><em>p</em></sub>∂<em>T</em>/∂<em>t</em> = ∂(<em>k</em>∂<em>T</em>/∂<em>x</em>)/∂<em>x</em></span> using the explicit Euler method. Use <span class="math inline"><em>ρ</em> = 1800 kg m<sup>−3</sup></span> and <span class="math inline"><em>c</em><sub><em>p</em></sub> = 900 J kg<sup>−1</sup> K<sup>−1</sup></span> for all layers (representative brick). Start from a uniform initial temperature of 20°C, apply <span class="math inline"><em>T</em><sub>right</sub> = −10</span>°C at <span class="math inline"><em>t</em> = 0</span>, and run until the solution is within 1°C of the steady state everywhere. Verify the stability condition <span class="math inline"><em>Δ</em><em>t</em> ≤ <em>Δ</em><em>x</em><sup>2</sup>/(2<em>α</em>)</span> where <span class="math inline"><em>α</em> = <em>k</em>/(<em>ρ</em><em>c</em><sub><em>p</em></sub>)</span> is the thermal diffusivity.</p>
+<p>Remove the steady-state assumption and discretize the full 1D heat equation <span class="math inline">\(\rho c_p \partial T / \partial t = \partial (k \partial T / \partial x) / \partial x\)</span> using the explicit Euler method. Use <span class="math inline">\(\rho = 1800\,\text{kg}\,\text{m}^{-3}\)</span> and <span class="math inline">\(c_p = 900\,\text{J}\,\text{kg}^{-1}\,\text{K}^{-1}\)</span> for all layers (representative brick). Start from a uniform initial temperature of 20°C, apply <span class="math inline">\(T_\text{right} = -10\)</span>°C at <span class="math inline">\(t=0\)</span>, and run until the solution is within 1°C of the steady state everywhere. Verify the stability condition <span class="math inline">\(\Delta t \le \Delta x^2 / (2 \alpha)\)</span> where <span class="math inline">\(\alpha = k / (\rho c_p)\)</span> is the thermal diffusivity.</p>
 <h3 data-number="22.10.5" id="optimal-insulation-placement"><span class="header-section-number">22.10.5</span> Optimal insulation placement</h3>
-<p>Fix the total insulation thickness at 5 cm and split it between two locations: one slab immediately inside the brick and one immediately inside the concrete. Let the inner slab have thickness <span class="math inline"><em>t</em></span> (<span class="math inline">0 ≤ <em>t</em> ≤ 0.05</span> m) and the outer slab <span class="math inline">(0.05 − <em>t</em>)</span> m. Compute the heat flux for each split and show that the total resistance — and therefore the heat flux — is independent of how the insulation is distributed. Explain this result using the series-resistance formula.</p>
+<p>Fix the total insulation thickness at 5 cm and split it between two locations: one slab immediately inside the brick and one immediately inside the concrete. Let the inner slab have thickness <span class="math inline">\(t\)</span> (<span class="math inline">\(0 \le t \le 0.05\)</span> m) and the outer slab <span class="math inline">\((0.05 - t)\)</span> m. Compute the heat flux for each split and show that the total resistance — and therefore the heat flux — is independent of how the insulation is distributed. Explain this result using the series-resistance formula.</p>
 </section>
 
 </main>

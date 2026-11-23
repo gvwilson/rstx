@@ -1,6 +1,15 @@
 metadata-files:
   - mccole/mccole.yml
 
+mccole-math: true
+
+filters:
+  - config/math.lua
+
+format:
+  html:
+    html-math-method: katex
+
 book:
   title: "Research Software Testing by Example"
   repo-url: "https://github.com/gvwilson/rstx"

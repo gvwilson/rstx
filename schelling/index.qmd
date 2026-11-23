@@ -61,7 +61,7 @@ $$f(r,c) = \frac{\text{occupied neighbours of the same type}}{\text{total occupi
 
 ## Computing the Same-Neighbour Fraction
 
--   Iterating over the 8 relative offsets $(\Delta r, \Delta c) \in \{-1,0,1\}^2 \setminus \\{(0,0)\\}$
+-   Iterating over the 8 relative offsets $(\Delta r, \Delta c) \in \{-1,0,1\}^2 \setminus \{(0,0)\}$
     visits each neighbour exactly once
 -   Grid boundaries are handled by checking that the neighbour index lies within $[0, N)$
 

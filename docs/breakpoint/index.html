@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Structural Break Detection in Economic Time Series</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -71,33 +88,33 @@ Wrong: absolute size alone does not cause drift; it is the consistent sign that 
 </div>
 <h2 data-number="32.2" id="the-cusum-statistic"><span class="header-section-number">32.2</span> The CUSUM Statistic</h2>
 <ul>
-<li>Given a time series <span class="math inline"><em>y</em><sub>0</sub>, …, <em>y</em><sub><em>T</em> − 1</sub></span> and a fitted model with residuals <span class="math inline"><em>ê</em><sub><em>t</em></sub> = <em>y</em><sub><em>t</em></sub> − <em>ŷ</em><sub><em>t</em></sub></span>, the cumulative sum (CUSUM) at step <span class="math inline"><em>t</em></span> is:</li>
+<li>Given a time series <span class="math inline">\(y_0, \ldots, y_{T-1}\)</span> and a fitted model with residuals <span class="math inline">\(\hat{e}_t = y_t - \hat{y}_t\)</span>, the cumulative sum (CUSUM) at step <span class="math inline">\(t\)</span> is:</li>
 </ul>
-<p><span class="math display">$$C_t = \sum_{s=0}^{t} \hat{e}_s$$</span></p>
+<p><span class="math display">\[C_t = \sum_{s=0}^{t} \hat{e}_s\]</span></p>
 <ul>
 <li>Before a break, residuals share one systematic sign (i.e., the global fit is wrong in one direction)</li>
-<li>After the break they flip, so <span class="math inline"><em>C</em><sub><em>t</em></sub></span> first drifts away from zero and then turns back</li>
+<li>After the break they flip, so <span class="math inline">\(C_t\)</span> first drifts away from zero and then turns back</li>
 <li>The break is detected at the index of maximum absolute deviation:</li>
 </ul>
-<p><span class="math display"><em>τ̂</em> = argmax<sub><em>t</em></sub>|<em>C</em><sub><em>t</em></sub>|</span></p>
+<p><span class="math display">\[\hat{\tau} = \mathop{\arg\max}_{t} |C_t|\]</span></p>
 <ul>
-<li>Because detect_break returns the last index before the estimated break, the estimated break location in terms of steps is <span class="math inline"><em>τ̂</em> + 1</span></li>
+<li>Because detect_break returns the last index before the estimated break, the estimated break location in terms of steps is <span class="math inline">\(\hat{\tau} + 1\)</span></li>
 </ul>
 <h2 data-number="32.3" id="generating-synthetic-data"><span class="header-section-number">32.3</span> Generating Synthetic Data</h2>
 <ul>
-<li>The series has a single abrupt break at step 100: the mean shifts from 0.0 to 3.0, a change of three standard deviations (<span class="math inline"><em>σ</em> = 1.0</span>)</li>
+<li>The series has a single abrupt break at step 100: the mean shifts from 0.0 to 3.0, a change of three standard deviations (<span class="math inline">\(\sigma = 1.0\)</span>)</li>
 <li>This signal-to-noise ratio of 3 gives reliable detection with 200 observations while still leaving visible scatter in the plots</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="32.4" id="mean-only-residuals-and-cusum"><span class="header-section-number">32.4</span> Mean-Only Residuals and CUSUM</h2>
 <ul>
-<li>Subtract the sample mean from each observation: <span class="math inline"><em>ê</em><sub><em>t</em></sub> = <em>y</em><sub><em>t</em></sub> − <em>ȳ</em></span></li>
+<li>Subtract the sample mean from each observation: <span class="math inline">\(\hat{e}_t = y_t - \bar{y}\)</span></li>
 <li>If there is no break, these residuals fluctuate randomly around zero with no consistent pattern</li>
 <li>If there is a break, residuals before the break have one consistent sign and residuals after have the opposite sign
 <ul>
 <li>The global mean sits between the two local means, so it over-estimates one half and under-estimates the other</li>
 </ul></li>
-<li>This sign reversal produces the characteristic V-shape in <span class="math inline"><em>C</em><sub><em>t</em></sub></span>
+<li>This sign reversal produces the characteristic V-shape in <span class="math inline">\(C_t\)</span>
 <ul>
 <li>The CUSUM drifts in one direction before the break and reverses after</li>
 <li>The peak marks the break</li>
@@ -111,7 +128,7 @@ Wrong: absolute size alone does not cause drift; it is the consistent sign that 
 <ul>
 <li>The CUSUM responds to both</li>
 </ul></li>
-<li>Instead, subtract the line of best fit found by <code>np.polyfit</code> with <span class="math inline"><em>ê</em><sub><em>t</em></sub> = <em>y</em><sub><em>t</em></sub> − (<em>a</em> + <em>b</em><em>t</em>)</span>, where <span class="math inline"><em>a</em></span> and <span class="math inline"><em>b</em></span> are chosen to minimise the sum of squared differences from the data</li>
+<li>Instead, subtract the line of best fit found by <code>np.polyfit</code> with <span class="math inline">\(\hat{e}_t = y_t - (a + bt)\)</span>, where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are chosen to minimise the sum of squared differences from the data</li>
 <li>The CUSUM of these trend residuals responds only to departures from the fitted line, such as a sudden mean shift</li>
 <li>A break that also changes the trend is harder to see in mean residuals but visible in trend residuals</li>
 <li>When the series has no trend (as in the synthetic data here) both models should detect the same break (which they do)</li>
@@ -180,11 +197,11 @@ For both the mean-only and linear-trend fits, residuals must sum to zero. Subtra
 </dd>
 <dt>Clean-signal break detection</dt>
 <dd>
-With no noise, a 0-to-3 step function has residuals of <span class="math inline">−1.5</span> before the break and <span class="math inline">+1.5</span> after. The CUSUM decreases at rate 1.5 for 100 steps (reaching <span class="math inline">−150</span>), then increases at rate 1.5 for 100 steps (returning to 0). The maximum absolute value is at index 99, so <code>detect_break</code> must return 99.
+With no noise, a 0-to-3 step function has residuals of <span class="math inline">\(-1.5\)</span> before the break and <span class="math inline">\(+1.5\)</span> after. The CUSUM decreases at rate 1.5 for 100 steps (reaching <span class="math inline">\(-150\)</span>), then increases at rate 1.5 for 100 steps (returning to 0). The maximum absolute value is at index 99, so <code>detect_break</code> must return 99.
 </dd>
 <dt>Noisy detection within ten steps</dt>
 <dd>
-With seed 7493418 and signal-to-noise ratio 3, the estimated break location (<span class="math inline"><em>τ̂</em> + 1</span>) must be within 10 steps of the true break at step 100. The tolerance of 10 is roughly <span class="math inline">$3\sigma / \sqrt{n} \approx 0.07$</span> of the series length, which is a generous margin given the high <a href="../glossary/index.html#signal_to_noise">signal-to-noise ratio</a> (SNR).
+With seed 7493418 and signal-to-noise ratio 3, the estimated break location (<span class="math inline">\(\hat{\tau} + 1\)</span>) must be within 10 steps of the true break at step 100. The tolerance of 10 is roughly <span class="math inline">\(3\sigma / \sqrt{n} \approx 0.07\)</span> of the series length, which is a generous margin given the high <a href="../glossary/index.html#signal_to_noise">signal-to-noise ratio</a> (SNR).
 </dd>
 </dl>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -238,36 +255,36 @@ With seed 7493418 and signal-to-noise ratio 3, the estimated break location (<sp
 <dd>
 A point in time at which the statistical properties of a time series (mean, variance, trend) change abruptly and permanently; also called a regime change or change point
 </dd>
-<dt>CUSUM statistic <span class="math inline"><em>C</em><sub><em>t</em></sub></span></dt>
+<dt>CUSUM statistic <span class="math inline">\(C_t\)</span></dt>
 <dd>
-<span class="math inline">$\sum_{s=0}^{t} \hat{e}_s$</span>; cumulative sum of residuals; drifts systematically when the fitted model is wrong on one side of a break
+<span class="math inline">\(\sum_{s=0}^{t} \hat{e}_s\)</span>; cumulative sum of residuals; drifts systematically when the fitted model is wrong on one side of a break
 </dd>
 <dt>Mean-only residuals</dt>
 <dd>
-<span class="math inline"><em>ê</em><sub><em>t</em></sub> = <em>y</em><sub><em>t</em></sub> − <em>ȳ</em></span>; appropriate when the series is stationary around a constant mean; confounds trend and break if a trend is present
+<span class="math inline">\(\hat{e}_t = y_t - \bar{y}\)</span>; appropriate when the series is stationary around a constant mean; confounds trend and break if a trend is present
 </dd>
 <dt>Linear-trend residuals</dt>
 <dd>
-<span class="math inline"><em>ê</em><sub><em>t</em></sub> = <em>y</em><sub><em>t</em></sub> − (<em>a</em> + <em>b</em><em>t</em>)</span> where <span class="math inline"><em>a</em></span> and <span class="math inline"><em>b</em></span> are found by <code>np.polyfit</code>; removes a fitted linear drift before forming the CUSUM; appropriate when the series has a deterministic trend
+<span class="math inline">\(\hat{e}_t = y_t - (a + bt)\)</span> where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are found by <code>np.polyfit</code>; removes a fitted linear drift before forming the CUSUM; appropriate when the series has a deterministic trend
 </dd>
 <dt>Break detection rule</dt>
 <dd>
-<span class="math inline"><em>τ̂</em> = arg max<sub><em>t</em></sub>|<em>C</em><sub><em>t</em></sub>|</span>; the last index before the estimated break; the estimated break location is <span class="math inline"><em>τ̂</em> + 1</span>
+<span class="math inline">\(\hat{\tau} = \arg\max_t |C_t|\)</span>; the last index before the estimated break; the estimated break location is <span class="math inline">\(\hat{\tau} + 1\)</span>
 </dd>
 </dl>
 </div>
 <section class="exercises">
 <h2 data-number="32.8" id="exercises"><span class="header-section-number">32.8</span> Exercises</h2>
 <h3 data-number="32.8.1" id="do-the-math"><span class="header-section-number">32.8.1</span> Do the math</h3>
-<p>A noise-free series has value 0 for steps 0-99 and value 3 for steps 100-199. The global mean is 1.5. At which step index (0-based) does <span class="math inline">|<em>C</em><sub><em>t</em></sub>|</span> reach its maximum?</p>
+<p>A noise-free series has value 0 for steps 0-99 and value 3 for steps 100-199. The global mean is 1.5. At which step index (0-based) does <span class="math inline">\(|C_t|\)</span> reach its maximum?</p>
 <h3 data-number="32.8.2" id="two-break-points"><span class="header-section-number">32.8.2</span> Two break points</h3>
 <p>Modify <code>make_breakpoint_data</code> to introduce a second break: the mean shifts from 0.0 to 3.0 at step 60 and then from 3.0 to 1.0 at step 140. Plot the CUSUM of the mean-only residuals and explain why the statistic now shows two local extrema. Does <code>detect_break</code> find the larger or smaller break?</p>
 <h3 data-number="32.8.3" id="effect-of-signal-to-noise-ratio"><span class="header-section-number">32.8.3</span> Effect of signal-to-noise ratio</h3>
 <p>Run the detection algorithm for five signal-to-noise ratios ($/ = $ 0.5, 1, 2, 3, 5) while keeping all other parameters fixed. For each ratio, report the detected break location and its distance from the true break. At what SNR does reliable detection (within 5 steps) become consistent across different random seeds?</p>
 <h3 data-number="32.8.4" id="trend-with-a-break"><span class="header-section-number">32.8.4</span> Trend with a break</h3>
-<p>Generate a series with a linear trend (<span class="math inline"><em>b</em> = 0.05</span> per step) and a mean break at step 100. Apply both the mean-only and linear-trend CUSUM and compare the detected break locations. Show that the mean-only CUSUM gives a biased estimate when a trend is present.</p>
+<p>Generate a series with a linear trend (<span class="math inline">\(b = 0.05\)</span> per step) and a mean break at step 100. Apply both the mean-only and linear-trend CUSUM and compare the detected break locations. Show that the mean-only CUSUM gives a biased estimate when a trend is present.</p>
 <h3 data-number="32.8.5" id="scaled-cusum-and-critical-values"><span class="header-section-number">32.8.5</span> Scaled CUSUM and critical values</h3>
-<p>The raw CUSUM is not scale-invariant: a larger noise standard deviation produces larger CUSUM values even with no break. Normalise the CUSUM by dividing by <span class="math inline">$\hat{\sigma}\sqrt{T}$</span> where <span class="math inline"><em>σ̂</em></span> is the residual standard error and <span class="math inline"><em>T</em></span> is the series length. The scaled statistic exceeds 1.36 with probability 5% under the null hypothesis of no break (Brown-Durbin-Evans critical value). Apply this threshold to the synthetic data and report whether the break is detected at the 5% level.</p>
+<p>The raw CUSUM is not scale-invariant: a larger noise standard deviation produces larger CUSUM values even with no break. Normalise the CUSUM by dividing by <span class="math inline">\(\hat{\sigma}\sqrt{T}\)</span> where <span class="math inline">\(\hat{\sigma}\)</span> is the residual standard error and <span class="math inline">\(T\)</span> is the series length. The scaled statistic exceeds 1.36 with probability 5% under the null hypothesis of no break (Brown-Durbin-Evans critical value). Apply this threshold to the synthetic data and report whether the break is detected at the 5% level.</p>
 </section>
 
 </main>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Predator-Prey Dynamics</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -51,23 +68,23 @@
 </ul>
 <h2 data-number="23.2" id="the-equations"><span class="header-section-number">23.2</span> The Equations</h2>
 <ul>
-<li>Let <span class="math inline"><em>x</em>(<em>t</em>)</span> be prey population and <span class="math inline"><em>y</em>(<em>t</em>)</span> be predator population.</li>
+<li>Let <span class="math inline">\(x(t)\)</span> be prey population and <span class="math inline">\(y(t)\)</span> be predator population.</li>
 <li>The model is a pair of ordinary differential equations:</li>
 </ul>
-<p><span class="math display">$$\frac{dx}{dt} = ax - bxy \qquad \frac{dy}{dt} = cxy - dy$$</span></p>
+<p><span class="math display">\[\frac{dx}{dt} = ax - bxy \qquad \frac{dy}{dt} = cxy - dy\]</span></p>
 <ul>
 <li>Each term has a direct interpretation:
 <ul>
-<li><span class="math inline"><em>a</em><em>x</em></span>: prey grow exponentially in the absence of predators (birth rate <span class="math inline"><em>a</em></span>)</li>
-<li><span class="math inline"><em>b</em><em>x</em><em>y</em></span>: prey are removed at a rate proportional to encounters between species (predation rate <span class="math inline"><em>b</em></span>)</li>
-<li><span class="math inline"><em>c</em><em>x</em><em>y</em></span>: predators gain from eating prey (efficiency <span class="math inline"><em>c</em></span>)</li>
-<li><span class="math inline"><em>d</em><em>y</em></span>: predators die at a constant per-capita rate <span class="math inline"><em>d</em></span></li>
+<li><span class="math inline">\(ax\)</span>: prey grow exponentially in the absence of predators (birth rate <span class="math inline">\(a\)</span>)</li>
+<li><span class="math inline">\(bxy\)</span>: prey are removed at a rate proportional to encounters between species (predation rate <span class="math inline">\(b\)</span>)</li>
+<li><span class="math inline">\(cxy\)</span>: predators gain from eating prey (efficiency <span class="math inline">\(c\)</span>)</li>
+<li><span class="math inline">\(dy\)</span>: predators die at a constant per-capita rate <span class="math inline">\(d\)</span></li>
 </ul></li>
 </ul>
 <h2 data-number="23.3" id="parameters-and-equilibrium"><span class="header-section-number">23.3</span> Parameters and Equilibrium</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
-<li>Setting both derivatives to zero gives the equilibrium: <span class="math inline"><em>x</em><sup>*</sup> = <em>d</em>/<em>c</em></span> and <span class="math inline"><em>y</em><sup>*</sup> = <em>a</em>/<em>b</em></span>.</li>
+<li>Setting both derivatives to zero gives the equilibrium: <span class="math inline">\(x^* = d/c\)</span> and <span class="math inline">\(y^* = a/b\)</span>.</li>
 <li>At the equilibrium, populations are constant</li>
 <li>But any perturbation produces oscillations</li>
 <li><code>PERIOD_APPROX</code> is derived by linearising around the equilibrium
@@ -76,11 +93,11 @@
 </ul></li>
 </ul>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>With <code>PREY_BIRTH</code> = 1.0, <code>PREDATION</code> = 0.1, <code>PRED_GROWTH</code> = 0.075, <code>PRED_DEATH</code> = 1.5, what is the prey equilibrium <span class="math inline"><em>x</em><sup>*</sup> = <em>d</em>/<em>c</em></span>?</p>
+<p>With <code>PREY_BIRTH</code> = 1.0, <code>PREDATION</code> = 0.1, <code>PRED_GROWTH</code> = 0.075, <code>PRED_DEATH</code> = 1.5, what is the prey equilibrium <span class="math inline">\(x^* = d/c\)</span>?</p>
 <dl>
 <dt>10.0</dt>
 <dd>
-Wrong: 10.0 is the predator equilibrium <span class="math inline"><em>y</em><sup>*</sup> = <em>a</em>/<em>b</em></span> = <code>PREY_BIRTH / PREDATION</code>.
+Wrong: 10.0 is the predator equilibrium <span class="math inline">\(y^* = a/b\)</span> = <code>PREY_BIRTH / PREDATION</code>.
 </dd>
 <dt>13.3</dt>
 <dd>
@@ -88,7 +105,7 @@ Wrong: that is <code>PREY_BIRTH / PRED_GROWTH</code> = 1.0 / 0.075, which is not
 </dd>
 <dt>20.0</dt>
 <dd>
-Correct: <span class="math inline"><em>x</em><sup>*</sup> = <em>d</em>/<em>c</em></span> = <code>PRED_DEATH / PRED_GROWTH</code> = 1.5 / 0.075 = 20.0.
+Correct: <span class="math inline">\(x^* = d/c\)</span> = <code>PRED_DEATH / PRED_GROWTH</code> = 1.5 / 0.075 = 20.0.
 </dd>
 <dt>1.0</dt>
 <dd>
@@ -98,8 +115,8 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 </div>
 <h2 data-number="23.4" id="implementing-the-right-hand-side"><span class="header-section-number">23.4</span> Implementing the Right-Hand Side</h2>
 <ul>
-<li><code>solve_ivp</code> requires a function that takes time <span class="math inline"><em>t</em></span> and state vector <span class="math inline"><em>z</em> = [<em>x</em>, <em>y</em>]</span> and returns <span class="math inline">[<em>d</em><em>x</em>/<em>d</em><em>t</em>, <em>d</em><em>y</em>/<em>d</em><em>t</em>]</span></li>
-<li>The function must not modify <span class="math inline"><em>z</em></span>; instead, it should return a new list</li>
+<li><code>solve_ivp</code> requires a function that takes time <span class="math inline">\(t\)</span> and state vector <span class="math inline">\(z = [x, y]\)</span> and returns <span class="math inline">\([dx/dt,\; dy/dt]\)</span></li>
+<li>The function must not modify <span class="math inline">\(z\)</span>; instead, it should return a new list</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
@@ -123,18 +140,18 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 <tbody>
 </tbody>
 </table>
-<div class="line-block"><span class="math inline"><em>a</em><em>x</em></span> | Prey grow exponentially in the absence of predators |<br>
-<span class="math inline"><em>b</em><em>x</em><em>y</em></span> | Prey are removed at a rate proportional to predator-prey encounters |<br>
-<span class="math inline"><em>c</em><em>x</em><em>y</em></span> | Predators gain population from consuming prey |<br>
-<span class="math inline"><em>d</em><em>y</em></span> | Predators die at a constant per-capita rate |</div>
+<div class="line-block"><span class="math inline">\(ax\)</span> | Prey grow exponentially in the absence of predators |<br>
+<span class="math inline">\(bxy\)</span> | Prey are removed at a rate proportional to predator-prey encounters |<br>
+<span class="math inline">\(cxy\)</span> | Predators gain population from consuming prey |<br>
+<span class="math inline">\(dy\)</span> | Predators die at a constant per-capita rate |</div>
 </div>
 <h2 data-number="23.5" id="solving-the-system"><span class="header-section-number">23.5</span> Solving the System</h2>
 <ul>
-<li><code>solve_ivp</code> advances the state from <span class="math inline"><em>t</em> = 0</span> to <code>T_MAX</code> using an adaptive Runge-Kutta method</li>
+<li><code>solve_ivp</code> advances the state from <span class="math inline">\(t = 0\)</span> to <code>T_MAX</code> using an adaptive Runge-Kutta method</li>
 <li><code>t_eval</code> specifies the output times; it does not control the internal step size</li>
 <li><code>rtol</code> and <code>atol</code> control the solver’s internal error tolerance
 <ul>
-<li>Setting them to <span class="math inline">10<sup>−8</sup></span> and <span class="math inline">10<sup>−10</sup></span> gives solutions accurate to roughly eight significant figures.</li>
+<li>Setting them to <span class="math inline">\(10^{-8}\)</span> and <span class="math inline">\(10^{-10}\)</span> gives solutions accurate to roughly eight significant figures.</li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -165,9 +182,9 @@ Figure&nbsp;23.1: Prey (blue) and predator (orange) populations over 53 time uni
 </figure>
 </div>
 <ul>
-<li>The population trajectory plots <span class="math inline"><em>x</em></span> versus <span class="math inline"><em>y</em></span> at each point in time
+<li>The population trajectory plots <span class="math inline">\(x\)</span> versus <span class="math inline">\(y\)</span> at each point in time
 <ul>
-<li>When the solution returns to approximately the same <span class="math inline">(<em>x</em>, <em>y</em>)</span> point after one cycle, the curve closes on itself.</li>
+<li>When the solution returns to approximately the same <span class="math inline">\((x, y)\)</span> point after one cycle, the curve closes on itself.</li>
 <li>A nearly closed loop means the system keeps repeating the same pattern indefinitely</li>
 </ul></li>
 </ul>
@@ -177,7 +194,7 @@ Figure&nbsp;23.1: Prey (blue) and predator (orange) populations over 53 time uni
 <img src="lotka_trajectory.svg" alt="A closed loop in the prey-predator plane showing the repeating population cycle.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lotka-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.2: Population trajectory: prey (<span class="math inline"><em>x</em></span>-axis) versus predator (<span class="math inline"><em>y</em></span>-axis). The loop closes because the populations repeat the same cycle.
+Figure&nbsp;23.2: Population trajectory: prey (<span class="math inline">\(x\)</span>-axis) versus predator (<span class="math inline">\(y\)</span>-axis). The loop closes because the populations repeat the same cycle.
 </figcaption>
 </figure>
 </div>
@@ -189,11 +206,11 @@ Analytically, neither population can reach zero in finite time: the positive qua
 </dd>
 <dt>Volterra averaging principle</dt>
 <dd>
-Volterra proved that the time mean of <span class="math inline"><em>x</em>(<em>t</em>)</span> over any complete number of cycles equals <span class="math inline"><em>x</em><sup>*</sup> = <em>d</em>/<em>c</em></span>, and similarly for <span class="math inline"><em>y</em>(<em>t</em>)</span>. This is an exact analytical result, not an approximation. Over <code>T_MAX</code> covering ~10 complete cycles, the fractional-cycle bias is below 0.2%. A relative tolerance of 1% gives a 5x safety margin over that measured bias.
+Volterra proved that the time mean of <span class="math inline">\(x(t)\)</span> over any complete number of cycles equals <span class="math inline">\(x^* = d/c\)</span>, and similarly for <span class="math inline">\(y(t)\)</span>. This is an exact analytical result, not an approximation. Over <code>T_MAX</code> covering ~10 complete cycles, the fractional-cycle bias is below 0.2%. A relative tolerance of 1% gives a 5x safety margin over that measured bias.
 </dd>
 <dt>Period matches linearised estimate</dt>
 <dd>
-Linearising the LV equations around equilibrium gives small oscillations with period <span class="math inline">$2\pi/\sqrt{ad}$</span>. For finite-amplitude oscillations the true period is longer (the nonlinear correction is <span class="math inline"><em>O</em>(amplitude<sup>2</sup>)</span>). With our initial conditions the measured period is ~5.30 versus the linearised estimate of ~5.13, a 3.3% deviation. A tolerance of 10% gives a safety factor of 3 over that measured deviation.
+Linearising the LV equations around equilibrium gives small oscillations with period <span class="math inline">\(2\pi/\sqrt{ad}\)</span>. For finite-amplitude oscillations the true period is longer (the nonlinear correction is <span class="math inline">\(O(\text{amplitude}^2)\)</span>). With our initial conditions the measured period is ~5.30 versus the linearised estimate of ~5.13, a 3.3% deviation. A tolerance of 10% gives a safety factor of 3 over that measured deviation.
 </dd>
 </dl>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -240,11 +257,11 @@ Linearising the LV equations around equilibrium gives small oscillations with pe
 <h3 data-number="23.8.1" id="starting-at-the-equilibrium"><span class="header-section-number">23.8.1</span> Starting at the equilibrium</h3>
 <p>Set <code>PREY_INIT = PREY_EQ</code> and <code>PRED_INIT = PRED_EQ</code> and run the simulation. What does <code>plot_time_series</code> show? What does <code>plot_trajectory</code> show? Explain why in terms of the fixed-point analysis.</p>
 <h3 data-number="23.8.2" id="effect-of-initial-conditions-on-period"><span class="header-section-number">23.8.2</span> Effect of initial conditions on period</h3>
-<p>Run the simulation with three different starting points: <span class="math inline">(<em>x</em><sub>0</sub>, <em>y</em><sub>0</sub>)</span> = (21, 10.5), (25, 5), and (40, 2). Plot the population trajectories on the same axes using different colors. Measure the period of each orbit using <code>find_peaks</code>. Is the period the same for all three orbits, or does it vary with amplitude? Compare each measured period to <code>PERIOD_APPROX</code>.</p>
+<p>Run the simulation with three different starting points: <span class="math inline">\((x_0, y_0)\)</span> = (21, 10.5), (25, 5), and (40, 2). Plot the population trajectories on the same axes using different colors. Measure the period of each orbit using <code>find_peaks</code>. Is the period the same for all three orbits, or does it vary with amplitude? Compare each measured period to <code>PERIOD_APPROX</code>.</p>
 <h3 data-number="23.8.3" id="harvesting-prey"><span class="header-section-number">23.8.3</span> Harvesting prey</h3>
-<p>Add a constant harvesting term to the prey equation: <span class="math inline"><em>d</em><em>x</em>/<em>d</em><em>t</em> = <em>a</em><em>x</em> − <em>b</em><em>x</em><em>y</em> − <em>h</em></span>, where <span class="math inline"><em>h</em> &gt; 0</span> represents the rate at which prey are removed by fishing, hunting, or sampling. Derive the new equilibrium <span class="math inline">(<em>x</em><sub><em>h</em></sub><sup>*</sup>, <em>y</em><sub><em>h</em></sub><sup>*</sup>)</span> algebraically. Implement the modified <code>rhs</code> and verify your algebra by checking that the simulation stays constant when started exactly at the new equilibrium.</p>
+<p>Add a constant harvesting term to the prey equation: <span class="math inline">\(dx/dt = ax - bxy - h\)</span>, where <span class="math inline">\(h &gt; 0\)</span> represents the rate at which prey are removed by fishing, hunting, or sampling. Derive the new equilibrium <span class="math inline">\((x_h^*, y_h^*)\)</span> algebraically. Implement the modified <code>rhs</code> and verify your algebra by checking that the simulation stays constant when started exactly at the new equilibrium.</p>
 <h3 data-number="23.8.4" id="numerical-accuracy-and-solver-tolerance"><span class="header-section-number">23.8.4</span> Numerical accuracy and solver tolerance</h3>
-<p>Reduce <code>rtol</code> and <code>atol</code> by a factor of 100 (to <span class="math inline">10<sup>−6</sup></span> and <span class="math inline">10<sup>−8</sup></span>) and re-run the simulation. Run the simulation for <code>T_MAX</code> time units and check whether the population trajectory still forms a nearly closed loop. At what tolerance does the loop visibly fail to close? What does this tell you about the relationship between solver accuracy and the appearance of the trajectory?</p>
+<p>Reduce <code>rtol</code> and <code>atol</code> by a factor of 100 (to <span class="math inline">\(10^{-6}\)</span> and <span class="math inline">\(10^{-8}\)</span>) and re-run the simulation. Run the simulation for <code>T_MAX</code> time units and check whether the population trajectory still forms a nearly closed loop. At what tolerance does the loop visibly fail to close? What does this tell you about the relationship between solver accuracy and the appearance of the trajectory?</p>
 </section>
 
 </main>

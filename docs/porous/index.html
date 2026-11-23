@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Percolation in a Porous Medium</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -42,7 +59,7 @@
 </ul>
 <h2 data-number="5.2" id="the-grid-model"><span class="header-section-number">5.2</span> The Grid Model</h2>
 <ul>
-<li>We approximate the material as a square grid: each cell is independently open (passable) with probability <span class="math inline"><em>p</em></span> or blocked (solid) with probability <span class="math inline">1 − <em>p</em></span>.</li>
+<li>We approximate the material as a square grid: each cell is independently open (passable) with probability <span class="math inline">\(p\)</span> or blocked (solid) with probability <span class="math inline">\(1-p\)</span>.</li>
 <li>This is <a href="../glossary/index.html#site_percolation">site percolation</a> on a 2D square lattice with 4-neighbor (von Neumann) connectivity.</li>
 <li>“Percolation” means a connected path of open cells exists from any cell in the top row to any cell in the bottom row.</li>
 </ul>
@@ -51,19 +68,19 @@
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>The expression <code>rng.random((GRID_SIZE, GRID_SIZE)) &lt; p</code> produces a boolean grid. What fraction of its cells are True on average?</p>
 <dl>
-<dt><span class="math inline">1 − <em>p</em></span></dt>
+<dt><span class="math inline">\(1 - p\)</span></dt>
 <dd>
 Wrong: cells with a uniform random value less than p are True with probability p, not 1-p.
 </dd>
-<dt><span class="math inline"><em>p</em></span></dt>
+<dt><span class="math inline">\(p\)</span></dt>
 <dd>
 Correct: each cell is drawn from Uniform(0, 1) and is less than p with probability p.
 </dd>
-<dt><span class="math inline"><em>p</em><sup>2</sup></span></dt>
+<dt><span class="math inline">\(p^2\)</span></dt>
 <dd>
 Wrong: the cells are independent; their joint probability involves products only when all must be True simultaneously.
 </dd>
-<dt><span class="math inline">$\sqrt{p}$</span></dt>
+<dt><span class="math inline">\(\sqrt{p}\)</span></dt>
 <dd>
 Wrong: the comparison <code>&lt; p</code> gives probability p directly, with no square root.
 </dd>
@@ -77,7 +94,7 @@ Wrong: the comparison <code>&lt; p</code> gives probability p directly, with no 
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
-<li><code>visited</code> prevents cells from being added to the stack twice, keeping the search <span class="math inline"><em>O</em>(<em>N</em><sup>2</sup>)</span> in the grid size.</li>
+<li><code>visited</code> prevents cells from being added to the stack twice, keeping the search <span class="math inline">\(O(N^2)\)</span> in the grid size.</li>
 <li>Marking cells as visited before the main loop (not after popping) ensures no cell is pushed onto the stack more than once.</li>
 </ul>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
@@ -114,7 +131,7 @@ Wrong: the check <code>r == nrows - 1</code> happens after popping; the order of
 <h2 data-number="5.4" id="sweeping-the-probability"><span class="header-section-number">5.4</span> Sweeping the Probability</h2>
 <ul>
 <li>We run <code>N_TRIALS</code> independent trials at each probability value and record the fraction that percolate.</li>
-<li>At low <span class="math inline"><em>p</em></span>, almost no trial percolates; at high <span class="math inline"><em>p</em></span>, almost every trial does.</li>
+<li>At low <span class="math inline">\(p\)</span>, almost no trial percolates; at high <span class="math inline">\(p\)</span>, almost every trial does.</li>
 <li>The transition from 0 to 1 sharpens as the grid size increases.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -134,18 +151,18 @@ Figure&nbsp;5.1: Percolation fraction vs.&nbsp;open-cell probability p on a 20 x
 <h2 data-number="5.6" id="testing"><span class="header-section-number">5.6</span> Testing</h2>
 <h3 data-number="5.6.1" id="boundary-cases"><span class="header-section-number">5.6.1</span> Boundary cases</h3>
 <ul>
-<li>At <span class="math inline"><em>p</em> = 0</span> all cells are closed; the stack starts empty and the search returns <code>False</code> immediately.</li>
-<li>At <span class="math inline"><em>p</em> = 1</span> all cells are open; a straight vertical path always exists.</li>
-<li>A single-row grid percolates if and only if any cell in that row is open (row 0 and row <span class="math inline"><em>N</em> − 1</span> are the same).</li>
+<li>At <span class="math inline">\(p = 0\)</span> all cells are closed; the stack starts empty and the search returns <code>False</code> immediately.</li>
+<li>At <span class="math inline">\(p = 1\)</span> all cells are open; a straight vertical path always exists.</li>
+<li>A single-row grid percolates if and only if any cell in that row is open (row 0 and row <span class="math inline">\(N-1\)</span> are the same).</li>
 </ul>
-<h3 data-number="5.6.2" id="fraction-in-0-1"><span class="header-section-number">5.6.2</span> Fraction in <span class="math inline">[0, 1]</span></h3>
+<h3 data-number="5.6.2" id="fraction-in-0-1"><span class="header-section-number">5.6.2</span> Fraction in <span class="math inline">\([0, 1]\)</span></h3>
 <ul>
-<li>Each trial produces a boolean; the fraction is a count divided by <code>N_TRIALS</code>, always in <span class="math inline">[0, 1]</span>.</li>
+<li>Each trial produces a boolean; the fraction is a count divided by <code>N_TRIALS</code>, always in <span class="math inline">\([0, 1]\)</span>.</li>
 </ul>
 <h3 data-number="5.6.3" id="threshold-near-theory"><span class="header-section-number">5.6.3</span> Threshold near theory</h3>
 <ul>
-<li>On an infinite lattice the threshold is <span class="math inline"><em>p</em><sub><em>c</em></sub> ≈ 0.5927</span> (Stauffer &amp; Aharony 1994).</li>
-<li>On a <span class="math inline">20 × 20</span> grid with 200 trials the finite-size correction and Monte Carlo variance together are within 0.07 of this value.</li>
+<li>On an infinite lattice the threshold is <span class="math inline">\(p_c \approx 0.5927\)</span> (Stauffer &amp; Aharony 1994).</li>
+<li>On a <span class="math inline">\(20 \times 20\)</span> grid with 200 trials the finite-size correction and Monte Carlo variance together are within 0.07 of this value.</li>
 <li>A tolerance of 0.07 is tight enough to catch a wrong algorithm but loose enough to accommodate finite-size effects.</li>
 </ul>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -198,11 +215,11 @@ Figure&nbsp;5.1: Percolation fraction vs.&nbsp;open-cell probability p on a 20 x
 <h3 data-number="5.7.2" id="larger-grids"><span class="header-section-number">5.7.2</span> Larger grids</h3>
 <p>Increase <code>GRID_SIZE</code> to 50 and rerun <code>sweep</code> (you may need to reduce <code>N_TRIALS</code> to 50 to keep the run time reasonable). Does the threshold estimate get closer to 0.5927? Does the transition curve become steeper?</p>
 <h3 data-number="5.7.3" id="neighbor-connectivity"><span class="header-section-number">5.7.3</span> 8-neighbor connectivity</h3>
-<p>Change the neighbor offsets in <code>percolates</code> from the 4-neighbor pattern to 8-neighbor (Moore neighborhood): add the four diagonal directions <span class="math inline">(±1, ±1)</span>. The theoretical threshold for 8-neighbor site percolation is approximately 0.407. Update <code>THRESHOLD_THEORY</code> and verify that <code>test_threshold_near_theory</code> still passes.</p>
+<p>Change the neighbor offsets in <code>percolates</code> from the 4-neighbor pattern to 8-neighbor (Moore neighborhood): add the four diagonal directions <span class="math inline">\((\pm 1, \pm 1)\)</span>. The theoretical threshold for 8-neighbor site percolation is approximately 0.407. Update <code>THRESHOLD_THEORY</code> and verify that <code>test_threshold_near_theory</code> still passes.</p>
 <h3 data-number="5.7.4" id="bond-percolation"><span class="header-section-number">5.7.4</span> Bond percolation</h3>
-<p>In bond percolation, edges between adjacent cells are open with probability <span class="math inline"><em>p</em></span> (rather than cells themselves). Implement a <code>make_bond_grid</code> function that creates a random boolean array for horizontal bonds and another for vertical bonds. Modify <code>percolates</code> to use bond arrays instead of a cell array. The theoretical threshold for 2D bond percolation on a square lattice is exactly <span class="math inline"><em>p</em><sub><em>c</em></sub> = 0.5</span>. Estimate it numerically and compare.</p>
+<p>In bond percolation, edges between adjacent cells are open with probability <span class="math inline">\(p\)</span> (rather than cells themselves). Implement a <code>make_bond_grid</code> function that creates a random boolean array for horizontal bonds and another for vertical bonds. Modify <code>percolates</code> to use bond arrays instead of a cell array. The theoretical threshold for 2D bond percolation on a square lattice is exactly <span class="math inline">\(p_c = 0.5\)</span>. Estimate it numerically and compare.</p>
 <h3 data-number="5.7.5" id="cluster-size-distribution"><span class="header-section-number">5.7.5</span> Cluster size distribution</h3>
-<p>Instead of returning only a boolean, modify <code>percolates</code> to return the sizes of all connected open clusters found during the DFS. At <span class="math inline"><em>p</em> = <em>p</em><sub><em>c</em></sub></span>, the largest cluster grows as a power law of the grid size <span class="math inline"><em>N</em></span>. Run sweeps at several grid sizes and plot the largest cluster size vs.&nbsp;<span class="math inline"><em>N</em></span> near the threshold.</p>
+<p>Instead of returning only a boolean, modify <code>percolates</code> to return the sizes of all connected open clusters found during the DFS. At <span class="math inline">\(p = p_c\)</span>, the largest cluster grows as a power law of the grid size <span class="math inline">\(N\)</span>. Run sweeps at several grid sizes and plot the largest cluster size vs.&nbsp;<span class="math inline">\(N\)</span> near the threshold.</p>
 </section>
 
 </main>

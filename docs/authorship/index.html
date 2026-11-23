@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Authorship Attribution by N-gram Profiles</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -70,22 +87,22 @@ Wrong: although n-grams can be applied across languages, this is not the reason 
 </div>
 <h2 data-number="9.2" id="character-n-gram-profiles"><span class="header-section-number">9.2</span> Character N-gram Profiles</h2>
 <ul>
-<li>A <a href="../glossary/index.html#char_ngram">character n-gram</a> is a sequence of <span class="math inline"><em>n</em></span> consecutive characters in a text
+<li>A <a href="../glossary/index.html#char_ngram">character n-gram</a> is a sequence of <span class="math inline">\(n\)</span> consecutive characters in a text
 <ul>
 <li>Spaces and punctuation are treated as characters so that word-boundary patterns are captured</li>
 </ul></li>
-<li>For a text of length <span class="math inline"><em>L</em></span> characters there are <span class="math inline"><em>L</em> − <em>n</em> + 1</span> overlapping n-grams</li>
+<li>For a text of length <span class="math inline">\(L\)</span> characters there are <span class="math inline">\(L - n + 1\)</span> overlapping n-grams</li>
 <li>The profile for an author is the relative frequency of each n-gram across all their training texts</li>
 </ul>
-<p><span class="math display">$$p(ng) = \frac{\text{count}(ng)}{\sum_{ng'} \text{count}(ng')}$$</span></p>
+<p><span class="math display">\[p(ng) = \frac{\text{count}(ng)}{\sum_{ng'} \text{count}(ng')}\]</span></p>
 <ul>
 <li>The profile is a probability distribution over the set of observed n-grams</li>
 </ul>
 <h2 data-number="9.3" id="cosine-similarity"><span class="header-section-number">9.3</span> Cosine Similarity</h2>
 <ul>
-<li>Given two profiles <span class="math inline"><strong>p</strong><sub><em>A</em></sub></span> and <span class="math inline"><strong>p</strong><sub><em>B</em></sub></span> (treated as vectors indexed by n-gram), with <span class="math inline">$\|\mathbf{p}\| = \sqrt{\sum_{ng} p(ng)^2}$</span>, the cosine similarity is:</li>
+<li>Given two profiles <span class="math inline">\(\mathbf{p}_A\)</span> and <span class="math inline">\(\mathbf{p}_B\)</span> (treated as vectors indexed by n-gram), with <span class="math inline">\(\|\mathbf{p}\| = \sqrt{\sum_{ng} p(ng)^2}\)</span>, the cosine similarity is:</li>
 </ul>
-<p><span class="math display">$$\text{sim}(A, B) = \frac{\sum_{ng} p_A(ng)\, p_B(ng)}{\|\mathbf{p}_A\|\;\|\mathbf{p}_B\|}$$</span></p>
+<p><span class="math display">\[\text{sim}(A, B) = \frac{\sum_{ng} p_A(ng)\, p_B(ng)}{\|\mathbf{p}_A\|\;\|\mathbf{p}_B\|}\]</span></p>
 <ul>
 <li>Cosine similarity ranges from 0 (no shared n-grams) to 1 (identical profiles)</li>
 <li>Dividing by the norms makes the measure length-independent: a short text and a long text with the same relative frequencies score 1</li>
@@ -148,8 +165,8 @@ Figure&nbsp;9.1: Cosine similarity of the Author C test text against each candid
 <ul>
 <li>Bigram counts
 <ul>
-<li>“abc” with <span class="math inline"><em>n</em> = 2</span> yields exactly the bigrams “ab” and “bc”, each with count 1</li>
-<li>“aaa” with <span class="math inline"><em>n</em> = 2</span> yields two overlapping “aa” bigrams</li>
+<li>“abc” with <span class="math inline">\(n=2\)</span> yields exactly the bigrams “ab” and “bc”, each with count 1</li>
+<li>“aaa” with <span class="math inline">\(n=2\)</span> yields two overlapping “aa” bigrams</li>
 </ul></li>
 <li>Profile normalization
 <ul>
@@ -215,7 +232,7 @@ Figure&nbsp;9.1: Cosine similarity of the Author C test text against each candid
 <dl>
 <dt>Character n-gram</dt>
 <dd>
-A sequence of <span class="math inline"><em>n</em></span> consecutive characters in a text, including spaces; captures local typing habits such as common letter combinations and word-boundary patterns
+A sequence of <span class="math inline">\(n\)</span> consecutive characters in a text, including spaces; captures local typing habits such as common letter combinations and word-boundary patterns
 </dd>
 <dt>N-gram profile</dt>
 <dd>
@@ -223,7 +240,7 @@ The relative frequency distribution of all observed n-grams in a text or collect
 </dd>
 <dt>Cosine similarity</dt>
 <dd>
-<span class="math inline">sim(<em>A</em>, <em>B</em>) = (<strong>p</strong><sub><em>A</em></sub> ⋅ <strong>p</strong><sub><em>B</em></sub>)/(∥<strong>p</strong><sub><em>A</em></sub>∥∥<strong>p</strong><sub><em>B</em></sub>∥)</span>; ranges from 0 (no shared n-grams) to 1 (identical profiles); length-independent
+<span class="math inline">\(\text{sim}(A,B) = (\mathbf{p}_A \cdot \mathbf{p}_B) / (\|\mathbf{p}_A\|\|\mathbf{p}_B\|)\)</span>; ranges from 0 (no shared n-grams) to 1 (identical profiles); length-independent
 </dd>
 <dt>Authorship attribution</dt>
 <dd>
@@ -240,7 +257,7 @@ The difference between the top candidate’s similarity score and the next-highe
 <h3 data-number="9.10.1" id="do-the-math"><span class="header-section-number">9.10.1</span> Do the math</h3>
 <p>Profile A has bigrams “ab” with frequency 0.6 and “cd” with frequency 0.8 (it contains no other bigrams, and the two frequencies form a unit vector). Profile B has “ab” with frequency 0.8 and “cd” with frequency 0.6. What is the cosine similarity of A and B?</p>
 <h3 data-number="9.10.2" id="effect-of-n-gram-size"><span class="header-section-number">9.10.2</span> Effect of n-gram size</h3>
-<p>Repeat the attribution experiment with <span class="math inline"><em>n</em> = 1</span>, <span class="math inline">2</span>, <span class="math inline">3</span>, and <span class="math inline">4</span>. Plot the similarity scores for all three test texts at each <span class="math inline"><em>n</em></span>. At which n-gram size does the margin between the correct author and the next-best candidate peak? Explain why very large <span class="math inline"><em>n</em></span> might reduce accuracy on short texts.</p>
+<p>Repeat the attribution experiment with <span class="math inline">\(n = 1\)</span>, <span class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span>, and <span class="math inline">\(4\)</span>. Plot the similarity scores for all three test texts at each <span class="math inline">\(n\)</span>. At which n-gram size does the margin between the correct author and the next-best candidate peak? Explain why very large <span class="math inline">\(n\)</span> might reduce accuracy on short texts.</p>
 <h3 data-number="9.10.3" id="profile-distance-matrix"><span class="header-section-number">9.10.3</span> Profile distance matrix</h3>
 <p>Build profiles for all training texts (not averaged per author) and compute the pairwise cosine similarity matrix. Visualize it as a heatmap. Do texts from the same author cluster together?</p>
 <h3 data-number="9.10.4" id="cross-validation"><span class="header-section-number">9.10.4</span> Cross-validation</h3>

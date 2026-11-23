@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Mineral Classification by Geochemistry</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -37,14 +54,14 @@
 <ul>
 <li>Geochemists measure rock samples as oxide weight percentages (wt%), which is the fraction of each chemical compound in the rock</li>
 <li>A classifier that assigns samples to mineral classes from their chemistry automates a task that otherwise requires expert visual inspection of thin sections under a microscope</li>
-<li>We train a <a href="../glossary/index.html#logistic_regression">logistic regression</a> model on <span class="math inline">SiO<sub>2</sub></span> (silica) and <span class="math inline">Al<sub>2</sub>O<sub>3</sub></span> (alumina) to separate felsic rocks (granite-like, silica-rich) from mafic rocks (basalt-like, silica-poor)</li>
+<li>We train a <a href="../glossary/index.html#logistic_regression">logistic regression</a> model on <span class="math inline">\(\text{SiO}_2\)</span> (silica) and <span class="math inline">\(\text{Al}_2\text{O}_3\)</span> (alumina) to separate felsic rocks (granite-like, silica-rich) from mafic rocks (basalt-like, silica-poor)</li>
 </ul>
 <h2 data-number="25.2" id="generating-synthetic-geochemical-data"><span class="header-section-number">25.2</span> Generating Synthetic Geochemical Data</h2>
 <ul>
 <li>We start with synthetic data drawn from two Gaussian distributions that mimic the composition ranges reported in igneous petrology textbooks</li>
-<li>Felsic rocks average 70 wt% <span class="math inline">SiO<sub>2</sub></span> and 14 wt% <span class="math inline">Al<sub>2</sub>O<sub>3</sub></span>
+<li>Felsic rocks average 70 wt% <span class="math inline">\(\text{SiO}_2\)</span> and 14 wt% <span class="math inline">\(\text{Al}_2\text{O}_3\)</span>
 <ul>
-<li>Mafic rocks average 50 wt% <span class="math inline">SiO<sub>2</sub></span> and 9 wt% <span class="math inline">Al<sub>2</sub>O<sub>3</sub></span></li>
+<li>Mafic rocks average 50 wt% <span class="math inline">\(\text{SiO}_2\)</span> and 9 wt% <span class="math inline">\(\text{Al}_2\text{O}_3\)</span></li>
 </ul></li>
 <li>The two distributions overlap because real mineral classification is never perfectly clean</li>
 </ul>
@@ -53,11 +70,11 @@
 <ul>
 <li>The model predicts the probability that a sample is mafic (class 1):</li>
 </ul>
-<p><span class="math display">$$p = \sigma(w_0 \cdot x_0 + w_1 \cdot x_1 + b) = \frac{1}{1 + e^{-(w_0 x_0 + w_1 x_1 + b)}}$$</span></p>
+<p><span class="math display">\[p = \sigma(w_0 \cdot x_0 + w_1 \cdot x_1 + b) = \frac{1}{1 + e^{-(w_0 x_0 + w_1 x_1 + b)}}\]</span></p>
 <ul>
-<li><span class="math inline"><em>σ</em></span> is the <a href="../glossary/index.html#sigmoid_function">sigmoid function</a>, which maps any real number to <span class="math inline">(0, 1)</span></li>
-<li><span class="math inline"><em>x</em><sub>0</sub></span> and <span class="math inline"><em>x</em><sub>1</sub></span> are the (normalised) <span class="math inline">SiO<sub>2</sub></span> and <span class="math inline">Al<sub>2</sub>O<sub>3</sub></span> concentrations</li>
-<li><span class="math inline"><em>w</em><sub>0</sub></span>, <span class="math inline"><em>w</em><sub>1</sub></span>, and <span class="math inline"><em>b</em></span> are learned from data</li>
+<li><span class="math inline">\(\sigma\)</span> is the <a href="../glossary/index.html#sigmoid_function">sigmoid function</a>, which maps any real number to <span class="math inline">\((0, 1)\)</span></li>
+<li><span class="math inline">\(x_0\)</span> and <span class="math inline">\(x_1\)</span> are the (normalised) <span class="math inline">\(\text{SiO}_2\)</span> and <span class="math inline">\(\text{Al}_2\text{O}_3\)</span> concentrations</li>
+<li><span class="math inline">\(w_0\)</span>, <span class="math inline">\(w_1\)</span>, and <span class="math inline">\(b\)</span> are learned from data</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
@@ -65,7 +82,7 @@
 <dl>
 <dt>Normalisation makes the sigmoid output exactly 0.5 at the start of training.</dt>
 <dd>
-Wrong: initial weights are zero, so <span class="math inline"><em>z</em> = 0</span> and <span class="math inline"><em>σ</em>(0) = 0.5</span> regardless of feature scale.
+Wrong: initial weights are zero, so <span class="math inline">\(z = 0\)</span> and <span class="math inline">\(\sigma(0) = 0.5\)</span> regardless of feature scale.
 </dd>
 </dl>
 <p>Features on very different scales cause gradient descent to take very small steps along one axis and large steps along another, slowing convergence. : Correct: unnormalized gradients have components proportional to feature magnitude, creating an elongated loss surface that makes convergence slow and erratic.</p>
@@ -74,9 +91,9 @@ Wrong: initial weights are zero, so <span class="math inline"><em>z</em> = 0
 <dd>
 Wrong: normalization changes the input scale, not the weight values; regularization is the standard tool for constraining weights.
 </dd>
-<dt>The sigmoid function is only defined for inputs in <span class="math inline">[0, 1]</span>.</dt>
+<dt>The sigmoid function is only defined for inputs in <span class="math inline">\([0, 1]\)</span>.</dt>
 <dd>
-Wrong: the sigmoid is defined for all real numbers; the <span class="math inline">[0, 1]</span> interval is its output range.
+Wrong: the sigmoid is defined for all real numbers; the <span class="math inline">\([0, 1]\)</span> interval is its output range.
 </dd>
 </dl>
 </div>
@@ -85,28 +102,28 @@ Wrong: the sigmoid is defined for all real numbers; the <span class="math inline
 <ul>
 <li>At each iteration, the model computes the <a href="../glossary/index.html#cross_entropy">binary cross-entropy</a> loss:</li>
 </ul>
-<p><span class="math display">$$\mathcal{L} = -\frac{1}{n}\sum_{i=1}^n \left[ y_i \log p_i + (1 - y_i) \log(1 - p_i) \right]$$</span></p>
+<p><span class="math display">\[\mathcal{L} = -\frac{1}{n}\sum_{i=1}^n \left[ y_i \log p_i + (1 - y_i) \log(1 - p_i) \right]\]</span></p>
 <ul>
-<li>The gradient of <span class="math inline">ℒ</span> with respect to the weights is <span class="math inline"><strong>X</strong><sup>⊤</sup>(<strong>p</strong> − <strong>y</strong>)/<em>n</em></span>, and with respect to the bias is <span class="math inline">mean(<strong>p</strong> − <strong>y</strong>)</span></li>
+<li>The gradient of <span class="math inline">\(\mathcal{L}\)</span> with respect to the weights is <span class="math inline">\(\mathbf{X}^\top (\mathbf{p} - \mathbf{y}) / n\)</span>, and with respect to the bias is <span class="math inline">\(\text{mean}(\mathbf{p} - \mathbf{y})\)</span></li>
 <li>Each gradient-descent step subtracts the gradient scaled by the learning rate</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put the steps of one gradient-descent iteration in the correct order.</p>
 <ol type="1">
-<li>Compute the linear combination <span class="math inline"><em>z</em> = <em>X</em><em>w</em> + <em>b</em></span></li>
-<li>Apply the sigmoid to get predicted probabilities <span class="math inline"><em>p̂</em> = <em>σ</em>(<em>z</em>)</span></li>
+<li>Compute the linear combination <span class="math inline">\(z = X w + b\)</span></li>
+<li>Apply the sigmoid to get predicted probabilities <span class="math inline">\(\hat{p} = \sigma(z)\)</span></li>
 <li>Evaluate the binary cross-entropy loss</li>
-<li>Compute gradients <span class="math inline">∂ℒ/∂<em>w</em></span> and <span class="math inline">∂ℒ/∂<em>b</em></span></li>
-<li>Update weights: <span class="math inline"><em>w</em> ← <em>w</em> − <em>α</em> ⋅ ∂ℒ/∂<em>w</em></span></li>
+<li>Compute gradients <span class="math inline">\(\partial \mathcal{L}/\partial w\)</span> and <span class="math inline">\(\partial \mathcal{L}/\partial b\)</span></li>
+<li>Update weights: <span class="math inline">\(w \leftarrow w - \alpha \cdot \partial \mathcal{L}/\partial w\)</span></li>
 </ol>
 </div>
 <h2 data-number="25.5" id="decision-boundary-and-classification"><span class="header-section-number">25.5</span> Decision Boundary and Classification</h2>
 <ul>
-<li>The decision boundary is the line where <span class="math inline"><em>p</em> = 0.5</span>, i.e., where <span class="math inline"><em>w</em><sub>0</sub><em>x</em><sub>0</sub> + <em>w</em><sub>1</sub><em>x</em><sub>1</sub> + <em>b</em> = 0</span></li>
-<li>Rearranging for <span class="math inline"><em>x</em><sub>1</sub></span> (<span class="math inline">Al<sub>2</sub>O<sub>3</sub></span>) as a function of <span class="math inline"><em>x</em><sub>0</sub></span> (<span class="math inline">SiO<sub>2</sub></span>) gives:</li>
+<li>The decision boundary is the line where <span class="math inline">\(p = 0.5\)</span>, i.e., where <span class="math inline">\(w_0 x_0 + w_1 x_1 + b = 0\)</span></li>
+<li>Rearranging for <span class="math inline">\(x_1\)</span> (<span class="math inline">\(\text{Al}_2\text{O}_3\)</span>) as a function of <span class="math inline">\(x_0\)</span> (<span class="math inline">\(\text{SiO}_2\)</span>) gives:</li>
 </ul>
-<p><span class="math display">$$x_1 = -\frac{w_0 x_0 + b}{w_1}$$</span></p>
+<p><span class="math display">\[x_1 = -\frac{w_0 x_0 + b}{w_1}\]</span></p>
 <ul>
 <li>Because features were normalised during training, the boundary must be mapped back to original units before plotting</li>
 </ul>
@@ -136,20 +153,20 @@ Figure&nbsp;25.1: Training data for 120 samples (80% of 160 total). The dashed l
 </thead>
 <tbody>
 <tr class="odd">
-<td><span class="math inline"><em>w</em><sub>0</sub><em>x</em><sub>0</sub> + <em>w</em><sub>1</sub><em>x</em><sub>1</sub> + <em>b</em></span></td>
+<td><span class="math inline">\(w_0 x_0 + w_1 x_1 + b\)</span></td>
 <td>Separating hyperplane in feature space</td>
 </tr>
 <tr class="even">
-<td><span class="math inline"><em>σ</em>(⋅)</span></td>
+<td><span class="math inline">\(\sigma(\cdot)\)</span></td>
 <td>Maps the linear score to a probability</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">ℒ</span></td>
+<td><span class="math inline">\(\mathcal{L}\)</span></td>
 <td>Penalises confident wrong predictions more heavily than uncertain ones</td>
 </tr>
 <tr class="even">
 <td>Decision boundary</td>
-<td>The surface where the model is maximally uncertain (<span class="math inline"><em>p</em> = 0.5</span>)</td>
+<td>The surface where the model is maximally uncertain (<span class="math inline">\(p = 0.5\)</span>)</td>
 </tr>
 </tbody>
 </table>
@@ -158,11 +175,11 @@ Figure&nbsp;25.1: Training data for 120 samples (80% of 160 total). The dashed l
 <dl>
 <dt>Sigmoid known values</dt>
 <dd>
-<span class="math inline"><em>σ</em>(0) = 0.5</span> exactly, <span class="math inline"><em>σ</em>(<em>z</em>) → 1</span> as <span class="math inline"><em>z</em> → +∞</span>, and <span class="math inline"><em>σ</em>(<em>z</em>) → 0</span> as <span class="math inline"><em>z</em> → −∞</span>. These are identities that must hold regardless of the training data.
+<span class="math inline">\(\sigma(0) = 0.5\)</span> exactly, <span class="math inline">\(\sigma(z) \to 1\)</span> as <span class="math inline">\(z \to +\infty\)</span>, and <span class="math inline">\(\sigma(z) \to 0\)</span> as <span class="math inline">\(z \to -\infty\)</span>. These are identities that must hold regardless of the training data.
 </dd>
 <dt>Normalization properties</dt>
 <dd>
-After normalization, each feature column must have mean 0 and standard deviation 1. Applying training statistics to test data must reproduce <span class="math inline">(<strong>x</strong> − <em>μ</em>)/<em>σ</em></span> without recomputing <span class="math inline"><em>μ</em></span> or <span class="math inline"><em>σ</em></span> from the test set.
+After normalization, each feature column must have mean 0 and standard deviation 1. Applying training statistics to test data must reproduce <span class="math inline">\((\mathbf{x} - \mu) / \sigma\)</span> without recomputing <span class="math inline">\(\mu\)</span> or <span class="math inline">\(\sigma\)</span> from the test set.
 </dd>
 <dt>Loss decreases during training</dt>
 <dd>
@@ -170,7 +187,7 @@ A correct gradient-descent implementation must reduce the cross-entropy loss mon
 </dd>
 <dt>Accuracy on well-separated data</dt>
 <dd>
-The two classes are separated by roughly 6.7 standard deviations in <span class="math inline">SiO<sub>2</sub></span>. A correctly trained classifier must achieve at least 95% accuracy; a lower score indicates a bug.
+The two classes are separated by roughly 6.7 standard deviations in <span class="math inline">\(\text{SiO}_2\)</span>. A correctly trained classifier must achieve at least 95% accuracy; a lower score indicates a bug.
 </dd>
 <dt>Accuracy with seed=42</dt>
 <dd>
@@ -178,7 +195,7 @@ With default parameters, held-out test accuracy must reach at least 95%. The tol
 </dd>
 <dt>Predict with known weights</dt>
 <dd>
-With <span class="math inline"><em>w</em> = [10, 0]</span> and <span class="math inline"><em>b</em> = 0</span>, the boundary is at <span class="math inline"><em>x</em><sub>0</sub> = 0</span>. A sample with <span class="math inline"><em>x</em><sub>0</sub> = 1</span> must be predicted class 1 and a sample with <span class="math inline"><em>x</em><sub>0</sub> = −1</span> must be predicted class 0.
+With <span class="math inline">\(w = [10, 0]\)</span> and <span class="math inline">\(b = 0\)</span>, the boundary is at <span class="math inline">\(x_0 = 0\)</span>. A sample with <span class="math inline">\(x_0 = 1\)</span> must be predicted class 1 and a sample with <span class="math inline">\(x_0 = -1\)</span> must be predicted class 0.
 </dd>
 </dl>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -255,19 +272,19 @@ With <span class="math inline"><em>w</em> = [10, 0]</span> and <span class
 <dl>
 <dt>Felsic rock</dt>
 <dd>
-Silica-rich igneous rock (granite, rhyolite); typically <span class="math inline">SiO<sub>2</sub> &gt; 63</span> wt%
+Silica-rich igneous rock (granite, rhyolite); typically <span class="math inline">\(\text{SiO}_2 &gt; 63\)</span> wt%
 </dd>
 <dt>Mafic rock</dt>
 <dd>
-Silica-poor, magnesium- and iron-rich igneous rock (basalt, gabbro); typically <span class="math inline">SiO<sub>2</sub> &lt; 52</span> wt%
+Silica-poor, magnesium- and iron-rich igneous rock (basalt, gabbro); typically <span class="math inline">\(\text{SiO}_2 &lt; 52\)</span> wt%
 </dd>
 <dt>Sigmoid function</dt>
 <dd>
-<span class="math inline"><em>σ</em>(<em>z</em>) = 1/(1 + <em>e</em><sup>−<em>z</em></sup>)</span>; maps any real number to the open interval <span class="math inline">(0, 1)</span> for use as a probability
+<span class="math inline">\(\sigma(z) = 1/(1 + e^{-z})\)</span>; maps any real number to the open interval <span class="math inline">\((0, 1)\)</span> for use as a probability
 </dd>
 <dt>Binary cross-entropy</dt>
 <dd>
-<span class="math inline">−[<em>y</em>log <em>p</em> + (1 − <em>y</em>)log (1 − <em>p</em>)]</span>; loss function that penalises confident wrong predictions
+<span class="math inline">\(-[y \log p + (1-y)\log(1-p)]\)</span>; loss function that penalises confident wrong predictions
 </dd>
 <dt>Decision boundary</dt>
 <dd>
@@ -282,13 +299,13 @@ Iterative optimisation that moves weights in the direction that most rapidly dec
 <section class="exercises">
 <h2 data-number="25.7" id="exercises"><span class="header-section-number">25.7</span> Exercises</h2>
 <h3 data-number="25.7.1" id="do-the-math"><span class="header-section-number">25.7.1</span> Do the math</h3>
-<p>The Mahalanobis distance between two univariate Gaussians with means <span class="math inline"><em>μ</em><sub>1</sub></span>, <span class="math inline"><em>μ</em><sub>2</sub></span> and equal standard deviation <span class="math inline"><em>σ</em></span> is <span class="math inline">|<em>μ</em><sub>1</sub> − <em>μ</em><sub>2</sub>|/<em>σ</em></span>. Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>, what fraction of the <span class="math inline">SiO<sub>2</sub></span> distributions overlap? (Hint: use the 68-95-99.7 rule: the distance is about <span class="math inline">6.7<em>σ</em></span>, so overlap <span class="math inline"> ≈ 0</span>.)</p>
+<p>The Mahalanobis distance between two univariate Gaussians with means <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span> and equal standard deviation <span class="math inline">\(\sigma\)</span> is <span class="math inline">\(|\mu_1 - \mu_2| / \sigma\)</span>. Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>, what fraction of the <span class="math inline">\(\text{SiO}_2\)</span> distributions overlap? (Hint: use the 68-95-99.7 rule: the distance is about <span class="math inline">\(6.7\sigma\)</span>, so overlap <span class="math inline">\(\approx 0\)</span>.)</p>
 <h3 data-number="25.7.2" id="three-class-classification"><span class="header-section-number">25.7.2</span> Three-class classification</h3>
-<p>Add a third class (ultramafic rocks, e.g.&nbsp;peridotite, with <span class="math inline">SiO<sub>2</sub> ≈ 42</span> wt% and <span class="math inline">Al<sub>2</sub>O<sub>3</sub> ≈ 3</span> wt%). Extend <code>train</code> to use the softmax function and categorical cross-entropy loss instead of the binary formulation. Report per-class precision and recall on a held-out test set.</p>
+<p>Add a third class (ultramafic rocks, e.g.&nbsp;peridotite, with <span class="math inline">\(\text{SiO}_2 \approx 42\)</span> wt% and <span class="math inline">\(\text{Al}_2\text{O}_3 \approx 3\)</span> wt%). Extend <code>train</code> to use the softmax function and categorical cross-entropy loss instead of the binary formulation. Report per-class precision and recall on a held-out test set.</p>
 <h3 data-number="25.7.3" id="learning-rate-sensitivity"><span class="header-section-number">25.7.3</span> Learning-rate sensitivity</h3>
-<p>Run <code>train</code> with learning rates <span class="math inline"><em>α</em> ∈ {0.001, 0.01, 0.1, 1.0, 10.0}</span> for 500 iterations each. Plot the final training loss as a function of <span class="math inline"><em>α</em></span> and identify the range where gradient descent converges reliably. Explain why very large learning rates cause divergence.</p>
+<p>Run <code>train</code> with learning rates <span class="math inline">\(\alpha \in \{0.001, 0.01, 0.1, 1.0, 10.0\}\)</span> for 500 iterations each. Plot the final training loss as a function of <span class="math inline">\(\alpha\)</span> and identify the range where gradient descent converges reliably. Explain why very large learning rates cause divergence.</p>
 <h3 data-number="25.7.4" id="decision-boundary-as-a-function-of-iteration-count"><span class="header-section-number">25.7.4</span> Decision boundary as a function of iteration count</h3>
-<p>Save the weights <span class="math inline"><em>w</em></span> and bias <span class="math inline"><em>b</em></span> every 50 iterations during training. Plot the decision boundary at each checkpoint on the same scatter plot. Show that the boundary rotates and shifts as training progresses and stabilises near the optimum.</p>
+<p>Save the weights <span class="math inline">\(w\)</span> and bias <span class="math inline">\(b\)</span> every 50 iterations during training. Plot the decision boundary at each checkpoint on the same scatter plot. Show that the boundary rotates and shifts as training progresses and stabilises near the optimum.</p>
 <h3 data-number="25.7.5" id="effect-of-class-imbalance"><span class="header-section-number">25.7.5</span> Effect of class imbalance</h3>
 <p>Generate a dataset with 160 felsic samples and 20 mafic samples. Train the classifier and report the confusion matrix. Show that the model achieves high overall accuracy by predicting felsic almost everywhere, then implement class-weighted cross-entropy loss (multiply the mafic term by <code>n_felsic / n_mafic</code>) and show that it recovers better detection of the minority class.</p>
 </section>

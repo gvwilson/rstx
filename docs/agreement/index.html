@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Inter-Rater Agreement</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -69,39 +86,39 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 </div>
 <h2 data-number="19.2" id="the-contingency-table"><span class="header-section-number">19.2</span> The Contingency Table</h2>
 <ul>
-<li>For <span class="math inline"><em>K</em></span> categories, the contingency table is a <span class="math inline"><em>K</em> × <em>K</em></span> integer matrix where entry <span class="math inline"><em>C</em><sub><em>i</em><em>j</em></sub></span> is the number of items for which rater A assigned category <span class="math inline"><em>i</em></span> and rater B assigned category <span class="math inline"><em>j</em></span></li>
-<li>The diagonal entries <span class="math inline"><em>C</em><sub><em>i</em><em>i</em></sub></span> represent agreements, while off-diagonal entries represent disagreements</li>
+<li>For <span class="math inline">\(K\)</span> categories, the contingency table is a <span class="math inline">\(K \times K\)</span> integer matrix where entry <span class="math inline">\(C_{ij}\)</span> is the number of items for which rater A assigned category <span class="math inline">\(i\)</span> and rater B assigned category <span class="math inline">\(j\)</span></li>
+<li>The diagonal entries <span class="math inline">\(C_{ii}\)</span> represent agreements, while off-diagonal entries represent disagreements</li>
 <li>The table summarises all information needed to compute kappa</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="19.3" id="cohens-kappa"><span class="header-section-number">19.3</span> Cohen’s Kappa</h2>
 <ul>
-<li>Let <span class="math inline"><em>N</em></span> be the total number of items and:
+<li>Let <span class="math inline">\(N\)</span> be the total number of items and:
 <ul>
-<li><span class="math inline"><em>P</em><sub><em>o</em></sub> = ∑<sub><em>i</em></sub><em>C</em><sub><em>i</em><em>i</em></sub>/<em>N</em></span>: observed agreement proportion</li>
-<li><span class="math inline"><em>p</em><sub><em>i</em></sub> = ∑<sub><em>j</em></sub><em>C</em><sub><em>i</em><em>j</em></sub>/<em>N</em></span>: rater A’s marginal probability for category <span class="math inline"><em>i</em></span></li>
-<li><span class="math inline"><em>q</em><sub><em>j</em></sub> = ∑<sub><em>i</em></sub><em>C</em><sub><em>i</em><em>j</em></sub>/<em>N</em></span>: rater B’s marginal probability for category <span class="math inline"><em>j</em></span></li>
-<li><span class="math inline"><em>P</em><sub><em>e</em></sub> = ∑<sub><em>i</em></sub><em>p</em><sub><em>i</em></sub><em>q</em><sub><em>i</em></sub></span>: expected agreement under independence</li>
+<li><span class="math inline">\(P_o = \sum_i C_{ii} / N\)</span>: observed agreement proportion</li>
+<li><span class="math inline">\(p_i = \sum_j C_{ij} / N\)</span>: rater A’s marginal probability for category <span class="math inline">\(i\)</span></li>
+<li><span class="math inline">\(q_j = \sum_i C_{ij} / N\)</span>: rater B’s marginal probability for category <span class="math inline">\(j\)</span></li>
+<li><span class="math inline">\(P_e = \sum_i p_i q_i\)</span>: expected agreement under independence</li>
 </ul></li>
 <li>Cohen’s kappa is:</li>
 </ul>
-<p><span class="math display">$$\kappa = \frac{P_o - P_e}{1 - P_e}$$</span></p>
+<p><span class="math display">\[\kappa = \frac{P_o - P_e}{1 - P_e}\]</span></p>
 <ul>
-<li><span class="math inline"><em>κ</em> = 0</span> when observed agreement equals the chance expectation</li>
-<li><span class="math inline"><em>κ</em> = 1</span> when raters agree perfectly (<span class="math inline"><em>P</em><sub><em>o</em></sub> = 1</span>)</li>
-<li><span class="math inline"><em>κ</em> &lt; 0</span> is possible when observed agreement falls below chance, though this rarely occurs in practice</li>
+<li><span class="math inline">\(\kappa = 0\)</span> when observed agreement equals the chance expectation</li>
+<li><span class="math inline">\(\kappa = 1\)</span> when raters agree perfectly (<span class="math inline">\(P_o = 1\)</span>)</li>
+<li><span class="math inline">\(\kappa &lt; 0\)</span> is possible when observed agreement falls below chance, though this rarely occurs in practice</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="19.4" id="the-expected-agreement-p_e"><span class="header-section-number">19.4</span> The Expected Agreement P_e</h2>
 <ul>
-<li><span class="math inline"><em>P</em><sub><em>e</em></sub> = ∑<sub><em>i</em></sub><em>p</em><sub><em>i</em></sub><em>q</em><sub><em>i</em></sub></span> is the probability that two independently drawn labels (one from rater A’s marginal, one from rater B’s) happen to match</li>
+<li><span class="math inline">\(P_e = \sum_i p_i q_i\)</span> is the probability that two independently drawn labels (one from rater A’s marginal, one from rater B’s) happen to match</li>
 <li>Under the generation model used here, with probability <code>agree_prob</code> both raters draw the same uniform label, and otherwise they draw independently</li>
-<li>With <span class="math inline"><em>K</em></span> categories this gives:</li>
+<li>With <span class="math inline">\(K\)</span> categories this gives:</li>
 </ul>
-<p><span class="math display">$$P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}$$</span></p>
+<p><span class="math display">\[P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}\]</span></p>
 <ul>
-<li>When marginals are uniform (<span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>q</em><sub><em>i</em></sub> = 1/<em>K</em></span>): <span class="math inline"><em>P</em><sub><em>e</em></sub> = <em>K</em> ⋅ (1/<em>K</em>)<sup>2</sup> = 1/<em>K</em></span></li>
-<li>Substituting into the kappa formula and simplifying gives <span class="math inline"><em>κ</em> = agree_prob</span>.</li>
+<li>When marginals are uniform (<span class="math inline">\(p_i = q_i = 1/K\)</span>): <span class="math inline">\(P_e = K \cdot (1/K)^2 = 1/K\)</span></li>
+<li>Substituting into the kappa formula and simplifying gives <span class="math inline">\(\kappa = \text{agree\_prob}\)</span>.</li>
 <li>So the synthetic generator produces data where the expected kappa directly equals the underlying agreement probability, making it easy to verify the implementation</li>
 </ul>
 <h2 data-number="19.5" id="generating-synthetic-rating-data"><span class="header-section-number">19.5</span> Generating Synthetic Rating Data</h2>
@@ -110,10 +127,10 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 <ul>
 <li>The asymptotic standard error is:</li>
 </ul>
-<p><span class="math display">$$\text{SE}(\kappa) = \sqrt{\frac{P_o(1 - P_o)}{N(1 - P_e)^2}}$$</span></p>
+<p><span class="math display">\[\text{SE}(\kappa) = \sqrt{\frac{P_o(1 - P_o)}{N(1 - P_e)^2}}\]</span></p>
 <ul>
-<li>This approximates <span class="math inline">$\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}$</span> (each item is an independent Bernoulli trial for agreement) and propagates it through the kappa formula by dividing by <span class="math inline">(1 − <em>P</em><sub><em>e</em></sub>)</span></li>
-<li>A 95% confidence interval for <span class="math inline"><em>κ</em></span> is <span class="math inline"><em>κ</em> ± 1.96 ⋅ SE(<em>κ</em>)</span></li>
+<li>This approximates <span class="math inline">\(\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}\)</span> (each item is an independent Bernoulli trial for agreement) and propagates it through the kappa formula by dividing by <span class="math inline">\((1 - P_e)\)</span></li>
+<li>A 95% confidence interval for <span class="math inline">\(\kappa\)</span> is <span class="math inline">\(\kappa \pm 1.96 \cdot \text{SE}(\kappa)\)</span></li>
 </ul>
 <h2 data-number="19.7" id="comparing-scenarios"><span class="header-section-number">19.7</span> Comparing Scenarios</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -131,7 +148,7 @@ Figure&nbsp;19.1: Cohen’s kappa for five synthetic rating scenarios (N = 100 i
 <dl>
 <dt>Table shape</dt>
 <dd>
-<code>contingency_table</code> with <code>n_cats=3</code> must return a <span class="math inline">(3, 3)</span> array.
+<code>contingency_table</code> with <code>n_cats=3</code> must return a <span class="math inline">\((3, 3)\)</span> array.
 </dd>
 <dt>Table sum equals item count</dt>
 <dd>
@@ -143,7 +160,7 @@ When both raters assign identical labels, every item is on the diagonal and kapp
 </dd>
 <dt>Chance agreement gives kappa near zero</dt>
 <dd>
-Independent uniform labels have <span class="math inline"><em>P</em><sub><em>o</em></sub> ≈ <em>P</em><sub><em>e</em></sub> = 1/<em>K</em></span>, so kappa should be near zero. The tolerance 0.15 accounts for sampling variability.
+Independent uniform labels have <span class="math inline">\(P_o \approx P_e = 1/K\)</span>, so kappa should be near zero. The tolerance 0.15 accounts for sampling variability.
 </dd>
 <dt>Standard error positive and finite</dt>
 <dd>
@@ -151,7 +168,7 @@ The standard error must be a positive finite number for any valid table.
 </dd>
 <dt>Kappa close to agree_prob</dt>
 <dd>
-With <code>N_ITEMS = 100</code> and uniform marginals, the observed kappa must be within 0.15 of <code>AGREE_PROB</code>. This is conservative given the sampling variability of approximately <span class="math inline">SE ≈ 0.05</span> at this sample size
+With <code>N_ITEMS = 100</code> and uniform marginals, the observed kappa must be within 0.15 of <code>AGREE_PROB</code>. This is conservative given the sampling variability of approximately <span class="math inline">\(\text{SE} \approx 0.05\)</span> at this sample size
 </dd>
 </dl>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
@@ -233,7 +250,7 @@ The probability that two raters would agree purely by chance, computed as the su
 <h3 data-number="19.9.1" id="do-the-math"><span class="header-section-number">19.9.1</span> Do the math</h3>
 <p>A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?</p>
 <h3 data-number="19.9.2" id="weighted-kappa"><span class="header-section-number">19.9.2</span> Weighted kappa</h3>
-<p>In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the diagonal should be penalised less than disagreements far from it. Implement weighted kappa using linear weights: <span class="math inline"><em>w</em><sub><em>i</em><em>j</em></sub> = 1 − |<em>i</em> − <em>j</em>|/(<em>K</em> − 1)</span>. Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa. When does the difference between weighted and unweighted kappa matter most?</p>
+<p>In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the diagonal should be penalised less than disagreements far from it. Implement weighted kappa using linear weights: <span class="math inline">\(w_{ij} = 1 - |i - j| / (K - 1)\)</span>. Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa. When does the difference between weighted and unweighted kappa matter most?</p>
 <h3 data-number="19.9.3" id="confidence-intervals-across-scenarios"><span class="header-section-number">19.9.3</span> Confidence intervals across scenarios</h3>
 <p>For each of the five <code>SCENARIOS</code> in <code>agreement.py</code>, compute the 95% confidence interval for kappa using the standard error formula. Add error bars to the bar chart. Do the confidence intervals for adjacent scenarios overlap?</p>
 <h3 data-number="19.9.4" id="three-or-more-raters"><span class="header-section-number">19.9.4</span> Three or more raters</h3>

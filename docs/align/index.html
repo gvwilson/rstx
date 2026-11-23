@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Pairwise Sequence Alignment</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -47,26 +64,26 @@
 <h2 data-number="8.2" id="a-warm-up-edit-distance"><span class="header-section-number">8.2</span> A Warm-Up: Edit Distance</h2>
 <ul>
 <li>The edit distance between two strings is the minimum number of insertions, deletions, or substitutions needed to transform one into the other</li>
-<li>Define <span class="math inline"><em>d</em>(<em>i</em>, <em>j</em>)</span> as the edit distance between the first <span class="math inline"><em>i</em></span> characters of string <span class="math inline"><em>a</em></span> and the first <span class="math inline"><em>j</em></span> characters of string <span class="math inline"><em>b</em></span></li>
+<li>Define <span class="math inline">\(d(i,j)\)</span> as the edit distance between the first <span class="math inline">\(i\)</span> characters of string <span class="math inline">\(a\)</span> and the first <span class="math inline">\(j\)</span> characters of string <span class="math inline">\(b\)</span></li>
 <li>The recurrence is:</li>
 </ul>
-<p><span class="math display">$$d(i,j) = \min\!\begin{cases} d(i-1,\,j-1) &amp; \text{if } a_i = b_j \quad\text{(characters match, no cost)} \\ d(i-1,\,j-1) + 1 &amp; \text{if } a_i \neq b_j \quad\text{(substitute)} \\ d(i-1,\,j) + 1 &amp; \text{(delete from } a \text{)} \\ d(i,\,j-1) + 1 &amp; \text{(insert into } a \text{)} \end{cases}$$</span></p>
+<p><span class="math display">\[d(i,j) = \min\!\begin{cases} d(i-1,\,j-1) &amp; \text{if } a_i = b_j \quad\text{(characters match, no cost)} \\ d(i-1,\,j-1) + 1 &amp; \text{if } a_i \neq b_j \quad\text{(substitute)} \\ d(i-1,\,j) + 1 &amp; \text{(delete from } a \text{)} \\ d(i,\,j-1) + 1 &amp; \text{(insert into } a \text{)} \end{cases}\]</span></p>
 <ul>
-<li>The boundary conditions are <span class="math inline"><em>d</em>(<em>i</em>, 0) = <em>i</em></span> (delete all of <span class="math inline"><em>a</em></span>’s prefix) and <span class="math inline"><em>d</em>(0, <em>j</em>) = <em>j</em></span> (insert all of <span class="math inline"><em>b</em></span>’s prefix)</li>
-<li>This is <a href="../glossary/index.html#dynamic_programming">dynamic programming</a>: every subproblem is solved once and stored, so the total work is <span class="math inline"><em>O</em>(<em>m</em><em>n</em>)</span> rather than the exponential cost of trying all possible alignments</li>
+<li>The boundary conditions are <span class="math inline">\(d(i,0) = i\)</span> (delete all of <span class="math inline">\(a\)</span>’s prefix) and <span class="math inline">\(d(0,j) = j\)</span> (insert all of <span class="math inline">\(b\)</span>’s prefix)</li>
+<li>This is <a href="../glossary/index.html#dynamic_programming">dynamic programming</a>: every subproblem is solved once and stored, so the total work is <span class="math inline">\(O(mn)\)</span> rather than the exponential cost of trying all possible alignments</li>
 </ul>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>Why is <span class="math inline"><em>d</em>(<em>i</em>, 0) = <em>i</em></span> in the edit distance recurrence, rather than <span class="math inline"><em>d</em>(<em>i</em>, 0) = 0</span>?</p>
+<p>Why is <span class="math inline">\(d(i,0) = i\)</span> in the edit distance recurrence, rather than <span class="math inline">\(d(i,0) = 0\)</span>?</p>
 <dl>
-<dt>Because the first <span class="math inline"><em>i</em></span> characters of <span class="math inline"><em>a</em></span> have already been aligned perfectly</dt>
+<dt>Because the first <span class="math inline">\(i\)</span> characters of <span class="math inline">\(a\)</span> have already been aligned perfectly</dt>
 <dd>
-Wrong: <span class="math inline"><em>d</em>(<em>i</em>, 0)</span> represents aligning <span class="math inline"><em>a</em>[1..<em>i</em>]</span> against an empty string, which requires <span class="math inline"><em>i</em></span> deletions, not zero.
+Wrong: <span class="math inline">\(d(i,0)\)</span> represents aligning <span class="math inline">\(a[1..i]\)</span> against an empty string, which requires <span class="math inline">\(i\)</span> deletions, not zero.
 </dd>
-<dt>Because you need <span class="math inline"><em>i</em></span> deletions to transform <span class="math inline"><em>a</em>[1..<em>i</em>]</span> into the empty string</dt>
+<dt>Because you need <span class="math inline">\(i\)</span> deletions to transform <span class="math inline">\(a[1..i]\)</span> into the empty string</dt>
 <dd>
-Correct: each of the <span class="math inline"><em>i</em></span> characters in the prefix must be removed, costing one unit per character.
+Correct: each of the <span class="math inline">\(i\)</span> characters in the prefix must be removed, costing one unit per character.
 </dd>
-<dt>Because each character in <span class="math inline"><em>a</em></span> must be substituted for a gap</dt>
+<dt>Because each character in <span class="math inline">\(a\)</span> must be substituted for a gap</dt>
 <dd>
 Wrong: substitution replaces one character with another; removing a character is a deletion, not a substitution.
 </dd>
@@ -100,15 +117,15 @@ Wrong: if both sequences are identical the edit distance is zero, regardless of 
 <h2 data-number="8.4" id="the-needleman-wunsch-algorithm"><span class="header-section-number">8.4</span> The Needleman-Wunsch Algorithm</h2>
 <ul>
 <li><a href="../glossary/index.html#needleman_wunsch">Needleman-Wunsch</a> solves global alignment exactly using dynamic programming</li>
-<li>Build a matrix <span class="math inline"><em>H</em></span> of size <span class="math inline">(<em>m</em> + 1) × (<em>n</em> + 1)</span> where <span class="math inline"><em>m</em></span> and <span class="math inline"><em>n</em></span> are the sequence lengths</li>
-<li>Initialize the border: <span class="math inline"><em>H</em>[<em>i</em>, 0] = <em>i</em> × gap</span> and <span class="math inline"><em>H</em>[0, <em>j</em>] = <em>j</em> × gap</span> to represent aligning a prefix of one sequence against an empty string</li>
-<li>Fill <span class="math inline"><em>H</em></span> left-to-right, top-to-bottom using the recurrence:</li>
+<li>Build a matrix <span class="math inline">\(H\)</span> of size <span class="math inline">\((m+1)\times(n+1)\)</span> where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the sequence lengths</li>
+<li>Initialize the border: <span class="math inline">\(H[i,0] = i \times \text{gap}\)</span> and <span class="math inline">\(H[0,j] = j \times \text{gap}\)</span> to represent aligning a prefix of one sequence against an empty string</li>
+<li>Fill <span class="math inline">\(H\)</span> left-to-right, top-to-bottom using the recurrence:</li>
 </ul>
-<p><span class="math display">$$H(i,j) = \max\!\begin{cases} H(i-1,\,j-1) + s(a_i,\,b_j) &amp; \text{(match or mismatch)} \\ H(i-1,\,j) + g &amp; \text{(gap in } b \text{)} \\ H(i,\,j-1) + g &amp; \text{(gap in } a \text{)} \end{cases}$$</span></p>
+<p><span class="math display">\[H(i,j) = \max\!\begin{cases} H(i-1,\,j-1) + s(a_i,\,b_j) &amp; \text{(match or mismatch)} \\ H(i-1,\,j) + g &amp; \text{(gap in } b \text{)} \\ H(i,\,j-1) + g &amp; \text{(gap in } a \text{)} \end{cases}\]</span></p>
 <ul>
-<li><span class="math inline"><em>s</em>(<em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>j</em></sub>)</span> is <code>MATCH_SCORE</code> or <code>MISMATCH_PENALTY</code> and <span class="math inline"><em>g</em></span> is <code>GAP_PENALTY</code></li>
+<li><span class="math inline">\(s(a_i, b_j)\)</span> is <code>MATCH_SCORE</code> or <code>MISMATCH_PENALTY</code> and <span class="math inline">\(g\)</span> is <code>GAP_PENALTY</code></li>
 <li>There is no zero floor: unlike local alignment, global alignment must account for every character in both sequences, so negative scores are allowed</li>
-<li>The final score of the best global alignment is <span class="math inline"><em>H</em>[<em>m</em>, <em>n</em>]</span>.</li>
+<li>The final score of the best global alignment is <span class="math inline">\(H[m, n]\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -187,22 +204,22 @@ Wrong: the relative penalties are set by <code>MISMATCH_PENALTY</code> and <code
 </table>
 <ul>
 <li>Row labels (left) are characters of <code>SEQ_A</code>; column labels (top) are characters of <code>SEQ_B</code></li>
-<li><span class="math inline"><em>H</em>[1, 1] = 2</span>: A matches A, so <span class="math inline"><em>H</em>[0, 0] + 2 = 0 + 2 = 2</span></li>
-<li><span class="math inline"><em>H</em>[2, 1] = 1</span>: C vs A is a mismatch
+<li><span class="math inline">\(H[1,1] = 2\)</span>: A matches A, so <span class="math inline">\(H[0,0] + 2 = 0 + 2 = 2\)</span></li>
+<li><span class="math inline">\(H[2,1] = 1\)</span>: C vs A is a mismatch
 <ul>
-<li>Best is diagonal <span class="math inline"><em>H</em>[1, 0] + (−1) = −1 + (−1) = −2</span>, or delete <span class="math inline"><em>H</em>[1, 1] + (−1) = 2 + (−1) = 1</span>, so the delete wins</li>
+<li>Best is diagonal <span class="math inline">\(H[1,0] + (-1) = -1 + (-1) = -2\)</span>, or delete <span class="math inline">\(H[1,1] + (-1) = 2 + (-1) = 1\)</span>, so the delete wins</li>
 </ul></li>
-<li><span class="math inline"><em>H</em>[4, 3] = 5</span>: the score of the best global alignment</li>
+<li><span class="math inline">\(H[4,3] = 5\)</span>: the score of the best global alignment</li>
 </ul>
 <h2 data-number="8.6" id="traceback"><span class="header-section-number">8.6</span> Traceback</h2>
 <ul>
-<li>The best global alignment ends at <span class="math inline"><em>H</em>[<em>m</em>, <em>n</em>]</span> (bottom-right cell)</li>
-<li>Follow the path that produced each cell’s score back through <span class="math inline"><em>H</em></span> until reaching <span class="math inline"><em>H</em>[0, 0]</span></li>
+<li>The best global alignment ends at <span class="math inline">\(H[m, n]\)</span> (bottom-right cell)</li>
+<li>Follow the path that produced each cell’s score back through <span class="math inline">\(H\)</span> until reaching <span class="math inline">\(H[0,0]\)</span></li>
 <li>At each cell, check which neighbour’s score plus the relevant penalty matches the current cell:
 <ul>
-<li>If the diagonal move from <span class="math inline"><em>H</em>[<em>i</em> − 1, <em>j</em> − 1]</span> matches (preferred on ties), step diagonally and record the pair <span class="math inline">(<em>a</em><sub><em>i</em></sub>, <em>b</em><sub><em>j</em></sub>)</span></li>
-<li>If the upward move from <span class="math inline"><em>H</em>[<em>i</em> − 1, <em>j</em>]</span> matches, step up and record <span class="math inline"><em>a</em><sub><em>i</em></sub></span> paired with a gap in <span class="math inline"><em>b</em></span></li>
-<li>Otherwise step left and record a gap in <span class="math inline"><em>a</em></span> paired with <span class="math inline"><em>b</em><sub><em>j</em></sub></span></li>
+<li>If the diagonal move from <span class="math inline">\(H[i-1,j-1]\)</span> matches (preferred on ties), step diagonally and record the pair <span class="math inline">\((a_i, b_j)\)</span></li>
+<li>If the upward move from <span class="math inline">\(H[i-1,j]\)</span> matches, step up and record <span class="math inline">\(a_i\)</span> paired with a gap in <span class="math inline">\(b\)</span></li>
+<li>Otherwise step left and record a gap in <span class="math inline">\(a\)</span> paired with <span class="math inline">\(b_j\)</span></li>
 </ul></li>
 <li>Reverse the collected characters at the end, since the traceback runs backwards</li>
 </ul>
@@ -261,11 +278,11 @@ Wrong: the relative penalties are set by <code>MISMATCH_PENALTY</code> and <code
 b: A-GT</code></pre>
 <ul>
 <li>The gap in <code>seq_b</code> at position 2 accounts for the <code>C</code> in <code>seq_a</code> that has no counterpart</li>
-<li>The score is <span class="math inline">3 × 2 + (−1) = 5</span>: three matches at <code>MATCH_SCORE</code> = 2 and one gap at <code>GAP_PENALTY</code> = -1</li>
+<li>The score is <span class="math inline">\(3 \times 2 + (-1) = 5\)</span>: three matches at <code>MATCH_SCORE</code> = 2 and one gap at <code>GAP_PENALTY</code> = -1</li>
 </ul>
 <h2 data-number="8.8" id="visualizing-the-scoring-matrix"><span class="header-section-number">8.8</span> Visualizing the Scoring Matrix</h2>
 <ul>
-<li>Plotting <span class="math inline"><em>H</em></span> as a heatmap shows where high-scoring regions form</li>
+<li>Plotting <span class="math inline">\(H\)</span> as a heatmap shows where high-scoring regions form</li>
 <li>Bright cells cluster along diagonals where the sequences share runs of matching characters</li>
 </ul>
 <div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -288,23 +305,23 @@ The matrix must have one extra row and column for the gap-penalty border. An off
 </dd>
 <dt>Border initialization</dt>
 <dd>
-<span class="math inline"><em>H</em>[<em>i</em>, 0] = <em>i</em> × <em>g</em></span> and <span class="math inline"><em>H</em>[0, <em>j</em>] = <em>j</em> × <em>g</em></span> for all <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span>. A common mistake is leaving the first row and column at zero (which gives Smith-Waterman local alignment, not Needleman-Wunsch global alignment).
+<span class="math inline">\(H[i,0] = i \times g\)</span> and <span class="math inline">\(H[0,j] = j \times g\)</span> for all <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>. A common mistake is leaving the first row and column at zero (which gives Smith-Waterman local alignment, not Needleman-Wunsch global alignment).
 </dd>
 <dt>Identical sequences</dt>
 <dd>
-Aligning a sequence with itself must match at every position with no gaps or mismatches. The score is exactly <span class="math inline">len × MATCH_SCORE</span>. This test also checks that the aligned strings are returned in the correct order (not reversed).
+Aligning a sequence with itself must match at every position with no gaps or mismatches. The score is exactly <span class="math inline">\(\text{len} \times \text{MATCH\_SCORE}\)</span>. This test also checks that the aligned strings are returned in the correct order (not reversed).
 </dd>
 <dt>Mismatch in alignment</dt>
 <dd>
-<code>"AAAC"</code> vs <code>"AGAC"</code>: the second character differs (A vs G), but the flanking matches make a gapless alignment preferable to introducing a gap. Score = <span class="math inline">3 × 2 + (−1) = 5</span>. This test verifies that the algorithm correctly accepts a mismatch rather than inserting a gap.
+<code>"AAAC"</code> vs <code>"AGAC"</code>: the second character differs (A vs G), but the flanking matches make a gapless alignment preferable to introducing a gap. Score = <span class="math inline">\(3 \times 2 + (-1) = 5\)</span>. This test verifies that the algorithm correctly accepts a mismatch rather than inserting a gap.
 </dd>
 <dt>Gap in alignment</dt>
 <dd>
-<code>"ACGT"</code> vs <code>"AGT"</code>: <code>seq_b</code> has no C, so the aligner inserts a gap. Score = <span class="math inline">3 × 2 + (−1) = 5</span>. This test is the key check on the gap-handling branch of the traceback.
+<code>"ACGT"</code> vs <code>"AGT"</code>: <code>seq_b</code> has no C, so the aligner inserts a gap. Score = <span class="math inline">\(3 \times 2 + (-1) = 5\)</span>. This test is the key check on the gap-handling branch of the traceback.
 </dd>
 <dt>All mismatches</dt>
 <dd>
-When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALTY</code>, the optimal global alignment still pairs all characters (no gaps), since introducing a gap would not improve the score. Score = <span class="math inline">len × MISMATCH_PENALTY</span>. Note the difference from Smith-Waterman, which would return an empty alignment with score 0.
+When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALTY</code>, the optimal global alignment still pairs all characters (no gaps), since introducing a gap would not improve the score. Score = <span class="math inline">\(\text{len} \times \text{MISMATCH\_PENALTY}\)</span>. Note the difference from Smith-Waterman, which would return an empty alignment with score 0.
 </dd>
 </dl>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> align <span class="im">import</span> (</span>
@@ -378,9 +395,9 @@ When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALT
 <h3 data-number="8.10.3" id="local-alignment-smith-waterman"><span class="header-section-number">8.10.3</span> Local alignment (Smith-Waterman)</h3>
 <p>The Smith-Waterman algorithm for local alignment differs from Needleman-Wunsch in exactly two ways: the first row and column are all zeros (not cumulative gap penalties), and each cell uses <code>max(0, diag, delete, insert)</code> instead of <code>max(diag, delete, insert)</code>. Implement <code>fill_local(seq_a, seq_b)</code> and <code>traceback_local(H, seq_a, seq_b)</code> where the traceback starts at the cell with the highest value and stops when it reaches a zero. Verify that aligning <code>"AAACGT"</code> with <code>"CCGT"</code> locally produces a different result than aligning them globally.</p>
 <h3 data-number="8.10.4" id="scoring-matrix-for-amino-acids"><span class="header-section-number">8.10.4</span> Scoring matrix for amino acids</h3>
-<p>Biological sequence aligners use substitution matrices such as BLOSUM62 that assign different scores to each pair of amino acid characters, reflecting how often each substitution occurs in evolution. Replace <code>_nt_score</code> with a function that looks up scores in a small hand-written <span class="math inline">4 × 4</span> substitution matrix for the four DNA bases A, C, G, T. Assign a higher score to transitions (A vs G, C vs T) than transversions (A vs C, A vs T, etc.), since transitions are more common mutations. Verify that aligning <code>"ATCG"</code> with <code>"AGCG"</code> now gives a different score than with the flat <code>MATCH_SCORE</code> / <code>MISMATCH_PENALTY</code> scheme.</p>
+<p>Biological sequence aligners use substitution matrices such as BLOSUM62 that assign different scores to each pair of amino acid characters, reflecting how often each substitution occurs in evolution. Replace <code>_nt_score</code> with a function that looks up scores in a small hand-written <span class="math inline">\(4 \times 4\)</span> substitution matrix for the four DNA bases A, C, G, T. Assign a higher score to transitions (A vs G, C vs T) than transversions (A vs C, A vs T, etc.), since transitions are more common mutations. Verify that aligning <code>"ATCG"</code> with <code>"AGCG"</code> now gives a different score than with the flat <code>MATCH_SCORE</code> / <code>MISMATCH_PENALTY</code> scheme.</p>
 <h3 data-number="8.10.5" id="affine-gap-penalty"><span class="header-section-number">8.10.5</span> Affine gap penalty</h3>
-<p>The linear gap penalty <span class="math inline"><em>g</em></span> treats opening a gap and extending an existing gap identically. A more realistic affine gap penalty charges a higher cost <span class="math inline"><em>g</em><sub><em>o</em></sub></span> to open a gap and a lower cost <span class="math inline"><em>g</em><sub><em>e</em></sub></span> to extend it: a gap of length <span class="math inline"><em>k</em></span> costs <span class="math inline"><em>g</em><sub><em>o</em></sub> + (<em>k</em> − 1)<em>g</em><sub><em>e</em></sub></span>. Look up the three-matrix formulation of Needleman-Wunsch with affine gaps (using matrices <span class="math inline"><em>H</em></span>, <span class="math inline"><em>E</em></span>, <span class="math inline"><em>F</em></span>) and implement it. Verify that with <span class="math inline"><em>g</em><sub><em>o</em></sub> = −3</span> and <span class="math inline"><em>g</em><sub><em>e</em></sub> = −1</span> the alignment of <code>"ACCCGT"</code> with <code>"AGT"</code> produces a single gap of length 3 rather than three individual gaps.</p>
+<p>The linear gap penalty <span class="math inline">\(g\)</span> treats opening a gap and extending an existing gap identically. A more realistic affine gap penalty charges a higher cost <span class="math inline">\(g_o\)</span> to open a gap and a lower cost <span class="math inline">\(g_e\)</span> to extend it: a gap of length <span class="math inline">\(k\)</span> costs <span class="math inline">\(g_o + (k-1)g_e\)</span>. Look up the three-matrix formulation of Needleman-Wunsch with affine gaps (using matrices <span class="math inline">\(H\)</span>, <span class="math inline">\(E\)</span>, <span class="math inline">\(F\)</span>) and implement it. Verify that with <span class="math inline">\(g_o = -3\)</span> and <span class="math inline">\(g_e = -1\)</span> the alignment of <code>"ACCCGT"</code> with <code>"AGT"</code> produces a single gap of length 3 rather than three individual gaps.</p>
 </section>
 
 </main>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Phylogenetic Tree Reconstruction</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -64,7 +81,7 @@ Wrong: this would require N=6 leaves.
 </div>
 <h2 data-number="11.2" id="distance-matrices"><span class="header-section-number">11.2</span> Distance Matrices</h2>
 <ul>
-<li>A <a href="../glossary/index.html#distance_matrix">distance matrix</a> <span class="math inline"><em>D</em></span> stores the evolutionary distance between every pair of taxa</li>
+<li>A <a href="../glossary/index.html#distance_matrix">distance matrix</a> <span class="math inline">\(D\)</span> stores the evolutionary distance between every pair of taxa</li>
 <li>Distances are estimated from aligned sequences: the fraction of positions that differ, corrected for multiple substitutions</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -108,13 +125,13 @@ Wrong: this would require N=6 leaves.
 <ul>
 <li>UPGMA (Unweighted Pair Group Method with Arithmetic Mean) reconstructs a rooted tree from a distance matrix using only arithmetic means</li>
 <li>At each step, merge the pair of taxa with the smallest pairwise distance</li>
-<li>Place the new internal node at height <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)/2</span> (i.e., half the merged distance) which is the estimated time of the common ancestor</li>
+<li>Place the new internal node at height <span class="math inline">\(D(i,j)/2\)</span> (i.e., half the merged distance) which is the estimated time of the common ancestor</li>
 <li>Branch length from the new node to each merged taxon is the difference in heights</li>
-<li>Update the distance from the new node <span class="math inline"><em>u</em></span> to any remaining taxon <span class="math inline"><em>k</em></span> as the arithmetic mean:</li>
+<li>Update the distance from the new node <span class="math inline">\(u\)</span> to any remaining taxon <span class="math inline">\(k\)</span> as the arithmetic mean:</li>
 </ul>
-<p><span class="math display">$$D(u, k) = \frac{D(i, k) + D(j, k)}{2}$$</span></p>
+<p><span class="math display">\[D(u, k) = \frac{D(i, k) + D(j, k)}{2}\]</span></p>
 <ul>
-<li>Replace <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> with <span class="math inline"><em>u</em></span> in the matrix and repeat until only one node remains.</li>
+<li>Replace <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with <span class="math inline">\(u\)</span> in the matrix and repeat until only one node remains.</li>
 </ul>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps for one iteration of UPGMA in the correct order.</p>
@@ -128,10 +145,10 @@ Wrong: this would require N=6 leaves.
 </div>
 <h2 data-number="11.4" id="a-worked-example"><span class="header-section-number">11.4</span> A Worked Example</h2>
 <ul>
-<li>Starting with <span class="math inline"><em>n</em> = 4</span> taxa and the distances above, Human and Gorilla have the smallest distance (0.9), so they are merged first into node4 at height <span class="math inline">0.9/2 = 0.45</span></li>
-<li>Branch lengths: <span class="math inline"><em>ℓ</em><sub>Human</sub> = 0.45 − 0 = 0.45</span> and <span class="math inline"><em>ℓ</em><sub>Gorilla</sub> = 0.45 − 0 = 0.45</span> (both start at height 0)</li>
-<li>After replacing Human and Gorilla with node4, the next smallest distance is Bat-Chimp (1.4), which becomes node5 at height <span class="math inline">1.4/2 = 0.70</span>. Branch lengths to Bat and Chimp are each <span class="math inline">0.70 − 0 = 0.70</span>.</li>
-<li>The final merge joins node4 and node5. The average distance between node4 and node5, computed as the arithmetic mean of all pairwise distances between the two groups, works out to <span class="math inline">2.35</span>. The final node (node6) sits at height <span class="math inline">2.35/2 = 1.175</span>. Branch lengths are <span class="math inline">1.175 − 0.45 = 0.725</span> to node4 and <span class="math inline">1.175 − 0.70 = 0.475</span> to node5.</li>
+<li>Starting with <span class="math inline">\(n = 4\)</span> taxa and the distances above, Human and Gorilla have the smallest distance (0.9), so they are merged first into node4 at height <span class="math inline">\(0.9/2 = 0.45\)</span></li>
+<li>Branch lengths: <span class="math inline">\(\ell_\text{Human} = 0.45 - 0 = 0.45\)</span> and <span class="math inline">\(\ell_\text{Gorilla} = 0.45 - 0 = 0.45\)</span> (both start at height 0)</li>
+<li>After replacing Human and Gorilla with node4, the next smallest distance is Bat-Chimp (1.4), which becomes node5 at height <span class="math inline">\(1.4/2 = 0.70\)</span>. Branch lengths to Bat and Chimp are each <span class="math inline">\(0.70 - 0 = 0.70\)</span>.</li>
+<li>The final merge joins node4 and node5. The average distance between node4 and node5, computed as the arithmetic mean of all pairwise distances between the two groups, works out to <span class="math inline">\(2.35\)</span>. The final node (node6) sits at height <span class="math inline">\(2.35/2 = 1.175\)</span>. Branch lengths are <span class="math inline">\(1.175 - 0.45 = 0.725\)</span> to node4 and <span class="math inline">\(1.175 - 0.70 = 0.475\)</span> to node5.</li>
 </ul>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>Why does UPGMA assume a molecular clock?</p>
@@ -142,7 +159,7 @@ Wrong: that is the merge criterion, not the clock assumption.
 </dd>
 <dt>Because it places each internal node at half the merged distance, assuming all lineages evolve at the same rate.</dt>
 <dd>
-Correct: placing the node at <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)/2</span> assumes that <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> are equidistant from their common ancestor, which requires equal rates of evolution in both lineages.
+Correct: placing the node at <span class="math inline">\(D(i,j)/2\)</span> assumes that <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> are equidistant from their common ancestor, which requires equal rates of evolution in both lineages.
 </dd>
 <dt>Because it uses arithmetic means to update distances.</dt>
 <dd>
@@ -170,12 +187,12 @@ Figure&nbsp;11.1: UPGMA tree for four taxa. Blue nodes are observed taxa; grey n
 <ul>
 <li>Matrix symmetry
 <ul>
-<li>Distances must satisfy <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>) = <em>D</em>(<em>j</em>, <em>i</em>)</span> and <span class="math inline"><em>D</em>(<em>i</em>, <em>i</em>) = 0</span></li>
+<li>Distances must satisfy <span class="math inline">\(D(i,j) = D(j,i)\)</span> and <span class="math inline">\(D(i,i) = 0\)</span></li>
 <li>An asymmetric matrix would indicate a bug in the construction code</li>
 </ul></li>
 <li>Edge count
 <ul>
-<li>A rooted binary tree on <span class="math inline"><em>N</em></span> leaves has exactly <span class="math inline">2<em>N</em> − 2</span> directed edges (each of the <span class="math inline"><em>N</em> − 1</span> internal nodes contributes two child edges)</li>
+<li>A rooted binary tree on <span class="math inline">\(N\)</span> leaves has exactly <span class="math inline">\(2N - 2\)</span> directed edges (each of the <span class="math inline">\(N - 1\)</span> internal nodes contributes two child edges)</li>
 <li>Any other count means the loop terminated early or ran too many iterations</li>
 </ul></li>
 <li>Topology recovery
@@ -186,7 +203,7 @@ Figure&nbsp;11.1: UPGMA tree for four taxa. Blue nodes are observed taxa; grey n
 <li>Branch length recovery
 <ul>
 <li>With exact tree-additive distances the algorithm recovers every branch length to machine precision</li>
-<li>No tolerance is needed: floating-point round-off in the arithmetic means is below <span class="math inline">10<sup>−10</sup></span></li>
+<li>No tolerance is needed: floating-point round-off in the arithmetic means is below <span class="math inline">\(10^{-10}\)</span></li>
 </ul></li>
 <li>Topology under noise
 <ul>
@@ -356,13 +373,13 @@ Figure&nbsp;11.1: UPGMA tree for four taxa. Blue nodes are observed taxa; grey n
 <section class="exercises">
 <h2 data-number="11.8" id="exercises"><span class="header-section-number">11.8</span> Exercises</h2>
 <h3 data-number="11.8.1" id="do-the-math"><span class="header-section-number">11.8.1</span> Do the math</h3>
-<p>In the first UPGMA iteration Human and Gorilla are merged. <span class="math inline"><em>D</em>(Human, Gorilla) = 0.9</span>. The new internal node is placed at height <span class="math inline"><em>D</em>/2</span>. What is the branch length from the new node to Human? Give your answer to two decimal places.</p>
+<p>In the first UPGMA iteration Human and Gorilla are merged. <span class="math inline">\(D(\text{Human}, \text{Gorilla}) = 0.9\)</span>. The new internal node is placed at height <span class="math inline">\(D/2\)</span>. What is the branch length from the new node to Human? Give your answer to two decimal places.</p>
 <h3 data-number="11.8.2" id="neighbor-joining-comparison"><span class="header-section-number">11.8.2</span> Neighbor-joining comparison</h3>
 <p>Neighbor-joining (Saitou and Nei, 1987) uses a Q-matrix correction that removes long-branch attraction bias and does not assume a molecular clock. Implement <code>neighbor_joining(names, D)</code> returning edges as <code>(node_a, node_b, length)</code> triples. Verify that UPGMA and neighbor-joining agree on the topology for the exact distance matrix, then add noise (scale 0.05) and show a case where they disagree.</p>
 <h3 data-number="11.8.3" id="bootstrapping"><span class="header-section-number">11.8.3</span> Bootstrapping</h3>
-<p>Phylogenetic bootstrap estimates how well-supported each split is. Draw 100 perturbed distance matrices using <code>make_distance_matrix(noise_scale=0.1, seed=i)</code> for <span class="math inline"><em>i</em> = 0, …, 99</span> and run UPGMA on each. Report what fraction of replicates recover the correct (Bat, Chimp) clade.</p>
+<p>Phylogenetic bootstrap estimates how well-supported each split is. Draw 100 perturbed distance matrices using <code>make_distance_matrix(noise_scale=0.1, seed=i)</code> for <span class="math inline">\(i = 0, \ldots, 99\)</span> and run UPGMA on each. Report what fraction of replicates recover the correct (Bat, Chimp) clade.</p>
 <h3 data-number="11.8.4" id="four-point-condition"><span class="header-section-number">11.8.4</span> Four-point condition</h3>
-<p>A distance matrix is tree-additive if and only if it satisfies the four-point condition: for every four taxa <span class="math inline"><em>i</em>, <em>j</em>, <em>k</em>, <em>l</em></span>, the largest two of the three sums <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>) + <em>D</em>(<em>k</em>, <em>l</em>)</span>, <span class="math inline"><em>D</em>(<em>i</em>, <em>k</em>) + <em>D</em>(<em>j</em>, <em>l</em>)</span>, <span class="math inline"><em>D</em>(<em>i</em>, <em>l</em>) + <em>D</em>(<em>j</em>, <em>k</em>)</span> are equal. Write <code>is_additive(names, D)</code> that checks this condition for all <span class="math inline">$\binom{N}{4}$</span> quadruples and returns <code>True</code> or <code>False</code>. Verify that the exact matrix passes and a noisy matrix fails.</p>
+<p>A distance matrix is tree-additive if and only if it satisfies the four-point condition: for every four taxa <span class="math inline">\(i, j, k, l\)</span>, the largest two of the three sums <span class="math inline">\(D(i,j)+D(k,l)\)</span>, <span class="math inline">\(D(i,k)+D(j,l)\)</span>, <span class="math inline">\(D(i,l)+D(j,k)\)</span> are equal. Write <code>is_additive(names, D)</code> that checks this condition for all <span class="math inline">\(\binom{N}{4}\)</span> quadruples and returns <code>True</code> or <code>False</code>. Verify that the exact matrix passes and a noisy matrix fails.</p>
 <h3 data-number="11.8.5" id="larger-synthetic-trees"><span class="header-section-number">11.8.5</span> Larger synthetic trees</h3>
 <p>Extend <code>make_distance_matrix</code> to accept an arbitrary Newick-format string such as <code>"((A:0.1,B:0.2):0.3,(C:0.4,D:0.5):0.6)"</code> and compute the full distance matrix from it. Use this to generate a 10-taxon example and confirm that UPGMA recovers the correct topology.</p>
 </section>

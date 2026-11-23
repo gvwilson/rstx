@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Topic Modeling a Document Corpus</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -80,8 +97,8 @@ Wrong: ignoring word order (the bag-of-words assumption) is a modeling choice, n
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="16.3" id="building-tf-vectors"><span class="header-section-number">16.3</span> Building TF Vectors</h2>
 <ul>
-<li>A term-frequency vector for document <span class="math inline"><em>d</em></span> is the vector <span class="math inline"><strong>t</strong><sub><em>d</em></sub> ∈ ℤ<sub> ≥ 0</sub><sup><em>V</em></sup></span> where <span class="math inline"><em>V</em></span> is the vocabulary size and <span class="math inline"><em>t</em><sub><em>d</em><em>w</em></sub></span> counts how many times word <span class="math inline"><em>w</em></span> appears in document <span class="math inline"><em>d</em></span>.</li>
-<li>Extracting word-count columns from the DataFrame and converting to a NumPy matrix gives a two-dimensional array with shape <span class="math inline">(n_docs, <em>V</em>)</span>.</li>
+<li>A term-frequency vector for document <span class="math inline">\(d\)</span> is the vector <span class="math inline">\(\mathbf{t}_d \in \mathbb{Z}_{\geq 0}^V\)</span> where <span class="math inline">\(V\)</span> is the vocabulary size and <span class="math inline">\(t_{dw}\)</span> counts how many times word <span class="math inline">\(w\)</span> appears in document <span class="math inline">\(d\)</span>.</li>
+<li>Extracting word-count columns from the DataFrame and converting to a NumPy matrix gives a two-dimensional array with shape <span class="math inline">\((\text{n\_docs},\, V)\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="16.4" id="length-normalization"><span class="header-section-number">16.4</span> Length Normalization</h2>
@@ -89,52 +106,52 @@ Wrong: ignoring word order (the bag-of-words assumption) is a modeling choice, n
 <li>Raw TF vectors are proportional to document length: a document twice as long will have roughly twice the counts for every word, even if its topic mix is identical.</li>
 <li>Dividing each document vector by its L2 norm removes this length effect:</li>
 </ul>
-<p><span class="math display">$$\hat{\mathbf{t}}_d = \frac{\mathbf{t}_d}{\|\mathbf{t}_d\|_2}$$</span></p>
+<p><span class="math display">\[\hat{\mathbf{t}}_d = \frac{\mathbf{t}_d}{\|\mathbf{t}_d\|_2}\]</span></p>
 <ul>
 <li>After normalization, two documents about the same topic are close to each other in Euclidean space even if one is three times longer than the other.</li>
 <li>This is analogous to comparing the shape of word use rather than its volume.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>A document has TF vector <span class="math inline">[6, 0, 2, 0]</span>. What is its L2 norm?</p>
+<p>A document has TF vector <span class="math inline">\([6, 0, 2, 0]\)</span>. What is its L2 norm?</p>
 <dl>
-<dt><span class="math inline">$\sqrt{6}$</span></dt>
+<dt><span class="math inline">\(\sqrt{6}\)</span></dt>
 <dd>
-Wrong: the L2 norm squares each entry before summing: <span class="math inline">$\sqrt{6^2 + 0^2 + 2^2 + 0^2} = \sqrt{40}$</span>.
+Wrong: the L2 norm squares each entry before summing: <span class="math inline">\(\sqrt{6^2 + 0^2 + 2^2 + 0^2} = \sqrt{40}\)</span>.
 </dd>
-<dt><span class="math inline">$\sqrt{40}$</span></dt>
+<dt><span class="math inline">\(\sqrt{40}\)</span></dt>
 <dd>
-Correct: <span class="math inline">$\|\mathbf{t}\|_2 = \sqrt{6^2 + 0^2 + 2^2 + 0^2} = \sqrt{36 + 4} = \sqrt{40}$</span>.
+Correct: <span class="math inline">\(\|\mathbf{t}\|_2 = \sqrt{6^2 + 0^2 + 2^2 + 0^2} = \sqrt{36 + 4} = \sqrt{40}\)</span>.
 </dd>
 <dt>8</dt>
 <dd>
 Wrong: adding the entries directly gives 8, but the L2 norm takes the square root of the sum of squares, not the sum itself.
 </dd>
-<dt><span class="math inline">$\sqrt{8}$</span></dt>
+<dt><span class="math inline">\(\sqrt{8}\)</span></dt>
 <dd>
-Wrong: <span class="math inline">$\sqrt{8}$</span> would be the L2 norm of <span class="math inline">[2, 2, 2, 2]</span>, not of <span class="math inline">[6, 0, 2, 0]</span>.
+Wrong: <span class="math inline">\(\sqrt{8}\)</span> would be the L2 norm of <span class="math inline">\([2, 2, 2, 2]\)</span>, not of <span class="math inline">\([6, 0, 2, 0]\)</span>.
 </dd>
 </dl>
 </div>
 <h2 data-number="16.5" id="the-k-means-algorithm"><span class="header-section-number">16.5</span> The K-Means Algorithm</h2>
 <ul>
-<li>K-means partitions <span class="math inline"><em>n</em></span> documents into <span class="math inline"><em>K</em></span> clusters by alternating two steps until assignments stop changing:
+<li>K-means partitions <span class="math inline">\(n\)</span> documents into <span class="math inline">\(K\)</span> clusters by alternating two steps until assignments stop changing:
 <ol type="1">
 <li>Assign each document to the nearest centroid (smallest Euclidean distance).</li>
 <li>Update each centroid as the coordinate-wise mean of all documents in that cluster.</li>
 </ol></li>
-<li>The centroid of a cluster is the “average document” for that cluster: its <span class="math inline"><em>w</em></span>-th coordinate is the average count (or average normalized count) of word <span class="math inline"><em>w</em></span> across all documents assigned to the cluster.</li>
-<li>The assignment distance between document <span class="math inline"><strong>t</strong></span> and centroid <span class="math inline"><strong>c</strong></span> is the Euclidean distance:</li>
+<li>The centroid of a cluster is the “average document” for that cluster: its <span class="math inline">\(w\)</span>-th coordinate is the average count (or average normalized count) of word <span class="math inline">\(w\)</span> across all documents assigned to the cluster.</li>
+<li>The assignment distance between document <span class="math inline">\(\mathbf{t}\)</span> and centroid <span class="math inline">\(\mathbf{c}\)</span> is the Euclidean distance:</li>
 </ul>
-<p><span class="math display">$$d(\mathbf{t},\,\mathbf{c}) = \sqrt{\sum_{w=1}^{V}(t_w - c_w)^2}$$</span></p>
+<p><span class="math display">\[d(\mathbf{t},\,\mathbf{c}) = \sqrt{\sum_{w=1}^{V}(t_w - c_w)^2}\]</span></p>
 <ul>
-<li>The algorithm needs <span class="math inline"><em>K</em></span> to be chosen before running it; topic modeling uses domain knowledge or model selection criteria to pick <span class="math inline"><em>K</em></span>.</li>
+<li>The algorithm needs <span class="math inline">\(K\)</span> to be chosen before running it; topic modeling uses domain knowledge or model selection criteria to pick <span class="math inline">\(K\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="16.6" id="top-words-per-cluster"><span class="header-section-number">16.6</span> Top Words Per Cluster</h2>
 <ul>
 <li>After k-means converges, the top words for each cluster are those with the highest value in the cluster’s centroid vector.</li>
-<li>A high centroid coordinate for word <span class="math inline"><em>w</em></span> means that documents in the cluster tend to use word <span class="math inline"><em>w</em></span> frequently, making it a good label for the cluster’s theme.</li>
+<li>A high centroid coordinate for word <span class="math inline">\(w\)</span> means that documents in the cluster tend to use word <span class="math inline">\(w\)</span> frequently, making it a good label for the cluster’s theme.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="16.7" id="raw-tf-vs.-normalized-tf"><span class="header-section-number">16.7</span> Raw TF vs.&nbsp;Normalized TF</h2>
@@ -184,8 +201,8 @@ Wrong: the centroid is a mean over all cluster members, not a selection of one p
 </ul></li>
 <li>Normalized rows have unit length
 <ul>
-<li>After <code>normalize_rows</code>, every row must satisfy <span class="math inline">$\|\hat{\mathbf{t}}_d\|_2 = 1$</span>.</li>
-<li>Tolerance of <span class="math inline">10<sup>−10</sup></span> is used because floating-point division introduces rounding errors at the level of machine epsilon (<span class="math inline"> ≈ 2 × 10<sup>−16</sup></span> for 64-bit floats).</li>
+<li>After <code>normalize_rows</code>, every row must satisfy <span class="math inline">\(\|\hat{\mathbf{t}}_d\|_2 = 1\)</span>.</li>
+<li>Tolerance of <span class="math inline">\(10^{-10}\)</span> is used because floating-point division introduces rounding errors at the level of machine epsilon (<span class="math inline">\(\approx 2\times 10^{-16}\)</span> for 64-bit floats).</li>
 <li>A zero row must remain zero (no division by zero).</li>
 </ul></li>
 <li>Top-words order
@@ -275,7 +292,7 @@ A vector with one entry per vocabulary word giving the count of that word in a d
 </dd>
 <dt>K-means clustering</dt>
 <dd>
-An iterative algorithm that assigns each document to its nearest centroid, then updates centroids as the mean of their members; repeats until assignments stop changing; requires the number of clusters <span class="math inline"><em>K</em></span> to be specified in advance
+An iterative algorithm that assigns each document to its nearest centroid, then updates centroids as the mean of their members; repeats until assignments stop changing; requires the number of clusters <span class="math inline">\(K\)</span> to be specified in advance
 </dd>
 <dt>Centroid</dt>
 <dd>
@@ -283,7 +300,7 @@ The coordinate-wise mean of all documents assigned to a cluster; high centroid c
 </dd>
 <dt>L2 normalization</dt>
 <dd>
-Dividing a vector by its Euclidean length <span class="math inline">$\|\mathbf{t}\|_2 = \sqrt{\sum_w t_w^2}$</span> so that the result has unit length; makes k-means compare the shape of word use rather than total token volume
+Dividing a vector by its Euclidean length <span class="math inline">\(\|\mathbf{t}\|_2 = \sqrt{\sum_w t_w^2}\)</span> so that the result has unit length; makes k-means compare the shape of word use rather than total token volume
 </dd>
 </dl>
 </div>
@@ -299,17 +316,17 @@ Dividing a vector by its Euclidean length <span class="math inline">$\|\mathbf{t
 <section class="exercises">
 <h2 data-number="16.11" id="exercises"><span class="header-section-number">16.11</span> Exercises</h2>
 <h3 data-number="16.11.1" id="do-the-math"><span class="header-section-number">16.11.1</span> Do the math</h3>
-<p>Consider two document vectors <span class="math inline"><strong>a</strong> = [3, 4]</span> and centroid <span class="math inline"><strong>c</strong> = [0, 0]</span>. What is the Euclidean distance <span class="math inline"><em>d</em>(<strong>a</strong>, <strong>c</strong>)</span>?</p>
+<p>Consider two document vectors <span class="math inline">\(\mathbf{a} = [3, 4]\)</span> and centroid <span class="math inline">\(\mathbf{c} = [0, 0]\)</span>. What is the Euclidean distance <span class="math inline">\(d(\mathbf{a}, \mathbf{c})\)</span>?</p>
 <h3 data-number="16.11.2" id="effect-of-k"><span class="header-section-number">16.11.2</span> Effect of K</h3>
-<p>Run k-means on the normalized TF matrix with <span class="math inline"><em>K</em> ∈ {2, 3, 4, 5}</span>. For <span class="math inline"><em>K</em> = 3</span>, the three clusters should match the three generating topics. What happens to the cluster centroid heatmap when <span class="math inline"><em>K</em> = 4</span>? Does the extra cluster split one of the true topics in two, or does it find a different grouping? Explain why increasing <span class="math inline"><em>K</em></span> beyond the true number of topics does not necessarily improve the result.</p>
+<p>Run k-means on the normalized TF matrix with <span class="math inline">\(K \in \{2, 3, 4, 5\}\)</span>. For <span class="math inline">\(K = 3\)</span>, the three clusters should match the three generating topics. What happens to the cluster centroid heatmap when <span class="math inline">\(K = 4\)</span>? Does the extra cluster split one of the true topics in two, or does it find a different grouping? Explain why increasing <span class="math inline">\(K\)</span> beyond the true number of topics does not necessarily improve the result.</p>
 <h3 data-number="16.11.3" id="effect-of-initialization"><span class="header-section-number">16.11.3</span> Effect of initialization</h3>
 <p>K-means can converge to different solutions depending on which documents are chosen as initial centroids. Run k-means on the normalized TF matrix 10 times, each time with a different random seed. How often does the algorithm recover all three true topics? What happens in the runs that fail to recover them?</p>
 <h3 data-number="16.11.4" id="mixed-documents"><span class="header-section-number">16.11.4</span> Mixed documents</h3>
 <p>Modify <code>make_corpus</code> to generate five documents that draw 50% of their tokens from topic 0 and 50% from topic 1. Add those documents to the corpus and re-run k-means. Which cluster do the mixed documents end up in? Plot the centroid weights for those documents alongside the cluster centroids to show why the algorithm places them where it does.</p>
 <h3 data-number="16.11.5" id="inertia"><span class="header-section-number">16.11.5</span> Inertia</h3>
 <p>The within-cluster sum of squared distances (inertia) measures how tightly packed each cluster is:</p>
-<p><span class="math display">$$\text{inertia} = \sum_{k=0}^{K-1} \sum_{d:\,\text{label}(d)=k} \|\hat{\mathbf{t}}_d - \mathbf{c}_k\|_2^2$$</span></p>
-<p>Implement <code>inertia(matrix, labels, centroids)</code> and plot inertia against <span class="math inline"><em>K</em></span> for <span class="math inline"><em>K</em> ∈ {2, 3, 4, 5, 6}</span>. The “elbow” in the plot (where inertia stops dropping sharply) is a common heuristic for choosing <span class="math inline"><em>K</em></span>. Does the elbow occur at <span class="math inline"><em>K</em> = 3</span> for this corpus?</p>
+<p><span class="math display">\[\text{inertia} = \sum_{k=0}^{K-1} \sum_{d:\,\text{label}(d)=k} \|\hat{\mathbf{t}}_d - \mathbf{c}_k\|_2^2\]</span></p>
+<p>Implement <code>inertia(matrix, labels, centroids)</code> and plot inertia against <span class="math inline">\(K\)</span> for <span class="math inline">\(K \in \{2, 3, 4, 5, 6\}\)</span>. The “elbow” in the plot (where inertia stops dropping sharply) is a common heuristic for choosing <span class="math inline">\(K\)</span>. Does the elbow occur at <span class="math inline">\(K = 3\)</span> for this corpus?</p>
 </section>
 
 </main>

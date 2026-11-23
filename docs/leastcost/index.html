@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Least-Cost Path Analysis for Trade Routes</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -67,22 +84,22 @@ Wrong: Dijkstra’s minimises accumulated cost, not geometric length; a longer v
 </div>
 <h2 data-number="7.2" id="the-cost-surface"><span class="header-section-number">7.2</span> The Cost Surface</h2>
 <ul>
-<li>The elevation grid is a 2-D array with values normalised to <span class="math inline">[0, 1]</span>
+<li>The elevation grid is a 2-D array with values normalised to <span class="math inline">\([0, 1]\)</span>
 <ul>
 <li>0 is the lowest point in the landscape, 1 is the highest</li>
 </ul></li>
-<li>Moving from cell <span class="math inline"><em>A</em></span> to an adjacent cell <span class="math inline"><em>B</em></span> incurs an edge cost:</li>
+<li>Moving from cell <span class="math inline">\(A\)</span> to an adjacent cell <span class="math inline">\(B\)</span> incurs an edge cost:</li>
 </ul>
-<p><span class="math display">$$\text{edge\_cost}(A, B) = \frac{\text{elev}(A) + \text{elev}(B)}{2} \times d(A, B)$$</span></p>
+<p><span class="math display">\[\text{edge\_cost}(A, B) = \frac{\text{elev}(A) + \text{elev}(B)}{2} \times d(A, B)\]</span></p>
 <ul>
 <li>Averaging the endpoint elevations penalises entering a ridge from a valley proportionally (and vice versa).</li>
-<li><span class="math inline"><em>d</em>(<em>A</em>, <em>B</em>) = 1</span> for orthogonal moves and <span class="math inline">$\sqrt{2}$</span> for diagonal moves, so longer edges cost proportionally more.</li>
+<li><span class="math inline">\(d(A, B) = 1\)</span> for orthogonal moves and <span class="math inline">\(\sqrt{2}\)</span> for diagonal moves, so longer edges cost proportionally more.</li>
 </ul>
 <h2 data-number="7.3" id="generating-synthetic-terrain"><span class="header-section-number">7.3</span> Generating Synthetic Terrain</h2>
 <ul>
 <li>The terrain is a superposition of sinusoidal waves at four octaves</li>
 <li>Each successive octave has half the amplitude and twice the spatial frequency of the previous, producing a fractal-like surface of ridges and valleys</li>
-<li>The result is normalised to <span class="math inline">[0, 1]</span> so that cost surface values are comparable regardless of the raw wave amplitudes</li>
+<li>The result is normalised to <span class="math inline">\([0, 1]\)</span> so that cost surface values are comparable regardless of the raw wave amplitudes</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="7.4" id="dijkstras-algorithm-on-a-grid"><span class="header-section-number">7.4</span> Dijkstra’s Algorithm on a Grid</h2>
@@ -132,7 +149,7 @@ Every consecutive pair of cells in the path must be 8-connected neighbors, i.e.,
 </dd>
 <dt>Flat terrain takes the diagonal</dt>
 <dd>
-On a uniform-elevation 5x5 grid, the cheapest route from <span class="math inline">(0, 0)</span> to <span class="math inline">(4, 4)</span> is the main diagonal (cost <span class="math inline">$4\sqrt{2} \approx 5.66$</span>) rather than the 8-step orthogonal route (cost 8.0), so the path must visit exactly 5 cells.
+On a uniform-elevation 5x5 grid, the cheapest route from <span class="math inline">\((0,0)\)</span> to <span class="math inline">\((4,4)\)</span> is the main diagonal (cost <span class="math inline">\(4\sqrt{2} \approx 5.66\)</span>) rather than the 8-step orthogonal route (cost 8.0), so the path must visit exactly 5 cells.
 </dd>
 <dt>Valley preferred over ridge</dt>
 <dd>
@@ -238,11 +255,11 @@ The route through a cost surface that minimises the total accumulated cost from 
 </dd>
 <dt>Dijkstra’s algorithm</dt>
 <dd>
-A graph search algorithm that finds shortest (or least-cost) paths from a source node to all other nodes by iteratively relaxing edges in order of increasing cost; runs in <span class="math inline"><em>O</em>((<em>V</em> + <em>E</em>)log <em>V</em>)</span> time with a binary heap
+A graph search algorithm that finds shortest (or least-cost) paths from a source node to all other nodes by iteratively relaxing edges in order of increasing cost; runs in <span class="math inline">\(O((V + E)\log V)\)</span> time with a binary heap
 </dd>
 <dt>Edge cost (terrain)</dt>
 <dd>
-The cost assigned to moving from one grid cell to an adjacent cell; computed here as the average of the two cells’ elevations times the step distance (<span class="math inline">1</span> for orthogonal, <span class="math inline">$\sqrt{2}$</span> for diagonal moves)
+The cost assigned to moving from one grid cell to an adjacent cell; computed here as the average of the two cells’ elevations times the step distance (<span class="math inline">\(1\)</span> for orthogonal, <span class="math inline">\(\sqrt{2}\)</span> for diagonal moves)
 </dd>
 </dl>
 </div>

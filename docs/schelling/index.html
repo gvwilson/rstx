@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Schelling Segregation Model</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -69,25 +86,25 @@ Wrong: random movement does not preserve spatial structure; systematic movement 
 </div>
 <h2 data-number="2.2" id="the-grid-and-neighbourhood"><span class="header-section-number">2.2</span> The Grid and Neighbourhood</h2>
 <ul>
-<li>The grid is an <span class="math inline"><em>N</em> × <em>N</em></span> array. Each cell holds one of three values: 0 (empty), 1 (red agent), or 2 (blue agent)</li>
+<li>The grid is an <span class="math inline">\(N \times N\)</span> array. Each cell holds one of three values: 0 (empty), 1 (red agent), or 2 (blue agent)</li>
 <li>The <a href="../glossary/index.html#moore_neighborhood">Moore neighbourhood</a> of a cell is the set of up to eight surrounding cells (horizontal, vertical, and diagonal)</li>
-<li>The same-neighbour fraction for an agent at position <span class="math inline">(<em>r</em>, <em>c</em>)</span> is:</li>
+<li>The same-neighbour fraction for an agent at position <span class="math inline">\((r, c)\)</span> is:</li>
 </ul>
-<p><span class="math display">$$f(r,c) = \frac{\text{occupied neighbours of the same type}}{\text{total occupied neighbours}}$$</span></p>
+<p><span class="math display">\[f(r,c) = \frac{\text{occupied neighbours of the same type}}{\text{total occupied neighbours}}\]</span></p>
 <ul>
-<li>An agent is satisfied when <span class="math inline"><em>f</em>(<em>r</em>, <em>c</em>) ≥ <em>θ</em></span>, where <span class="math inline"><em>θ</em></span> is the threshold</li>
-<li>An agent with no occupied neighbours is treated as satisfied (<span class="math inline"><em>f</em> = 1</span>) so that isolated agents do not drift endlessly across empty space</li>
+<li>An agent is satisfied when <span class="math inline">\(f(r,c) \geq \theta\)</span>, where <span class="math inline">\(\theta\)</span> is the threshold</li>
+<li>An agent with no occupied neighbours is treated as satisfied (<span class="math inline">\(f = 1\)</span>) so that isolated agents do not drift endlessly across empty space</li>
 </ul>
 <h2 data-number="2.3" id="initializing-the-grid"><span class="header-section-number">2.3</span> Initializing the Grid</h2>
 <ul>
-<li>Equal numbers of red and blue agents are placed at random in a fraction <span class="math inline">(1 − <em>p</em><sub><em>e</em></sub>)</span> of cells, where <span class="math inline"><em>p</em><sub><em>e</em></sub></span> is the empty fraction</li>
+<li>Equal numbers of red and blue agents are placed at random in a fraction <span class="math inline">\((1 - p_e)\)</span> of cells, where <span class="math inline">\(p_e\)</span> is the empty fraction</li>
 <li>The empty cells provide the vacancies that dissatisfied agents move into</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="2.4" id="computing-the-same-neighbour-fraction"><span class="header-section-number">2.4</span> Computing the Same-Neighbour Fraction</h2>
 <ul>
-<li>Iterating over the 8 relative offsets <span class="math inline">$(\Delta r, \Delta c) \in \{-1,0,1\}^2 \setminus \\{(0,0)\\}$</span> visits each neighbour exactly once</li>
-<li>Grid boundaries are handled by checking that the neighbour index lies within <span class="math inline">[0, <em>N</em>)</span></li>
+<li>Iterating over the 8 relative offsets <span class="math inline">\((\Delta r, \Delta c) \in \{-1,0,1\}^2 \setminus \{(0,0)\}\)</span> visits each neighbour exactly once</li>
+<li>Grid boundaries are handled by checking that the neighbour index lies within <span class="math inline">\([0, N)\)</span></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="2.5" id="one-simulation-step"><span class="header-section-number">2.5</span> One Simulation Step</h2>
@@ -141,7 +158,7 @@ Figure&nbsp;2.1: Grid state at steps 0, 5, 10, and 20 (GRID_SIZE=50, EMPTY_FRACT
 <ul>
 <li>Grid shape and contents
 <ul>
-<li><code>make_grid</code> must produce a <span class="math inline">(50 × 50)</span> array whose cells are all in <span class="math inline">{0, 1, 2}</span></li>
+<li><code>make_grid</code> must produce a <span class="math inline">\((50 \times 50)\)</span> array whose cells are all in <span class="math inline">\(\{0, 1, 2\}\)</span></li>
 </ul></li>
 <li>Balanced agent counts
 <ul>
@@ -155,8 +172,8 @@ Figure&nbsp;2.1: Grid state at steps 0, 5, 10, and 20 (GRID_SIZE=50, EMPTY_FRACT
 </ul></li>
 <li>Stable segregated grid
 <ul>
-<li>A <span class="math inline">4 × 4</span> grid with red in the left two columns and blue in the right two columns is fully satisfied</li>
-<li>Border agents have <span class="math inline">5/8 = 0.625</span> same-type neighbours which exceeds the threshold of 0.3</li>
+<li>A <span class="math inline">\(4 \times 4\)</span> grid with red in the left two columns and blue in the right two columns is fully satisfied</li>
+<li>Border agents have <span class="math inline">\(5/8 = 0.625\)</span> same-type neighbours which exceeds the threshold of 0.3</li>
 <li>One step must leave the grid unchanged</li>
 </ul></li>
 <li>Satisfaction increases
@@ -236,7 +253,7 @@ The set of up to 8 cells immediately surrounding a grid cell (horizontal, vertic
 </dd>
 <dt>Same-neighbour fraction</dt>
 <dd>
-<span class="math inline"><em>f</em> = same-type occupied neighbours/total occupied neighbours</span>; defined as 1.0 for isolated agents; an agent is satisfied when <span class="math inline"><em>f</em> ≥ <em>θ</em></span>
+<span class="math inline">\(f = \text{same-type occupied neighbours} / \text{total occupied neighbours}\)</span>; defined as 1.0 for isolated agents; an agent is satisfied when <span class="math inline">\(f \geq \theta\)</span>
 </dd>
 <dt>Satisfaction rate</dt>
 <dd>

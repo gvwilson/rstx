@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Wealth Inequality in an Exchange Economy</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -39,17 +56,17 @@
 <li>This is the central insight of agent-based models of exchange: inequality can emerge from random processes, not only from skill differences or deliberate exploitation.</li>
 <li>The <a href="../glossary/index.html#yardsale">model</a> works as follows:
 <ul>
-<li>Start with <span class="math inline"><em>N</em></span> agents, each holding 1 unit of wealth (total wealth <span class="math inline"> = <em>N</em></span>).</li>
+<li>Start with <span class="math inline">\(N\)</span> agents, each holding 1 unit of wealth (total wealth <span class="math inline">\(= N\)</span>).</li>
 <li>At each step, choose two agents at random; the poorer transfers a uniformly random fraction of their own wealth to the richer.</li>
 <li>Repeat for many steps and track the wealth distribution.</li>
 </ul></li>
 </ul>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>In the yardsale model, Agent A has 0.4 units and Agent B has 1.6 units. A fraction <span class="math inline"><em>f</em> = 0.25</span> is drawn. What is Agent A’s wealth after the exchange?</p>
+<p>In the yardsale model, Agent A has 0.4 units and Agent B has 1.6 units. A fraction <span class="math inline">\(f = 0.25\)</span> is drawn. What is Agent A’s wealth after the exchange?</p>
 <dl>
 <dt>0.3 units.</dt>
 <dd>
-Correct: Agent A is poorer, so A transfers <span class="math inline">0.25 × 0.4 = 0.1</span> units to B. <span class="math inline">0.4 − 0.1 = 0.3</span>.
+Correct: Agent A is poorer, so A transfers <span class="math inline">\(0.25 \times 0.4 = 0.1\)</span> units to B. <span class="math inline">\(0.4 - 0.1 = 0.3\)</span>.
 </dd>
 <dt>0.5 units.</dt>
 <dd>
@@ -67,36 +84,36 @@ Wrong: A is the poorer agent and must transfer wealth to B.
 </div>
 <h2 data-number="15.2" id="the-gini-coefficient"><span class="header-section-number">15.2</span> The Gini Coefficient</h2>
 <ul>
-<li>The <a href="../glossary/index.html#gini_coefficient">Gini coefficient</a> <span class="math inline"><em>G</em></span> is the most widely used scalar summary of inequality: it equals 0 for perfect equality and approaches 1 when all wealth is concentrated in one agent.</li>
+<li>The <a href="../glossary/index.html#gini_coefficient">Gini coefficient</a> <span class="math inline">\(G\)</span> is the most widely used scalar summary of inequality: it equals 0 for perfect equality and approaches 1 when all wealth is concentrated in one agent.</li>
 <li>It is defined as the mean absolute difference in wealth between all pairs, normalised by twice the mean wealth:</li>
 </ul>
-<p><span class="math display">$$G = \frac{\sum_i \sum_j |w_i - w_j|}{2\,n \sum_i w_i}$$</span></p>
+<p><span class="math display">\[G = \frac{\sum_i \sum_j |w_i - w_j|}{2\,n \sum_i w_i}\]</span></p>
 <ul>
-<li>Computing this directly requires <span class="math inline"><em>O</em>(<em>n</em><sup>2</sup>)</span> comparisons. Sorting the wealth array first reduces the cost to <span class="math inline"><em>O</em>(<em>n</em>log <em>n</em>)</span>: after sorting so that <span class="math inline"><em>w</em><sub>(1)</sub> ≤ <em>w</em><sub>(2)</sub> ≤ ⋯ ≤ <em>w</em><sub>(<em>n</em>)</sub></span>,</li>
+<li>Computing this directly requires <span class="math inline">\(O(n^2)\)</span> comparisons. Sorting the wealth array first reduces the cost to <span class="math inline">\(O(n \log n)\)</span>: after sorting so that <span class="math inline">\(w_{(1)} \leq w_{(2)} \leq \cdots \leq w_{(n)}\)</span>,</li>
 </ul>
-<p><span class="math display">$$G = \frac{2\sum_{i=1}^n i\,w_{(i)} - (n+1)\sum_i w_i}{n \sum_i w_i}$$</span></p>
+<p><span class="math display">\[G = \frac{2\sum_{i=1}^n i\,w_{(i)} - (n+1)\sum_i w_i}{n \sum_i w_i}\]</span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="15.3" id="the-exchange-simulation"><span class="header-section-number">15.3</span> The Exchange Simulation</h2>
 <ul>
 <li>The simulation records the Gini coefficient after every exchange so we can watch inequality grow from zero.</li>
-<li>A key invariant: total wealth <span class="math inline">∑<sub><em>i</em></sub><em>w</em><sub><em>i</em></sub> = <em>N</em></span> is conserved exactly at every step because each transfer moves wealth without creating or destroying it.</li>
+<li>A key invariant: total wealth <span class="math inline">\(\sum_i w_i = N\)</span> is conserved exactly at every step because each transfer moves wealth without creating or destroying it.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put the exchange steps in the correct order.</p>
 <ol type="1">
-<li>Choose two distinct agents <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> uniformly at random</li>
-<li>Identify the poorer agent (swap labels if necessary so <span class="math inline"><em>w</em><sub><em>i</em></sub> ≤ <em>w</em><sub><em>j</em></sub></span>)</li>
-<li>Draw fraction <span class="math inline"><em>f</em> ∼ Uniform(0, 1)</span></li>
-<li>Compute transfer <span class="math inline"><em>δ</em> = <em>f</em> ⋅ <em>w</em><sub><em>i</em></sub></span></li>
-<li>Update <span class="math inline"><em>w</em><sub><em>i</em></sub> ← <em>w</em><sub><em>i</em></sub> − <em>δ</em></span> and <span class="math inline"><em>w</em><sub><em>j</em></sub> ← <em>w</em><sub><em>j</em></sub> + <em>δ</em></span></li>
+<li>Choose two distinct agents <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> uniformly at random</li>
+<li>Identify the poorer agent (swap labels if necessary so <span class="math inline">\(w_i \leq w_j\)</span>)</li>
+<li>Draw fraction <span class="math inline">\(f \sim \text{Uniform}(0, 1)\)</span></li>
+<li>Compute transfer <span class="math inline">\(\delta = f \cdot w_i\)</span></li>
+<li>Update <span class="math inline">\(w_i \leftarrow w_i - \delta\)</span> and <span class="math inline">\(w_j \leftarrow w_j + \delta\)</span></li>
 </ol>
 </div>
 <h2 data-number="15.4" id="the-lorenz-curve"><span class="header-section-number">15.4</span> The Lorenz Curve</h2>
 <ul>
 <li>The <a href="../glossary/index.html#lorenz_curve">Lorenz curve</a> gives a visual picture of the whole distribution, not just a single number.</li>
-<li>Sort agents by wealth ascending; the curve plots the cumulative fraction of total wealth held by the bottom <span class="math inline"><em>x</em></span> fraction of the population.</li>
-<li>Perfect equality produces the 45-degree line <span class="math inline"><em>y</em> = <em>x</em></span>. Any inequality bows the curve below that line.</li>
+<li>Sort agents by wealth ascending; the curve plots the cumulative fraction of total wealth held by the bottom <span class="math inline">\(x\)</span> fraction of the population.</li>
+<li>Perfect equality produces the 45-degree line <span class="math inline">\(y = x\)</span>. Any inequality bows the curve below that line.</li>
 <li>The Gini coefficient equals twice the area between the Lorenz curve and the equality line.</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -112,7 +129,7 @@ Figure&nbsp;15.1: Lorenz curve after 2000 exchanges with 200 agents (seed 749341
 </figure>
 </div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>In a Lorenz curve, the point <span class="math inline">(0.5, 0.2)</span> means:</p>
+<p>In a Lorenz curve, the point <span class="math inline">\((0.5,\; 0.2)\)</span> means:</p>
 <dl>
 <dt>The wealthiest 50% of agents hold 20% of total wealth.</dt>
 <dd>
@@ -128,7 +145,7 @@ Wrong: the axes represent cumulative fractions, not individual shares.
 </dd>
 <dt>The Gini coefficient equals 0.2.</dt>
 <dd>
-Wrong: the Gini is twice the area between the Lorenz curve and the diagonal, not the <span class="math inline"><em>y</em></span>-value at <span class="math inline"><em>x</em> = 0.5</span>.
+Wrong: the Gini is twice the area between the Lorenz curve and the diagonal, not the <span class="math inline">\(y\)</span>-value at <span class="math inline">\(x = 0.5\)</span>.
 </dd>
 </dl>
 </div>
@@ -153,11 +170,11 @@ Figure&nbsp;15.2: Gini coefficient over 2000 pairwise exchanges with 200 agents.
 <dl>
 <dt>Equal-distribution baseline</dt>
 <dd>
-<code>gini(np.ones(n))</code> must return exactly 0.0 for any <span class="math inline"><em>n</em></span>. Analytically: substituting <span class="math inline"><em>w</em><sub>(<em>i</em>)</sub> = 1</span> gives <span class="math inline">2<em>n</em>(<em>n</em> + 1)/2 − (<em>n</em> + 1)<em>n</em> = 0</span> in the numerator.
+<code>gini(np.ones(n))</code> must return exactly 0.0 for any <span class="math inline">\(n\)</span>. Analytically: substituting <span class="math inline">\(w_{(i)} = 1\)</span> gives <span class="math inline">\(2n(n+1)/2 - (n+1)n = 0\)</span> in the numerator.
 </dd>
 <dt>Perfect-inequality limit</dt>
 <dd>
-When one agent holds all wealth, the formula gives <span class="math inline">(<em>n</em> − 1)/<em>n</em></span>. For <span class="math inline"><em>n</em> = 10</span>: <span class="math inline"><em>G</em> = 0.9</span>, which approaches 1 as <span class="math inline"><em>n</em> → ∞</span>, confirming the coefficient never quite reaches 1 for any finite population.
+When one agent holds all wealth, the formula gives <span class="math inline">\((n-1)/n\)</span>. For <span class="math inline">\(n = 10\)</span>: <span class="math inline">\(G = 0.9\)</span>, which approaches 1 as <span class="math inline">\(n \to \infty\)</span>, confirming the coefficient never quite reaches 1 for any finite population.
 </dd>
 <dt>Gini stays in [0, 1]</dt>
 <dd>
@@ -165,7 +182,7 @@ Wealth is non-negative and total wealth is conserved, so the formula is always w
 </dd>
 <dt>Total wealth conserved</dt>
 <dd>
-The sum of all agent wealths must equal <span class="math inline"><em>N</em></span> to within floating-point rounding throughout the full simulation.
+The sum of all agent wealths must equal <span class="math inline">\(N\)</span> to within floating-point rounding throughout the full simulation.
 </dd>
 <dt>Gini rises from zero</dt>
 <dd>
@@ -209,13 +226,13 @@ Starting from equal wealth (Gini = 0), the simulation must produce substantial i
 <div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Wealth inequality key terms</p>
 <dl>
-<dt>Gini coefficient <span class="math inline"><em>G</em></span></dt>
+<dt>Gini coefficient <span class="math inline">\(G\)</span></dt>
 <dd>
-<span class="math inline">(2∑<em>i</em> <em>w</em><sub>(<em>i</em>)</sub> − (<em>n</em> + 1)∑<em>w</em>)/(<em>n</em>∑<em>w</em>)</span> for sorted wealth; 0 for perfect equality, <span class="math inline">(<em>n</em> − 1)/<em>n</em></span> when all wealth is held by one agent
+<span class="math inline">\((2\sum i\,w_{(i)} - (n+1)\sum w) / (n\sum w)\)</span> for sorted wealth; 0 for perfect equality, <span class="math inline">\((n-1)/n\)</span> when all wealth is held by one agent
 </dd>
 <dt>Lorenz curve</dt>
 <dd>
-Plot of cumulative wealth fraction vs.&nbsp;cumulative population fraction, both sorted from poorest to richest; the area between the curve and the 45-degree line equals <span class="math inline"><em>G</em>/2</span>
+Plot of cumulative wealth fraction vs.&nbsp;cumulative population fraction, both sorted from poorest to richest; the area between the curve and the 45-degree line equals <span class="math inline">\(G/2\)</span>
 </dd>
 <dt>Agent-based model</dt>
 <dd>
@@ -227,18 +244,18 @@ Random exchange rule in which the poorer agent transfers a random fraction of th
 </dd>
 <dt>Wealth conservation invariant</dt>
 <dd>
-<span class="math inline">∑<sub><em>i</em></sub><em>w</em><sub><em>i</em></sub> = <em>N</em></span> at every step; a transfer <span class="math inline"><em>δ</em></span> from agent <span class="math inline"><em>i</em></span> to <span class="math inline"><em>j</em></span> subtracts <span class="math inline"><em>δ</em></span> from <span class="math inline"><em>w</em><sub><em>i</em></sub></span> and adds <span class="math inline"><em>δ</em></span> to <span class="math inline"><em>w</em><sub><em>j</em></sub></span>, leaving the total unchanged
+<span class="math inline">\(\sum_i w_i = N\)</span> at every step; a transfer <span class="math inline">\(\delta\)</span> from agent <span class="math inline">\(i\)</span> to <span class="math inline">\(j\)</span> subtracts <span class="math inline">\(\delta\)</span> from <span class="math inline">\(w_i\)</span> and adds <span class="math inline">\(\delta\)</span> to <span class="math inline">\(w_j\)</span>, leaving the total unchanged
 </dd>
 </dl>
 </div>
 <section class="exercises">
 <h2 data-number="15.7" id="exercises"><span class="header-section-number">15.7</span> Exercises</h2>
 <h3 data-number="15.7.1" id="do-the-math"><span class="header-section-number">15.7.1</span> Do the math</h3>
-<p>Three agents hold 1, 1, and 1 unit of wealth respectively. Using the formula <span class="math inline"><em>G</em> = (2∑<em>i</em> <em>w</em><sub>(<em>i</em>)</sub> − (<em>n</em> + 1)∑<em>w</em>)/(<em>n</em>∑<em>w</em>)</span> with <span class="math inline"><em>n</em> = 3</span>, compute the Gini coefficient.</p>
+<p>Three agents hold 1, 1, and 1 unit of wealth respectively. Using the formula <span class="math inline">\(G = (2\sum i\,w_{(i)} - (n+1)\sum w) / (n\sum w)\)</span> with <span class="math inline">\(n=3\)</span>, compute the Gini coefficient.</p>
 <h3 data-number="15.7.2" id="theoretical-steady-state-gini"><span class="header-section-number">15.7.2</span> Theoretical steady-state Gini</h3>
-<p>For an exponential distribution with rate <span class="math inline"><em>λ</em></span>, all agents draw wealth <span class="math inline"><em>w</em> ∼ Exp(<em>λ</em>)</span> independently. Show algebraically that the Gini coefficient of this distribution is exactly 0.5. (Hint: use the formula <span class="math inline"><em>G</em> = 1 − 2∫<sub>0</sub><sup>∞</sup><em>S</em>(<em>w</em>)<sup>2</sup> <em>d</em><em>w</em>/E[<em>W</em>]</span> where <span class="math inline"><em>S</em>(<em>w</em>) = <em>e</em><sup>−<em>λ</em><em>w</em></sup></span> is the survival function.)</p>
-<h3 data-number="15.7.3" id="convergence-as-a-function-of-n"><span class="header-section-number">15.7.3</span> Convergence as a function of <span class="math inline"><em>N</em></span></h3>
-<p>Run the simulation with 50, 200, and 1000 agents for 10 000 steps each and plot the final Gini as a function of <span class="math inline"><em>N</em></span>. Does the steady-state Gini depend on the population size, or does it converge to the same value regardless of <span class="math inline"><em>N</em></span>?</p>
+<p>For an exponential distribution with rate <span class="math inline">\(\lambda\)</span>, all agents draw wealth <span class="math inline">\(w \sim \text{Exp}(\lambda)\)</span> independently. Show algebraically that the Gini coefficient of this distribution is exactly 0.5. (Hint: use the formula <span class="math inline">\(G = 1 - 2\int_0^\infty S(w)^2 \, dw / \text{E}[W]\)</span> where <span class="math inline">\(S(w) = e^{-\lambda w}\)</span> is the survival function.)</p>
+<h3 data-number="15.7.3" id="convergence-as-a-function-of-n"><span class="header-section-number">15.7.3</span> Convergence as a function of <span class="math inline">\(N\)</span></h3>
+<p>Run the simulation with 50, 200, and 1000 agents for 10 000 steps each and plot the final Gini as a function of <span class="math inline">\(N\)</span>. Does the steady-state Gini depend on the population size, or does it converge to the same value regardless of <span class="math inline">\(N\)</span>?</p>
 <h3 data-number="15.7.4" id="redistribution-policy"><span class="header-section-number">15.7.4</span> Redistribution policy</h3>
 <p>Add a “redistribution step” every 100 exchanges: take 10% of the total wealth held by the top decile (wealthiest 10% of agents) and distribute it equally to all agents. How does this change the trajectory and steady-state Gini?</p>
 <h3 data-number="15.7.5" id="symmetric-exchange-rule"><span class="header-section-number">15.7.5</span> Symmetric exchange rule</h3>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Exoplanet Detection via Radial Velocity</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -44,14 +61,14 @@
 <ul>
 <li>The velocity of the star along the line of sight varies as:</li>
 </ul>
-<p><span class="math display">$$v(t) = K \sin\!\left(\frac{2\pi t}{P} + \phi\right) + v_\text{sys}$$</span></p>
+<p><span class="math display">\[v(t) = K \sin\!\left(\frac{2\pi t}{P} + \phi\right) + v_\text{sys}\]</span></p>
 <ul>
-<li><span class="math inline"><em>K</em></span> is the <a href="../glossary/index.html#semi_amplitude">semi-amplitude</a> (m/s), <span class="math inline"><em>P</em></span> the orbital period (days), <span class="math inline"><em>ϕ</em></span> the phase, and <span class="math inline"><em>v</em><sub>sys</sub></span> the systemic (centre-of-mass) velocity</li>
+<li><span class="math inline">\(K\)</span> is the <a href="../glossary/index.html#semi_amplitude">semi-amplitude</a> (m/s), <span class="math inline">\(P\)</span> the orbital period (days), <span class="math inline">\(\phi\)</span> the phase, and <span class="math inline">\(v_\text{sys}\)</span> the systemic (centre-of-mass) velocity</li>
 <li>For a circular orbit the semi-amplitude is related to the planet mass by:</li>
 </ul>
-<p><span class="math display">$$K = \left(\frac{2\pi G}{P}\right)^{1/3} \frac{M_p \sin i}{(M_\star + M_p)^{2/3}}$$</span></p>
+<p><span class="math display">\[K = \left(\frac{2\pi G}{P}\right)^{1/3} \frac{M_p \sin i}{(M_\star + M_p)^{2/3}}\]</span></p>
 <ul>
-<li>Because only <span class="math inline"><em>M</em><sub><em>p</em></sub>sin <em>i</em></span> appears in the formula, the RV method gives a minimum planet mass; the true mass requires an independent inclination measurement.</li>
+<li>Because only <span class="math inline">\(M_p \sin i\)</span> appears in the formula, the RV method gives a minimum planet mass; the true mass requires an independent inclination measurement.</li>
 </ul>
 <h2 data-number="28.3" id="generating-synthetic-observations"><span class="header-section-number">28.3</span> Generating Synthetic Observations</h2>
 <ul>
@@ -64,7 +81,7 @@
 <li>The one-sigma uncertainties are the square roots of the diagonal entries of the covariance matrix</li>
 <li>Initial guesses are derived from the data without assuming knowledge of the true parameters
 <ul>
-<li>The amplitude guess uses the fact that the standard deviation of a sinusoid equals <span class="math inline">$K / \sqrt{2}$</span></li>
+<li>The amplitude guess uses the fact that the standard deviation of a sinusoid equals <span class="math inline">\(K / \sqrt{2}\)</span></li>
 <li>The period guess assumes roughly three cycles are visible in the baseline</li>
 </ul></li>
 </ul>
@@ -84,12 +101,12 @@
 </thead>
 <tbody>
 <tr class="odd">
-<td><code>amp_guess</code> = std(rv) <span class="math inline">$\times \sqrt{2}$</span></td>
+<td><code>amp_guess</code> = std(rv) <span class="math inline">\(\times \sqrt{2}\)</span></td>
 <td>The time-average of a zero-mean sinusoid is zero</td>
 </tr>
 <tr class="even">
-<td><code>period_guess</code> = <span class="math inline">(<em>t</em><sub>max</sub> − <em>t</em><sub>min</sub>)/3</span></td>
-<td>The std dev of a sinusoid with amplitude K is <span class="math inline">$K / \sqrt{2}$</span></td>
+<td><code>period_guess</code> = <span class="math inline">\((t_\text{max} - t_\text{min}) / 3\)</span></td>
+<td>The std dev of a sinusoid with amplitude K is <span class="math inline">\(K / \sqrt{2}\)</span></td>
 </tr>
 <tr class="odd">
 <td><code>v_sys_guess</code> = mean(rv)</td>
@@ -119,23 +136,23 @@ Figure&nbsp;28.1: Fifty synthetic observations (noise 10 m/s) with the best-fit 
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>The pure-noise fit returns K = 2.4 m/s with uncertainty <span class="math inline"><em>σ</em><sub><em>K</em></sub> = 2.2</span> m/s, so <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em> = 0.92</span>. What does this mean?</p>
+<p>The pure-noise fit returns K = 2.4 m/s with uncertainty <span class="math inline">\(\sigma_K = 2.2\)</span> m/s, so <span class="math inline">\(\sigma_K / K = 0.92\)</span>. What does this mean?</p>
 <dl>
 <dt>The planet has a very small semi-amplitude and is marginally detectable</dt>
 <dd>
-Wrong: <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em> = 0.92</span> means the uncertainty is nearly as large as the value itself — the signal is consistent with zero, not merely small.
+Wrong: <span class="math inline">\(\sigma_K / K = 0.92\)</span> means the uncertainty is nearly as large as the value itself — the signal is consistent with zero, not merely small.
 </dd>
 <dt>The fit converged to a local minimum far from the true parameters</dt>
 <dd>
-Wrong: convergence quality is a separate issue; <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em></span> measures statistical significance of the result, not convergence.
+Wrong: convergence quality is a separate issue; <span class="math inline">\(\sigma_K / K\)</span> measures statistical significance of the result, not convergence.
 </dd>
 <dt>The fitted amplitude is indistinguishable from zero — no planet is detected</dt>
 <dd>
-Correct: a fractional uncertainty above 0.5 means the fitted amplitude is less than <span class="math inline">2<em>σ</em></span> from zero, so the detection is not statistically significant.
+Correct: a fractional uncertainty above 0.5 means the fitted amplitude is less than <span class="math inline">\(2\sigma\)</span> from zero, so the detection is not statistically significant.
 </dd>
 <dt>The noise level is 92% of the signal, so the planet is weakly detected</dt>
 <dd>
-Wrong: <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em></span> compares the uncertainty to the fitted value, not the noise to the true signal amplitude.
+Wrong: <span class="math inline">\(\sigma_K / K\)</span> compares the uncertainty to the fitted value, not the noise to the true signal amplitude.
 </dd>
 </dl>
 </div>
@@ -150,21 +167,21 @@ Figure&nbsp;28.2: Fitting a sinusoid to pure noise (no planet signal). Fitted: K
 </figure>
 </div>
 <ul>
-<li>The fractional amplitude uncertainty <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em></span> is a quick significance diagnostic:
+<li>The fractional amplitude uncertainty <span class="math inline">\(\sigma_K / K\)</span> is a quick significance diagnostic:
 <ul>
-<li><span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em> &lt; 0.1</span>: strong detection</li>
-<li><span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em> &gt; 0.5</span>: non-detection</li>
+<li><span class="math inline">\(\sigma_K / K &lt; 0.1\)</span>: strong detection</li>
+<li><span class="math inline">\(\sigma_K / K &gt; 0.5\)</span>: non-detection</li>
 </ul></li>
 </ul>
 <h2 data-number="28.6" id="testing"><span class="header-section-number">28.6</span> Testing</h2>
 <dl>
 <dt>Model values</dt>
 <dd>
-At <span class="math inline"><em>t</em> = 0</span> and <span class="math inline"><em>ϕ</em> = 0</span> the model reduces to <span class="math inline"><em>v</em><sub>sys</sub></span>. At <span class="math inline"><em>t</em> = <em>P</em>/4</span> it reaches <span class="math inline"><em>K</em> + <em>v</em><sub>sys</sub></span>. Checking known exact values guards against sign errors in the sine argument.
+At <span class="math inline">\(t = 0\)</span> and <span class="math inline">\(\phi = 0\)</span> the model reduces to <span class="math inline">\(v_\text{sys}\)</span>. At <span class="math inline">\(t = P/4\)</span> it reaches <span class="math inline">\(K + v_\text{sys}\)</span>. Checking known exact values guards against sign errors in the sine argument.
 </dd>
 <dt>Periodicity</dt>
 <dd>
-Adding one full period to <span class="math inline"><em>t</em></span> must return the same velocity. This is a pure algebraic property of the model and requires no tolerance.
+Adding one full period to <span class="math inline">\(t\)</span> must return the same velocity. This is a pure algebraic property of the model and requires no tolerance.
 </dd>
 <dt>Noise-free recovery</dt>
 <dd>
@@ -236,13 +253,13 @@ A fractional amplitude uncertainty above 0.5 means the fitted amplitude is not d
 <dl>
 <dt>Semi-amplitude K</dt>
 <dd>
-The maximum radial velocity of the star due to gravitational pull from the planet (m/s) Systemic velocity <span class="math inline"><em>v</em><sub>sys</sub></span>
+The maximum radial velocity of the star due to gravitational pull from the planet (m/s) Systemic velocity <span class="math inline">\(v_\text{sys}\)</span>
 </dd>
 <dd>
-The centre-of-mass velocity of the star-planet system along the line of sight; a constant offset in the RV signal Minimum planet mass <span class="math inline"><em>M</em><sub><em>p</em></sub>sin <em>i</em></span>
+The centre-of-mass velocity of the star-planet system along the line of sight; a constant offset in the RV signal Minimum planet mass <span class="math inline">\(M_p \sin i\)</span>
 </dd>
 <dd>
-The RV method cannot determine orbital inclination i, so it gives only a lower bound on the true planet mass Fractional amplitude uncertainty <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em></span>
+The RV method cannot determine orbital inclination i, so it gives only a lower bound on the true planet mass Fractional amplitude uncertainty <span class="math inline">\(\sigma_K / K\)</span>
 </dd>
 <dd>
 Values above 0.5 indicate a non-detection: the fitted amplitude is consistent with zero at the 2-sigma level <a href="../glossary/index.html#lomb_scargle">Lomb-Scargle periodogram</a>
@@ -255,17 +272,17 @@ A method for finding periodic signals in unevenly sampled time series without re
 <section class="exercises">
 <h2 data-number="28.7" id="exercises"><span class="header-section-number">28.7</span> Exercises</h2>
 <h3 data-number="28.7.1" id="do-the-math"><span class="header-section-number">28.7.1</span> Do the math</h3>
-<p>Using <span class="math inline"><em>v</em>(<em>t</em>) = <em>K</em>sin (2<em>π</em><em>t</em>/<em>P</em> + <em>φ</em>) + <em>v</em><sub>sys</sub></span> with <span class="math inline"><em>K</em> = 50</span> m/s, <span class="math inline"><em>P</em> = 10</span> days, <span class="math inline"><em>φ</em> = 0</span>, <span class="math inline"><em>v</em><sub>sys</sub> = 0</span>, what is <span class="math inline"><em>v</em>(2.5)</span>? Give your answer in m/s.</p>
+<p>Using <span class="math inline">\(v(t) = K \sin(2\pi t / P + \varphi) + v_\text{sys}\)</span> with <span class="math inline">\(K = 50\)</span> m/s, <span class="math inline">\(P = 10\)</span> days, <span class="math inline">\(\varphi = 0\)</span>, <span class="math inline">\(v_\text{sys} = 0\)</span>, what is <span class="math inline">\(v(2.5)\)</span>? Give your answer in m/s.</p>
 <h3 data-number="28.7.2" id="lomb-scargle-periodogram"><span class="header-section-number">28.7.2</span> Lomb-Scargle periodogram</h3>
 <p><code>scipy.optimize.curve_fit</code> requires a period initial guess; a poor guess may converge to a wrong local minimum. The Lomb-Scargle periodogram finds periodic signals in unevenly sampled data without an initial guess. Use <code>scipy.signal.lombscargle</code> to compute the power spectrum of the synthetic RV data, identify the peak frequency, and use it as the initial period estimate for <code>curve_fit</code>. Show that this two-step approach still recovers the correct period when the single-step approach fails (try a very different initial guess to trigger failure).</p>
 <h3 data-number="28.7.3" id="eccentric-orbit"><span class="header-section-number">28.7.3</span> Eccentric orbit</h3>
 <p>A circular orbit produces a pure sinusoid, but most real exoplanets have eccentric orbits. Replace the model with:</p>
-<p><span class="math display"><em>v</em>(<em>t</em>) = <em>K</em>[cos (<em>ω</em> + <em>ν</em>(<em>t</em>)) + <em>e</em>cos <em>ω</em>] + <em>v</em><sub>sys</sub></span></p>
-<p>where <span class="math inline"><em>e</em></span> is the eccentricity, <span class="math inline"><em>ω</em></span> the argument of periapsis, and <span class="math inline"><em>ν</em>(<em>t</em>)</span> the true anomaly (obtained by solving Kepler’s equation numerically). Generate data with <span class="math inline"><em>e</em> = 0.3</span> and show that fitting a pure sinusoid to it yields a systematically biased period estimate.</p>
+<p><span class="math display">\[v(t) = K [\cos(\omega + \nu(t)) + e \cos\omega] + v_\text{sys}\]</span></p>
+<p>where <span class="math inline">\(e\)</span> is the eccentricity, <span class="math inline">\(\omega\)</span> the argument of periapsis, and <span class="math inline">\(\nu(t)\)</span> the true anomaly (obtained by solving Kepler’s equation numerically). Generate data with <span class="math inline">\(e = 0.3\)</span> and show that fitting a pure sinusoid to it yields a systematically biased period estimate.</p>
 <h3 data-number="28.7.4" id="multiple-planets"><span class="header-section-number">28.7.4</span> Multiple planets</h3>
 <p>Extend <code>make_rv_data</code> to superpose signals from two planets with different periods. Show that <code>fit_sinusoid</code> (single-planet model) fails to recover either period correctly, then fit a two-planet model and demonstrate clean recovery.</p>
 <h3 data-number="28.7.5" id="detection-threshold"><span class="header-section-number">28.7.5</span> Detection threshold</h3>
-<p>Generate 200 data sets for each of ten noise levels from 2 to 50 m/s. For each data set, run <code>fit_sinusoid</code> and classify the result as a detection when <span class="math inline"><em>σ</em><sub><em>K</em></sub>/<em>K</em> &lt; 0.1</span>. Plot the detection fraction as a function of noise level and identify the noise floor at which detection drops below 50%.</p>
+<p>Generate 200 data sets for each of ten noise levels from 2 to 50 m/s. For each data set, run <code>fit_sinusoid</code> and classify the result as a detection when <span class="math inline">\(\sigma_K / K &lt; 0.1\)</span>. Plot the detection fraction as a function of noise level and identify the noise floor at which detection drops below 50%.</p>
 </section>
 
 </main>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Manuscript Stemma Reconstruction</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -75,7 +92,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 <li>We represent each manuscript as a binary sequence: 0 if the reading at a locus matches the <a href="../glossary/index.html#archetype">archetype</a>, 1 if it has been corrupted.</li>
 <li>The Hamming distance between two manuscripts is the fraction of loci where they disagree:</li>
 </ul>
-<p><span class="math display">$$D(A, B) = \frac{\text{number of loci where } A \neq B}{\text{total loci}}$$</span></p>
+<p><span class="math display">\[D(A, B) = \frac{\text{number of loci where } A \neq B}{\text{total loci}}\]</span></p>
 <ul>
 <li>Manuscripts that share a common intermediate ancestor will have a smaller Hamming distance to each other than to manuscripts from a different family, because they share inherited variants in addition to their unique ones.</li>
 </ul>
@@ -83,7 +100,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 <ul>
 <li>The reference stemma is:</li>
 </ul>
-<p><span class="math display">((<em>A</em> : 0.05,&nbsp;<em>B</em> : 0.03) : 0.07,&nbsp;(<em>C</em> : 0.06,&nbsp;<em>D</em> : 0.04) : 0.05)</span></p>
+<p><span class="math display">\[((A:0.05,\ B:0.03):0.07,\ (C:0.06,\ D:0.04):0.05)\]</span></p>
 <ul>
 <li>Manuscripts A and B share intermediate ancestor alpha, which is separated from the archetype by 0.07. C and D share beta, separated from the archetype by 0.05.</li>
 <li>Pairwise distances are sums of branch lengths along the path between each pair.</li>
@@ -128,22 +145,22 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 <li>UPGMA (Unweighted Pair-Group Method with Arithmetic means) builds a rooted tree by iteratively merging the pair of nodes with the smallest pairwise distance.</li>
 <li>At each step:
 <ul>
-<li>Find the pair <span class="math inline">(<em>i</em>, <em>j</em>)</span> with the smallest <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)</span>.</li>
-<li>Create an internal node <span class="math inline"><em>u</em></span>. Each branch from <span class="math inline"><em>u</em></span> has length <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)/2</span>:</li>
+<li>Find the pair <span class="math inline">\((i, j)\)</span> with the smallest <span class="math inline">\(D(i,j)\)</span>.</li>
+<li>Create an internal node <span class="math inline">\(u\)</span>. Each branch from <span class="math inline">\(u\)</span> has length <span class="math inline">\(D(i,j)/2\)</span>:</li>
 </ul></li>
 </ul>
-<p><span class="math display">$$\ell_i = \ell_j = \frac{D(i,j)}{2}$$</span></p>
+<p><span class="math display">\[\ell_i = \ell_j = \frac{D(i,j)}{2}\]</span></p>
 <ul>
-<li>Replace <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> with <span class="math inline"><em>u</em></span>. Distance from <span class="math inline"><em>u</em></span> to any remaining taxon <span class="math inline"><em>k</em></span> is the average:</li>
+<li>Replace <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with <span class="math inline">\(u\)</span>. Distance from <span class="math inline">\(u\)</span> to any remaining taxon <span class="math inline">\(k\)</span> is the average:</li>
 </ul>
-<p><span class="math display">$$D(u,k) = \frac{D(i,k) + D(j,k)}{2}$$</span></p>
+<p><span class="math display">\[D(u,k) = \frac{D(i,k) + D(j,k)}{2}\]</span></p>
 <ul>
 <li>Repeat until two nodes remain, then join them with an edge equal to the remaining distance.</li>
 <li>UPGMA assumes a constant rate of scribal error across all manuscripts (analogous to the molecular clock in phylogenetics). The neighbor-joining algorithm relaxes this assumption but requires more advanced mathematics.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="10.5" id="a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</h2>
-<p>Starting with <span class="math inline"><em>n</em> = 4</span> manuscripts and the distances from the reference stemma:</p>
+<p>Starting with <span class="math inline">\(n = 4\)</span> manuscripts and the distances from the reference stemma:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -185,9 +202,9 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tr>
 </tbody>
 </table>
-<p>Step 1: the minimum distance is <span class="math inline"><em>D</em>(<em>A</em>, <em>B</em>) = 0.08</span>. Merge A and B into node4. Branch lengths: <span class="math inline"><em>ℓ</em><sub><em>A</em></sub> = <em>ℓ</em><sub><em>B</em></sub> = 0.08/2 = 0.04</span>. Update the matrix using the UPGMA averaging rule:</p>
-<p><span class="math display">$$D(\text{node4}, C) = \frac{0.23 + 0.21}{2} = 0.22$$</span> <span class="math display">$$D(\text{node4}, D) = \frac{0.21 + 0.19}{2} = 0.20$$</span></p>
-<p>The <span class="math inline">3 × 3</span> matrix after step 1:</p>
+<p>Step 1: the minimum distance is <span class="math inline">\(D(A,B) = 0.08\)</span>. Merge A and B into node4. Branch lengths: <span class="math inline">\(\ell_A = \ell_B = 0.08/2 = 0.04\)</span>. Update the matrix using the UPGMA averaging rule:</p>
+<p><span class="math display">\[D(\text{node4}, C) = \frac{0.23 + 0.21}{2} = 0.22\]</span> <span class="math display">\[D(\text{node4}, D) = \frac{0.21 + 0.19}{2} = 0.20\]</span></p>
+<p>The <span class="math inline">\(3 \times 3\)</span> matrix after step 1:</p>
 <table class="caption-top">
 <thead>
 <tr class="header">
@@ -218,9 +235,9 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tr>
 </tbody>
 </table>
-<p>Step 2: the minimum distance is <span class="math inline"><em>D</em>(<em>C</em>, <em>D</em>) = 0.10</span>. Merge C and D into node5. Branch lengths: <span class="math inline"><em>ℓ</em><sub><em>C</em></sub> = <em>ℓ</em><sub><em>D</em></sub> = 0.10/2 = 0.05</span>. Update:</p>
-<p><span class="math display">$$D(\text{node4}, \text{node5}) = \frac{0.22 + 0.20}{2} = 0.21$$</span></p>
-<p>Step 3: two nodes remain (node4 and node5). Join them with the remaining edge of length <span class="math inline">0.21</span>.</p>
+<p>Step 2: the minimum distance is <span class="math inline">\(D(C,D) = 0.10\)</span>. Merge C and D into node5. Branch lengths: <span class="math inline">\(\ell_C = \ell_D = 0.10/2 = 0.05\)</span>. Update:</p>
+<p><span class="math display">\[D(\text{node4}, \text{node5}) = \frac{0.22 + 0.20}{2} = 0.21\]</span></p>
+<p>Step 3: two nodes remain (node4 and node5). Join them with the remaining edge of length <span class="math inline">\(0.21\)</span>.</p>
 <p>The recovered edges are:</p>
 <table class="caption-top">
 <thead>
@@ -311,7 +328,7 @@ Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example
 <li>Branch-length recovery
 <ul>
 <li>With the reference distances, UPGMA assigns branch length 0.04 to each of the A and B edges (half of 0.08), 0.05 to each of the C and D edges (half of 0.10), and 0.21 to the internal edge.</li>
-<li>Tolerance <span class="math inline">10<sup>−10</sup></span> covers only accumulated floating-point rounding.</li>
+<li>Tolerance <span class="math inline">\(10^{-10}\)</span> covers only accumulated floating-point rounding.</li>
 </ul></li>
 <li>All lengths positive
 <ul>
@@ -475,14 +492,14 @@ Unweighted Pair-Group Method with Arithmetic means; a clustering algorithm that 
 <h3 data-number="10.10.1" id="do-the-math"><span class="header-section-number">10.10.1</span> Do the math</h3>
 <ol type="1">
 <li><p>Two manuscripts each have 100 variant loci. Manuscript A differs from the archetype at loci 1–10 and 21–30. Manuscript B differs from the archetype at loci 1–10 and 41–55. What is the Hamming distance between A and B?</p></li>
-<li><p>After merging A and B into node4 in the first UPGMA step, <span class="math inline"><em>D</em>(<em>A</em>, <em>C</em>) = 0.23</span> and <span class="math inline"><em>D</em>(<em>B</em>, <em>C</em>) = 0.21</span>. Using the UPGMA averaging rule <span class="math inline"><em>D</em>(node4, <em>C</em>) = (<em>D</em>(<em>A</em>, <em>C</em>) + <em>D</em>(<em>B</em>, <em>C</em>))/2</span>, what is <span class="math inline"><em>D</em>(node4, <em>C</em>)</span>?</p></li>
+<li><p>After merging A and B into node4 in the first UPGMA step, <span class="math inline">\(D(A, C) = 0.23\)</span> and <span class="math inline">\(D(B, C) = 0.21\)</span>. Using the UPGMA averaging rule <span class="math inline">\(D(\text{node4}, C) = (D(A,C) + D(B,C)) / 2\)</span>, what is <span class="math inline">\(D(\text{node4}, C)\)</span>?</p></li>
 </ol>
 <h3 data-number="10.10.2" id="hamming-distance-from-manuscript-sequences"><span class="header-section-number">10.10.2</span> Hamming distance from manuscript sequences</h3>
-<p>The <code>generate_stemma</code> module produces actual sequences, not just distances. Write <code>build_distance_matrix(mss)</code> that accepts the dict returned by <code>make_manuscripts</code> and computes the full <span class="math inline">4 × 4</span> Hamming distance matrix. Run UPGMA on this matrix and compare the recovered topology to the one from <code>make_distance_matrix</code>. Do the stochastic distances give the same grouping?</p>
+<p>The <code>generate_stemma</code> module produces actual sequences, not just distances. Write <code>build_distance_matrix(mss)</code> that accepts the dict returned by <code>make_manuscripts</code> and computes the full <span class="math inline">\(4 \times 4\)</span> Hamming distance matrix. Run UPGMA on this matrix and compare the recovered topology to the one from <code>make_distance_matrix</code>. Do the stochastic distances give the same grouping?</p>
 <h3 data-number="10.10.3" id="effect-of-mutation-rate"><span class="header-section-number">10.10.3</span> Effect of mutation rate</h3>
 <p>Re-run <code>make_manuscripts</code> with <code>mutation_prob</code> values of 0.01, 0.05, 0.10, and 0.20. For each rate, compute the distance matrix and check whether UPGMA recovers the correct two-family topology. At what mutation rate does the signal begin to fail, and why?</p>
 <h3 data-number="10.10.4" id="effect-of-noise-on-upgma"><span class="header-section-number">10.10.4</span> Effect of noise on UPGMA</h3>
-<p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline"><em>s</em> ∈ {0.01, 0.02, 0.05}</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
+<p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline">\(s \in \{0.01, 0.02, 0.05\}\)</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
 <h3 data-number="10.10.5" id="adding-a-contaminated-manuscript"><span class="header-section-number">10.10.5</span> Adding a contaminated manuscript</h3>
 <p>A contaminated manuscript (one that was copied partly from two different sources) does not fit a tree model. Add a fifth manuscript E whose sequence is a 50/50 mix of A and C. Compute the distance matrix for all five manuscripts and run UPGMA. Does the algorithm detect the problem, and if so, how is it visible in the recovered tree?</p>
 </section>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Cell Segmentation in Microscopy Images</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -43,11 +60,11 @@
 </ul>
 <h2 data-number="14.2" id="representing-a-fluorescence-image"><span class="header-section-number">14.2</span> Representing a Fluorescence Image</h2>
 <ul>
-<li>Each cell is modelled as a 2-D Gaussian blob centred at <span class="math inline">(<em>x</em><sub><em>c</em></sub>, <em>y</em><sub><em>c</em></sub>)</span>:</li>
+<li>Each cell is modelled as a 2-D Gaussian blob centred at <span class="math inline">\((x_c, y_c)\)</span>:</li>
 </ul>
-<p><span class="math display">$$I(x, y) = B \exp\!\left(-\frac{(x - x_c)^2 + (y - y_c)^2}{2\sigma^2}\right)$$</span></p>
+<p><span class="math display">\[I(x, y) = B \exp\!\left(-\frac{(x - x_c)^2 + (y - y_c)^2}{2\sigma^2}\right)\]</span></p>
 <ul>
-<li><span class="math inline"><em>B</em></span> is the peak brightness and <span class="math inline"><em>σ</em></span> is the width of the cell in pixels</li>
+<li><span class="math inline">\(B\)</span> is the peak brightness and <span class="math inline">\(\sigma\)</span> is the width of the cell in pixels</li>
 <li>Multiple cells are summed, independent Gaussian noise is then added and intensities are clipped to zero
 <ul>
 <li>A negative photon count is unphysical</li>
@@ -61,11 +78,11 @@
 <h2 data-number="14.3" id="step-1-smoothing"><span class="header-section-number">14.3</span> Step 1: Smoothing</h2>
 <ul>
 <li>Raw images are noisy, so the <a href="../glossary/index.html#gaussian_filter">Gaussian filter</a> replaces each pixel with a weighted average of its neighbourhood, suppressing point-to-point fluctuations</li>
-<li><a href="../glossary/index.html#convolution">Convolving</a> the signal Gaussian (<span class="math inline"><em>σ</em></span>) with the filter Gaussian (<span class="math inline"><em>σ</em><sub><em>s</em></sub></span>) gives a smoothed cell with sigma <span class="math inline">$\sqrt{\sigma^2 + \sigma_s^2}$</span> and peak brightness:</li>
+<li><a href="../glossary/index.html#convolution">Convolving</a> the signal Gaussian (<span class="math inline">\(\sigma\)</span>) with the filter Gaussian (<span class="math inline">\(\sigma_s\)</span>) gives a smoothed cell with sigma <span class="math inline">\(\sqrt{\sigma^2 + \sigma_s^2}\)</span> and peak brightness:</li>
 </ul>
-<p><span class="math display">$$B_\text{smooth} = B \cdot \frac{\sigma^2}{\sigma^2 + \sigma_s^2}$$</span></p>
+<p><span class="math display">\[B_\text{smooth} = B \cdot \frac{\sigma^2}{\sigma^2 + \sigma_s^2}\]</span></p>
 <ul>
-<li>With <span class="math inline"><em>σ</em> = 6</span> and <span class="math inline"><em>σ</em><sub><em>s</em></sub> = 2</span> this gives <span class="math inline"><em>B</em><sub>smooth</sub> = 36/40 = 0.90</span></li>
+<li>With <span class="math inline">\(\sigma = 6\)</span> and <span class="math inline">\(\sigma_s = 2\)</span> this gives <span class="math inline">\(B_\text{smooth} = 36/40 = 0.90\)</span></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="14.4" id="step-2-thresholding-and-labelling"><span class="header-section-number">14.4</span> Step 2: Thresholding and Labelling</h2>
@@ -93,10 +110,10 @@
 <ul>
 <li>The smoothed noise has standard deviation:</li>
 </ul>
-<p><span class="math display">$$\sigma_\text{noise,smooth} = \frac{\sigma_\text{noise}}{2\sqrt{\pi}\,\sigma_s} \approx \frac{0.15}{2\sqrt{\pi}\cdot 2} \approx 0.021$$</span></p>
+<p><span class="math display">\[\sigma_\text{noise,smooth} = \frac{\sigma_\text{noise}}{2\sqrt{\pi}\,\sigma_s} \approx \frac{0.15}{2\sqrt{\pi}\cdot 2} \approx 0.021\]</span></p>
 <ul>
-<li>The operating threshold of 0.50 is approximately <span class="math inline">24 <em>σ</em><sub>noise,smooth</sub></span>, so the probability of a noise pixel exceeding it is vanishingly small</li>
-<li>The minimum cell separation (24 px) ensures the midpoint between two adjacent cells has intensity <span class="math inline">2<em>B</em>exp (−<em>d</em><sup>2</sup>/8<em>σ</em><sup>2</sup>) = 2exp (−2.25) ≈ 0.21</span>, well below the threshold, so adjacent cells are never merged into one component</li>
+<li>The operating threshold of 0.50 is approximately <span class="math inline">\(24\,\sigma_\text{noise,smooth}\)</span>, so the probability of a noise pixel exceeding it is vanishingly small</li>
+<li>The minimum cell separation (24 px) ensures the midpoint between two adjacent cells has intensity <span class="math inline">\(2 B \exp(-d^2 / 8\sigma^2) = 2 \exp(-2.25) \approx 0.21\)</span>, well below the threshold, so adjacent cells are never merged into one component</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
@@ -110,9 +127,9 @@ Wrong: label works at pixel level and separates any two components that do not t
 <dd>
 Correct: two Gaussians 24 px apart have midpoint intensity ≈ 0.21, safely below the threshold of 0.50; closer cells would merge.
 </dd>
-<dt>The Gaussian smoothing filter blurs cells together unless they are at least <span class="math inline">4<em>σ</em></span> apart</dt>
+<dt>The Gaussian smoothing filter blurs cells together unless they are at least <span class="math inline">\(4\sigma\)</span> apart</dt>
 <dd>
-Wrong: <code>SMOOTH_SIGMA</code> = 2, so <span class="math inline">4<em>σ</em> = 8</span> pixels — much less than 24; blurring is not the limiting factor.
+Wrong: <code>SMOOTH_SIGMA</code> = 2, so <span class="math inline">\(4\sigma = 8\)</span> pixels — much less than 24; blurring is not the limiting factor.
 </dd>
 <dt>24 pixels is the minimum required by the physical image resolution in microns</dt>
 <dd>
@@ -136,7 +153,7 @@ Figure&nbsp;14.1: Pure Gaussian noise (no cells) smoothed and segmented at thres
 </figure>
 </div>
 <ul>
-<li>At threshold 0.05 (<span class="math inline"> ≈ 2.4 <em>σ</em><sub>noise,smooth</sub></span>) roughly 0.8% of pixels exceed the threshold
+<li>At threshold 0.05 (<span class="math inline">\(\approx 2.4\,\sigma_\text{noise,smooth}\)</span>) roughly 0.8% of pixels exceed the threshold
 <ul>
 <li>These cluster into a handful of connected blobs</li>
 </ul></li>
@@ -170,7 +187,7 @@ Wrong: a very low threshold lets many noise pixels cluster into large components
 </dd>
 <dt>The threshold is the primary defence; the size filter removes small noise blobs that slip past a well-chosen threshold</dt>
 <dd>
-Correct: at 0.50 <span class="math inline"> ≈ 24<em>σ</em></span>, noise exceedances are vanishingly rare; the size filter is a secondary backstop for the few that remain.
+Correct: at 0.50 <span class="math inline">\(\approx 24\sigma\)</span>, noise exceedances are vanishingly rare; the size filter is a secondary backstop for the few that remain.
 </dd>
 </dl>
 </div>
@@ -194,7 +211,7 @@ With default parameters the pipeline must find exactly <code>N_CELLS = 8</code> 
 </dd>
 <dt>Cell sizes</dt>
 <dd>
-All detected cell areas must fall in the range 50-350 <span class="math inline">px<sup>2</sup></span>. The analytic value is 148 <span class="math inline">px<sup>2</sup></span>; the bounds give a factor of 3 on each side to absorb noise, overlap, and discretisation effects.
+All detected cell areas must fall in the range 50-350 <span class="math inline">\(\text{px}^2\)</span>. The analytic value is 148 <span class="math inline">\(\text{px}^2\)</span>; the bounds give a factor of 3 on each side to absorb noise, overlap, and discretisation effects.
 </dd>
 <dt>Empty result above maximum</dt>
 <dd>
@@ -254,17 +271,17 @@ At threshold 0.05 pure noise must produce at least one false detection, showing 
 <section class="exercises">
 <h2 data-number="14.8" id="exercises"><span class="header-section-number">14.8</span> Exercises</h2>
 <h3 data-number="14.8.1" id="do-the-math"><span class="header-section-number">14.8.1</span> Do the math</h3>
-<p>A cell has peak brightness <span class="math inline"><em>B</em> = 1.0</span> and Gaussian width <span class="math inline"><em>σ</em> = 6</span> pixels. After smoothing with a Gaussian filter of width <span class="math inline"><em>σ</em><sub><em>s</em></sub> = 2</span> pixels, the smoothed peak brightness is <span class="math inline"><em>B</em> ⋅ <em>σ</em><sup>2</sup>/(<em>σ</em><sup>2</sup> + <em>σ</em><sub><em>s</em></sub><sup>2</sup>)</span>. What is the result? Give your answer to two decimal places.</p>
+<p>A cell has peak brightness <span class="math inline">\(B = 1.0\)</span> and Gaussian width <span class="math inline">\(\sigma = 6\)</span> pixels. After smoothing with a Gaussian filter of width <span class="math inline">\(\sigma_s = 2\)</span> pixels, the smoothed peak brightness is <span class="math inline">\(B \cdot \sigma^2 / (\sigma^2 + \sigma_s^2)\)</span>. What is the result? Give your answer to two decimal places.</p>
 <h3 data-number="14.8.2" id="watershed-segmentation"><span class="header-section-number">14.8.2</span> Watershed segmentation</h3>
 <p>The thresholding approach fails when two cells overlap and merge into a single connected component. Implement watershed segmentation: compute the distance transform of the binary mask (<code>scipy.ndimage.distance_transform_edt</code>), find local maxima of the distance map as seed points, and use <code>scipy.ndimage.watershed_ift</code> (or <code>skimage.segmentation.watershed</code>) to split overlapping regions. Demonstrate that it correctly separates two cells whose centres are only 14 pixels apart (closer than <code>MIN_SEPARATION</code>).</p>
 <h3 data-number="14.8.3" id="intensity-based-cell-classification"><span class="header-section-number">14.8.3</span> Intensity-based cell classification</h3>
 <p>Add a second cell type to <code>make_image</code>: dim cells with <code>brightness=0.4</code> alongside the standard bright cells with <code>brightness=1.0</code>. Extend <code>segment</code> to return a label array and a list of per-cell mean intensities, then classify each detected cell as bright or dim using a simple intensity threshold. Report precision and recall for each class.</p>
 <h3 data-number="14.8.4" id="effect-of-noise-on-count-accuracy"><span class="header-section-number">14.8.4</span> Effect of noise on count accuracy</h3>
-<p>Generate 50 images for each of five noise levels: <span class="math inline"><em>σ</em><sub>noise</sub> ∈ {0.05, 0.10, 0.15, 0.20, 0.25}</span>. Run the full pipeline on each image and record the number of cells found. Plot mean and standard deviation of the cell count as a function of noise level and identify the noise level at which the pipeline begins to fail consistently.</p>
+<p>Generate 50 images for each of five noise levels: <span class="math inline">\(\sigma_\text{noise} \in \{0.05, 0.10, 0.15, 0.20, 0.25\}\)</span>. Run the full pipeline on each image and record the number of cells found. Plot mean and standard deviation of the cell count as a function of noise level and identify the noise level at which the pipeline begins to fail consistently.</p>
 <h3 data-number="14.8.5" id="adaptive-thresholding"><span class="header-section-number">14.8.5</span> Adaptive thresholding</h3>
 <p>Real microscopy images often have uneven illumination: the background is brighter in some regions than others. Simulate this by adding a low-frequency gradient:</p>
 <p>
-<span class="math inline"><em>G</em>(<em>x</em>, <em>y</em>) = 0.2 ⋅ <em>x</em>/IMAGE_SIZE</span>
+<span class="math inline">\(G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}\)</span>
 </p>
 <p>to the synthetic image before adding noise. Show that the global threshold misses cells in dark regions or over-detects in bright regions, then implement local thresholding (<code>scipy.ndimage.generic_filter</code> with a percentile-based local estimate) and show that it restores accurate cell counts.</p>
 </section>

@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Glossary</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -64,7 +81,7 @@ FIXME
 </dd>
 <dt><span id="area_under_curve">Area under the curve (AUC)</span></dt>
 <dd>
-The area enclosed between the ROC curve and the x-axis, computed using the trapezoidal rule as <span class="math inline">$\text{AUC} \approx \sum_i \tfrac{1}{2}(\text{HR}_i + \text{HR}_{i+1})|\text{FAR}_i - \text{FAR}_{i+1}|$</span>; AUC = 0.5 for chance performance (the diagonal) and AUC = 1.0 for perfect discrimination; it equals the probability that a randomly chosen signal trial receives a higher evidence score than a randomly chosen noise trial.
+The area enclosed between the ROC curve and the x-axis, computed using the trapezoidal rule as <span class="math inline">\(\text{AUC} \approx \sum_i \tfrac{1}{2}(\text{HR}_i + \text{HR}_{i+1})|\text{FAR}_i - \text{FAR}_{i+1}|\)</span>; AUC = 0.5 for chance performance (the diagonal) and AUC = 1.0 for perfect discrimination; it equals the probability that a randomly chosen signal trial receives a higher evidence score than a randomly chosen noise trial.
 </dd>
 <dt><span id="authorship_attribution">Authorship attribution</span></dt>
 <dd>
@@ -79,11 +96,11 @@ A document representation that records only which words appear and how often, di
 </dd>
 <dt><span id="basic_reproduction_number">Basic reproduction number</span></dt>
 <dd>
-Denoted <span class="math inline"><em>R</em><sub>0</sub></span>, the average number of secondary infections caused by a single infectious individual in a fully susceptible population; if <span class="math inline"><em>R</em><sub>0</sub> &gt; 1</span> an epidemic can grow, if <span class="math inline"><em>R</em><sub>0</sub> ≤ 1</span> it dies out. For the SIR model, <span class="math inline"><em>R</em><sub>0</sub> = <em>β</em>/<em>γ</em></span>.
+Denoted <span class="math inline">\(R_0\)</span>, the average number of secondary infections caused by a single infectious individual in a fully susceptible population; if <span class="math inline">\(R_0 &gt; 1\)</span> an epidemic can grow, if <span class="math inline">\(R_0 \leq 1\)</span> it dies out. For the SIR model, <span class="math inline">\(R_0 = \beta / \gamma\)</span>.
 </dd>
 <dt><span id="bessel_correction">Bessel’s correction</span></dt>
 <dd>
-The use of <span class="math inline"><em>n</em> − 1</span> rather than <span class="math inline"><em>n</em></span> in the denominator of the sample variance; it makes the sample variance an unbiased estimator of the population variance.
+The use of <span class="math inline">\(n-1\)</span> rather than <span class="math inline">\(n\)</span> in the denominator of the sample variance; it makes the sample variance an unbiased estimator of the population variance.
 </dd>
 <dt><span id="binary_mask">Binary mask</span></dt>
 <dd>
@@ -98,19 +115,19 @@ A split of the set of taxa into two disjoint groups induced by cutting a single 
 <dl>
 <dt><span id="char_ngram">Character n-gram</span></dt>
 <dd>
-A sequence of <span class="math inline"><em>n</em></span> consecutive characters in a text, including spaces and punctuation; for a text of length <span class="math inline"><em>L</em></span> there are <span class="math inline"><em>L</em> − <em>n</em> + 1</span> overlapping n-grams. Character n-grams capture unconscious stylistic patterns such as preferred letter combinations and word-boundary habits, making them useful for authorship attribution.
+A sequence of <span class="math inline">\(n\)</span> consecutive characters in a text, including spaces and punctuation; for a text of length <span class="math inline">\(L\)</span> there are <span class="math inline">\(L - n + 1\)</span> overlapping n-grams. Character n-grams capture unconscious stylistic patterns such as preferred letter combinations and word-boundary habits, making them useful for authorship attribution.
 </dd>
 <dt><span id="cohens_kappa">Cohen’s kappa</span></dt>
 <dd>
-A chance-corrected measure of inter-rater agreement: <span class="math inline"><em>κ</em> = (<em>P</em><sub><em>o</em></sub> − <em>P</em><sub><em>e</em></sub>)/(1 − <em>P</em><sub><em>e</em></sub>)</span>, where <span class="math inline"><em>P</em><sub><em>o</em></sub></span> is the proportion of items on which raters agree and <span class="math inline"><em>P</em><sub><em>e</em></sub></span> is the agreement expected under independence. <span class="math inline"><em>κ</em> = 0</span> at chance, <span class="math inline"><em>κ</em> = 1</span> at perfect agreement, <span class="math inline"><em>κ</em> &lt; 0</span> when observed agreement falls below chance.
+A chance-corrected measure of inter-rater agreement: <span class="math inline">\(\kappa = (P_o - P_e) / (1 - P_e)\)</span>, where <span class="math inline">\(P_o\)</span> is the proportion of items on which raters agree and <span class="math inline">\(P_e\)</span> is the agreement expected under independence. <span class="math inline">\(\kappa = 0\)</span> at chance, <span class="math inline">\(\kappa = 1\)</span> at perfect agreement, <span class="math inline">\(\kappa &lt; 0\)</span> when observed agreement falls below chance.
 </dd>
 <dt><span id="confidence_interval_parameter">Confidence interval (parameter)</span></dt>
 <dd>
-An interval constructed from data such that, over many repetitions of the experiment, the true parameter value falls within the interval at the stated rate (e.g., 95%); for nonlinear least squares the interval is formed as <span class="math inline"><em>θ̂</em> ± <em>z</em> ⋅ SE(<em>θ̂</em>)</span> where <span class="math inline">$\text{SE}(\hat{\theta}) = \sqrt{\text{diag}(\text{pcov})}$</span> and <span class="math inline"><em>z</em> = 1.96</span> for a 95% CI under asymptotic normality.
+An interval constructed from data such that, over many repetitions of the experiment, the true parameter value falls within the interval at the stated rate (e.g., 95%); for nonlinear least squares the interval is formed as <span class="math inline">\(\hat{\theta} \pm z \cdot \text{SE}(\hat{\theta})\)</span> where <span class="math inline">\(\text{SE}(\hat{\theta}) = \sqrt{\text{diag}(\text{pcov})}\)</span> and <span class="math inline">\(z = 1.96\)</span> for a 95% CI under asymptotic normality.
 </dd>
 <dt><span id="confusion_matrix">Confusion matrix</span></dt>
 <dd>
-A <span class="math inline">2 × 2</span> (or larger) table that cross-tabulates true class labels against predicted class labels; for binary classification it contains true negatives (TN), false positives (FP), false negatives (FN), and true positives (TP), enabling computation of precision, recall, and F1 score alongside overall accuracy.
+A <span class="math inline">\(2\times2\)</span> (or larger) table that cross-tabulates true class labels against predicted class labels; for binary classification it contains true negatives (TN), false positives (FP), false negatives (FN), and true positives (TP), enabling computation of precision, recall, and F1 score alongside overall accuracy.
 </dd>
 <dt><span id="connected_component">Connected component</span></dt>
 <dd>
@@ -118,7 +135,7 @@ A maximal set of pixels (or grid cells) that are all above a threshold and are c
 </dd>
 <dt><span id="contingency_table_raters">Contingency table (raters)</span></dt>
 <dd>
-A <span class="math inline"><em>K</em> × <em>K</em></span> integer matrix whose entry <span class="math inline"><em>C</em><sub><em>i</em><em>j</em></sub></span> counts the number of observations for which rater A assigned category <span class="math inline"><em>i</em></span> and rater B assigned category <span class="math inline"><em>j</em></span>; diagonal entries are agreements and off-diagonal entries are disagreements; used to compute Cohen’s kappa.
+A <span class="math inline">\(K \times K\)</span> integer matrix whose entry <span class="math inline">\(C_{ij}\)</span> counts the number of observations for which rater A assigned category <span class="math inline">\(i\)</span> and rater B assigned category <span class="math inline">\(j\)</span>; diagonal entries are agreements and off-diagonal entries are disagreements; used to compute Cohen’s kappa.
 </dd>
 <dt><span id="convexity">Convex combination</span></dt>
 <dd>
@@ -130,7 +147,7 @@ A mathematical operation that combines two functions by integrating the product 
 </dd>
 <dt><span id="cosine_similarity">Cosine similarity</span></dt>
 <dd>
-A measure of the angle between two vectors: <span class="math inline">sim(<strong>a</strong>, <strong>b</strong>) = (<strong>a</strong> ⋅ <strong>b</strong>)/(∥<strong>a</strong>∥∥<strong>b</strong>∥)</span>; ranges from 0 (orthogonal, no shared features) to 1 (identical direction). Used to compare n-gram frequency profiles because it is independent of text length: profiles with the same relative frequencies score 1 regardless of how many tokens produced them.
+A measure of the angle between two vectors: <span class="math inline">\(\text{sim}(\mathbf{a}, \mathbf{b}) = (\mathbf{a}\cdot\mathbf{b}) / (\|\mathbf{a}\|\|\mathbf{b}\|)\)</span>; ranges from 0 (orthogonal, no shared features) to 1 (identical direction). Used to compare n-gram frequency profiles because it is independent of text length: profiles with the same relative frequencies score 1 regardless of how many tokens produced them.
 </dd>
 <dt><span id="cost_surface">Cost surface</span></dt>
 <dd>
@@ -146,11 +163,11 @@ FIXME
 </dd>
 <dt><span id="cross_entropy">Cross-entropy loss</span></dt>
 <dd>
-A loss function for classification: <span class="math inline">−[<em>y</em>log <em>p</em> + (1 − <em>y</em>)log (1 − <em>p</em>)]</span> for binary problems, where <span class="math inline"><em>y</em></span> is the true label and <span class="math inline"><em>p</em></span> is the predicted probability; penalises confident wrong predictions more heavily than uncertain ones.
+A loss function for classification: <span class="math inline">\(-[y\log p + (1-y)\log(1-p)]\)</span> for binary problems, where <span class="math inline">\(y\)</span> is the true label and <span class="math inline">\(p\)</span> is the predicted probability; penalises confident wrong predictions more heavily than uncertain ones.
 </dd>
 <dt><span id="cusum">Cumulative sum (CUSUM) statistic</span></dt>
 <dd>
-<span class="math inline">$C_t = \sum_{s=0}^{t} \hat{e}_s$</span>, the running total of OLS residuals; used to detect structural breaks because a shift in the series mean causes residuals to share a systematic sign, producing a drift in <span class="math inline"><em>C</em><sub><em>t</em></sub></span> that reverses direction at the break. The estimated break location is the index where <span class="math inline">|<em>C</em><sub><em>t</em></sub>|</span> is largest.
+<span class="math inline">\(C_t = \sum_{s=0}^{t} \hat{e}_s\)</span>, the running total of OLS residuals; used to detect structural breaks because a shift in the series mean causes residuals to share a systematic sign, producing a drift in <span class="math inline">\(C_t\)</span> that reverses direction at the break. The estimated break location is the index where <span class="math inline">\(|C_t|\)</span> is largest.
 </dd>
 </dl>
 <h2 data-number="E.4" id="d"><span class="header-section-number">E.4</span> D</h2>
@@ -165,11 +182,11 @@ The study of how a linguistic feature (such as word frequency or grammatical con
 </dd>
 <dt><span id="dijkstras_algorithm">Dijkstra’s algorithm</span></dt>
 <dd>
-A shortest-path algorithm that processes nodes in order of increasing accumulated cost from a source, using a priority queue; at each step it relaxes the edges of the cheapest unvisited node and stops when the destination is reached. For a grid with <span class="math inline"><em>V</em></span> cells and <span class="math inline"><em>E</em></span> edges, runtime is <span class="math inline"><em>O</em>((<em>V</em> + <em>E</em>)log <em>V</em>)</span> with a binary heap.
+A shortest-path algorithm that processes nodes in order of increasing accumulated cost from a source, using a priority queue; at each step it relaxes the edges of the cheapest unvisited node and stops when the destination is reached. For a grid with <span class="math inline">\(V\)</span> cells and <span class="math inline">\(E\)</span> edges, runtime is <span class="math inline">\(O((V + E)\log V)\)</span> with a binary heap.
 </dd>
 <dt><span id="distance_matrix">Distance matrix</span></dt>
 <dd>
-A square symmetric matrix <span class="math inline"><em>D</em></span> where entry <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)</span> stores the evolutionary (or other pairwise) distance between taxa <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span>; the input to tree-reconstruction algorithms.
+A square symmetric matrix <span class="math inline">\(D\)</span> where entry <span class="math inline">\(D(i,j)\)</span> stores the evolutionary (or other pairwise) distance between taxa <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span>; the input to tree-reconstruction algorithms.
 </dd>
 <dt><span id="dynamic_programming">Dynamic programming</span></dt>
 <dd>
@@ -180,14 +197,14 @@ An algorithmic strategy that solves a problem by breaking it into overlapping su
 <dl>
 <dt><span id="eulers_method">Euler’s method</span></dt>
 <dd>
-The simplest numerical method for integrating an ordinary differential equation, which advances the solution one small step at a time using the derivative at the current point: <span class="math inline"><em>y</em><sub><em>n</em> + 1</sub> = <em>y</em><sub><em>n</em></sub> + <em>h</em> <em>f</em>(<em>t</em><sub><em>n</em></sub>, <em>y</em><sub><em>n</em></sub>)</span>.
+The simplest numerical method for integrating an ordinary differential equation, which advances the solution one small step at a time using the derivative at the current point: <span class="math inline">\(y_{n+1} = y_n + h\,f(t_n, y_n)\)</span>.
 </dd>
 </dl>
 <h2 data-number="E.6" id="f"><span class="header-section-number">E.6</span> F</h2>
 <dl>
 <dt><span id="false_alarm_rate">False alarm rate</span></dt>
 <dd>
-The proportion of noise-only trials on which an observer responds “signal present”: <span class="math inline">FAR = <em>P</em>(yes ∣ noise) = 1 − <em>Φ</em>(<em>c</em>)</span>; also called the false positive rate or <span class="math inline">1 − specificity</span>.
+The proportion of noise-only trials on which an observer responds “signal present”: <span class="math inline">\(\text{FAR} = P(\text{yes} \mid \text{noise}) = 1 - \Phi(c)\)</span>; also called the false positive rate or <span class="math inline">\(1 - \text{specificity}\)</span>.
 </dd>
 <dt><span id="flow_network">Flow network</span></dt>
 <dd>
@@ -206,7 +223,7 @@ An extra grid point added outside the physical boundary of a numerical simulatio
 </dd>
 <dt><span id="gini_coefficient">Gini coefficient</span></dt>
 <dd>
-A scalar measure of inequality ranging from 0 (perfect equality) to <span class="math inline">(<em>n</em> − 1)/<em>n</em></span> (one agent holds all wealth). For sorted wealth values <span class="math inline"><em>w</em><sub>(1)</sub> ≤ ⋯ ≤ <em>w</em><sub>(<em>n</em>)</sub></span>: <span class="math inline">$G = (2\sum_{i=1}^n i\,w_{(i)} - (n+1)\sum w) / (n\sum w)$</span>. Geometrically, <span class="math inline"><em>G</em></span> is twice the area between the Lorenz curve and the 45-degree line of equality.
+A scalar measure of inequality ranging from 0 (perfect equality) to <span class="math inline">\((n-1)/n\)</span> (one agent holds all wealth). For sorted wealth values <span class="math inline">\(w_{(1)} \leq \cdots \leq w_{(n)}\)</span>: <span class="math inline">\(G = (2\sum_{i=1}^n i\,w_{(i)} - (n+1)\sum w) / (n\sum w)\)</span>. Geometrically, <span class="math inline">\(G\)</span> is twice the area between the Lorenz curve and the 45-degree line of equality.
 </dd>
 <dt><span id="global_alignment">Global alignment</span></dt>
 <dd>
@@ -214,7 +231,7 @@ An alignment that spans both sequences from end to end, inserting gaps wherever 
 </dd>
 <dt><span id="gradient_descent">Gradient descent</span></dt>
 <dd>
-An iterative optimisation algorithm that updates parameters in the direction of the negative gradient of the loss function; at each step, <span class="math inline"><em>θ</em> ← <em>θ</em> − <em>η</em>∇<em>L</em></span> where <span class="math inline"><em>η</em></span> is the learning rate. For convex losses such as binary cross-entropy, gradient descent converges to the global minimum.
+An iterative optimisation algorithm that updates parameters in the direction of the negative gradient of the loss function; at each step, <span class="math inline">\(\theta \leftarrow \theta - \eta \nabla L\)</span> where <span class="math inline">\(\eta\)</span> is the learning rate. For convex losses such as binary cross-entropy, gradient descent converges to the global minimum.
 </dd>
 </dl>
 <h2 data-number="E.8" id="h"><span class="header-section-number">E.8</span> H</h2>
@@ -225,11 +242,11 @@ The number of positions at which two sequences of equal length differ; when norm
 </dd>
 <dt><span id="heat_flux">Heat flux</span></dt>
 <dd>
-The rate of heat energy transfer per unit area through a surface, measured in watts per square metre (W m⁻²); in steady-state conduction it equals <span class="math inline">−<em>k</em> <em>d</em><em>T</em>/<em>d</em><em>x</em></span> and is uniform throughout any composite wall.
+The rate of heat energy transfer per unit area through a surface, measured in watts per square metre (W m⁻²); in steady-state conduction it equals <span class="math inline">\(-k\,dT/dx\)</span> and is uniform throughout any composite wall.
 </dd>
 <dt><span id="hit_rate">Hit rate</span></dt>
 <dd>
-The proportion of signal trials on which an observer correctly responds “signal present”: <span class="math inline">HR = <em>P</em>(yes ∣ signal) = 1 − <em>Φ</em>(<em>c</em> − <em>d</em><sup>′</sup>)</span>; also called the true positive rate or sensitivity (not to be confused with <span class="math inline"><em>d</em><sup>′</sup></span> sensitivity).
+The proportion of signal trials on which an observer correctly responds “signal present”: <span class="math inline">\(\text{HR} = P(\text{yes} \mid \text{signal}) = 1 - \Phi(c - d')\)</span>; also called the true positive rate or sensitivity (not to be confused with <span class="math inline">\(d'\)</span> sensitivity).
 </dd>
 <dt><span id="hold_out">hold out</span></dt>
 <dd>
@@ -240,7 +257,7 @@ FIXME
 <dl>
 <dt><span id="inverse_distance_weighting">Inverse-distance weighting (IDW)</span></dt>
 <dd>
-A spatial interpolation method that estimates the value at a query point as a weighted average of observed station values, where each station’s weight is <span class="math inline"><em>d</em><sub><em>i</em></sub><sup>−<em>p</em></sup></span> (<span class="math inline"><em>d</em><sub><em>i</em></sub></span> is the distance from the query point, <span class="math inline"><em>p</em></span> is the power parameter); larger <span class="math inline"><em>p</em></span> concentrates influence on the nearest stations.
+A spatial interpolation method that estimates the value at a query point as a weighted average of observed station values, where each station’s weight is <span class="math inline">\(d_i^{-p}\)</span> (<span class="math inline">\(d_i\)</span> is the distance from the query point, <span class="math inline">\(p\)</span> is the power parameter); larger <span class="math inline">\(p\)</span> concentrates influence on the nearest stations.
 </dd>
 </dl>
 <h2 data-number="E.10" id="j"><span class="header-section-number">E.10</span> J</h2>
@@ -254,7 +271,7 @@ An iterative method for solving systems of equations in which each unknown is up
 <dl>
 <dt><span id="k_means">K-means clustering</span></dt>
 <dd>
-An iterative algorithm that partitions <span class="math inline"><em>n</em></span> data points into <span class="math inline"><em>K</em></span> clusters by alternating between two steps: assigning each point to its nearest centroid (using Euclidean distance) and updating each centroid as the coordinate-wise mean of all points assigned to it. The algorithm stops when assignments no longer change. Because initialization is random, results can vary across runs; the number of clusters <span class="math inline"><em>K</em></span> must be chosen in advance.
+An iterative algorithm that partitions <span class="math inline">\(n\)</span> data points into <span class="math inline">\(K\)</span> clusters by alternating between two steps: assigning each point to its nearest centroid (using Euclidean distance) and updating each centroid as the coordinate-wise mean of all points assigned to it. The algorithm stops when assignments no longer change. Because initialization is random, results can vary across runs; the number of clusters <span class="math inline">\(K\)</span> must be chosen in advance.
 </dd>
 </dl>
 <h2 data-number="E.12" id="l"><span class="header-section-number">E.12</span> L</h2>
@@ -265,7 +282,7 @@ A subfield of archaeology that studies the spatial distribution of human activit
 </dd>
 <dt><span id="learning_curve">Learning curve</span></dt>
 <dd>
-A plot of performance (such as reaction time or error rate) against the amount of practice (trial number or hours of training); empirically follows a power law: <span class="math inline">RT(<em>n</em>) = <em>A</em> ⋅ <em>n</em><sup>−<em>b</em></sup></span>, where <span class="math inline"><em>A</em></span> is the initial performance and <span class="math inline"><em>b</em> &gt; 0</span> is the learning rate exponent.
+A plot of performance (such as reaction time or error rate) against the amount of practice (trial number or hours of training); empirically follows a power law: <span class="math inline">\(\text{RT}(n) = A \cdot n^{-b}\)</span>, where <span class="math inline">\(A\)</span> is the initial performance and <span class="math inline">\(b &gt; 0\)</span> is the learning rate exponent.
 </dd>
 <dt><span id="least_cost_path">Least-cost path</span></dt>
 <dd>
@@ -277,11 +294,11 @@ A model-evaluation procedure in which each observation is held out in turn, the 
 </dd>
 <dt><span id="log_log_regression">Log-log regression</span></dt>
 <dd>
-A linear regression of <span class="math inline">ln <em>y</em></span> on <span class="math inline">ln <em>x</em></span>; the OLS slope directly estimates the exponent of an underlying power-law relationship <span class="math inline"><em>y</em> = <em>A</em><em>x</em><sup><em>b</em></sup></span>, and is used in economics to estimate price elasticity of demand.
+A linear regression of <span class="math inline">\(\ln y\)</span> on <span class="math inline">\(\ln x\)</span>; the OLS slope directly estimates the exponent of an underlying power-law relationship <span class="math inline">\(y = A x^b\)</span>, and is used in economics to estimate price elasticity of demand.
 </dd>
 <dt><span id="log_normal_distribution">Log-normal distribution</span></dt>
 <dd>
-A probability distribution for a positive random variable <span class="math inline"><em>X</em></span> such that <span class="math inline">ln <em>X</em></span> follows a normal distribution; characterised by its log-mean <span class="math inline"><em>μ</em><sub><em>y</em></sub></span> and log-standard-deviation <span class="math inline"><em>σ</em><sub><em>y</em></sub></span>, and widely used in hydrology to model annual maximum river flows.
+A probability distribution for a positive random variable <span class="math inline">\(X\)</span> such that <span class="math inline">\(\ln X\)</span> follows a normal distribution; characterised by its log-mean <span class="math inline">\(\mu_y\)</span> and log-standard-deviation <span class="math inline">\(\sigma_y\)</span>, and widely used in hydrology to model annual maximum river flows.
 </dd>
 <dt><span id="logistic_regression">Logistic regression</span></dt>
 <dd>
@@ -293,7 +310,7 @@ FIXME
 </dd>
 <dt><span id="lorenz_curve">Lorenz curve</span></dt>
 <dd>
-A plot of the cumulative share of total wealth held by the bottom <span class="math inline"><em>x</em></span> fraction of the population (sorted from poorest to richest); a perfectly equal distribution produces the 45-degree diagonal, while any inequality bows the curve below it. The Gini coefficient equals twice the area between the Lorenz curve and the diagonal.
+A plot of the cumulative share of total wealth held by the bottom <span class="math inline">\(x\)</span> fraction of the population (sorted from poorest to richest); a perfectly equal distribution produces the 45-degree diagonal, while any inequality bows the curve below it. The Gini coefficient equals twice the area between the Lorenz curve and the diagonal.
 </dd>
 <dt><span id="lotka_volterra">Lotka-Volterra model</span></dt>
 <dd>
@@ -304,7 +321,7 @@ A pair of ordinary differential equations describing the coupled dynamics of a p
 <dl>
 <dt><span id="mean_absolute_error">Mean absolute error</span></dt>
 <dd>
-The average of the absolute differences between predicted and observed values: <span class="math inline">$\text{MAE} = \frac{1}{n}\sum_i |\hat{y}_i - y_i|$</span>; a scale-dependent measure of prediction error used to evaluate interpolation and other regression models.
+The average of the absolute differences between predicted and observed values: <span class="math inline">\(\text{MAE} = \frac{1}{n}\sum_i |\hat{y}_i - y_i|\)</span>; a scale-dependent measure of prediction error used to evaluate interpolation and other regression models.
 </dd>
 <dt><span id="method_of_moments">Method of moments</span></dt>
 <dd>
@@ -320,7 +337,7 @@ A smoothing filter that replaces each value in a series with the mean of a fixed
 </dd>
 <dt><span id="mattr">Moving-Average Type-Token Ratio (MATTR)</span></dt>
 <dd>
-A length-independent measure of vocabulary richness: TTR is computed over each overlapping window of fixed width <span class="math inline"><em>w</em></span> and the results are averaged. Because every window has the same length, MATTR can fairly compare texts of different total sizes, unlike the global TTR which falls as text length increases.
+A length-independent measure of vocabulary richness: TTR is computed over each overlapping window of fixed width <span class="math inline">\(w\)</span> and the results are averaged. Because every window has the same length, MATTR can fairly compare texts of different total sizes, unlike the global TTR which falls as text length increases.
 </dd>
 </dl>
 <h2 data-number="E.14" id="n"><span class="header-section-number">E.14</span> N</h2>
@@ -346,14 +363,14 @@ A word’s count in a period divided by the total token count for the same perio
 <dl>
 <dt><span id="ordinary_least_squares">Ordinary least squares</span></dt>
 <dd>
-A method for fitting a linear model <span class="math inline"><em>y</em> = <em>X</em><em>b</em></span> by minimising the sum of squared residuals <span class="math inline">∥<em>y</em> − <em>X</em><em>b</em>∥<sup>2</sup></span>; the closed-form solution is <span class="math inline"><em>b̂</em> = (<em>X</em><sup><em>T</em></sup><em>X</em>)<sup>−1</sup><em>X</em><sup><em>T</em></sup><em>y</em></span>, and the slope uncertainty is quantified by the standard error <span class="math inline">$\text{SE}(\hat{b}) = \sqrt{\hat{\sigma}^2(X^TX)^{-1}}$</span>.
+A method for fitting a linear model <span class="math inline">\(y = Xb\)</span> by minimising the sum of squared residuals <span class="math inline">\(\|y - Xb\|^2\)</span>; the closed-form solution is <span class="math inline">\(\hat{b} = (X^TX)^{-1}X^Ty\)</span>, and the slope uncertainty is quantified by the standard error <span class="math inline">\(\text{SE}(\hat{b}) = \sqrt{\hat{\sigma}^2(X^TX)^{-1}}\)</span>.
 </dd>
 </dl>
 <h2 data-number="E.16" id="p"><span class="header-section-number">E.16</span> P</h2>
 <dl>
 <dt><span id="percolation_threshold">Percolation threshold</span></dt>
 <dd>
-The critical probability <span class="math inline"><em>p</em><sub><em>c</em></sub></span> at which a large random network transitions from almost certainly disconnected to almost certainly connected; for 2D site percolation on a square lattice with 4-neighbor connectivity, <span class="math inline"><em>p</em><sub><em>c</em></sub> ≈ 0.5927</span>.
+The critical probability <span class="math inline">\(p_c\)</span> at which a large random network transitions from almost certainly disconnected to almost certainly connected; for 2D site percolation on a square lattice with 4-neighbor connectivity, <span class="math inline">\(p_c \approx 0.5927\)</span>.
 </dd>
 <dt><span id="phylogenetic_tree">Phylogenetic tree</span></dt>
 <dd>
@@ -361,11 +378,11 @@ A branching diagram showing the inferred evolutionary relationships among a set 
 </dd>
 <dt><span id="power_law">Power law</span></dt>
 <dd>
-A mathematical relationship of the form <span class="math inline"><em>y</em> = <em>A</em><em>x</em><sup><em>b</em></sup></span>; on a log-log plot the relationship appears as a straight line with slope <span class="math inline"><em>b</em></span>. In learning-curve analysis <span class="math inline"><em>b</em> &gt; 0</span> is the learning rate exponent, quantifying how rapidly performance improves with practice.
+A mathematical relationship of the form <span class="math inline">\(y = A x^b\)</span>; on a log-log plot the relationship appears as a straight line with slope <span class="math inline">\(b\)</span>. In learning-curve analysis <span class="math inline">\(b &gt; 0\)</span> is the learning rate exponent, quantifying how rapidly performance improves with practice.
 </dd>
 <dt><span id="price_elasticity">Price elasticity of demand</span></dt>
 <dd>
-The percentage change in quantity demanded for a 1% change in price: <span class="math inline"><em>ε</em> = ∂ln <em>Q</em>/∂ln <em>P</em></span>; values below <span class="math inline">−1</span> indicate elastic demand (quantity is highly responsive to price) and values between <span class="math inline">−1</span> and <span class="math inline">0</span> indicate inelastic demand.
+The percentage change in quantity demanded for a 1% change in price: <span class="math inline">\(\varepsilon = \partial \ln Q / \partial \ln P\)</span>; values below <span class="math inline">\(-1\)</span> indicate elastic demand (quantity is highly responsive to price) and values between <span class="math inline">\(-1\)</span> and <span class="math inline">\(0\)</span> indicate inelastic demand.
 </dd>
 </dl>
 <h2 data-number="E.17" id="q"><span class="header-section-number">E.17</span> Q</h2>
@@ -383,7 +400,7 @@ The component of a star’s velocity along the observer’s line of sight; measu
 </dd>
 <dt><span id="return_period">Return period</span></dt>
 <dd>
-Also called recurrence interval; the average time between events that exceed a given threshold. A <span class="math inline"><em>T</em></span>-year event has probability <span class="math inline">1/<em>T</em></span> of being exceeded in any single year and probability <span class="math inline">1 − (1 − 1/<em>T</em>)<sup><em>T</em></sup> ≈ 63%</span> of being exceeded at least once in <span class="math inline"><em>T</em></span> years.
+Also called recurrence interval; the average time between events that exceed a given threshold. A <span class="math inline">\(T\)</span>-year event has probability <span class="math inline">\(1/T\)</span> of being exceeded in any single year and probability <span class="math inline">\(1-(1-1/T)^T \approx 63\%\)</span> of being exceeded at least once in <span class="math inline">\(T\)</span> years.
 </dd>
 <dt><span id="riemann_sum">Riemann sum</span></dt>
 <dd>
@@ -399,7 +416,7 @@ Receiver Operating Characteristic curve; a plot of hit rate against false-alarm 
 </dd>
 <dt><span id="rolling_window">Rolling window</span></dt>
 <dd>
-A fixed-width buffer of the <span class="math inline"><em>w</em></span> most recent observations used to compute local summary statistics (mean, variance) that adapt to gradual changes in the signal; also called a moving window or sliding window.
+A fixed-width buffer of the <span class="math inline">\(w\)</span> most recent observations used to compute local summary statistics (mean, variance) that adapt to gradual changes in the signal; also called a moving window or sliding window.
 </dd>
 <dt><span id="runge_kutta">Runge-Kutta method</span></dt>
 <dd>
@@ -414,11 +431,11 @@ An agent-based simulation of residential segregation (Schelling, 1971) in which 
 </dd>
 <dt><span id="semi_amplitude">Semi-amplitude</span></dt>
 <dd>
-The quantity <span class="math inline"><em>K</em></span> in a sinusoidal radial-velocity model, equal to the maximum speed of the star relative to the centre of mass of the star-planet system; related to the planet’s minimum mass and orbital period.
+The quantity <span class="math inline">\(K\)</span> in a sinusoidal radial-velocity model, equal to the maximum speed of the star relative to the centre of mass of the star-planet system; related to the planet’s minimum mass and orbital period.
 </dd>
 <dt><span id="sigmoid_function">Sigmoid function</span></dt>
 <dd>
-The function <span class="math inline"><em>σ</em>(<em>z</em>) = 1/(1 + <em>e</em><sup>−<em>z</em></sup>)</span> that maps any real number to the open interval <span class="math inline">(0, 1)</span>; used in logistic regression to convert a linear score into a probability.
+The function <span class="math inline">\(\sigma(z) = 1/(1 + e^{-z})\)</span> that maps any real number to the open interval <span class="math inline">\((0,1)\)</span>; used in logistic regression to convert a linear score into a probability.
 </dd>
 <dt><span id="signal_to_noise">signal-to-noise ratio</span> (SNR)</dt>
 <dd>
@@ -426,14 +443,14 @@ FIXME
 </dd>
 <dt><span id="sir_model">SIR model</span></dt>
 <dd>
-A compartmental epidemic model that divides a fixed population into Susceptible, Infectious, and Recovered compartments; individuals move irreversibly from S to I at rate <span class="math inline"><em>β</em><em>S</em><em>I</em>/<em>N</em></span> and from I to R at rate <span class="math inline"><em>γ</em><em>I</em></span>, producing a single epidemic wave when <span class="math inline"><em>R</em><sub>0</sub> = <em>β</em>/<em>γ</em> &gt; 1</span>.
+A compartmental epidemic model that divides a fixed population into Susceptible, Infectious, and Recovered compartments; individuals move irreversibly from S to I at rate <span class="math inline">\(\beta SI/N\)</span> and from I to R at rate <span class="math inline">\(\gamma I\)</span>, producing a single epidemic wave when <span class="math inline">\(R_0 = \beta/\gamma &gt; 1\)</span>.
 </dd>
 <dt><span id="site_percolation">Site percolation</span></dt>
 <dd>
-A percolation model in which each site (cell) of a lattice is independently declared open with probability <span class="math inline"><em>p</em></span>; the question is whether open sites form a connected path from one boundary to the other. Contrast with bond percolation, where edges rather than sites are opened.
+A percolation model in which each site (cell) of a lattice is independently declared open with probability <span class="math inline">\(p\)</span>; the question is whether open sites form a connected path from one boundary to the other. Contrast with bond percolation, where edges rather than sites are opened.
 </dd>
 <dd>
-The function <span class="math inline"><em>σ</em>(<em>z</em>) = 1/(1 + <em>e</em><sup>−<em>z</em></sup>)</span> that maps any real number to the open interval <span class="math inline">(0, 1)</span>; used in logistic regression to convert a linear score into a probability.
+The function <span class="math inline">\(\sigma(z) = 1/(1 + e^{-z})\)</span> that maps any real number to the open interval <span class="math inline">\((0,1)\)</span>; used in logistic regression to convert a linear score into a probability.
 </dd>
 <dt><span id="spatial_clustering">Spatial clustering</span></dt>
 <dd>
@@ -465,7 +482,7 @@ A point in time at which the statistical properties of a time series (mean, vari
 </dd>
 <dt><span id="survival_function">Survival function</span></dt>
 <dd>
-The probability that a randomly chosen individual has not yet experienced the event of interest by time <span class="math inline"><em>t</em></span>: <span class="math inline"><em>S</em>(<em>t</em>) = <em>P</em>(<em>T</em> &gt; <em>t</em>)</span>; always starts at 1, is non-increasing, and approaches 0 as <span class="math inline"><em>t</em> → ∞</span> if all individuals eventually experience the event.
+The probability that a randomly chosen individual has not yet experienced the event of interest by time <span class="math inline">\(t\)</span>: <span class="math inline">\(S(t) = P(T &gt; t)\)</span>; always starts at 1, is non-increasing, and approaches 0 as <span class="math inline">\(t \to \infty\)</span> if all individuals eventually experience the event.
 </dd>
 </dl>
 <h2 data-number="E.20" id="t"><span class="header-section-number">E.20</span> T</h2>
@@ -480,11 +497,11 @@ The count of how many times each word in the vocabulary appears in a given docum
 </dd>
 <dt><span id="thermal_conductivity">Thermal conductivity</span></dt>
 <dd>
-A material property <span class="math inline"><em>k</em></span> (W m⁻¹ K⁻¹) measuring how readily heat flows through a material; high <span class="math inline"><em>k</em></span> (e.g.&nbsp;metals) allows large heat flux for a small temperature gradient.
+A material property <span class="math inline">\(k\)</span> (W m⁻¹ K⁻¹) measuring how readily heat flows through a material; high <span class="math inline">\(k\)</span> (e.g.&nbsp;metals) allows large heat flux for a small temperature gradient.
 </dd>
 <dt><span id="thermal_resistance">Thermal resistance</span></dt>
 <dd>
-For a uniform layer of thickness <span class="math inline"><em>L</em></span> and conductivity <span class="math inline"><em>k</em></span>, the resistance <span class="math inline"><em>R</em> = <em>L</em>/<em>k</em></span> (m² K W⁻¹) represents the temperature drop per unit heat flux; layers in series add.
+For a uniform layer of thickness <span class="math inline">\(L\)</span> and conductivity <span class="math inline">\(k\)</span>, the resistance <span class="math inline">\(R = L/k\)</span> (m² K W⁻¹) represents the temperature drop per unit heat flux; layers in series add.
 </dd>
 <dt><span id="trapezoidal_rule">trapezoidal rule</span></dt>
 <dd>
@@ -492,18 +509,18 @@ FIXME
 </dd>
 <dt><span id="truncation_error">Truncation error</span></dt>
 <dd>
-The error introduced at each time step by approximating continuous derivatives with finite differences; for the explicit diffusion scheme the global truncation error scales as <span class="math inline"><em>O</em>(<em>Δ</em><em>t</em> + <em>Δ</em><em>x</em><sup>2</sup>)</span>.
+The error introduced at each time step by approximating continuous derivatives with finite differences; for the explicit diffusion scheme the global truncation error scales as <span class="math inline">\(O(\Delta t + \Delta x^2)\)</span>.
 </dd>
 <dt><span id="type_token_ratio">Type-token ratio (TTR)</span></dt>
 <dd>
-The number of distinct word types divided by the total number of word tokens in a text: <span class="math inline">TTR = <em>V</em>/<em>T</em></span>. A value near 1 indicates high lexical diversity (few repetitions); a value near 0 indicates heavy repetition. TTR is sensitive to text length — it decreases for longer texts even when richness is constant — so MATTR is preferred for cross-text comparisons.
+The number of distinct word types divided by the total number of word tokens in a text: <span class="math inline">\(\text{TTR} = V/T\)</span>. A value near 1 indicates high lexical diversity (few repetitions); a value near 0 indicates heavy repetition. TTR is sensitive to text length — it decreases for longer texts even when richness is constant — so MATTR is preferred for cross-text comparisons.
 </dd>
 </dl>
 <h2 data-number="E.21" id="u"><span class="header-section-number">E.21</span> U</h2>
 <dl>
 <dt><span id="upgma">UPGMA</span></dt>
 <dd>
-Unweighted Pair Group Method with Arithmetic Mean; a distance-based algorithm that reconstructs a rooted phylogenetic tree by iteratively merging the pair of taxa (or clusters) with the smallest average pairwise distance, placing each new node at height <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)/2</span>. UPGMA assumes a molecular clock (constant evolutionary rate across all lineages); when rates vary, the recovered topology may be incorrect.
+Unweighted Pair Group Method with Arithmetic Mean; a distance-based algorithm that reconstructs a rooted phylogenetic tree by iteratively merging the pair of taxa (or clusters) with the smallest average pairwise distance, placing each new node at height <span class="math inline">\(D(i,j)/2\)</span>. UPGMA assumes a molecular clock (constant evolutionary rate across all lineages); when rates vary, the recovered topology may be incorrect.
 </dd>
 </dl>
 <h2 data-number="E.22" id="v"><span class="header-section-number">E.22</span> V</h2>
@@ -517,7 +534,7 @@ A specific position in a text where at least two manuscripts have different read
 <dl>
 <dt><span id="weibull_plotting_position">Weibull plotting position</span></dt>
 <dd>
-The empirical non-exceedance probability <span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1)</span> assigned to the <span class="math inline"><em>i</em></span>-th smallest of <span class="math inline"><em>n</em></span> observations, used to place data on a probability plot without assuming a specific distribution.
+The empirical non-exceedance probability <span class="math inline">\(p_i = i/(n+1)\)</span> assigned to the <span class="math inline">\(i\)</span>-th smallest of <span class="math inline">\(n\)</span> observations, used to place data on a probability plot without assuming a specific distribution.
 </dd>
 <dt><span id="word_shift">Word shift</span></dt>
 <dd>
@@ -536,7 +553,7 @@ FIXME
 <dl>
 <dt><span id="z_score">Z-score</span></dt>
 <dd>
-The number of standard deviations by which an observation deviates from a reference mean: <span class="math inline"><em>z</em> = (<em>x</em> − <em>x̄</em>)/<em>σ̂</em></span>; used in anomaly detection to flag readings that are unusually far from the local rolling mean.
+The number of standard deviations by which an observation deviates from a reference mean: <span class="math inline">\(z = (x - \bar{x}) / \hat{\sigma}\)</span>; used in anomaly detection to flag readings that are unusually far from the local rolling mean.
 </dd>
 <dt><span id="zero_flux_boundary">Zero-flux boundary conditions</span></dt>
 <dd>
@@ -544,7 +561,7 @@ Boundary conditions in which the gradient (and hence the flux) is zero at the ed
 </dd>
 <dt><span id="zipf_law">Zipf’s law</span></dt>
 <dd>
-The empirical regularity (Zipf, 1949) that the <span class="math inline"><em>k</em></span>-th most frequent word in a large corpus appears roughly <span class="math inline">1/<em>k</em></span> times as often as the most frequent word; equivalently, word frequency is approximately proportional to <span class="math inline">1/rank</span>. The resulting distribution has a heavy tail: a few words are extremely common and a large number of words are rare. Used here to generate synthetic text corpora that mimic the statistical properties of natural language.
+The empirical regularity (Zipf, 1949) that the <span class="math inline">\(k\)</span>-th most frequent word in a large corpus appears roughly <span class="math inline">\(1/k\)</span> times as often as the most frequent word; equivalently, word frequency is approximately proportional to <span class="math inline">\(1/\text{rank}\)</span>. The resulting distribution has a heavy tail: a few words are extremely common and a large number of words are rare. Used here to generate synthetic text corpora that mimic the statistical properties of natural language.
 </dd>
 </dl>
 

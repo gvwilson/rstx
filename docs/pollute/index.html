@@ -3,7 +3,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title>Pollutant Spread in a River Network</title>
   <link rel="stylesheet" href="../mccole/mccole-book.css">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer="" src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  var elems = document.getElementsByClassName("math");
+  for (var i = 0; i < elems.length; i++) {
+    var el = elems[i];
+    var tex = el.firstChild;
+    if (el.tagName === "SPAN" && tex) {
+      katex.render(tex.data, el, {
+        displayMode: el.classList.contains("display"),
+        throwOnError: false
+      });
+    }
+  }
+});
+</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js" async=""></script>
 </head>
 <body>
 <header class="topbar">
@@ -81,18 +98,18 @@ Wrong: undirected graphs support weighted edges just as directed graphs do.
 <h2 data-number="4.3" id="the-transport-model"><span class="header-section-number">4.3</span> The Transport Model</h2>
 <ul>
 <li>At each time step, a fraction <code>TRANSPORT_RATE</code> of the concentration at each non-sink node moves downstream</li>
-<li>The remaining fraction <span class="math inline">(1 − TRANSPORT_RATE)</span> stays at the node (representing mixing and retention in the water column)</li>
-<li>For a node <span class="math inline"><em>v</em></span> with upstream neighbours <span class="math inline"><em>u</em><sub>1</sub>, <em>u</em><sub>2</sub>, …</span> each contributing fraction <span class="math inline"><em>f</em><sub><em>k</em></sub></span>, the update rule is:</li>
+<li>The remaining fraction <span class="math inline">\((1 - \text{TRANSPORT\_RATE})\)</span> stays at the node (representing mixing and retention in the water column)</li>
+<li>For a node <span class="math inline">\(v\)</span> with upstream neighbours <span class="math inline">\(u_1, u_2, \ldots\)</span> each contributing fraction <span class="math inline">\(f_k\)</span>, the update rule is:</li>
 </ul>
-<p><span class="math display"><em>c</em><sub><em>v</em></sub><sup><em>n</em> + 1</sup> = (1 − <em>α</em>) <em>c</em><sub><em>v</em></sub><sup><em>n</em></sup> + ∑<sub><em>k</em></sub><em>f</em><sub><em>k</em></sub> <em>c</em><sub><em>u</em><sub><em>k</em></sub></sub><sup><em>n</em></sup></span></p>
+<p><span class="math display">\[c_v^{n+1} = (1 - \alpha)\,c_v^n + \sum_k f_k\,c_{u_k}^n\]</span></p>
 <ul>
-<li><span class="math inline"><em>α</em> = TRANSPORT_RATE</span> and <span class="math inline"><em>f</em><sub><em>k</em></sub> = <em>α</em>/(number of downstream neighbours of <em>u</em><sub><em>k</em></sub>)</span></li>
-<li>When a node drains into a single successor, <span class="math inline"><em>f</em><sub><em>k</em></sub> = <em>α</em></span></li>
-<li>When a node splits equally among two successors, each receives <span class="math inline"><em>α</em>/2</span></li>
+<li><span class="math inline">\(\alpha = \text{TRANSPORT\_RATE}\)</span> and <span class="math inline">\(f_k = \alpha / \text{(number of downstream neighbours of } u_k\text{)}\)</span></li>
+<li>When a node drains into a single successor, <span class="math inline">\(f_k = \alpha\)</span></li>
+<li>When a node splits equally among two successors, each receives <span class="math inline">\(\alpha / 2\)</span></li>
 </ul>
 <h2 data-number="4.4" id="building-the-upstream-table"><span class="header-section-number">4.4</span> Building the Upstream Table</h2>
 <ul>
-<li>Rather than building a matrix, we pre-compute the list of <span class="math inline">(<em>u</em>, <em>f</em>)</span> pairs for each node <span class="math inline"><em>v</em></span>, where <span class="math inline"><em>u</em></span> is an upstream neighbour and <span class="math inline"><em>f</em></span> is the fraction of <span class="math inline"><em>u</em></span>’s concentration that flows into <span class="math inline"><em>v</em></span></li>
+<li>Rather than building a matrix, we pre-compute the list of <span class="math inline">\((u, f)\)</span> pairs for each node <span class="math inline">\(v\)</span>, where <span class="math inline">\(u\)</span> is an upstream neighbour and <span class="math inline">\(f\)</span> is the fraction of <span class="math inline">\(u\)</span>’s concentration that flows into <span class="math inline">\(v\)</span></li>
 <li>This list is empty for headwater nodes (no upstream neighbours) and for isolated nodes</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
@@ -129,7 +146,7 @@ Wrong: 1.0 would mean all concentration moves downstream and none is retained.
 <h2 data-number="4.5" id="running-the-simulation"><span class="header-section-number">4.5</span> Running the Simulation</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
-<li>For each time step and each node <span class="math inline"><em>v</em></span>, <code>retained</code> is the fraction staying put and <code>inflow</code> is the sum of fractions arriving from upstream neighbours</li>
+<li>For each time step and each node <span class="math inline">\(v\)</span>, <code>retained</code> is the fraction staying put and <code>inflow</code> is the sum of fractions arriving from upstream neighbours</li>
 <li>The loop saves a snapshot every <code>SNAPSHOT_INTERVAL</code> steps so that only a small table is stored</li>
 </ul>
 <h2 data-number="4.6" id="visualizing-the-results"><span class="header-section-number">4.6</span> Visualizing the Results</h2>
@@ -150,7 +167,7 @@ Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pu
 <ul>
 <li>At every step, each unit of concentration is either retained at its node or forwarded to a downstream neighbour.</li>
 <li>No mass is created or destroyed, so the sum over all nodes must equal 1.0 throughout.</li>
-<li>Floating-point addition of 5 small numbers over 20 steps introduces rounding of at most <span class="math inline">10<sup>−12</sup></span>.</li>
+<li>Floating-point addition of 5 small numbers over 20 steps introduces rounding of at most <span class="math inline">\(10^{-12}\)</span>.</li>
 </ul></li>
 <li>Non-negativity
 <ul>
@@ -159,13 +176,13 @@ Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pu
 </ul></li>
 <li>Monotone decay at the spill node
 <ul>
-<li><code>upstream_a</code> has no upstream neighbours, so each step it retains only <span class="math inline">(1 − <em>α</em>)</span> of whatever it holds.</li>
-<li>Starting from <span class="math inline"><em>c</em><sub>0</sub> = 1</span>, its concentration decays as <span class="math inline">(1 − <em>α</em>)<sup><em>n</em></sup></span>, which is strictly decreasing.</li>
+<li><code>upstream_a</code> has no upstream neighbours, so each step it retains only <span class="math inline">\((1 - \alpha)\)</span> of whatever it holds.</li>
+<li>Starting from <span class="math inline">\(c_0 = 1\)</span>, its concentration decays as <span class="math inline">\((1 - \alpha)^n\)</span>, which is strictly decreasing.</li>
 </ul></li>
 <li>Uncontaminated node stays zero
 <ul>
 <li><code>upstream_b</code> also has no upstream neighbours and starts at zero concentration.</li>
-<li>Each step it retains <span class="math inline">(1 − <em>α</em>) × 0 = 0</span>, so it remains zero throughout.</li>
+<li>Each step it retains <span class="math inline">\((1 - \alpha) \times 0 = 0\)</span>, so it remains zero throughout.</li>
 </ul></li>
 <li>Monotone accumulation at the outlet
 <ul>
@@ -173,7 +190,7 @@ Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pu
 </ul></li>
 <li>Upstream fractions sum to transport rate
 <ul>
-<li>For each non-sink node <span class="math inline"><em>u</em></span> that has downstream successors, the fractions stored in the upstream table must sum to exactly <code>TRANSPORT_RATE</code>, confirming that all transported mass is accounted for</li>
+<li>For each non-sink node <span class="math inline">\(u\)</span> that has downstream successors, the fractions stored in the upstream table must sum to exactly <code>TRANSPORT_RATE</code>, confirming that all transported mass is accounted for</li>
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pollute <span class="im">import</span> (</span>
@@ -302,8 +319,8 @@ Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pu
 <section class="exercises">
 <h2 data-number="4.8" id="exercises"><span class="header-section-number">4.8</span> Exercises</h2>
 <h3 data-number="4.8.1" id="do-the-math"><span class="header-section-number">4.8.1</span> Do the math</h3>
-<p>Starting from <span class="math inline"><em>c</em> = [1, 0, 0, 0, 0]</span> and using <code>TRANSPORT_RATE</code> = 0.4, what is the concentration at <code>junction</code> (node 2) after exactly 2 time steps? Give your answer to two decimal places.</p>
-<p>Hint: trace through the update rule step by step. At step 1, junction receives <span class="math inline">0.4 × <em>c</em><sub>0</sub>[upstream_a]</span> from upstream_a. At step 2, junction retains <span class="math inline">0.6</span> of its step-1 value and receives another inflow from upstream_a.</p>
+<p>Starting from <span class="math inline">\(c = [1, 0, 0, 0, 0]\)</span> and using <code>TRANSPORT_RATE</code> = 0.4, what is the concentration at <code>junction</code> (node 2) after exactly 2 time steps? Give your answer to two decimal places.</p>
+<p>Hint: trace through the update rule step by step. At step 1, junction receives <span class="math inline">\(0.4 \times c_0[\text{upstream\_a}]\)</span> from upstream_a. At step 2, junction retains <span class="math inline">\(0.6\)</span> of its step-1 value and receives another inflow from upstream_a.</p>
 <h3 data-number="4.8.2" id="adding-a-tributary"><span class="header-section-number">4.8.2</span> Adding a tributary</h3>
 <p>Add a sixth node <code>tributary</code> (node 5) that joins at <code>reach</code> (node 3) with edge weight 2.0. Update <code>build_network</code> and rerun the simulation. Does <code>test_mass_conservation</code> still pass? Does the pollutant reach the outlet faster or slower?</p>
 <h3 data-number="4.8.3" id="variable-transport-rate"><span class="header-section-number">4.8.3</span> Variable transport rate</h3>
