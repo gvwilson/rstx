@@ -21,7 +21,14 @@ document.addEventListener("DOMContentLoaded", function () {
     var el = elems[i];
     var tex = el.firstChild;
     if (el.tagName === "SPAN" && tex) {
-      katex.render(tex.data, el, {
+      var text = tex.data;
+      if (text.slice(0, 2) === "\\(" || text.slice(0, 2) === "\\[") {
+        text = text.slice(2);
+      }
+      if (text.slice(-2) === "\\)" || text.slice(-2) === "\\]") {
+        text = text.slice(0, -2);
+      }
+      katex.render(text, el, {
         displayMode: el.classList.contains("display"),
         throwOnError: false
       });
