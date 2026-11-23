@@ -1,565 +1,116 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Flood Frequency Analysis</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>30&nbsp; Flood Frequency Analysis – Research Software Testing by Example</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../survival/index.html" rel="next">
-<link href="../elasticity/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../flood/index.html"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../schelling/index.html">Schelling Segregation Model</a></li><li><a href="../vocab/index.html">Vocabulary Richness in Historical Texts</a></li><li><a href="../pollute/index.html">Pollutant Spread in a River Network</a></li><li><a href="../porous/index.html">Percolation in a Porous Medium</a></li><li><a href="../archcluster/index.html">Spatial Clustering of Archaeological Sites</a></li><li><a href="../leastcost/index.html">Least-Cost Path Analysis for Trade Routes</a></li><li><a href="../align/index.html">Pairwise Sequence Alignment</a></li><li><a href="../authorship/index.html">Authorship Attribution by N-gram Profiles</a></li><li><a href="../stemma/index.html">Manuscript Stemma Reconstruction</a></li><li><a href="../phylo/index.html">Phylogenetic Tree Reconstruction</a></li><li><a href="../vitals/index.html">Anomaly Detection in Patient Vital Signs</a></li><li><a href="../massspec/index.html">Peak Detection in Mass Spectra</a></li><li><a href="../cellseg/index.html">Cell Segmentation in Microscopy Images</a></li><li><a href="../wealth/index.html">Wealth Inequality in an Exchange Economy</a></li><li><a href="../topics/index.html">Topic Modeling a Document Corpus</a></li><li><a href="../sdt/index.html">Signal Detection Theory Analysis</a></li><li><a href="../interp/index.html">Spatial Interpolation of Climate Data</a></li><li><a href="../agreement/index.html">Inter-Rater Agreement</a></li><li><a href="../wordshift/index.html">Word Frequency Change Over Time</a></li><li><a href="../diffusion/index.html">1D Diffusion Simulation</a></li><li><a href="../heatwall/index.html">Heat Conduction Through a Composite Wall</a></li><li><a href="../lotka/index.html">Predator-Prey Dynamics</a></li><li><a href="../sir/index.html">Fitting an SIR Epidemic Model</a></li><li><a href="../mineral/index.html">Mineral Classification by Geochemistry</a></li><li><a href="../tumor/index.html">Tumor Classification by Logistic Regression</a></li><li><a href="../learning/index.html">Fitting a Learning Curve to Experimental Data</a></li><li><a href="../radvel/index.html">Exoplanet Detection via Radial Velocity</a></li><li><a href="../elasticity/index.html">Estimating Price Elasticity of Demand</a></li><li><a href="../flood/index.html">Flood Frequency Analysis</a></li><li><a href="../survival/index.html">Survival Analysis</a></li><li><a href="../breakpoint/index.html">Structural Break Detection in Economic Time Series</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">30.1</span> The Problem</a></li>
+<li><a href="#the-log-normal-distribution" id="toc-the-log-normal-distribution"><span class="header-section-number">30.2</span> The Log-Normal Distribution</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">30.3</span> Generating Synthetic Data</a></li>
+<li><a href="#fitting-by-the-method-of-moments" id="toc-fitting-by-the-method-of-moments"><span class="header-section-number">30.4</span> Fitting by the Method of Moments</a></li>
+<li><a href="#return-periods" id="toc-return-periods"><span class="header-section-number">30.5</span> Return Periods</a></li>
+<li><a href="#normal-probability-plot" id="toc-normal-probability-plot"><span class="header-section-number">30.6</span> Normal Probability Plot</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">30.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">30.8</span> Exercises</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Research Software Testing by Example</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../flood/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">30.1</span> The Problem</a></li>
-  <li><a href="#the-log-normal-distribution" id="toc-the-log-normal-distribution" class="nav-link" data-scroll-target="#the-log-normal-distribution"><span class="header-section-number">30.2</span> The Log-Normal Distribution</a></li>
-  <li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data" class="nav-link" data-scroll-target="#generating-synthetic-data"><span class="header-section-number">30.3</span> Generating Synthetic Data</a></li>
-  <li><a href="#fitting-by-the-method-of-moments" id="toc-fitting-by-the-method-of-moments" class="nav-link" data-scroll-target="#fitting-by-the-method-of-moments"><span class="header-section-number">30.4</span> Fitting by the Method of Moments</a></li>
-  <li><a href="#return-periods" id="toc-return-periods" class="nav-link" data-scroll-target="#return-periods"><span class="header-section-number">30.5</span> Return Periods</a></li>
-  <li><a href="#normal-probability-plot" id="toc-normal-probability-plot" class="nav-link" data-scroll-target="#normal-probability-plot"><span class="header-section-number">30.6</span> Normal Probability Plot</a></li>
-  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">30.7</span> Testing</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">30.8</span> Exercises</a>
-  <ul class="collapse">
-  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">30.8.1</span> Do the math</a></li>
-  <li><a href="#confidence-intervals-by-bootstrap" id="toc-confidence-intervals-by-bootstrap" class="nav-link" data-scroll-target="#confidence-intervals-by-bootstrap"><span class="header-section-number">30.8.2</span> Confidence intervals by bootstrap</a></li>
-  <li><a href="#hazen-plotting-positions" id="toc-hazen-plotting-positions" class="nav-link" data-scroll-target="#hazen-plotting-positions"><span class="header-section-number">30.8.3</span> Hazen plotting positions</a></li>
-  <li><a href="#comparing-distributions" id="toc-comparing-distributions" class="nav-link" data-scroll-target="#comparing-distributions"><span class="header-section-number">30.8.4</span> Comparing distributions</a></li>
-  <li><a href="#annual-maxima-from-daily-data" id="toc-annual-maxima-from-daily-data" class="nav-link" data-scroll-target="#annual-maxima-from-daily-data"><span class="header-section-number">30.8.5</span> Annual maxima from daily data</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/flood/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/flood/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="the-problem" class="level2" data-number="30.1">
-<h2 data-number="30.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">30.1</span> The Problem</h2>
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">Flood Frequency Analysis</h1>
+<h2 data-number="30.1" id="the-problem"><span class="header-section-number">30.1</span> The Problem</h2>
 <ul>
 <li>Infrastructure such must be designed to withstand rare but extreme floods</li>
 <li>Engineers specify design events by <a href="../glossary/index.html#return_period">return period</a>: the average number of years between events that exceed a given magnitude</li>
 <li>A 100-year flood does not occur once per century on a schedule: it has a 1% probability of being exceeded in any given year</li>
 <li>Estimating these probabilities from historical records by fitting a statistical distribution to the annual maximum flows</li>
 </ul>
-</section>
-<section id="the-log-normal-distribution" class="level2" data-number="30.2">
-<h2 data-number="30.2" class="anchored" data-anchor-id="the-log-normal-distribution"><span class="header-section-number">30.2</span> The Log-Normal Distribution</h2>
+<h2 data-number="30.2" id="the-log-normal-distribution"><span class="header-section-number">30.2</span> The Log-Normal Distribution</h2>
 <ul>
 <li>Annual maximum flows are positive and right-skewed, so a <a href="../glossary/index.html#log_normal_distribution">log-normal distribution</a> is a natural starting point</li>
-<li>A random variable <span class="math inline">\(X\)</span> is log-normally distributed if <span class="math inline">\(Y = \ln X\)</span> follows a normal distribution</li>
+<li>A random variable <span class="math inline"><em>X</em></span> is log-normally distributed if <span class="math inline"><em>Y</em> = ln <em>X</em></span> follows a normal distribution</li>
 <li>The log-normal distribution is characterised by two parameters:
 <ul>
-<li><span class="math inline">\(\mu_y\)</span> (the mean of <span class="math inline">\(\ln X\)</span>)</li>
-<li><span class="math inline">\(\sigma_y &gt; 0\)</span> (the standard deviation of <span class="math inline">\(\ln X\)</span>)</li>
+<li><span class="math inline"><em>μ</em><sub><em>y</em></sub></span> (the mean of <span class="math inline">ln <em>X</em></span>)</li>
+<li><span class="math inline"><em>σ</em><sub><em>y</em></sub> &gt; 0</span> (the standard deviation of <span class="math inline">ln <em>X</em></span>)</li>
 </ul></li>
-<li>If <span class="math inline">\(\Phi\)</span> is the standard normal CDF, the log-normal’s cumulative distribution function is:</li>
+<li>If <span class="math inline"><em>Φ</em></span> is the standard normal CDF, the log-normal’s cumulative distribution function is:</li>
 </ul>
-<p><span class="math display">\[F(x) = \Phi\!\left(\frac{\ln x - \mu_y}{\sigma_y}\right), \quad x &gt; 0\]</span></p>
+<p><span class="math display">$$F(x) = \Phi\!\left(\frac{\ln x - \mu_y}{\sigma_y}\right), \quad x &gt; 0$$</span></p>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>A dataset of 50 annual maximum flows has sample mean log-flow <span class="math inline">\(\bar{y} = 4.80\)</span> and sample standard deviation of log-flows <span class="math inline">\(s_y = 0.40\)</span>. Using the log-normal model, what is <span class="math inline">\(\hat{\mu}_y\)</span>?</p>
+<p>A dataset of 50 annual maximum flows has sample mean log-flow <span class="math inline"><em>ȳ</em> = 4.80</span> and sample standard deviation of log-flows <span class="math inline"><em>s</em><sub><em>y</em></sub> = 0.40</span>. Using the log-normal model, what is <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span>?</p>
 <dl>
 <dt>4.80</dt>
 <dd>
-Correct: the method-of-moments estimate of <span class="math inline">\(\mu_y\)</span> is simply the sample mean of the log-flows.
+Correct: the method-of-moments estimate of <span class="math inline"><em>μ</em><sub><em>y</em></sub></span> is simply the sample mean of the log-flows.
 </dd>
 <dt>0.40</dt>
 <dd>
-Wrong: 0.40 is <span class="math inline">\(s_y\)</span>, the estimate of <span class="math inline">\(\sigma_y\)</span>, not of <span class="math inline">\(\mu_y\)</span>.
+Wrong: 0.40 is <span class="math inline"><em>s</em><sub><em>y</em></sub></span>, the estimate of <span class="math inline"><em>σ</em><sub><em>y</em></sub></span>, not of <span class="math inline"><em>μ</em><sub><em>y</em></sub></span>.
 </dd>
-<dt><span class="math inline">\(e^{4.80} \approx 121\)</span></dt>
+<dt><span class="math inline"><em>e</em><sup>4.80</sup> ≈ 121</span></dt>
 <dd>
-Wrong: exponentiating <span class="math inline">\(\bar{y}\)</span> gives the estimated median flow in m^3/s, not the log-mean parameter.
+Wrong: exponentiating <span class="math inline"><em>ȳ</em></span> gives the estimated median flow in m^3/s, not the log-mean parameter.
 </dd>
-<dt><span class="math inline">\(4.80 / 0.40 = 12\)</span></dt>
+<dt><span class="math inline">4.80/0.40 = 12</span></dt>
 <dd>
 Wrong: dividing the log-mean by the log-standard-deviation has no statistical interpretation here.
 </dd>
 </dl>
 </div>
-</section>
-<section id="generating-synthetic-data" class="level2" data-number="30.3">
-<h2 data-number="30.3" class="anchored" data-anchor-id="generating-synthetic-data"><span class="header-section-number">30.3</span> Generating Synthetic Data</h2>
+<h2 data-number="30.3" id="generating-synthetic-data"><span class="header-section-number">30.3</span> Generating Synthetic Data</h2>
 <ul>
 <li>We draw 50 years of annual maximum flows from a known log-normal distribution so that we can verify our estimator</li>
-<li>Drawing <span class="math inline">\(Y \sim \text{Normal}(\mu_y, \sigma_y)\)</span> and setting <span class="math inline">\(X = e^Y\)</span> gives <span class="math inline">\(X \sim \text{LogNormal}(\mu_y, \sigma_y)\)</span></li>
+<li>Drawing <span class="math inline"><em>Y</em> ∼ Normal(<em>μ</em><sub><em>y</em></sub>, <em>σ</em><sub><em>y</em></sub>)</span> and setting <span class="math inline"><em>X</em> = <em>e</em><sup><em>Y</em></sup></span> gives <span class="math inline"><em>X</em> ∼ LogNormal(<em>μ</em><sub><em>y</em></sub>, <em>σ</em><sub><em>y</em></sub>)</span></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="fitting-by-the-method-of-moments" class="level2" data-number="30.4">
-<h2 data-number="30.4" class="anchored" data-anchor-id="fitting-by-the-method-of-moments"><span class="header-section-number">30.4</span> Fitting by the Method of Moments</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="30.4" id="fitting-by-the-method-of-moments"><span class="header-section-number">30.4</span> Fitting by the Method of Moments</h2>
 <ul>
 <li>The <a href="../glossary/index.html#method_of_moments">method of moments</a> sets the distribution’s theoretical moments equal to the sample moments and solves for the parameters</li>
-<li>For the log-normal distribution the moments of <span class="math inline">\(Y = \ln X\)</span> are exactly <span class="math inline">\(\mu_y\)</span> and <span class="math inline">\(\sigma_y\)</span>, so the estimates are:</li>
+<li>For the log-normal distribution the moments of <span class="math inline"><em>Y</em> = ln <em>X</em></span> are exactly <span class="math inline"><em>μ</em><sub><em>y</em></sub></span> and <span class="math inline"><em>σ</em><sub><em>y</em></sub></span>, so the estimates are:</li>
 </ul>
-<p><span class="math display">\[\hat{\mu}_y = \bar{y} = \frac{1}{n}\sum_{i=1}^n \ln x_i \qquad \hat{\sigma}_y = s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (\ln x_i - \bar{y})^2}\]</span></p>
+<p><span class="math display">$$\hat{\mu}_y = \bar{y} = \frac{1}{n}\sum_{i=1}^n \ln x_i \qquad \hat{\sigma}_y = s_y = \sqrt{\frac{1}{n-1}\sum_{i=1}^n (\ln x_i - \bar{y})^2}$$</span></p>
 <ul>
-<li>Here, the <span class="math inline">\(n-1\)</span> denominator applies <a href="../glossary/index.html#bessel_correction">Bessel's correction</a> for the sample standard deviation</li>
+<li>Here, the <span class="math inline"><em>n</em> − 1</span> denominator applies <a href="../glossary/index.html#bessel_correction">Bessel's correction</a> for the sample standard deviation</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps in the correct order for method-of-moments estimation of log-normal parameters.</p>
 <ol type="1">
-<li>Take the natural logarithm of each annual maximum flow to get <span class="math inline">\(y_i = \ln x_i\)</span></li>
-<li>Compute <span class="math inline">\(\hat{\mu}_y = \bar{y}\)</span>, the sample mean of the log-flows</li>
-<li>Compute <span class="math inline">\(\hat{\sigma}_y = s_y\)</span>, the sample standard deviation of the log-flows (with <span class="math inline">\(n-1\)</span> denominator)</li>
-<li>Use <span class="math inline">\(\hat{\mu}_y\)</span> and <span class="math inline">\(\hat{\sigma}_y\)</span> to compute return levels or plot the fitted distribution</li>
+<li>Take the natural logarithm of each annual maximum flow to get <span class="math inline"><em>y</em><sub><em>i</em></sub> = ln <em>x</em><sub><em>i</em></sub></span></li>
+<li>Compute <span class="math inline"><em>μ̂</em><sub><em>y</em></sub> = <em>ȳ</em></span>, the sample mean of the log-flows</li>
+<li>Compute <span class="math inline"><em>σ̂</em><sub><em>y</em></sub> = <em>s</em><sub><em>y</em></sub></span>, the sample standard deviation of the log-flows (with <span class="math inline"><em>n</em> − 1</span> denominator)</li>
+<li>Use <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span> and <span class="math inline"><em>σ̂</em><sub><em>y</em></sub></span> to compute return levels or plot the fitted distribution</li>
 </ol>
 </div>
-</section>
-<section id="return-periods" class="level2" data-number="30.5">
-<h2 data-number="30.5" class="anchored" data-anchor-id="return-periods"><span class="header-section-number">30.5</span> Return Periods</h2>
+<h2 data-number="30.5" id="return-periods"><span class="header-section-number">30.5</span> Return Periods</h2>
 <ul>
-<li>The <span class="math inline">\(T\)</span>-year return level <span class="math inline">\(x_T\)</span> is the flow magnitude exceeded with probability <span class="math inline">\(1/T\)</span> in any given year.</li>
-<li>Setting <span class="math inline">\(F(x_T) = 1 - 1/T\)</span> and inverting the log-normal CDF:</li>
+<li>The <span class="math inline"><em>T</em></span>-year return level <span class="math inline"><em>x</em><sub><em>T</em></sub></span> is the flow magnitude exceeded with probability <span class="math inline">1/<em>T</em></span> in any given year.</li>
+<li>Setting <span class="math inline"><em>F</em>(<em>x</em><sub><em>T</em></sub>) = 1 − 1/<em>T</em></span> and inverting the log-normal CDF:</li>
 </ul>
-<p><span class="math display">\[x_T = \exp\!\left(\hat{\mu}_y + z_p\, \hat{\sigma}_y\right), \quad p = 1 - \frac{1}{T}\]</span></p>
+<p><span class="math display">$$x_T = \exp\!\left(\hat{\mu}_y + z_p\, \hat{\sigma}_y\right), \quad p = 1 - \frac{1}{T}$$</span></p>
 <ul>
-<li>Here, <span class="math inline">\(z_p = \Phi^{-1}(p)\)</span> is the standard normal quantile at probability <span class="math inline">\(p\)</span>, computed with <code>scipy.stats.norm.ppf</code>.</li>
+<li>Here, <span class="math inline"><em>z</em><sub><em>p</em></sub> = <em>Φ</em><sup>−1</sup>(<em>p</em>)</span> is the standard normal quantile at probability <span class="math inline"><em>p</em></span>, computed with <code>scipy.stats.norm.ppf</code>.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>A community’s flood barrier is designed for the 100-year return level. Over the next 100 years, what is the probability that the barrier is overtopped at least once?</p>
 <dl>
@@ -581,52 +132,48 @@ Wrong: the return period T such that P(at least one exceedance in T years) = 0.5
 </dd>
 </dl>
 </div>
-</section>
-<section id="normal-probability-plot" class="level2" data-number="30.6">
-<h2 data-number="30.6" class="anchored" data-anchor-id="normal-probability-plot"><span class="header-section-number">30.6</span> Normal Probability Plot</h2>
+<h2 data-number="30.6" id="normal-probability-plot"><span class="header-section-number">30.6</span> Normal Probability Plot</h2>
 <ul>
 <li>Plotting data on a normal probability plot (<a href="../glossary/index.html#q_q_plot">Q-Q plot</a>) provides a visual check on whether the log-normal distribution fits</li>
-<li>The <a href="../glossary/index.html#weibull_plotting_position">Weibull plotting position</a> <span class="math inline">\(p_i = i/(n+1)\)</span> assigns a non-exceedance probability to each ranked observation without assuming a specific distribution</li>
-<li>The theoretical normal quantile <span class="math inline">\(z_i = \Phi^{-1}(p_i)\)</span> linearises the log-normal CDF: if <span class="math inline">\(\ln X\)</span> is normally distributed, plotting <span class="math inline">\((z_i, \ln x_{(i)})\)</span> gives a straight line</li>
+<li>The <a href="../glossary/index.html#weibull_plotting_position">Weibull plotting position</a> <span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1)</span> assigns a non-exceedance probability to each ranked observation without assuming a specific distribution</li>
+<li>The theoretical normal quantile <span class="math inline"><em>z</em><sub><em>i</em></sub> = <em>Φ</em><sup>−1</sup>(<em>p</em><sub><em>i</em></sub>)</span> linearises the log-normal CDF: if <span class="math inline">ln <em>X</em></span> is normally distributed, plotting <span class="math inline">(<em>z</em><sub><em>i</em></sub>, ln <em>x</em><sub>(<em>i</em>)</sub>)</span> gives a straight line</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="fig-flood-probability-paper" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot of ln(annual maximum flow) vs. standard normal quantile, with a fitted red line. Points follow the line closely.">
-<figure class="quarto-float quarto-float-fig figure">
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div id="fig-flood-probability-paper" class="quarto-float quarto-figure quarto-figure-center" alt="Scatter plot of ln(annual maximum flow) vs. standard normal quantile, with a fitted red line. Points follow the line closely.">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-flood-probability-paper-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="flood.svg" class="img-fluid figure-img" alt="Scatter plot of ln(annual maximum flow) vs. standard normal quantile, with a fitted red line. Points follow the line closely.">
+<img src="flood.svg" alt="Scatter plot of ln(annual maximum flow) vs. standard normal quantile, with a fitted red line. Points follow the line closely.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-flood-probability-paper-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;30.1: Normal probability plot of log-flows. Points are ranked log-observations; the red line is the fitted log-normal distribution. Departures from the line indicate that the log-normal model may not fit.
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="testing" class="level2" data-number="30.7">
-<h2 data-number="30.7" class="anchored" data-anchor-id="testing"><span class="header-section-number">30.7</span> Testing</h2>
+<h2 data-number="30.7" id="testing"><span class="header-section-number">30.7</span> Testing</h2>
 <ul>
 <li>Parameter recovery on a large sample
 <ul>
-<li>With <span class="math inline">\(n = 10\,000\)</span> the central-limit theorem says that the standard error of <span class="math inline">\(\hat{\mu}_y\)</span> is roughly <span class="math inline">\(\sigma_y / \sqrt{n} \approx 0.004\)</span>, well under 1%</li>
-<li>A relative tolerance of 5% gives a safety factor of <span class="math inline">\(\sim 50\)</span> over the expected sampling error</li>
+<li>With <span class="math inline"><em>n</em> = 10 000</span> the central-limit theorem says that the standard error of <span class="math inline"><em>μ̂</em><sub><em>y</em></sub></span> is roughly <span class="math inline">$\sigma_y / \sqrt{n} \approx 0.004$</span>, well under 1%</li>
+<li>A relative tolerance of 5% gives a safety factor of <span class="math inline"> ∼ 50</span> over the expected sampling error</li>
 </ul></li>
 <li>Monotone return levels
 <ul>
-<li>The log-normal quantile <span class="math inline">\(x_T = \exp(\mu_y + z_p \sigma_y)\)</span> is strictly increasing in <span class="math inline">\(T\)</span> because <span class="math inline">\(\sigma_y &gt; 0\)</span> and <span class="math inline">\(z_p = \Phi^{-1}(1 - 1/T)\)</span> is strictly increasing in <span class="math inline">\(T\)</span></li>
+<li>The log-normal quantile <span class="math inline"><em>x</em><sub><em>T</em></sub> = exp (<em>μ</em><sub><em>y</em></sub> + <em>z</em><sub><em>p</em></sub><em>σ</em><sub><em>y</em></sub>)</span> is strictly increasing in <span class="math inline"><em>T</em></span> because <span class="math inline"><em>σ</em><sub><em>y</em></sub> &gt; 0</span> and <span class="math inline"><em>z</em><sub><em>p</em></sub> = <em>Φ</em><sup>−1</sup>(1 − 1/<em>T</em>)</span> is strictly increasing in <span class="math inline"><em>T</em></span></li>
 <li>Any violation would indicate an error in the formula or the sign conventions</li>
 </ul></li>
 <li>Algebraic consistency
 <ul>
-<li><span class="math inline">\(F(x_T) = 1 - 1/T\)</span> is the definition of the return level</li>
-<li>it must hold to numerical precision (<span class="math inline">\(&lt; 10^{-10}\)</span>)</li>
+<li><span class="math inline"><em>F</em>(<em>x</em><sub><em>T</em></sub>) = 1 − 1/<em>T</em></span> is the definition of the return level</li>
+<li>it must hold to numerical precision (<span class="math inline"> &lt; 10<sup>−10</sup></span>)</li>
 </ul></li>
 <li>Valid plotting positions
 <ul>
-<li><span class="math inline">\(p_i = i/(n+1) \in (0,1)\)</span> guarantees finite normal quantiles</li>
+<li><span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1) ∈ (0, 1)</span> guarantees finite normal quantiles</li>
 <li>sorted log-flows must be non-decreasing</li>
 </ul></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.stats <span class="im">import</span> norm</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_flood <span class="im">import</span> TRUE_MU_LOG, TRUE_SIGMA_LOG, generate</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> flood <span class="im">import</span> (</span>
@@ -634,574 +181,59 @@ Figure&nbsp;30.1: Normal probability plot of log-flows. Points are ranked log-ob
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    plotting_positions,</span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    return_level,</span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Large sample size used for parameter recovery tests.  With N = 10 000 the</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># standard error of the sample mean of log-flows is roughly sigma_y / sqrt(N)</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="co"># ~ 0.4 / 100 = 0.004, so a 5% relative tolerance gives a safety factor of ~50.</span></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>N_LARGE <span class="op">=</span> <span class="dv">10_000</span></span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_fit_lognormal_large_sample():</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw a large log-normal sample and verify that the method-of-moments</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    <span class="co"># estimates are close to the true parameters.</span></span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(<span class="dv">7493418</span>)</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    log_flows <span class="op">=</span> rng.normal(loc<span class="op">=</span>TRUE_MU_LOG, scale<span class="op">=</span>TRUE_SIGMA_LOG, size<span class="op">=</span>N_LARGE)</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> np.exp(log_flows)</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>    mu_y_hat, sigma_y_hat <span class="op">=</span> fit_lognormal(flows)</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(mu_y_hat <span class="op">-</span> TRUE_MU_LOG) <span class="op">/</span> TRUE_MU_LOG <span class="op">&lt;</span> <span class="fl">0.05</span></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(sigma_y_hat <span class="op">-</span> TRUE_SIGMA_LOG) <span class="op">/</span> TRUE_SIGMA_LOG <span class="op">&lt;</span> <span class="fl">0.05</span></span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_return_levels_increase_with_period():</span>
-<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># A T-year flood is rarer and more extreme than a shorter-period flood,</span></span>
-<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># so return levels must be strictly increasing in T.  The log-normal quantile</span></span>
-<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x_T = exp(mu_y + z_p * sigma_y) is strictly increasing in T because</span></span>
-<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sigma_y &gt; 0 and norm.ppf(1 - 1/T) is strictly increasing in T.</span></span>
-<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> generate()[<span class="st">"annual_max_flow"</span>].to_numpy()</span>
-<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    mu_y, sigma_y <span class="op">=</span> fit_lognormal(flows)</span>
-<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> [return_level(mu_y, sigma_y, T) <span class="cf">for</span> T <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>]]</span>
-<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">all</span>(levels[i] <span class="op">&lt;</span> levels[i <span class="op">+</span> <span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(levels) <span class="op">-</span> <span class="dv">1</span>))</span>
-<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_return_level_probability():</span>
-<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># By construction, x_T satisfies F(x_T) = 1 - 1/T under the log-normal CDF.</span></span>
-<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This is an algebraic identity; the residual should be below 1e-10.</span></span>
-<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    mu_y, sigma_y <span class="op">=</span> <span class="fl">4.8</span>, <span class="fl">0.4</span></span>
-<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> <span class="dv">100</span></span>
-<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    x_T <span class="op">=</span> return_level(mu_y, sigma_y, T)</span>
-<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-normal CDF: F(x) = norm.cdf((ln(x) - mu_y) / sigma_y)</span></span>
-<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    p_fitted <span class="op">=</span> norm.cdf((np.log(x_T) <span class="op">-</span> mu_y) <span class="op">/</span> sigma_y)</span>
-<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(p_fitted <span class="op">-</span> (<span class="fl">1.0</span> <span class="op">-</span> <span class="fl">1.0</span> <span class="op">/</span> T)) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
-<span id="cb8-47"><a href="#cb8-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-48"><a href="#cb8-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-49"><a href="#cb8-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_plotting_positions_valid():</span>
-<span id="cb8-50"><a href="#cb8-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Weibull positions i/(n+1) lie in (0, 1), so the normal quantiles are</span></span>
-<span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># always finite.  Sorted log-flows must be non-decreasing.</span></span>
-<span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> generate()[<span class="st">"annual_max_flow"</span>].to_numpy()</span>
-<span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    z, log_q <span class="op">=</span> plotting_positions(flows)</span>
-<span id="cb8-54"><a href="#cb8-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.isfinite(z).<span class="bu">all</span>(), <span class="st">"normal quantiles contain infinite values"</span></span>
-<span id="cb8-55"><a href="#cb8-55" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (np.diff(log_q) <span class="op">&gt;=</span> <span class="dv">0</span>).<span class="bu">all</span>(), <span class="st">"log-flows are not sorted ascending"</span></span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Large sample size used for parameter recovery tests.  With N = 10 000 the</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># standard error of the sample mean of log-flows is roughly sigma_y / sqrt(N)</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ~ 0.4 / 100 = 0.004, so a 5% relative tolerance gives a safety factor of ~50.</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>N_LARGE <span class="op">=</span> <span class="dv">10_000</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_fit_lognormal_large_sample():</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Draw a large log-normal sample and verify that the method-of-moments</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    <span class="co"># estimates are close to the true parameters.</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(<span class="dv">7493418</span>)</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>    log_flows <span class="op">=</span> rng.normal(loc<span class="op">=</span>TRUE_MU_LOG, scale<span class="op">=</span>TRUE_SIGMA_LOG, size<span class="op">=</span>N_LARGE)</span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> np.exp(log_flows)</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    mu_y_hat, sigma_y_hat <span class="op">=</span> fit_lognormal(flows)</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(mu_y_hat <span class="op">-</span> TRUE_MU_LOG) <span class="op">/</span> TRUE_MU_LOG <span class="op">&lt;</span> <span class="fl">0.05</span></span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(sigma_y_hat <span class="op">-</span> TRUE_SIGMA_LOG) <span class="op">/</span> TRUE_SIGMA_LOG <span class="op">&lt;</span> <span class="fl">0.05</span></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_return_levels_increase_with_period():</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># A T-year flood is rarer and more extreme than a shorter-period flood,</span></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># so return levels must be strictly increasing in T.  The log-normal quantile</span></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># x_T = exp(mu_y + z_p * sigma_y) is strictly increasing in T because</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a>    <span class="co"># sigma_y &gt; 0 and norm.ppf(1 - 1/T) is strictly increasing in T.</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> generate()[<span class="st">"annual_max_flow"</span>].to_numpy()</span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>    mu_y, sigma_y <span class="op">=</span> fit_lognormal(flows)</span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>    levels <span class="op">=</span> [return_level(mu_y, sigma_y, T) <span class="cf">for</span> T <span class="kw">in</span> [<span class="dv">2</span>, <span class="dv">10</span>, <span class="dv">50</span>, <span class="dv">100</span>, <span class="dv">500</span>]]</span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">all</span>(levels[i] <span class="op">&lt;</span> levels[i <span class="op">+</span> <span class="dv">1</span>] <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(levels) <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_return_level_probability():</span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># By construction, x_T satisfies F(x_T) = 1 - 1/T under the log-normal CDF.</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>    <span class="co"># This is an algebraic identity; the residual should be below 1e-10.</span></span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>    mu_y, sigma_y <span class="op">=</span> <span class="fl">4.8</span>, <span class="fl">0.4</span></span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>    T <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>    x_T <span class="op">=</span> return_level(mu_y, sigma_y, T)</span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Log-normal CDF: F(x) = norm.cdf((ln(x) - mu_y) / sigma_y)</span></span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>    p_fitted <span class="op">=</span> norm.cdf((np.log(x_T) <span class="op">-</span> mu_y) <span class="op">/</span> sigma_y)</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(p_fitted <span class="op">-</span> (<span class="fl">1.0</span> <span class="op">-</span> <span class="fl">1.0</span> <span class="op">/</span> T)) <span class="op">&lt;</span> <span class="fl">1e-10</span></span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_plotting_positions_valid():</span>
+<span id="cb8-41"><a href="#cb8-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Weibull positions i/(n+1) lie in (0, 1), so the normal quantiles are</span></span>
+<span id="cb8-42"><a href="#cb8-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># always finite.  Sorted log-flows must be non-decreasing.</span></span>
+<span id="cb8-43"><a href="#cb8-43" aria-hidden="true" tabindex="-1"></a>    flows <span class="op">=</span> generate()[<span class="st">"annual_max_flow"</span>].to_numpy()</span>
+<span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    z, log_q <span class="op">=</span> plotting_positions(flows)</span>
+<span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.isfinite(z).<span class="bu">all</span>(), <span class="st">"normal quantiles contain infinite values"</span></span>
+<span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (np.diff(log_q) <span class="op">&gt;=</span> <span class="dv">0</span>).<span class="bu">all</span>(), <span class="st">"log-flows are not sorted ascending"</span></span></code></pre></div>
 <section class="exercises">
-</section>
-<section id="exercises" class="level2" data-number="30.8">
-<h2 data-number="30.8" class="anchored" data-anchor-id="exercises"><span class="header-section-number">30.8</span> Exercises</h2>
-<section id="do-the-math" class="level3" data-number="30.8.1">
-<h3 data-number="30.8.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">30.8.1</span> Do the math</h3>
-<p>Using <span class="math inline">\(\hat{\mu}_y = 4.80\)</span> and <span class="math inline">\(\hat{\sigma}_y = 0.40\)</span>, the standard normal quantile at <span class="math inline">\(p = 0.99\)</span> is <span class="math inline">\(z_{0.99} \approx 2.3263\)</span>. Compute the 100-year return level <span class="math inline">\(x_{100} = \exp(4.80 + 2.3263 \times 0.40)\)</span>. Give your answer in m^3/s, rounded to one decimal place.</p>
-</section>
-<section id="confidence-intervals-by-bootstrap" class="level3" data-number="30.8.2">
-<h3 data-number="30.8.2" class="anchored" data-anchor-id="confidence-intervals-by-bootstrap"><span class="header-section-number">30.8.2</span> Confidence intervals by bootstrap</h3>
+<h2 data-number="30.8" id="exercises"><span class="header-section-number">30.8</span> Exercises</h2>
+<h3 data-number="30.8.1" id="do-the-math"><span class="header-section-number">30.8.1</span> Do the math</h3>
+<p>Using <span class="math inline"><em>μ̂</em><sub><em>y</em></sub> = 4.80</span> and <span class="math inline"><em>σ̂</em><sub><em>y</em></sub> = 0.40</span>, the standard normal quantile at <span class="math inline"><em>p</em> = 0.99</span> is <span class="math inline"><em>z</em><sub>0.99</sub> ≈ 2.3263</span>. Compute the 100-year return level <span class="math inline"><em>x</em><sub>100</sub> = exp (4.80 + 2.3263 × 0.40)</span>. Give your answer in m^3/s, rounded to one decimal place.</p>
+<h3 data-number="30.8.2" id="confidence-intervals-by-bootstrap"><span class="header-section-number">30.8.2</span> Confidence intervals by bootstrap</h3>
 <p>Estimate 95% confidence intervals for the 100-year return level using the bootstrap: draw 1000 samples of size 50 with replacement from the original data, fit the log-normal distribution to each, and compute the 100-year return level. Report the 2.5th and 97.5th percentiles of the 1000 estimates. How wide is the interval relative to the point estimate?</p>
-</section>
-<section id="hazen-plotting-positions" class="level3" data-number="30.8.3">
-<h3 data-number="30.8.3" class="anchored" data-anchor-id="hazen-plotting-positions"><span class="header-section-number">30.8.3</span> Hazen plotting positions</h3>
-<p>Replace the Weibull plotting position <span class="math inline">\(p_i = i/(n+1)\)</span> with the Hazen position <span class="math inline">\(p_i = (i - 0.5) / n\)</span>, which places each observation at the midpoint of its probability interval. How much do the plotted points shift on the normal probability plot? Does the fitted line change?</p>
-</section>
-<section id="comparing-distributions" class="level3" data-number="30.8.4">
-<h3 data-number="30.8.4" class="anchored" data-anchor-id="comparing-distributions"><span class="header-section-number">30.8.4</span> Comparing distributions</h3>
+<h3 data-number="30.8.3" id="hazen-plotting-positions"><span class="header-section-number">30.8.3</span> Hazen plotting positions</h3>
+<p>Replace the Weibull plotting position <span class="math inline"><em>p</em><sub><em>i</em></sub> = <em>i</em>/(<em>n</em> + 1)</span> with the Hazen position <span class="math inline"><em>p</em><sub><em>i</em></sub> = (<em>i</em> − 0.5)/<em>n</em></span>, which places each observation at the midpoint of its probability interval. How much do the plotted points shift on the normal probability plot? Does the fitted line change?</p>
+<h3 data-number="30.8.4" id="comparing-distributions"><span class="header-section-number">30.8.4</span> Comparing distributions</h3>
 <p>The log-normal is one of several distributions used in hydrology; the Pearson Type III (a three-parameter gamma family) is another common choice. Use <code>scipy.stats.pearson3.fit</code> to fit the Pearson Type III distribution to the log-flows and compare its 100-year return level with the log-normal estimate. Which distribution fits the Q-Q plot more closely?</p>
-</section>
-<section id="annual-maxima-from-daily-data" class="level3" data-number="30.8.5">
-<h3 data-number="30.8.5" class="anchored" data-anchor-id="annual-maxima-from-daily-data"><span class="header-section-number">30.8.5</span> Annual maxima from daily data</h3>
-<p>Generate a synthetic series of daily flows for 50 years as the exponent of a first-order autoregressive process: <span class="math inline">\(\ln Q_t = \phi \ln Q_{t-1} + \varepsilon_t\)</span> with <span class="math inline">\(\phi = 0.8\)</span> and <span class="math inline">\(\varepsilon_t \sim \text{Normal}(0, 0.2)\)</span>. Extract the annual maximum from each year. Fit the log-normal distribution to the maxima and plot the result on a normal probability plot. How does the quality of the fit compare to the case where the data were drawn directly from a log-normal distribution?</p>
+<h3 data-number="30.8.5" id="annual-maxima-from-daily-data"><span class="header-section-number">30.8.5</span> Annual maxima from daily data</h3>
+<p>Generate a synthetic series of daily flows for 50 years as the exponent of a first-order autoregressive process: <span class="math inline">ln <em>Q</em><sub><em>t</em></sub> = <em>ϕ</em>ln <em>Q</em><sub><em>t</em> − 1</sub> + <em>ε</em><sub><em>t</em></sub></span> with <span class="math inline"><em>ϕ</em> = 0.8</span> and <span class="math inline"><em>ε</em><sub><em>t</em></sub> ∼ Normal(0, 0.2)</span>. Extract the annual maximum from each year. Fit the log-normal distribution to the maxima and plot the result on a normal probability plot. How does the quality of the fit compare to the case where the data were drawn directly from a log-normal distribution?</p>
 </section>
 
-
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../elasticity/index.html" class="pagination-link" aria-label="Estimating Price Elasticity of Demand">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../survival/index.html" class="pagination-link" aria-label="Survival Analysis">
-        <span class="nav-page-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
+</main>
 
 
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/flood/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/flood/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

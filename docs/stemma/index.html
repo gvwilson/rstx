@@ -1,483 +1,42 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Manuscript Stemma Reconstruction</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>10&nbsp; Manuscript Stemma Reconstruction – Research Software Testing by Example</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../phylo/index.html" rel="next">
-<link href="../authorship/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../stemma/index.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../schelling/index.html">Schelling Segregation Model</a></li><li><a href="../vocab/index.html">Vocabulary Richness in Historical Texts</a></li><li><a href="../pollute/index.html">Pollutant Spread in a River Network</a></li><li><a href="../porous/index.html">Percolation in a Porous Medium</a></li><li><a href="../archcluster/index.html">Spatial Clustering of Archaeological Sites</a></li><li><a href="../leastcost/index.html">Least-Cost Path Analysis for Trade Routes</a></li><li><a href="../align/index.html">Pairwise Sequence Alignment</a></li><li><a href="../authorship/index.html">Authorship Attribution by N-gram Profiles</a></li><li><a href="../stemma/index.html">Manuscript Stemma Reconstruction</a></li><li><a href="../phylo/index.html">Phylogenetic Tree Reconstruction</a></li><li><a href="../vitals/index.html">Anomaly Detection in Patient Vital Signs</a></li><li><a href="../massspec/index.html">Peak Detection in Mass Spectra</a></li><li><a href="../cellseg/index.html">Cell Segmentation in Microscopy Images</a></li><li><a href="../wealth/index.html">Wealth Inequality in an Exchange Economy</a></li><li><a href="../topics/index.html">Topic Modeling a Document Corpus</a></li><li><a href="../sdt/index.html">Signal Detection Theory Analysis</a></li><li><a href="../interp/index.html">Spatial Interpolation of Climate Data</a></li><li><a href="../agreement/index.html">Inter-Rater Agreement</a></li><li><a href="../wordshift/index.html">Word Frequency Change Over Time</a></li><li><a href="../diffusion/index.html">1D Diffusion Simulation</a></li><li><a href="../heatwall/index.html">Heat Conduction Through a Composite Wall</a></li><li><a href="../lotka/index.html">Predator-Prey Dynamics</a></li><li><a href="../sir/index.html">Fitting an SIR Epidemic Model</a></li><li><a href="../mineral/index.html">Mineral Classification by Geochemistry</a></li><li><a href="../tumor/index.html">Tumor Classification by Logistic Regression</a></li><li><a href="../learning/index.html">Fitting a Learning Curve to Experimental Data</a></li><li><a href="../radvel/index.html">Exoplanet Detection via Radial Velocity</a></li><li><a href="../elasticity/index.html">Estimating Price Elasticity of Demand</a></li><li><a href="../flood/index.html">Flood Frequency Analysis</a></li><li><a href="../survival/index.html">Survival Analysis</a></li><li><a href="../breakpoint/index.html">Structural Break Detection in Economic Time Series</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">10.1</span> The Problem</a></li>
+<li><a href="#variant-loci-and-hamming-distance" id="toc-variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</a></li>
+<li><a href="#distance-matrix-for-the-reference-stemma" id="toc-distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</a></li>
+<li><a href="#the-upgma-algorithm" id="toc-the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</a></li>
+<li><a href="#a-worked-example" id="toc-a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</a></li>
+<li><a href="#hamming-distance-function" id="toc-hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</a></li>
+<li><a href="#visualizing-the-stemma" id="toc-visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</a></li>
+<li><a href="#generating-synthetic-manuscripts" id="toc-generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">10.9</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">10.10</span> Exercises</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Research Software Testing by Example</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">10.1</span> The Problem</a></li>
-  <li><a href="#variant-loci-and-hamming-distance" id="toc-variant-loci-and-hamming-distance" class="nav-link" data-scroll-target="#variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</a></li>
-  <li><a href="#distance-matrix-for-the-reference-stemma" id="toc-distance-matrix-for-the-reference-stemma" class="nav-link" data-scroll-target="#distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</a></li>
-  <li><a href="#the-upgma-algorithm" id="toc-the-upgma-algorithm" class="nav-link" data-scroll-target="#the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</a></li>
-  <li><a href="#a-worked-example" id="toc-a-worked-example" class="nav-link" data-scroll-target="#a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</a></li>
-  <li><a href="#hamming-distance-function" id="toc-hamming-distance-function" class="nav-link" data-scroll-target="#hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</a></li>
-  <li><a href="#visualizing-the-stemma" id="toc-visualizing-the-stemma" class="nav-link" data-scroll-target="#visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</a></li>
-  <li><a href="#generating-synthetic-manuscripts" id="toc-generating-synthetic-manuscripts" class="nav-link" data-scroll-target="#generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</a></li>
-  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">10.9</span> Testing</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">10.10</span> Exercises</a>
-  <ul class="collapse">
-  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">10.10.1</span> Do the math</a></li>
-  <li><a href="#hamming-distance-from-manuscript-sequences" id="toc-hamming-distance-from-manuscript-sequences" class="nav-link" data-scroll-target="#hamming-distance-from-manuscript-sequences"><span class="header-section-number">10.10.2</span> Hamming distance from manuscript sequences</a></li>
-  <li><a href="#effect-of-mutation-rate" id="toc-effect-of-mutation-rate" class="nav-link" data-scroll-target="#effect-of-mutation-rate"><span class="header-section-number">10.10.3</span> Effect of mutation rate</a></li>
-  <li><a href="#effect-of-noise-on-upgma" id="toc-effect-of-noise-on-upgma" class="nav-link" data-scroll-target="#effect-of-noise-on-upgma"><span class="header-section-number">10.10.4</span> Effect of noise on UPGMA</a></li>
-  <li><a href="#adding-a-contaminated-manuscript" id="toc-adding-a-contaminated-manuscript" class="nav-link" data-scroll-target="#adding-a-contaminated-manuscript"><span class="header-section-number">10.10.5</span> Adding a contaminated manuscript</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/stemma/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/stemma/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="the-problem" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">10.1</span> The Problem</h2>
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">Manuscript Stemma Reconstruction</h1>
+<h2 data-number="10.1" id="the-problem"><span class="header-section-number">10.1</span> The Problem</h2>
 <ul>
 <li>A historical text often survives in multiple manuscript copies, each introduced by scribes who occasionally made errors, omitted passages, or substituted words.</li>
 <li>A <a href="../glossary/index.html#stemma">stemma</a> is the family tree of those copies: it shows which manuscripts descend from which others and reconstructs lost intermediate ancestors.</li>
@@ -510,30 +69,26 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </dd>
 </dl>
 </div>
-</section>
-<section id="variant-loci-and-hamming-distance" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</h2>
+<h2 data-number="10.2" id="variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</h2>
 <ul>
 <li>A variant locus is a specific position in a manuscript where at least one copy reads differently from the others.</li>
 <li>We represent each manuscript as a binary sequence: 0 if the reading at a locus matches the <a href="../glossary/index.html#archetype">archetype</a>, 1 if it has been corrupted.</li>
 <li>The Hamming distance between two manuscripts is the fraction of loci where they disagree:</li>
 </ul>
-<p><span class="math display">\[D(A, B) = \frac{\text{number of loci where } A \neq B}{\text{total loci}}\]</span></p>
+<p><span class="math display">$$D(A, B) = \frac{\text{number of loci where } A \neq B}{\text{total loci}}$$</span></p>
 <ul>
 <li>Manuscripts that share a common intermediate ancestor will have a smaller Hamming distance to each other than to manuscripts from a different family, because they share inherited variants in addition to their unique ones.</li>
 </ul>
-</section>
-<section id="distance-matrix-for-the-reference-stemma" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</h2>
+<h2 data-number="10.3" id="distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</h2>
 <ul>
 <li>The reference stemma is:</li>
 </ul>
-<p><span class="math display">\[((A:0.05,\ B:0.03):0.07,\ (C:0.06,\ D:0.04):0.05)\]</span></p>
+<p><span class="math display">((<em>A</em> : 0.05,&nbsp;<em>B</em> : 0.03) : 0.07,&nbsp;(<em>C</em> : 0.06,&nbsp;<em>D</em> : 0.04) : 0.05)</span></p>
 <ul>
 <li>Manuscripts A and B share intermediate ancestor alpha, which is separated from the archetype by 0.07. C and D share beta, separated from the archetype by 0.05.</li>
 <li>Pairwise distances are sums of branch lengths along the path between each pair.</li>
 </ul>
-<table class="caption-top table">
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>Pair</th>
@@ -567,33 +122,29 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tr>
 </tbody>
 </table>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="the-upgma-algorithm" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</h2>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="10.4" id="the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</h2>
 <ul>
 <li>UPGMA (Unweighted Pair-Group Method with Arithmetic means) builds a rooted tree by iteratively merging the pair of nodes with the smallest pairwise distance.</li>
 <li>At each step:
 <ul>
-<li>Find the pair <span class="math inline">\((i, j)\)</span> with the smallest <span class="math inline">\(D(i,j)\)</span>.</li>
-<li>Create an internal node <span class="math inline">\(u\)</span>. Each branch from <span class="math inline">\(u\)</span> has length <span class="math inline">\(D(i,j)/2\)</span>:</li>
+<li>Find the pair <span class="math inline">(<em>i</em>, <em>j</em>)</span> with the smallest <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)</span>.</li>
+<li>Create an internal node <span class="math inline"><em>u</em></span>. Each branch from <span class="math inline"><em>u</em></span> has length <span class="math inline"><em>D</em>(<em>i</em>, <em>j</em>)/2</span>:</li>
 </ul></li>
 </ul>
-<p><span class="math display">\[\ell_i = \ell_j = \frac{D(i,j)}{2}\]</span></p>
+<p><span class="math display">$$\ell_i = \ell_j = \frac{D(i,j)}{2}$$</span></p>
 <ul>
-<li>Replace <span class="math inline">\(i\)</span> and <span class="math inline">\(j\)</span> with <span class="math inline">\(u\)</span>. Distance from <span class="math inline">\(u\)</span> to any remaining taxon <span class="math inline">\(k\)</span> is the average:</li>
+<li>Replace <span class="math inline"><em>i</em></span> and <span class="math inline"><em>j</em></span> with <span class="math inline"><em>u</em></span>. Distance from <span class="math inline"><em>u</em></span> to any remaining taxon <span class="math inline"><em>k</em></span> is the average:</li>
 </ul>
-<p><span class="math display">\[D(u,k) = \frac{D(i,k) + D(j,k)}{2}\]</span></p>
+<p><span class="math display">$$D(u,k) = \frac{D(i,k) + D(j,k)}{2}$$</span></p>
 <ul>
 <li>Repeat until two nodes remain, then join them with an edge equal to the remaining distance.</li>
 <li>UPGMA assumes a constant rate of scribal error across all manuscripts (analogous to the molecular clock in phylogenetics). The neighbor-joining algorithm relaxes this assumption but requires more advanced mathematics.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="a-worked-example" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</h2>
-<p>Starting with <span class="math inline">\(n = 4\)</span> manuscripts and the distances from the reference stemma:</p>
-<table class="caption-top table">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="10.5" id="a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</h2>
+<p>Starting with <span class="math inline"><em>n</em> = 4</span> manuscripts and the distances from the reference stemma:</p>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th></th>
@@ -634,10 +185,10 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tr>
 </tbody>
 </table>
-<p>Step 1: the minimum distance is <span class="math inline">\(D(A,B) = 0.08\)</span>. Merge A and B into node4. Branch lengths: <span class="math inline">\(\ell_A = \ell_B = 0.08/2 = 0.04\)</span>. Update the matrix using the UPGMA averaging rule:</p>
-<p><span class="math display">\[D(\text{node4}, C) = \frac{0.23 + 0.21}{2} = 0.22\]</span> <span class="math display">\[D(\text{node4}, D) = \frac{0.21 + 0.19}{2} = 0.20\]</span></p>
-<p>The <span class="math inline">\(3 \times 3\)</span> matrix after step 1:</p>
-<table class="caption-top table">
+<p>Step 1: the minimum distance is <span class="math inline"><em>D</em>(<em>A</em>, <em>B</em>) = 0.08</span>. Merge A and B into node4. Branch lengths: <span class="math inline"><em>ℓ</em><sub><em>A</em></sub> = <em>ℓ</em><sub><em>B</em></sub> = 0.08/2 = 0.04</span>. Update the matrix using the UPGMA averaging rule:</p>
+<p><span class="math display">$$D(\text{node4}, C) = \frac{0.23 + 0.21}{2} = 0.22$$</span> <span class="math display">$$D(\text{node4}, D) = \frac{0.21 + 0.19}{2} = 0.20$$</span></p>
+<p>The <span class="math inline">3 × 3</span> matrix after step 1:</p>
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th></th>
@@ -667,11 +218,11 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tr>
 </tbody>
 </table>
-<p>Step 2: the minimum distance is <span class="math inline">\(D(C,D) = 0.10\)</span>. Merge C and D into node5. Branch lengths: <span class="math inline">\(\ell_C = \ell_D = 0.10/2 = 0.05\)</span>. Update:</p>
-<p><span class="math display">\[D(\text{node4}, \text{node5}) = \frac{0.22 + 0.20}{2} = 0.21\]</span></p>
-<p>Step 3: two nodes remain (node4 and node5). Join them with the remaining edge of length <span class="math inline">\(0.21\)</span>.</p>
+<p>Step 2: the minimum distance is <span class="math inline"><em>D</em>(<em>C</em>, <em>D</em>) = 0.10</span>. Merge C and D into node5. Branch lengths: <span class="math inline"><em>ℓ</em><sub><em>C</em></sub> = <em>ℓ</em><sub><em>D</em></sub> = 0.10/2 = 0.05</span>. Update:</p>
+<p><span class="math display">$$D(\text{node4}, \text{node5}) = \frac{0.22 + 0.20}{2} = 0.21$$</span></p>
+<p>Step 3: two nodes remain (node4 and node5). Join them with the remaining edge of length <span class="math inline">0.21</span>.</p>
 <p>The recovered edges are:</p>
-<table class="caption-top table">
+<table class="caption-top">
 <thead>
 <tr class="header">
 <th>Edge</th>
@@ -718,36 +269,28 @@ Wrong: D(C, D) = 0.10 is the global minimum and is smaller than both cross-famil
 </dd>
 </dl>
 </div>
-</section>
-<section id="hamming-distance-function" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="visualizing-the-stemma" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="fig-stemma-tree" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
-<figure class="quarto-float quarto-float-fig figure">
+<h2 data-number="10.6" id="hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="10.7" id="visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div id="fig-stemma-tree" class="quarto-float quarto-figure quarto-figure-center" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-stemma-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="stemma-tree.svg" class="img-fluid figure-img" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
+<img src="stemma-tree.svg" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stemma-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example. The two internal (grey) nodes correspond to the lost intermediate ancestors alpha (A–B family) and beta (C–D family). Branch lengths give the fraction of loci that differ along each copying step.
 </figcaption>
 </figure>
 </div>
-</section>
-<section id="generating-synthetic-manuscripts" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</h2>
+<h2 data-number="10.8" id="generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</h2>
 <ul>
 <li>The stochastic generator simulates a known copying tree by propagating random mutations from the archetype through each branch.</li>
 <li>Each locus flips independently with probability <code>MUTATION_PROB = 0.05</code>.</li>
 <li>Only the four surviving manuscripts A, B, C, D are returned; the archetype and intermediate ancestors are not observed.</li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="testing" class="level2" data-number="10.9">
-<h2 data-number="10.9" class="anchored" data-anchor-id="testing"><span class="header-section-number">10.9</span> Testing</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="10.9" id="testing"><span class="header-section-number">10.9</span> Testing</h2>
 <ul>
 <li>Hamming distance edge cases
 <ul>
@@ -768,7 +311,7 @@ Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example
 <li>Branch-length recovery
 <ul>
 <li>With the reference distances, UPGMA assigns branch length 0.04 to each of the A and B edges (half of 0.08), 0.05 to each of the C and D edges (half of 0.10), and 0.21 to the internal edge.</li>
-<li>Tolerance <span class="math inline">\(10^{-10}\)</span> covers only accumulated floating-point rounding.</li>
+<li>Tolerance <span class="math inline">10<sup>−10</sup></span> covers only accumulated floating-point rounding.</li>
 </ul></li>
 <li>All lengths positive
 <ul>
@@ -779,7 +322,7 @@ Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example
 <li>Manuscripts generated by the copying simulator must also satisfy the within-family vs.&nbsp;cross-family distance inequality, confirming that the mutation rate is low enough for the tree signal to dominate noise.</li>
 </ul></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_stemma <span class="im">import</span> make_manuscripts, MANUSCRIPTS</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> stemma <span class="im">import</span> (</span>
@@ -787,147 +330,117 @@ Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    make_distance_matrix,</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    upgma,</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co"># hamming_distance</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co"># hamming_distance</span></span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_identical():</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Two identical sequences have distance 0.0.</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    seq <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>], dtype<span class="op">=</span>np.int8)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq, seq.copy()) <span class="op">==</span> pytest.approx(<span class="fl">0.0</span>)</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_all_different():</span>
-<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sequences that differ at every locus have distance 1.0.</span></span>
-<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    seq_a <span class="op">=</span> np.zeros(<span class="dv">10</span>, dtype<span class="op">=</span>np.int8)</span>
-<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    seq_b <span class="op">=</span> np.ones(<span class="dv">10</span>, dtype<span class="op">=</span>np.int8)</span>
-<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq_a, seq_b) <span class="op">==</span> pytest.approx(<span class="fl">1.0</span>)</span>
-<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_half():</span>
-<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sequences differing at exactly half the loci have distance 0.5.</span></span>
-<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    seq_a <span class="op">=</span> np.zeros(<span class="dv">8</span>, dtype<span class="op">=</span>np.int8)</span>
-<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    seq_b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], dtype<span class="op">=</span>np.int8)</span>
-<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq_a, seq_b) <span class="op">==</span> pytest.approx(<span class="fl">0.5</span>)</span>
-<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a><span class="co"># Distance matrix</span></span>
-<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_distance_matrix_symmetry():</span>
-<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The distance matrix must be symmetric with zero diagonal.</span></span>
-<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
-<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(names)</span>
-<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> D.shape <span class="op">==</span> (n, n)</span>
-<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_allclose(D, D.T, atol<span class="op">=</span><span class="fl">1e-12</span>)</span>
-<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_allclose(np.diag(D), <span class="fl">0.0</span>, atol<span class="op">=</span><span class="fl">1e-12</span>)</span>
-<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_distance_matrix_within_family_smaller():</span>
-<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Within-family distances (A–B and C–D) must be smaller than cross-family</span></span>
-<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># distances (A–C, A–D, B–C, B–D), reflecting the true copying tree.</span></span>
-<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
-<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> {n: i <span class="cf">for</span> i, n <span class="kw">in</span> <span class="bu">enumerate</span>(names)}</span>
-<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    d_ab <span class="op">=</span> D[idx[<span class="st">"A"</span>], idx[<span class="st">"B"</span>]]</span>
-<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    d_cd <span class="op">=</span> D[idx[<span class="st">"C"</span>], idx[<span class="st">"D"</span>]]</span>
-<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    cross <span class="op">=</span> [D[idx[a], idx[b]] <span class="cf">for</span> a <span class="kw">in</span> <span class="st">"AB"</span> <span class="cf">for</span> b <span class="kw">in</span> <span class="st">"CD"</span>]</span>
-<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d_ab <span class="op">&lt;</span> <span class="bu">min</span>(cross)</span>
-<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d_cd <span class="op">&lt;</span> <span class="bu">min</span>(cross)</span>
-<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a><span class="co"># UPGMA topology and branch lengths</span></span>
-<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_topology_recovery():</span>
-<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="co"># A and B must share a private internal ancestor, and C and D must share</span></span>
-<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a different one.  UPGMA merges the pair with the smallest distance first:</span></span>
-<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>    <span class="co"># D(A,B) = 0.08 is the global minimum, so A and B are joined first into</span></span>
-<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    <span class="co"># node4; then D(C,D) = 0.10 &lt; D(node4,C) = D(node4,D), so C and D are</span></span>
-<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a>    <span class="co"># joined into node5; finally node4 and node5 are joined.</span></span>
-<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
-<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
-<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build an adjacency map.</span></span>
-<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    adj <span class="op">=</span> {}</span>
-<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b, _ <span class="kw">in</span> edges:</span>
-<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>        adj.setdefault(a, []).append(b)</span>
-<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>        adj.setdefault(b, []).append(a)</span>
-<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the internal node connected to each manuscript.</span></span>
-<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    parent_a <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"A"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
-<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    parent_b <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"B"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
-<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    parent_c <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"C"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
-<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    parent_d <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"D"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
-<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_a <span class="op">==</span> parent_b, <span class="st">"A and B should share an internal ancestor"</span></span>
-<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_c <span class="op">==</span> parent_d, <span class="st">"C and D should share an internal ancestor"</span></span>
-<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_a <span class="op">!=</span> parent_c, (</span>
-<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        <span class="st">"AB family and CD family should have different ancestors"</span></span>
-<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_branch_lengths():</span>
-<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>    <span class="co"># UPGMA branch lengths for the reference distance matrix.</span></span>
-<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: merge A and B (D=0.08).  Each branch length = 0.08/2 = 0.04.</span></span>
-<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, C) = (0.23 + 0.21) / 2 = 0.22</span></span>
-<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, D) = (0.21 + 0.19) / 2 = 0.20</span></span>
-<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: merge C and D (D=0.10 &lt; 0.20 &lt; 0.22).  Each branch length = 0.05.</span></span>
-<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, node5) = (0.22 + 0.20) / 2 = 0.21</span></span>
-<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 3: join node4 and node5 with the remaining distance = 0.21.</span></span>
-<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
-<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tolerance 1e-10 covers only accumulated floating-point rounding.</span></span>
-<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
-<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
-<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> {</span>
-<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"A"</span>]): <span class="fl">0.04</span>,</span>
-<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"B"</span>]): <span class="fl">0.04</span>,</span>
-<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node5"</span>, <span class="st">"C"</span>]): <span class="fl">0.05</span>,</span>
-<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node5"</span>, <span class="st">"D"</span>]): <span class="fl">0.05</span>,</span>
-<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"node5"</span>]): <span class="fl">0.21</span>,</span>
-<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>    recovered <span class="op">=</span> {<span class="bu">frozenset</span>([a, b]): length <span class="cf">for</span> a, b, length <span class="kw">in</span> edges}</span>
-<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key, true_len <span class="kw">in</span> expected.items():</span>
-<span id="cb6-120"><a href="#cb6-120" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> key <span class="kw">in</span> recovered, <span class="ss">f"Missing edge </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> recovered[key] <span class="op">==</span> pytest.approx(true_len, <span class="bu">abs</span><span class="op">=</span><span class="fl">1e-10</span>)</span>
-<span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-124"><a href="#cb6-124" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_all_lengths_positive():</span>
-<span id="cb6-125"><a href="#cb6-125" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Every branch length in the UPGMA tree must be strictly positive.</span></span>
-<span id="cb6-126"><a href="#cb6-126" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
-<span id="cb6-127"><a href="#cb6-127" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
-<span id="cb6-128"><a href="#cb6-128" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b, length <span class="kw">in</span> edges:</span>
-<span id="cb6-129"><a href="#cb6-129" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> length <span class="op">&gt;</span> <span class="dv">0</span>, <span class="ss">f"Non-positive branch length on edge </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">--</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>length<span class="sc">}</span><span class="ss">"</span></span>
-<span id="cb6-130"><a href="#cb6-130" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-131"><a href="#cb6-131" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-132"><a href="#cb6-132" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-133"><a href="#cb6-133" aria-hidden="true" tabindex="-1"></a><span class="co"># Stochastic generator topology</span></span>
-<span id="cb6-134"><a href="#cb6-134" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
-<span id="cb6-135"><a href="#cb6-135" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-136"><a href="#cb6-136" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-137"><a href="#cb6-137" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_generator_topology():</span>
-<span id="cb6-138"><a href="#cb6-138" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Manuscripts generated stochastically must also produce a distance matrix</span></span>
-<span id="cb6-139"><a href="#cb6-139" aria-hidden="true" tabindex="-1"></a>    <span class="co"># whose minimum within-family distance is smaller than the minimum</span></span>
-<span id="cb6-140"><a href="#cb6-140" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cross-family distance, so UPGMA can still find the correct grouping.</span></span>
-<span id="cb6-141"><a href="#cb6-141" aria-hidden="true" tabindex="-1"></a>    mss <span class="op">=</span> make_manuscripts()</span>
-<span id="cb6-142"><a href="#cb6-142" aria-hidden="true" tabindex="-1"></a>    within <span class="op">=</span> [</span>
-<span id="cb6-143"><a href="#cb6-143" aria-hidden="true" tabindex="-1"></a>        hamming_distance(mss[<span class="st">"A"</span>], mss[<span class="st">"B"</span>]),</span>
-<span id="cb6-144"><a href="#cb6-144" aria-hidden="true" tabindex="-1"></a>        hamming_distance(mss[<span class="st">"C"</span>], mss[<span class="st">"D"</span>]),</span>
-<span id="cb6-145"><a href="#cb6-145" aria-hidden="true" tabindex="-1"></a>    ]</span>
-<span id="cb6-146"><a href="#cb6-146" aria-hidden="true" tabindex="-1"></a>    cross <span class="op">=</span> [hamming_distance(mss[a], mss[b]) <span class="cf">for</span> a <span class="kw">in</span> <span class="st">"AB"</span> <span class="cf">for</span> b <span class="kw">in</span> <span class="st">"CD"</span>]</span>
-<span id="cb6-147"><a href="#cb6-147" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">max</span>(within) <span class="op">&lt;</span> <span class="bu">min</span>(cross), (</span>
-<span id="cb6-148"><a href="#cb6-148" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Within-family distances should be smaller than cross-family distances"</span></span>
-<span id="cb6-149"><a href="#cb6-149" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_identical():</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Two identical sequences have distance 0.0.</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    seq <span class="op">=</span> np.array([<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>], dtype<span class="op">=</span>np.int8)</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq, seq.copy()) <span class="op">==</span> pytest.approx(<span class="fl">0.0</span>)</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_all_different():</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sequences that differ at every locus have distance 1.0.</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>    seq_a <span class="op">=</span> np.zeros(<span class="dv">10</span>, dtype<span class="op">=</span>np.int8)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>    seq_b <span class="op">=</span> np.ones(<span class="dv">10</span>, dtype<span class="op">=</span>np.int8)</span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq_a, seq_b) <span class="op">==</span> pytest.approx(<span class="fl">1.0</span>)</span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_hamming_half():</span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Sequences differing at exactly half the loci have distance 0.5.</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>    seq_a <span class="op">=</span> np.zeros(<span class="dv">8</span>, dtype<span class="op">=</span>np.int8)</span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>    seq_b <span class="op">=</span> np.array([<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>], dtype<span class="op">=</span>np.int8)</span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> hamming_distance(seq_a, seq_b) <span class="op">==</span> pytest.approx(<span class="fl">0.5</span>)</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a><span class="co"># Distance matrix</span></span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_distance_matrix_symmetry():</span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The distance matrix must be symmetric with zero diagonal.</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(names)</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> D.shape <span class="op">==</span> (n, n)</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_allclose(D, D.T, atol<span class="op">=</span><span class="fl">1e-12</span>)</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>    np.testing.assert_allclose(np.diag(D), <span class="fl">0.0</span>, atol<span class="op">=</span><span class="fl">1e-12</span>)</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_distance_matrix_within_family_smaller():</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Within-family distances (A–B and C–D) must be smaller than cross-family</span></span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>    <span class="co"># distances (A–C, A–D, B–C, B–D), reflecting the true copying tree.</span></span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a>    idx <span class="op">=</span> {n: i <span class="cf">for</span> i, n <span class="kw">in</span> <span class="bu">enumerate</span>(names)}</span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>    d_ab <span class="op">=</span> D[idx[<span class="st">"A"</span>], idx[<span class="st">"B"</span>]]</span>
+<span id="cb6-42"><a href="#cb6-42" aria-hidden="true" tabindex="-1"></a>    d_cd <span class="op">=</span> D[idx[<span class="st">"C"</span>], idx[<span class="st">"D"</span>]]</span>
+<span id="cb6-43"><a href="#cb6-43" aria-hidden="true" tabindex="-1"></a>    cross <span class="op">=</span> [D[idx[a], idx[b]] <span class="cf">for</span> a <span class="kw">in</span> <span class="st">"AB"</span> <span class="cf">for</span> b <span class="kw">in</span> <span class="st">"CD"</span>]</span>
+<span id="cb6-44"><a href="#cb6-44" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d_ab <span class="op">&lt;</span> <span class="bu">min</span>(cross)</span>
+<span id="cb6-45"><a href="#cb6-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> d_cd <span class="op">&lt;</span> <span class="bu">min</span>(cross)</span>
+<span id="cb6-46"><a href="#cb6-46" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-47"><a href="#cb6-47" aria-hidden="true" tabindex="-1"></a><span class="co"># UPGMA topology and branch lengths</span></span>
+<span id="cb6-48"><a href="#cb6-48" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-49"><a href="#cb6-49" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_topology_recovery():</span>
+<span id="cb6-50"><a href="#cb6-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># A and B must share a private internal ancestor, and C and D must share</span></span>
+<span id="cb6-51"><a href="#cb6-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a different one.  UPGMA merges the pair with the smallest distance first:</span></span>
+<span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    <span class="co"># D(A,B) = 0.08 is the global minimum, so A and B are joined first into</span></span>
+<span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    <span class="co"># node4; then D(C,D) = 0.10 &lt; D(node4,C) = D(node4,D), so C and D are</span></span>
+<span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="co"># joined into node5; finally node4 and node5 are joined.</span></span>
+<span id="cb6-55"><a href="#cb6-55" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
+<span id="cb6-56"><a href="#cb6-56" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
+<span id="cb6-57"><a href="#cb6-57" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Build an adjacency map.</span></span>
+<span id="cb6-58"><a href="#cb6-58" aria-hidden="true" tabindex="-1"></a>    adj <span class="op">=</span> {}</span>
+<span id="cb6-59"><a href="#cb6-59" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b, _ <span class="kw">in</span> edges:</span>
+<span id="cb6-60"><a href="#cb6-60" aria-hidden="true" tabindex="-1"></a>        adj.setdefault(a, []).append(b)</span>
+<span id="cb6-61"><a href="#cb6-61" aria-hidden="true" tabindex="-1"></a>        adj.setdefault(b, []).append(a)</span>
+<span id="cb6-62"><a href="#cb6-62" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Find the internal node connected to each manuscript.</span></span>
+<span id="cb6-63"><a href="#cb6-63" aria-hidden="true" tabindex="-1"></a>    parent_a <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"A"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
+<span id="cb6-64"><a href="#cb6-64" aria-hidden="true" tabindex="-1"></a>    parent_b <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"B"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
+<span id="cb6-65"><a href="#cb6-65" aria-hidden="true" tabindex="-1"></a>    parent_c <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"C"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
+<span id="cb6-66"><a href="#cb6-66" aria-hidden="true" tabindex="-1"></a>    parent_d <span class="op">=</span> [n <span class="cf">for</span> n <span class="kw">in</span> adj[<span class="st">"D"</span>] <span class="cf">if</span> n <span class="kw">not</span> <span class="kw">in</span> MANUSCRIPTS][<span class="dv">0</span>]</span>
+<span id="cb6-67"><a href="#cb6-67" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_a <span class="op">==</span> parent_b, <span class="st">"A and B should share an internal ancestor"</span></span>
+<span id="cb6-68"><a href="#cb6-68" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_c <span class="op">==</span> parent_d, <span class="st">"C and D should share an internal ancestor"</span></span>
+<span id="cb6-69"><a href="#cb6-69" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> parent_a <span class="op">!=</span> parent_c, (</span>
+<span id="cb6-70"><a href="#cb6-70" aria-hidden="true" tabindex="-1"></a>        <span class="st">"AB family and CD family should have different ancestors"</span></span>
+<span id="cb6-71"><a href="#cb6-71" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-72"><a href="#cb6-72" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_branch_lengths():</span>
+<span id="cb6-73"><a href="#cb6-73" aria-hidden="true" tabindex="-1"></a>    <span class="co"># UPGMA branch lengths for the reference distance matrix.</span></span>
+<span id="cb6-74"><a href="#cb6-74" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-75"><a href="#cb6-75" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 1: merge A and B (D=0.08).  Each branch length = 0.08/2 = 0.04.</span></span>
+<span id="cb6-76"><a href="#cb6-76" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, C) = (0.23 + 0.21) / 2 = 0.22</span></span>
+<span id="cb6-77"><a href="#cb6-77" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, D) = (0.21 + 0.19) / 2 = 0.20</span></span>
+<span id="cb6-78"><a href="#cb6-78" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-79"><a href="#cb6-79" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 2: merge C and D (D=0.10 &lt; 0.20 &lt; 0.22).  Each branch length = 0.05.</span></span>
+<span id="cb6-80"><a href="#cb6-80" aria-hidden="true" tabindex="-1"></a>    <span class="co">#   D(node4, node5) = (0.22 + 0.20) / 2 = 0.21</span></span>
+<span id="cb6-81"><a href="#cb6-81" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-82"><a href="#cb6-82" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Step 3: join node4 and node5 with the remaining distance = 0.21.</span></span>
+<span id="cb6-83"><a href="#cb6-83" aria-hidden="true" tabindex="-1"></a>    <span class="co">#</span></span>
+<span id="cb6-84"><a href="#cb6-84" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Tolerance 1e-10 covers only accumulated floating-point rounding.</span></span>
+<span id="cb6-85"><a href="#cb6-85" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
+<span id="cb6-86"><a href="#cb6-86" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
+<span id="cb6-87"><a href="#cb6-87" aria-hidden="true" tabindex="-1"></a>    expected <span class="op">=</span> {</span>
+<span id="cb6-88"><a href="#cb6-88" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"A"</span>]): <span class="fl">0.04</span>,</span>
+<span id="cb6-89"><a href="#cb6-89" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"B"</span>]): <span class="fl">0.04</span>,</span>
+<span id="cb6-90"><a href="#cb6-90" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node5"</span>, <span class="st">"C"</span>]): <span class="fl">0.05</span>,</span>
+<span id="cb6-91"><a href="#cb6-91" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node5"</span>, <span class="st">"D"</span>]): <span class="fl">0.05</span>,</span>
+<span id="cb6-92"><a href="#cb6-92" aria-hidden="true" tabindex="-1"></a>        <span class="bu">frozenset</span>([<span class="st">"node4"</span>, <span class="st">"node5"</span>]): <span class="fl">0.21</span>,</span>
+<span id="cb6-93"><a href="#cb6-93" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb6-94"><a href="#cb6-94" aria-hidden="true" tabindex="-1"></a>    recovered <span class="op">=</span> {<span class="bu">frozenset</span>([a, b]): length <span class="cf">for</span> a, b, length <span class="kw">in</span> edges}</span>
+<span id="cb6-95"><a href="#cb6-95" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> key, true_len <span class="kw">in</span> expected.items():</span>
+<span id="cb6-96"><a href="#cb6-96" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> key <span class="kw">in</span> recovered, <span class="ss">f"Missing edge </span><span class="sc">{</span>key<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb6-97"><a href="#cb6-97" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> recovered[key] <span class="op">==</span> pytest.approx(true_len, <span class="bu">abs</span><span class="op">=</span><span class="fl">1e-10</span>)</span>
+<span id="cb6-98"><a href="#cb6-98" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_upgma_all_lengths_positive():</span>
+<span id="cb6-99"><a href="#cb6-99" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Every branch length in the UPGMA tree must be strictly positive.</span></span>
+<span id="cb6-100"><a href="#cb6-100" aria-hidden="true" tabindex="-1"></a>    names, D <span class="op">=</span> make_distance_matrix()</span>
+<span id="cb6-101"><a href="#cb6-101" aria-hidden="true" tabindex="-1"></a>    edges <span class="op">=</span> upgma(names, D)</span>
+<span id="cb6-102"><a href="#cb6-102" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> a, b, length <span class="kw">in</span> edges:</span>
+<span id="cb6-103"><a href="#cb6-103" aria-hidden="true" tabindex="-1"></a>        <span class="cf">assert</span> length <span class="op">&gt;</span> <span class="dv">0</span>, <span class="ss">f"Non-positive branch length on edge </span><span class="sc">{</span>a<span class="sc">}</span><span class="ss">--</span><span class="sc">{</span>b<span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>length<span class="sc">}</span><span class="ss">"</span></span>
+<span id="cb6-104"><a href="#cb6-104" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-105"><a href="#cb6-105" aria-hidden="true" tabindex="-1"></a><span class="co"># Stochastic generator topology</span></span>
+<span id="cb6-106"><a href="#cb6-106" aria-hidden="true" tabindex="-1"></a><span class="co"># ---------------------------------------------------------------------------</span></span>
+<span id="cb6-107"><a href="#cb6-107" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_generator_topology():</span>
+<span id="cb6-108"><a href="#cb6-108" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Manuscripts generated stochastically must also produce a distance matrix</span></span>
+<span id="cb6-109"><a href="#cb6-109" aria-hidden="true" tabindex="-1"></a>    <span class="co"># whose minimum within-family distance is smaller than the minimum</span></span>
+<span id="cb6-110"><a href="#cb6-110" aria-hidden="true" tabindex="-1"></a>    <span class="co"># cross-family distance, so UPGMA can still find the correct grouping.</span></span>
+<span id="cb6-111"><a href="#cb6-111" aria-hidden="true" tabindex="-1"></a>    mss <span class="op">=</span> make_manuscripts()</span>
+<span id="cb6-112"><a href="#cb6-112" aria-hidden="true" tabindex="-1"></a>    within <span class="op">=</span> [</span>
+<span id="cb6-113"><a href="#cb6-113" aria-hidden="true" tabindex="-1"></a>        hamming_distance(mss[<span class="st">"A"</span>], mss[<span class="st">"B"</span>]),</span>
+<span id="cb6-114"><a href="#cb6-114" aria-hidden="true" tabindex="-1"></a>        hamming_distance(mss[<span class="st">"C"</span>], mss[<span class="st">"D"</span>]),</span>
+<span id="cb6-115"><a href="#cb6-115" aria-hidden="true" tabindex="-1"></a>    ]</span>
+<span id="cb6-116"><a href="#cb6-116" aria-hidden="true" tabindex="-1"></a>    cross <span class="op">=</span> [hamming_distance(mss[a], mss[b]) <span class="cf">for</span> a <span class="kw">in</span> <span class="st">"AB"</span> <span class="cf">for</span> b <span class="kw">in</span> <span class="st">"CD"</span>]</span>
+<span id="cb6-117"><a href="#cb6-117" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">max</span>(within) <span class="op">&lt;</span> <span class="bu">min</span>(cross), (</span>
+<span id="cb6-118"><a href="#cb6-118" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Within-family distances should be smaller than cross-family distances"</span></span>
+<span id="cb6-119"><a href="#cb6-119" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Manuscript stemma key terms</p>
 <dl>
@@ -958,529 +471,23 @@ Unweighted Pair-Group Method with Arithmetic means; a clustering algorithm that 
 </dl>
 </div>
 <section class="exercises">
-</section>
-<section id="exercises" class="level2" data-number="10.10">
-<h2 data-number="10.10" class="anchored" data-anchor-id="exercises"><span class="header-section-number">10.10</span> Exercises</h2>
-<section id="do-the-math" class="level3" data-number="10.10.1">
-<h3 data-number="10.10.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">10.10.1</span> Do the math</h3>
+<h2 data-number="10.10" id="exercises"><span class="header-section-number">10.10</span> Exercises</h2>
+<h3 data-number="10.10.1" id="do-the-math"><span class="header-section-number">10.10.1</span> Do the math</h3>
 <ol type="1">
 <li><p>Two manuscripts each have 100 variant loci. Manuscript A differs from the archetype at loci 1–10 and 21–30. Manuscript B differs from the archetype at loci 1–10 and 41–55. What is the Hamming distance between A and B?</p></li>
-<li><p>After merging A and B into node4 in the first UPGMA step, <span class="math inline">\(D(A, C) = 0.23\)</span> and <span class="math inline">\(D(B, C) = 0.21\)</span>. Using the UPGMA averaging rule <span class="math inline">\(D(\text{node4}, C) = (D(A,C) + D(B,C)) / 2\)</span>, what is <span class="math inline">\(D(\text{node4}, C)\)</span>?</p></li>
+<li><p>After merging A and B into node4 in the first UPGMA step, <span class="math inline"><em>D</em>(<em>A</em>, <em>C</em>) = 0.23</span> and <span class="math inline"><em>D</em>(<em>B</em>, <em>C</em>) = 0.21</span>. Using the UPGMA averaging rule <span class="math inline"><em>D</em>(node4, <em>C</em>) = (<em>D</em>(<em>A</em>, <em>C</em>) + <em>D</em>(<em>B</em>, <em>C</em>))/2</span>, what is <span class="math inline"><em>D</em>(node4, <em>C</em>)</span>?</p></li>
 </ol>
-</section>
-<section id="hamming-distance-from-manuscript-sequences" class="level3" data-number="10.10.2">
-<h3 data-number="10.10.2" class="anchored" data-anchor-id="hamming-distance-from-manuscript-sequences"><span class="header-section-number">10.10.2</span> Hamming distance from manuscript sequences</h3>
-<p>The <code>generate_stemma</code> module produces actual sequences, not just distances. Write <code>build_distance_matrix(mss)</code> that accepts the dict returned by <code>make_manuscripts</code> and computes the full <span class="math inline">\(4 \times 4\)</span> Hamming distance matrix. Run UPGMA on this matrix and compare the recovered topology to the one from <code>make_distance_matrix</code>. Do the stochastic distances give the same grouping?</p>
-</section>
-<section id="effect-of-mutation-rate" class="level3" data-number="10.10.3">
-<h3 data-number="10.10.3" class="anchored" data-anchor-id="effect-of-mutation-rate"><span class="header-section-number">10.10.3</span> Effect of mutation rate</h3>
+<h3 data-number="10.10.2" id="hamming-distance-from-manuscript-sequences"><span class="header-section-number">10.10.2</span> Hamming distance from manuscript sequences</h3>
+<p>The <code>generate_stemma</code> module produces actual sequences, not just distances. Write <code>build_distance_matrix(mss)</code> that accepts the dict returned by <code>make_manuscripts</code> and computes the full <span class="math inline">4 × 4</span> Hamming distance matrix. Run UPGMA on this matrix and compare the recovered topology to the one from <code>make_distance_matrix</code>. Do the stochastic distances give the same grouping?</p>
+<h3 data-number="10.10.3" id="effect-of-mutation-rate"><span class="header-section-number">10.10.3</span> Effect of mutation rate</h3>
 <p>Re-run <code>make_manuscripts</code> with <code>mutation_prob</code> values of 0.01, 0.05, 0.10, and 0.20. For each rate, compute the distance matrix and check whether UPGMA recovers the correct two-family topology. At what mutation rate does the signal begin to fail, and why?</p>
-</section>
-<section id="effect-of-noise-on-upgma" class="level3" data-number="10.10.4">
-<h3 data-number="10.10.4" class="anchored" data-anchor-id="effect-of-noise-on-upgma"><span class="header-section-number">10.10.4</span> Effect of noise on UPGMA</h3>
-<p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline">\(s \in \{0.01, 0.02, 0.05\}\)</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
-</section>
-<section id="adding-a-contaminated-manuscript" class="level3" data-number="10.10.5">
-<h3 data-number="10.10.5" class="anchored" data-anchor-id="adding-a-contaminated-manuscript"><span class="header-section-number">10.10.5</span> Adding a contaminated manuscript</h3>
+<h3 data-number="10.10.4" id="effect-of-noise-on-upgma"><span class="header-section-number">10.10.4</span> Effect of noise on UPGMA</h3>
+<p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline"><em>s</em> ∈ {0.01, 0.02, 0.05}</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
+<h3 data-number="10.10.5" id="adding-a-contaminated-manuscript"><span class="header-section-number">10.10.5</span> Adding a contaminated manuscript</h3>
 <p>A contaminated manuscript (one that was copied partly from two different sources) does not fit a tree model. Add a fifth manuscript E whose sequence is a 50/50 mix of A and C. Compute the distance matrix for all five manuscripts and run UPGMA. Does the algorithm detect the problem, and if so, how is it visible in the recovered tree?</p>
 </section>
 
-
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../authorship/index.html" class="pagination-link" aria-label="Authorship Attribution by N-gram Profiles">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../phylo/index.html" class="pagination-link" aria-label="Phylogenetic Tree Reconstruction">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
+</main>
 
 
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/stemma/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/stemma/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>

@@ -1,480 +1,39 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Estimating Price Elasticity of Demand</title>
+  <link rel="stylesheet" href="../mccole/mccole-book.css">
 
-<meta charset="utf-8">
-<meta name="generator" content="quarto-1.11.9">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-
-
-<title>29&nbsp; Estimating Price Elasticity of Demand – Research Software Testing by Example</title>
-<style>
-/* Default styles provided by pandoc.
-** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
-*/
-span.smallcaps{font-variant: small-caps;}
-div.columns{display: flex; gap: 1.5em;}
-div.column{flex: auto;}
-@media screen {
-div.columns{gap: min(4vw, 1.5em);}
-div.column{overflow-x: auto;}
-}
-div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-ul.task-list{list-style: none;}
-ul.task-list li input[type="checkbox"] {
-  width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
-  vertical-align: middle;
-}
-/* CSS for syntax highlighting */
-html { -webkit-text-size-adjust: 100%; }
-pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-pre > code.sourceCode > span:empty { height: 1.2em; }
-.sourceCode { overflow: visible; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-div.sourceCode { margin: 1em 0; }
-pre.sourceCode { margin: 0; }
-@media screen {
-div.sourceCode { overflow: auto; }
-}
-@media print {
-pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-}
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
-    -webkit-touch-callout: none; -webkit-user-select: none;
-    -khtml-user-select: none; -moz-user-select: none;
-    -ms-user-select: none; user-select: none;
-    padding: 0 4px; width: 4em;
-  }
-pre.numberSource { margin-left: 3em;  padding-left: 4px; }
-div.sourceCode
-  {   }
-@media screen {
-pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-}
-</style>
-
-
-<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../">
-<link href="../flood/index.html" rel="next">
-<link href="../radvel/index.html" rel="prev">
-<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
-<script src="../site_libs/quarto-html/popper.min.js"></script>
-<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-01a495efc5497ac6e3f5457e7ed18e65.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "sidebar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "start",
-  "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
-
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-chtml.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
-
-<link rel="stylesheet" href="../mccole/book.css">
 </head>
-
-<body class="nav-sidebar floating quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a>
-
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav" aria-label="Toolbar">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="Breadcrumbs"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../elasticity/index.html"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></a></li></ol></nav>
-        <a class="flex-grow-1" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
+<body>
+<header class="topbar">
+  <nav class="topnav">
+    <a class="topnav-item" href="../index.html">Home</a>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Chapters</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../intro/index.html">Introduction</a></li><li><a href="../schelling/index.html">Schelling Segregation Model</a></li><li><a href="../vocab/index.html">Vocabulary Richness in Historical Texts</a></li><li><a href="../pollute/index.html">Pollutant Spread in a River Network</a></li><li><a href="../porous/index.html">Percolation in a Porous Medium</a></li><li><a href="../archcluster/index.html">Spatial Clustering of Archaeological Sites</a></li><li><a href="../leastcost/index.html">Least-Cost Path Analysis for Trade Routes</a></li><li><a href="../align/index.html">Pairwise Sequence Alignment</a></li><li><a href="../authorship/index.html">Authorship Attribution by N-gram Profiles</a></li><li><a href="../stemma/index.html">Manuscript Stemma Reconstruction</a></li><li><a href="../phylo/index.html">Phylogenetic Tree Reconstruction</a></li><li><a href="../vitals/index.html">Anomaly Detection in Patient Vital Signs</a></li><li><a href="../massspec/index.html">Peak Detection in Mass Spectra</a></li><li><a href="../cellseg/index.html">Cell Segmentation in Microscopy Images</a></li><li><a href="../wealth/index.html">Wealth Inequality in an Exchange Economy</a></li><li><a href="../topics/index.html">Topic Modeling a Document Corpus</a></li><li><a href="../sdt/index.html">Signal Detection Theory Analysis</a></li><li><a href="../interp/index.html">Spatial Interpolation of Climate Data</a></li><li><a href="../agreement/index.html">Inter-Rater Agreement</a></li><li><a href="../wordshift/index.html">Word Frequency Change Over Time</a></li><li><a href="../diffusion/index.html">1D Diffusion Simulation</a></li><li><a href="../heatwall/index.html">Heat Conduction Through a Composite Wall</a></li><li><a href="../lotka/index.html">Predator-Prey Dynamics</a></li><li><a href="../sir/index.html">Fitting an SIR Epidemic Model</a></li><li><a href="../mineral/index.html">Mineral Classification by Geochemistry</a></li><li><a href="../tumor/index.html">Tumor Classification by Logistic Regression</a></li><li><a href="../learning/index.html">Fitting a Learning Curve to Experimental Data</a></li><li><a href="../radvel/index.html">Exoplanet Detection via Radial Velocity</a></li><li><a href="../elasticity/index.html">Estimating Price Elasticity of Demand</a></li><li><a href="../flood/index.html">Flood Frequency Analysis</a></li><li><a href="../survival/index.html">Survival Analysis</a></li><li><a href="../breakpoint/index.html">Structural Break Detection in Economic Time Series</a></li><li><a href="../finale/index.html">Conclusion</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Appendices</span>
+      <div class="topnav-menu"><ul class="topnav-list"><li><a href="../license/index.html">License</a></li><li><a href="../conduct/index.html">Code of Conduct</a></li><li><a href="../contributing/index.html">Contributing</a></li><li><a href="../bibliography/index.html">Bibliography</a></li><li><a href="../glossary/index.html">Glossary</a></li></ul></div>
+    </div>
+    <div class="topnav-dropdown">
+      <span class="topnav-item">Contents</span>
+      <div class="topnav-menu"><ul>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">29.1</span> The Problem</a></li>
+<li><a href="#the-log-log-model" id="toc-the-log-log-model"><span class="header-section-number">29.2</span> The Log-Log Model</a></li>
+<li><a href="#ordinary-least-squares-in-log-log-space" id="toc-ordinary-least-squares-in-log-log-space"><span class="header-section-number">29.3</span> Ordinary Least Squares in Log-Log Space</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">29.4</span> Generating Synthetic Data</a></li>
+<li><a href="#fitting-and-reporting-the-elasticity" id="toc-fitting-and-reporting-the-elasticity"><span class="header-section-number">29.5</span> Fitting and Reporting the Elasticity</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">29.6</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">29.7</span> Exercises</a></li>
+</ul></div>
     </div>
   </nav>
 </header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto" aria-label="Site">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
-    <div class="sidebar-title mb-0 py-0">
-      <a href="../">Research Software Testing by Example</a> 
-        <div class="sidebar-tools-main">
-    <a href="https://github.com/gvwilson/rstx" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
-</div>
-    </div>
-      </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Overview</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../intro/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../schelling/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Schelling Segregation Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vocab/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Vocabulary Richness in Historical Texts</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../pollute/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Pollutant Spread in a River Network</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../porous/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Percolation in a Porous Medium</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../archcluster/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Spatial Clustering of Archaeological Sites</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../leastcost/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Least-Cost Path Analysis for Trade Routes</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../align/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Pairwise Sequence Alignment</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../authorship/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Authorship Attribution by N-gram Profiles</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../stemma/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Manuscript Stemma Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../phylo/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Phylogenetic Tree Reconstruction</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../vitals/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Anomaly Detection in Patient Vital Signs</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../massspec/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Peak Detection in Mass Spectra</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../cellseg/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Cell Segmentation in Microscopy Images</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wealth/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Wealth Inequality in an Exchange Economy</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../topics/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Topic Modeling a Document Corpus</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sdt/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Signal Detection Theory Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../interp/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Spatial Interpolation of Climate Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../agreement/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Inter-Rater Agreement</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../wordshift/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Word Frequency Change Over Time</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../diffusion/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">1D Diffusion Simulation</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../heatwall/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Heat Conduction Through a Composite Wall</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../lotka/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Predator-Prey Dynamics</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../sir/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Fitting an SIR Epidemic Model</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../mineral/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Mineral Classification by Geochemistry</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../tumor/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Tumor Classification by Logistic Regression</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../learning/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Fitting a Learning Curve to Experimental Data</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../radvel/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../elasticity/index.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../flood/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../survival/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">31</span>&nbsp; <span class="chapter-title">Survival Analysis</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../breakpoint/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">32</span>&nbsp; <span class="chapter-title">Structural Break Detection in Economic Time Series</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../finale/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">33</span>&nbsp; <span class="chapter-title">Conclusion</span></span></a>
-  </div>
-</li>
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <button type="button" class="sidebar-item-text sidebar-item-toggle sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-controls="quarto-sidebar-section-1" aria-expanded="true">
- <span class="menu-text" id="quarto-sidebar-section-1-label">Appendices</span><i class="bi bi-chevron-right" aria-hidden="true"></i></button>
-      </div>
-      <ul id="quarto-sidebar-section-1" aria-labelledby="quarto-sidebar-section-1-label" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../license/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">A</span>&nbsp; <span class="chapter-title">License</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../conduct/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">B</span>&nbsp; <span class="chapter-title">Code of Conduct</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributing/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">C</span>&nbsp; <span class="chapter-title">Contributing</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../bibliography/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">D</span>&nbsp; <span class="chapter-title">Bibliography</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../glossary/index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">E</span>&nbsp; <span class="chapter-title">Glossary</span></span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
-    <h2 id="toc-title">Table of contents</h2>
-   
-  <ul>
-  <li><a href="#the-problem" id="toc-the-problem" class="nav-link active" data-scroll-target="#the-problem"><span class="header-section-number">29.1</span> The Problem</a></li>
-  <li><a href="#the-log-log-model" id="toc-the-log-log-model" class="nav-link" data-scroll-target="#the-log-log-model"><span class="header-section-number">29.2</span> The Log-Log Model</a></li>
-  <li><a href="#ordinary-least-squares-in-log-log-space" id="toc-ordinary-least-squares-in-log-log-space" class="nav-link" data-scroll-target="#ordinary-least-squares-in-log-log-space"><span class="header-section-number">29.3</span> Ordinary Least Squares in Log-Log Space</a></li>
-  <li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data" class="nav-link" data-scroll-target="#generating-synthetic-data"><span class="header-section-number">29.4</span> Generating Synthetic Data</a></li>
-  <li><a href="#fitting-and-reporting-the-elasticity" id="toc-fitting-and-reporting-the-elasticity" class="nav-link" data-scroll-target="#fitting-and-reporting-the-elasticity"><span class="header-section-number">29.5</span> Fitting and Reporting the Elasticity</a></li>
-  <li><a href="#testing" id="toc-testing" class="nav-link" data-scroll-target="#testing"><span class="header-section-number">29.6</span> Testing</a></li>
-  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">29.7</span> Exercises</a>
-  <ul class="collapse">
-  <li><a href="#do-the-math" id="toc-do-the-math" class="nav-link" data-scroll-target="#do-the-math"><span class="header-section-number">29.7.1</span> Do the math</a></li>
-  <li><a href="#residual-diagnostics" id="toc-residual-diagnostics" class="nav-link" data-scroll-target="#residual-diagnostics"><span class="header-section-number">29.7.2</span> Residual diagnostics</a></li>
-  <li><a href="#weighted-least-squares" id="toc-weighted-least-squares" class="nav-link" data-scroll-target="#weighted-least-squares"><span class="header-section-number">29.7.3</span> Weighted least squares</a></li>
-  <li><a href="#two-stage-price-endogeneity-correction" id="toc-two-stage-price-endogeneity-correction" class="nav-link" data-scroll-target="#two-stage-price-endogeneity-correction"><span class="header-section-number">29.7.4</span> Two-stage price endogeneity correction</a></li>
-  <li><a href="#bootstrap-confidence-intervals" id="toc-bootstrap-confidence-intervals" class="nav-link" data-scroll-target="#bootstrap-confidence-intervals"><span class="header-section-number">29.7.5</span> Bootstrap confidence intervals</a></li>
-  </ul></li>
-  </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/elasticity/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/elasticity/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
-    </div>
-<!-- main -->
-<main class="content" id="quarto-document-content" tabindex="-1">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">29</span>&nbsp; <span class="chapter-title">Estimating Price Elasticity of Demand</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-
-</header>
-
-
-<section id="the-problem" class="level2" data-number="29.1">
-<h2 data-number="29.1" class="anchored" data-anchor-id="the-problem"><span class="header-section-number">29.1</span> The Problem</h2>
+<main class="content"><header id="title-block-header" class="quarto-title-block"></header>
+<h1 class="title">Estimating Price Elasticity of Demand</h1>
+<h2 data-number="29.1" id="the-problem"><span class="header-section-number">29.1</span> The Problem</h2>
 <ul>
 <li>The <a href="../glossary/index.html#price_elasticity">price elasticity of demand</a> measures how sensitive consumer demand is to price changes
 <ul>
@@ -482,14 +41,14 @@ window.Quarto = {
 </ul></li>
 <li>Formally:</li>
 </ul>
-<p><span class="math display">\[\varepsilon = \frac{\partial \ln Q}{\partial \ln P} = \frac{P}{Q} \frac{dQ}{dP}\]</span></p>
+<p><span class="math display">$$\varepsilon = \frac{\partial \ln Q}{\partial \ln P} = \frac{P}{Q} \frac{dQ}{dP}$$</span></p>
 <ul>
-<li><span class="math inline">\(\varepsilon &lt; -1\)</span>: demand is elastic — a 1% price increase causes more than a 1% drop in quantity</li>
-<li><span class="math inline">\(-1 &lt; \varepsilon &lt; 0\)</span>: demand is inelastic — quantity is relatively insensitive to price</li>
-<li><span class="math inline">\(\varepsilon = -1\)</span>: unit elastic — price and quantity move in equal and opposite proportions</li>
+<li><span class="math inline"><em>ε</em> &lt; −1</span>: demand is elastic — a 1% price increase causes more than a 1% drop in quantity</li>
+<li><span class="math inline">−1 &lt; <em>ε</em> &lt; 0</span>: demand is inelastic — quantity is relatively insensitive to price</li>
+<li><span class="math inline"><em>ε</em> = −1</span>: unit elastic — price and quantity move in equal and opposite proportions</li>
 </ul>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
-<p>A product has estimated price elasticity <span class="math inline">\(\varepsilon = -2.0\)</span>. If the price increases by 10%, what happens to quantity demanded?</p>
+<p>A product has estimated price elasticity <span class="math inline"><em>ε</em> = −2.0</span>. If the price increases by 10%, what happens to quantity demanded?</p>
 <dl>
 <dt>Quantity decreases by 2%.</dt>
 <dd>
@@ -497,7 +56,7 @@ Wrong: elasticity multiplies the percentage change in price, not adds to it.
 </dd>
 <dt>Quantity decreases by 20%.</dt>
 <dd>
-Correct: <span class="math inline">\(\Delta Q / Q \approx \varepsilon \times \Delta P / P = -2.0 \times 10\% = -20\%\)</span>.
+Correct: <span class="math inline"><em>Δ</em><em>Q</em>/<em>Q</em> ≈ <em>ε</em> × <em>Δ</em><em>P</em>/<em>P</em> = −2.0 × 10% = −20%</span>.
 </dd>
 <dt>Quantity increases by 20% because supply adjusts.</dt>
 <dd>
@@ -505,91 +64,81 @@ Wrong: price elasticity of demand describes consumer response, not supplier resp
 </dd>
 <dt>Quantity is unchanged because consumers need the product regardless of price.</dt>
 <dd>
-Wrong: that would describe a perfectly inelastic good (<span class="math inline">\(\varepsilon = 0\)</span>), not one with <span class="math inline">\(\varepsilon = -2\)</span>.
+Wrong: that would describe a perfectly inelastic good (<span class="math inline"><em>ε</em> = 0</span>), not one with <span class="math inline"><em>ε</em> = −2</span>.
 </dd>
 </dl>
 </div>
-</section>
-<section id="the-log-log-model" class="level2" data-number="29.2">
-<h2 data-number="29.2" class="anchored" data-anchor-id="the-log-log-model"><span class="header-section-number">29.2</span> The Log-Log Model</h2>
+<h2 data-number="29.2" id="the-log-log-model"><span class="header-section-number">29.2</span> The Log-Log Model</h2>
 <ul>
-<li>A power-law demand curve <span class="math inline">\(Q = A P^\varepsilon\)</span> becomes linear after taking logarithms:</li>
+<li>A power-law demand curve <span class="math inline"><em>Q</em> = <em>A</em><em>P</em><sup><em>ε</em></sup></span> becomes linear after taking logarithms:</li>
 </ul>
-<p><span class="math display">\[\ln Q = \ln A + \varepsilon \ln P\]</span></p>
+<p><span class="math display">ln <em>Q</em> = ln <em>A</em> + <em>ε</em>ln <em>P</em></span></p>
 <ul>
-<li>This means <span class="math inline">\(\varepsilon\)</span> is the ordinary least squares slope in <a href="../glossary/index.html#log_log_regression">log-log space</a>: fitting <span class="math inline">\(y = a + bx\)</span> where <span class="math inline">\(y = \ln Q\)</span> and <span class="math inline">\(x = \ln P\)</span> directly estimates the elasticity as the slope <span class="math inline">\(b\)</span></li>
-<li>The intercept <span class="math inline">\(a = \ln A\)</span> gives the log of the demand intercept, but is rarely reported by itself.</li>
+<li>This means <span class="math inline"><em>ε</em></span> is the ordinary least squares slope in <a href="../glossary/index.html#log_log_regression">log-log space</a>: fitting <span class="math inline"><em>y</em> = <em>a</em> + <em>b</em><em>x</em></span> where <span class="math inline"><em>y</em> = ln <em>Q</em></span> and <span class="math inline"><em>x</em> = ln <em>P</em></span> directly estimates the elasticity as the slope <span class="math inline"><em>b</em></span></li>
+<li>The intercept <span class="math inline"><em>a</em> = ln <em>A</em></span> gives the log of the demand intercept, but is rarely reported by itself.</li>
 </ul>
-</section>
-<section id="ordinary-least-squares-in-log-log-space" class="level2" data-number="29.3">
-<h2 data-number="29.3" class="anchored" data-anchor-id="ordinary-least-squares-in-log-log-space"><span class="header-section-number">29.3</span> Ordinary Least Squares in Log-Log Space</h2>
+<h2 data-number="29.3" id="ordinary-least-squares-in-log-log-space"><span class="header-section-number">29.3</span> Ordinary Least Squares in Log-Log Space</h2>
 <ul>
 <li>Transforming prices and quantities to logs reduces the nonlinear power-law model to a straight line, so standard OLS applies:</li>
 </ul>
-<p><span class="math display">\[\hat{\varepsilon} = \frac{\sum_i (\ln P_i - \overline{\ln P})(\ln Q_i - \overline{\ln Q})}{\sum_i (\ln P_i - \overline{\ln P})^2}\]</span></p>
+<p><span class="math display">$$\hat{\varepsilon} = \frac{\sum_i (\ln P_i - \overline{\ln P})(\ln Q_i - \overline{\ln Q})}{\sum_i (\ln P_i - \overline{\ln P})^2}$$</span></p>
 <ul>
-<li>The standard error of <span class="math inline">\(\hat{\varepsilon}\)</span> is:</li>
+<li>The standard error of <span class="math inline"><em>ε̂</em></span> is:</li>
 </ul>
-<p><span class="math display">\[\text{SE}(\hat{\varepsilon}) = \sqrt{\frac{\text{RSS}/(n-2)}{\sum_i (\ln P_i - \overline{\ln P})^2}}\]</span></p>
+<p><span class="math display">$$\text{SE}(\hat{\varepsilon}) = \sqrt{\frac{\text{RSS}/(n-2)}{\sum_i (\ln P_i - \overline{\ln P})^2}}$$</span></p>
 <ul>
-<li><span class="math inline">\(\text{RSS} = \sum_i (\ln Q_i - \hat{a} - \hat{\varepsilon} \ln P_i)^2\)</span> is the residual sum of squares</li>
-<li>A 95% confidence interval is <span class="math inline">\(\hat{\varepsilon} \pm t_{0.975,\,n-2} \cdot \text{SE}(\hat{\varepsilon})\)</span></li>
+<li><span class="math inline">RSS = ∑<sub><em>i</em></sub>(ln <em>Q</em><sub><em>i</em></sub> − <em>â</em> − <em>ε̂</em>ln <em>P</em><sub><em>i</em></sub>)<sup>2</sup></span> is the residual sum of squares</li>
+<li>A 95% confidence interval is <span class="math inline"><em>ε̂</em> ± <em>t</em><sub>0.975, <em>n</em> − 2</sub> ⋅ SE(<em>ε̂</em>)</span></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these log-log OLS steps in the correct order.</p>
 <ol type="1">
-<li>Compute <span class="math inline">\(x_i = \ln P_i\)</span> and <span class="math inline">\(y_i = \ln Q_i\)</span> for each observation</li>
-<li>Compute <span class="math inline">\(\bar{x}\)</span> and <span class="math inline">\(\bar{y}\)</span>, then <span class="math inline">\(SS_{xx}\)</span> and <span class="math inline">\(SS_{xy}\)</span></li>
-<li>Estimate slope <span class="math inline">\(\hat{\varepsilon} = SS_{xy} / SS_{xx}\)</span> and intercept <span class="math inline">\(\hat{a} = \bar{y} - \hat{\varepsilon}\bar{x}\)</span></li>
-<li>Compute residuals <span class="math inline">\(e_i = y_i - (\hat{a} + \hat{\varepsilon} x_i)\)</span> and RSS <span class="math inline">\(= \sum e_i^2\)</span></li>
-<li>Report <span class="math inline">\(\hat{\varepsilon}\)</span> with 95% CI using <span class="math inline">\(t_{0.975,\,n-2} \cdot \text{SE}(\hat{\varepsilon})\)</span></li>
+<li>Compute <span class="math inline"><em>x</em><sub><em>i</em></sub> = ln <em>P</em><sub><em>i</em></sub></span> and <span class="math inline"><em>y</em><sub><em>i</em></sub> = ln <em>Q</em><sub><em>i</em></sub></span> for each observation</li>
+<li>Compute <span class="math inline"><em>x̄</em></span> and <span class="math inline"><em>ȳ</em></span>, then <span class="math inline"><em>S</em><em>S</em><sub><em>x</em><em>x</em></sub></span> and <span class="math inline"><em>S</em><em>S</em><sub><em>x</em><em>y</em></sub></span></li>
+<li>Estimate slope <span class="math inline"><em>ε̂</em> = <em>S</em><em>S</em><sub><em>x</em><em>y</em></sub>/<em>S</em><em>S</em><sub><em>x</em><em>x</em></sub></span> and intercept <span class="math inline"><em>â</em> = <em>ȳ</em> − <em>ε̂</em><em>x̄</em></span></li>
+<li>Compute residuals <span class="math inline"><em>e</em><sub><em>i</em></sub> = <em>y</em><sub><em>i</em></sub> − (<em>â</em> + <em>ε̂</em><em>x</em><sub><em>i</em></sub>)</span> and RSS <span class="math inline"> = ∑<em>e</em><sub><em>i</em></sub><sup>2</sup></span></li>
+<li>Report <span class="math inline"><em>ε̂</em></span> with 95% CI using <span class="math inline"><em>t</em><sub>0.975, <em>n</em> − 2</sub> ⋅ SE(<em>ε̂</em>)</span></li>
 </ol>
 </div>
-</section>
-<section id="generating-synthetic-data" class="level2" data-number="29.4">
-<h2 data-number="29.4" class="anchored" data-anchor-id="generating-synthetic-data"><span class="header-section-number">29.4</span> Generating Synthetic Data</h2>
+<h2 data-number="29.4" id="generating-synthetic-data"><span class="header-section-number">29.4</span> Generating Synthetic Data</h2>
 <ul>
-<li>Prices are drawn uniformly from <span class="math inline">\([1, 20]\)</span> dollars
+<li>Prices are drawn uniformly from <span class="math inline">[1, 20]</span> dollars
 <ul>
 <li>Log-quantities are generated from the power-law model plus Gaussian noise in log space</li>
 </ul></li>
 <li>Noise in log space is equivalent to multiplicative noise in original space
 <ul>
-<li>Each observed quantity is <span class="math inline">\(Q_i = A P_i^\varepsilon \cdot e^{\epsilon_i}\)</span>, where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span></li>
+<li>Each observed quantity is <span class="math inline"><em>Q</em><sub><em>i</em></sub> = <em>A</em><em>P</em><sub><em>i</em></sub><sup><em>ε</em></sup> ⋅ <em>e</em><sup><em>ϵ</em><sub><em>i</em></sub></sup></span>, where <span class="math inline"><em>ϵ</em><sub><em>i</em></sub> ∼ <em>N</em>(0, <em>σ</em><sup>2</sup>)</span></li>
 </ul></li>
 </ul>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-</section>
-<section id="fitting-and-reporting-the-elasticity" class="level2" data-number="29.5">
-<h2 data-number="29.5" class="anchored" data-anchor-id="fitting-and-reporting-the-elasticity"><span class="header-section-number">29.5</span> Fitting and Reporting the Elasticity</h2>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div id="fig-elasticity-loglog" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Log-log scatter plot of price vs quantity with a straight fitted line showing a negative slope.">
-<figure class="quarto-float quarto-float-fig figure">
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<h2 data-number="29.5" id="fitting-and-reporting-the-elasticity"><span class="header-section-number">29.5</span> Fitting and Reporting the Elasticity</h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div id="fig-elasticity-loglog" class="quarto-float quarto-figure quarto-figure-center" alt="Log-log scatter plot of price vs quantity with a straight fitted line showing a negative slope.">
+<figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-elasticity-loglog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="elasticity.svg" class="img-fluid figure-img" alt="Log-log scatter plot of price vs quantity with a straight fitted line showing a negative slope.">
+<img src="elasticity.svg" alt="Log-log scatter plot of price vs quantity with a straight fitted line showing a negative slope.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-elasticity-loglog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;29.1: Eighty synthetic price-quantity observations on log-log axes. The fitted OLS line has slope <span class="math inline">\(\hat{\varepsilon} = -1.474 \pm 0.022\)</span> (95% CI: <span class="math inline">\([-1.518,\,-1.430]\)</span>), covering the true value <span class="math inline">\(\varepsilon = -1.5\)</span>.
+Figure&nbsp;29.1: Eighty synthetic price-quantity observations on log-log axes. The fitted OLS line has slope <span class="math inline"><em>ε̂</em> = −1.474 ± 0.022</span> (95% CI: <span class="math inline">[−1.518,  − 1.430]</span>), covering the true value <span class="math inline"><em>ε</em> = −1.5</span>.
 </figcaption>
 </figure>
 </div>
 <ul>
-<li>The confidence interval <span class="math inline">\([-1.518, -1.430]\)</span> is narrow because the noise (<span class="math inline">\(\sigma = 0.15\)</span> in log space) is small relative to the price variation</li>
+<li>The confidence interval <span class="math inline">[−1.518, −1.430]</span> is narrow because the noise (<span class="math inline"><em>σ</em> = 0.15</span> in log space) is small relative to the price variation</li>
 <li>A wide confidence interval (or one that includes zero) indicates insufficient price variation in the data to estimate elasticity reliably</li>
 </ul>
-</section>
-<section id="testing" class="level2" data-number="29.6">
-<h2 data-number="29.6" class="anchored" data-anchor-id="testing"><span class="header-section-number">29.6</span> Testing</h2>
+<h2 data-number="29.6" id="testing"><span class="header-section-number">29.6</span> Testing</h2>
 <dl>
 <dt>Noise-free recovery</dt>
 <dd>
-With no noise, OLS returns the exact true slope and intercept to within <span class="math inline">\(10^{-6}\)</span> (relative). Any deviation is a bug in the OLS formula rather than a sampling artefact.
+With no noise, OLS returns the exact true slope and intercept to within <span class="math inline">10<sup>−6</sup></span> (relative). Any deviation is a bug in the OLS formula rather than a sampling artefact.
 </dd>
 <dt>Noisy slope within 10% of true value</dt>
 <dd>
-With <span class="math inline">\(\sigma = 0.15\)</span> and <span class="math inline">\(n = 80\)</span>, the theoretical SE of the slope is approximately 0.02. Ten percent of <span class="math inline">\(|\varepsilon| = 1.5\)</span> equals 0.15, giving a safety factor of roughly 7.5 over the expected sampling error, so the test should pass for any reasonable random seed.
+With <span class="math inline"><em>σ</em> = 0.15</span> and <span class="math inline"><em>n</em> = 80</span>, the theoretical SE of the slope is approximately 0.02. Ten percent of <span class="math inline">|<em>ε</em>| = 1.5</span> equals 0.15, giving a safety factor of roughly 7.5 over the expected sampling error, so the test should pass for any reasonable random seed.
 </dd>
 <dt>Negative elasticity</dt>
 <dd>
@@ -597,611 +146,95 @@ Any estimated slope for downward-sloping demand must be negative. A positive slo
 </dd>
 <dt>95% CI contains true value</dt>
 <dd>
-With the fixed seed 7493418, the CI <span class="math inline">\([-1.518, -1.430]\)</span> reliably contains the true value <span class="math inline">\(-1.5\)</span>. This test would fail only with data where the noise draw happens to be extreme, which the fixed seed rules out.
+With the fixed seed 7493418, the CI <span class="math inline">[−1.518, −1.430]</span> reliably contains the true value <span class="math inline">−1.5</span>. This test would fail only with data where the noise draw happens to be extreme, which the fixed seed rules out.
 </dd>
 </dl>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pytest</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_elasticity <span class="im">import</span> make_elasticity_data, TRUE_ELASTICITY, TRUE_INTERCEPT</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> elasticity <span class="im">import</span> log_log_ols</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noise_free_slope_recovery():</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With no noise, OLS must recover the true slope to near machine precision.</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We use a generous relative tolerance of 1e-6 to allow for floating-point</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="co"># arithmetic, which is far tighter than the noise-corrupted case (&lt; 10%).</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> np.linspace(<span class="fl">1.0</span>, <span class="fl">20.0</span>, <span class="dv">60</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    log_quantities <span class="op">=</span> TRUE_INTERCEPT <span class="op">+</span> TRUE_ELASTICITY <span class="op">*</span> np.log(prices)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> np.exp(log_quantities)</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> slope <span class="op">==</span> pytest.approx(TRUE_ELASTICITY, rel<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noise_free_intercept_recovery():</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> np.linspace(<span class="fl">1.0</span>, <span class="fl">20.0</span>, <span class="dv">60</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    log_quantities <span class="op">=</span> TRUE_INTERCEPT <span class="op">+</span> TRUE_ELASTICITY <span class="op">*</span> np.log(prices)</span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> np.exp(log_quantities)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    intercept, _, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> intercept <span class="op">==</span> pytest.approx(TRUE_INTERCEPT, rel<span class="op">=</span><span class="fl">1e-6</span>)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noisy_slope_within_ten_percent():</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With Gaussian log-quantity noise (std=0.15) and 80 observations,</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the OLS slope must land within 10% of the true value.</span></span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The theoretical SE of the slope is roughly noise_std / sqrt(SS_xx),</span></span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="co"># where SS_xx grows with n; 10% of |TRUE_ELASTICITY| = 0.15 gives</span></span>
-<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a safety factor of ~3 over the expected SE ≈ 0.04.</span></span>
-<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
-<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
-<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
-<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
-<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(slope <span class="op">-</span> TRUE_ELASTICITY) <span class="op">/</span> <span class="bu">abs</span>(TRUE_ELASTICITY) <span class="op">&lt;</span> <span class="fl">0.10</span></span>
-<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_elasticity_is_negative():</span>
-<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normal demand: higher price → lower quantity → negative slope in log-log space.</span></span>
-<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
-<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
-<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
-<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
-<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> slope <span class="op">&lt;</span> <span class="fl">0.0</span></span>
-<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-47"><a href="#cb5-47" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-48"><a href="#cb5-48" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_confidence_interval_contains_true_value():</span>
-<span id="cb5-49"><a href="#cb5-49" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The 95% CI should contain the true elasticity.</span></span>
-<span id="cb5-50"><a href="#cb5-50" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With a well-specified model and n=80 points this should virtually always hold;</span></span>
-<span id="cb5-51"><a href="#cb5-51" aria-hidden="true" tabindex="-1"></a>    <span class="co"># it fails only in extreme noise draws that do not occur with seed 7493418.</span></span>
-<span id="cb5-52"><a href="#cb5-52" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
-<span id="cb5-53"><a href="#cb5-53" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
-<span id="cb5-54"><a href="#cb5-54" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
-<span id="cb5-55"><a href="#cb5-55" aria-hidden="true" tabindex="-1"></a>    _, _, _, ci_low, ci_high <span class="op">=</span> log_log_ols(prices, quantities)</span>
-<span id="cb5-56"><a href="#cb5-56" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> ci_low <span class="op">&lt;</span> TRUE_ELASTICITY <span class="op">&lt;</span> ci_high</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noise_free_slope_recovery():</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With no noise, OLS must recover the true slope to near machine precision.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># We use a generous relative tolerance of 1e-6 to allow for floating-point</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="co"># arithmetic, which is far tighter than the noise-corrupted case (&lt; 10%).</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> np.linspace(<span class="fl">1.0</span>, <span class="fl">20.0</span>, <span class="dv">60</span>)</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    log_quantities <span class="op">=</span> TRUE_INTERCEPT <span class="op">+</span> TRUE_ELASTICITY <span class="op">*</span> np.log(prices)</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> np.exp(log_quantities)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> slope <span class="op">==</span> pytest.approx(TRUE_ELASTICITY, rel<span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noise_free_intercept_recovery():</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> np.linspace(<span class="fl">1.0</span>, <span class="fl">20.0</span>, <span class="dv">60</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    log_quantities <span class="op">=</span> TRUE_INTERCEPT <span class="op">+</span> TRUE_ELASTICITY <span class="op">*</span> np.log(prices)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> np.exp(log_quantities)</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    intercept, _, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> intercept <span class="op">==</span> pytest.approx(TRUE_INTERCEPT, rel<span class="op">=</span><span class="fl">1e-6</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_noisy_slope_within_ten_percent():</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With Gaussian log-quantity noise (std=0.15) and 80 observations,</span></span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># the OLS slope must land within 10% of the true value.</span></span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The theoretical SE of the slope is roughly noise_std / sqrt(SS_xx),</span></span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    <span class="co"># where SS_xx grows with n; 10% of |TRUE_ELASTICITY| = 0.15 gives</span></span>
+<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>    <span class="co"># a safety factor of ~3 over the expected SE ≈ 0.04.</span></span>
+<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
+<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
+<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
+<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
+<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(slope <span class="op">-</span> TRUE_ELASTICITY) <span class="op">/</span> <span class="bu">abs</span>(TRUE_ELASTICITY) <span class="op">&lt;</span> <span class="fl">0.10</span></span>
+<span id="cb5-31"><a href="#cb5-31" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_elasticity_is_negative():</span>
+<span id="cb5-32"><a href="#cb5-32" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Normal demand: higher price → lower quantity → negative slope in log-log space.</span></span>
+<span id="cb5-33"><a href="#cb5-33" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
+<span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
+<span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
+<span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a>    _, slope, _, _, _ <span class="op">=</span> log_log_ols(prices, quantities)</span>
+<span id="cb5-37"><a href="#cb5-37" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> slope <span class="op">&lt;</span> <span class="fl">0.0</span></span>
+<span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> test_confidence_interval_contains_true_value():</span>
+<span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="co"># The 95% CI should contain the true elasticity.</span></span>
+<span id="cb5-40"><a href="#cb5-40" aria-hidden="true" tabindex="-1"></a>    <span class="co"># With a well-specified model and n=80 points this should virtually always hold;</span></span>
+<span id="cb5-41"><a href="#cb5-41" aria-hidden="true" tabindex="-1"></a>    <span class="co"># it fails only in extreme noise draws that do not occur with seed 7493418.</span></span>
+<span id="cb5-42"><a href="#cb5-42" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> make_elasticity_data()</span>
+<span id="cb5-43"><a href="#cb5-43" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> df[<span class="st">"price"</span>].to_numpy()</span>
+<span id="cb5-44"><a href="#cb5-44" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> df[<span class="st">"quantity"</span>].to_numpy()</span>
+<span id="cb5-45"><a href="#cb5-45" aria-hidden="true" tabindex="-1"></a>    _, _, _, ci_low, ci_high <span class="op">=</span> log_log_ols(prices, quantities)</span>
+<span id="cb5-46"><a href="#cb5-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> ci_low <span class="op">&lt;</span> TRUE_ELASTICITY <span class="op">&lt;</span> ci_high</span></code></pre></div>
 <div class="forma-flashcard" data-lang="en" data-markdown="1">
 <p>Price elasticity key terms</p>
 <dl>
-<dt>Price elasticity of demand <span class="math inline">\(\varepsilon\)</span></dt>
+<dt>Price elasticity of demand <span class="math inline"><em>ε</em></span></dt>
 <dd>
-<span class="math inline">\(\partial \ln Q / \partial \ln P\)</span>; the percentage change in quantity demanded for a 1% change in price; negative for normal goods
+<span class="math inline">∂ln <em>Q</em>/∂ln <em>P</em></span>; the percentage change in quantity demanded for a 1% change in price; negative for normal goods
 </dd>
-<dt>Elastic demand (<span class="math inline">\(|\varepsilon| &gt; 1\)</span>)</dt>
+<dt>Elastic demand (<span class="math inline">|<em>ε</em>| &gt; 1</span>)</dt>
 <dd>
 Quantity is highly responsive to price; a 1% price rise causes more than a 1% drop in sales
 </dd>
-<dt>Inelastic demand (<span class="math inline">\(|\varepsilon| &lt; 1\)</span>)</dt>
+<dt>Inelastic demand (<span class="math inline">|<em>ε</em>| &lt; 1</span>)</dt>
 <dd>
 Quantity is insensitive to price; consumers buy approximately the same amount regardless of small price changes
 </dd>
 <dt>Log-log regression</dt>
 <dd>
-A linear regression of <span class="math inline">\(\ln Q\)</span> on <span class="math inline">\(\ln P\)</span>; the OLS slope directly estimates the elasticity exponent of the underlying power-law demand curve
+A linear regression of <span class="math inline">ln <em>Q</em></span> on <span class="math inline">ln <em>P</em></span>; the OLS slope directly estimates the elasticity exponent of the underlying power-law demand curve
 </dd>
 <dt>Residual standard error</dt>
 <dd>
-<span class="math inline">\(\sqrt{\text{RSS}/(n-2)}\)</span>; estimates the noise in log-quantity; together with price variation it determines the precision of the elasticity estimate
+<span class="math inline">$\sqrt{\text{RSS}/(n-2)}$</span>; estimates the noise in log-quantity; together with price variation it determines the precision of the elasticity estimate
 </dd>
 </dl>
 </div>
 <section class="exercises">
-</section>
-<section id="exercises" class="level2" data-number="29.7">
-<h2 data-number="29.7" class="anchored" data-anchor-id="exercises"><span class="header-section-number">29.7</span> Exercises</h2>
-<section id="do-the-math" class="level3" data-number="29.7.1">
-<h3 data-number="29.7.1" class="anchored" data-anchor-id="do-the-math"><span class="header-section-number">29.7.1</span> Do the math</h3>
-<p>Using <span class="math inline">\(\ln Q = a + \varepsilon \ln P\)</span> with <span class="math inline">\(a = 5\)</span> and <span class="math inline">\(\varepsilon = -1.5\)</span>, compute <span class="math inline">\(\ln Q\)</span> when <span class="math inline">\(P = e\)</span> (Euler’s number, so <span class="math inline">\(\ln P = 1\)</span>). What is the corresponding elasticity (the slope of the log-log line)?</p>
-</section>
-<section id="residual-diagnostics" class="level3" data-number="29.7.2">
-<h3 data-number="29.7.2" class="anchored" data-anchor-id="residual-diagnostics"><span class="header-section-number">29.7.2</span> Residual diagnostics</h3>
-<p>Plot the OLS residuals <span class="math inline">\(e_i = \ln Q_i - \hat{a} - \hat{\varepsilon} \ln P_i\)</span> against <span class="math inline">\(\ln P_i\)</span>. If the log-log model is correct, the residuals should show no trend and no heteroscedasticity (variance should be roughly constant across prices). Modify <code>make_elasticity_data</code> to introduce heteroscedasticity (noise that increases with price) and show how the residual plot reveals it.</p>
-</section>
-<section id="weighted-least-squares" class="level3" data-number="29.7.3">
-<h3 data-number="29.7.3" class="anchored" data-anchor-id="weighted-least-squares"><span class="header-section-number">29.7.3</span> Weighted least squares</h3>
-<p>If measurement variance is known to be proportional to price (<span class="math inline">\(\text{Var}(\epsilon_i) = \sigma^2 P_i\)</span>), ordinary OLS is inefficient. Implement weighted OLS by minimising <span class="math inline">\(\sum_i w_i (y_i - \hat{a} - \hat{\varepsilon} x_i)^2\)</span> with weights <span class="math inline">\(w_i = 1/P_i\)</span>. Compare the standard errors of the WLS and OLS estimates on heteroscedastic data.</p>
-</section>
-<section id="two-stage-price-endogeneity-correction" class="level3" data-number="29.7.4">
-<h3 data-number="29.7.4" class="anchored" data-anchor-id="two-stage-price-endogeneity-correction"><span class="header-section-number">29.7.4</span> Two-stage price endogeneity correction</h3>
-<p>In observational data, price is not set randomly — firms charge more when demand is high, creating a spurious correlation. Instrumental variables estimation uses an instrument <span class="math inline">\(Z\)</span> correlated with price but uncorrelated with the demand shock. Simulate endogenous prices by adding a common demand shock to both price and log-quantity, then show that OLS overestimates <span class="math inline">\(|\varepsilon|\)</span> while two-stage least squares (using a cost instrument) recovers the true elasticity.</p>
-</section>
-<section id="bootstrap-confidence-intervals" class="level3" data-number="29.7.5">
-<h3 data-number="29.7.5" class="anchored" data-anchor-id="bootstrap-confidence-intervals"><span class="header-section-number">29.7.5</span> Bootstrap confidence intervals</h3>
+<h2 data-number="29.7" id="exercises"><span class="header-section-number">29.7</span> Exercises</h2>
+<h3 data-number="29.7.1" id="do-the-math"><span class="header-section-number">29.7.1</span> Do the math</h3>
+<p>Using <span class="math inline">ln <em>Q</em> = <em>a</em> + <em>ε</em>ln <em>P</em></span> with <span class="math inline"><em>a</em> = 5</span> and <span class="math inline"><em>ε</em> = −1.5</span>, compute <span class="math inline">ln <em>Q</em></span> when <span class="math inline"><em>P</em> = <em>e</em></span> (Euler’s number, so <span class="math inline">ln <em>P</em> = 1</span>). What is the corresponding elasticity (the slope of the log-log line)?</p>
+<h3 data-number="29.7.2" id="residual-diagnostics"><span class="header-section-number">29.7.2</span> Residual diagnostics</h3>
+<p>Plot the OLS residuals <span class="math inline"><em>e</em><sub><em>i</em></sub> = ln <em>Q</em><sub><em>i</em></sub> − <em>â</em> − <em>ε̂</em>ln <em>P</em><sub><em>i</em></sub></span> against <span class="math inline">ln <em>P</em><sub><em>i</em></sub></span>. If the log-log model is correct, the residuals should show no trend and no heteroscedasticity (variance should be roughly constant across prices). Modify <code>make_elasticity_data</code> to introduce heteroscedasticity (noise that increases with price) and show how the residual plot reveals it.</p>
+<h3 data-number="29.7.3" id="weighted-least-squares"><span class="header-section-number">29.7.3</span> Weighted least squares</h3>
+<p>If measurement variance is known to be proportional to price (<span class="math inline">Var(<em>ϵ</em><sub><em>i</em></sub>) = <em>σ</em><sup>2</sup><em>P</em><sub><em>i</em></sub></span>), ordinary OLS is inefficient. Implement weighted OLS by minimising <span class="math inline">∑<sub><em>i</em></sub><em>w</em><sub><em>i</em></sub>(<em>y</em><sub><em>i</em></sub> − <em>â</em> − <em>ε̂</em><em>x</em><sub><em>i</em></sub>)<sup>2</sup></span> with weights <span class="math inline"><em>w</em><sub><em>i</em></sub> = 1/<em>P</em><sub><em>i</em></sub></span>. Compare the standard errors of the WLS and OLS estimates on heteroscedastic data.</p>
+<h3 data-number="29.7.4" id="two-stage-price-endogeneity-correction"><span class="header-section-number">29.7.4</span> Two-stage price endogeneity correction</h3>
+<p>In observational data, price is not set randomly — firms charge more when demand is high, creating a spurious correlation. Instrumental variables estimation uses an instrument <span class="math inline"><em>Z</em></span> correlated with price but uncorrelated with the demand shock. Simulate endogenous prices by adding a common demand shock to both price and log-quantity, then show that OLS overestimates <span class="math inline">|<em>ε</em>|</span> while two-stage least squares (using a cost instrument) recovers the true elasticity.</p>
+<h3 data-number="29.7.5" id="bootstrap-confidence-intervals"><span class="header-section-number">29.7.5</span> Bootstrap confidence intervals</h3>
 <p>The OLS confidence interval assumes normally distributed residuals. Implement a bootstrap estimate: resample the 80 observations with replacement, fit the log-log model to each resample, and take the 2.5th and 97.5th percentiles of the 1000 bootstrapped slopes as the CI. Compare the bootstrap CI with the analytic CI; do they agree closely for the synthetic data?</p>
 </section>
 
-
-</section>
-</section>
-
-</main> <!-- /main -->
-<script id="quarto-html-after-body" type="application/javascript">
-  window.document.addEventListener("DOMContentLoaded", function (event) {
-    const icon = "";
-    const anchorJS = new window.AnchorJS();
-    anchorJS.options = {
-      placement: 'right',
-      icon: icon
-    };
-    anchorJS.add('.anchored');
-    const isCodeAnnotation = (el) => {
-      for (const clz of el.classList) {
-        if (clz.startsWith('code-annotation-')) {                     
-          return true;
-        }
-      }
-      return false;
-    }
-    const onCopySuccess = function(e) {
-      // button target
-      const button = e.trigger;
-      // don't keep focus
-      button.blur();
-      // flash "checked"
-      button.classList.add('code-copy-button-checked');
-      var currentTitle = button.getAttribute("title");
-      button.setAttribute("title", "Copied!");
-      let tooltip;
-      if (window.bootstrap) {
-        button.setAttribute("data-bs-toggle", "tooltip");
-        button.setAttribute("data-bs-placement", "left");
-        button.setAttribute("data-bs-title", "Copied!");
-        tooltip = new bootstrap.Tooltip(button, 
-          { trigger: "manual", 
-            customClass: "code-copy-button-tooltip",
-            offset: [0, -8]});
-        tooltip.show();    
-      }
-      setTimeout(function() {
-        if (tooltip) {
-          tooltip.hide();
-          button.removeAttribute("data-bs-title");
-          button.removeAttribute("data-bs-toggle");
-          button.removeAttribute("data-bs-placement");
-        }
-        button.setAttribute("title", currentTitle);
-        button.classList.remove('code-copy-button-checked');
-      }, 1000);
-      // clear code selection
-      e.clearSelection();
-    }
-    const getTextToCopy = function(trigger) {
-      const outerScaffold = trigger.parentElement.cloneNode(true);
-      const codeEl = outerScaffold.querySelector('code');
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-      text: getTextToCopy
-    });
-    clipboard.on('success', onCopySuccess);
-    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-        text: getTextToCopy,
-        container: window.document.getElementById('quarto-embedded-source-code-modal')
-      });
-      clipboardModal.on('success', onCopySuccess);
-    }
-      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-      var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
-      var isInternal = (href) => {
-          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-      }
-      // Inspect non-navigation links and adorn them if external
-      window.quartoDecorateExternalLinks = function (root) {
-     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-      for (var i=0; i<links.length; i++) {
-        const link = links[i];
-        if (!isInternal(link.href)) {
-          // undo the damage that might have been done by quarto-nav.js in the case of
-          // links that we want to consider external
-          if (link.dataset.originalHref !== undefined) {
-            link.href = link.dataset.originalHref;
-          }
-          if (!link.classList.contains('no-external-icon')) {
-          }
-        }
-      }
-      };
-      window.quartoDecorateExternalLinks(window.document);
-    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
-    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
-    const hideOnEscAndFocusOut = {
-      name: 'hideOnEscAndFocusOut',
-      defaultValue: true,
-      fn(instance) {
-        const dismiss = () => {
-          // A show scheduled by the trigger delay would otherwise reopen it
-          instance.clearDelayTimeouts();
-          instance.hide();
-        };
-        const onKeyDown = (event) => {
-          if (event.key !== 'Escape') {
-            return;
-          }
-          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
-          // except an open reveal.js slide menu, which Esc should close too.
-          // The menu handles keys only when its keyboard option is on.
-          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
-            window.Reveal.getConfig().menu?.keyboard !== false;
-          if (!menuHandlesEsc) {
-            event.stopPropagation();
-          }
-          if (instance.popper.contains(window.document.activeElement)) {
-            // Disabled while refocusing so the focus trigger does not reopen it
-            instance.disable();
-            instance.reference.focus();
-            instance.enable();
-          }
-          dismiss();
-        };
-        const onFocusOut = (event) => {
-          const target = event.relatedTarget;
-          if (target && !instance.reference.contains(target) &&
-              !instance.popper.contains(target)) {
-            dismiss();
-          }
-        };
-        // On the trigger too: a click trigger (code-annotations: select) has no
-        // blur handling. Attached for the instance's lifetime so leaving the
-        // trigger also cancels a show still pending on the trigger delay.
-        instance.reference.addEventListener('focusout', onFocusOut);
-        return {
-          onShow() {
-            window.document.addEventListener('keydown', onKeyDown, true);
-            instance.popper.addEventListener('focusout', onFocusOut);
-          },
-          onHide() {
-            window.document.removeEventListener('keydown', onKeyDown, true);
-            instance.popper.removeEventListener('focusout', onFocusOut);
-          },
-          onDestroy() {
-            instance.reference.removeEventListener('focusout', onFocusOut);
-          },
-        };
-      },
-    };
-    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-      const config = {
-        allowHTML: true,
-        maxWidth: 500,
-        delay: 100,
-        arrow: false,
-        appendTo: function(el) {
-            return el.parentElement;
-        },
-        interactive: true,
-        interactiveBorder: 10,
-        theme: 'quarto',
-        placement: 'bottom-start',
-        plugins: [hideOnEscAndFocusOut],
-      };
-      if (contentFn) {
-        config.content = contentFn;
-      }
-      if (onTriggerFn) {
-        config.onTrigger = onTriggerFn;
-      }
-      if (onUntriggerFn) {
-        config.onUntrigger = onUntriggerFn;
-      }
-      window.tippy(el, config); 
-    }
-    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-    for (var i=0; i<noterefs.length; i++) {
-      const ref = noterefs[i];
-      tippyHover(ref, function() {
-        // use id or data attribute instead here
-        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-        try { href = new URL(href).hash; } catch {}
-        const id = href.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note) {
-          return note.innerHTML;
-        } else {
-          return "";
-        }
-      });
-    }
-    const xrefs = window.document.querySelectorAll('a.quarto-xref');
-    const processXRef = (id, note) => {
-      // Strip column container classes
-      const stripColumnClz = (el) => {
-        el.classList.remove("page-full", "page-columns");
-        if (el.children) {
-          for (const child of el.children) {
-            stripColumnClz(child);
-          }
-        }
-      }
-      stripColumnClz(note)
-      if (id === null || id.startsWith('sec-')) {
-        // Special case sections, only their first couple elements
-        const container = document.createElement("div");
-        if (note.children && note.children.length > 2) {
-          container.appendChild(note.children[0].cloneNode(true));
-          for (let i = 1; i < note.children.length; i++) {
-            const child = note.children[i];
-            if (child.tagName === "P" && child.innerText === "") {
-              continue;
-            } else {
-              container.appendChild(child.cloneNode(true));
-              break;
-            }
-          }
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(container);
-          }
-          return container.innerHTML
-        } else {
-          if (window.Quarto?.typesetMath) {
-            window.Quarto.typesetMath(note);
-          }
-          return note.innerHTML;
-        }
-      } else {
-        // Remove any anchor links if they are present
-        const anchorLink = note.querySelector('a.anchorjs-link');
-        if (anchorLink) {
-          anchorLink.remove();
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        if (note.classList.contains("callout")) {
-          return note.outerHTML;
-        } else {
-          return note.innerHTML;
-        }
-      }
-    }
-    for (var i=0; i<xrefs.length; i++) {
-      const xref = xrefs[i];
-      tippyHover(xref, undefined, function(instance) {
-        instance.disable();
-        let url = xref.getAttribute('href');
-        let hash = undefined; 
-        if (url.startsWith('#')) {
-          hash = url;
-        } else {
-          try { hash = new URL(url).hash; } catch {}
-        }
-        if (hash) {
-          const id = hash.replace(/^#\/?/, "");
-          const note = window.document.getElementById(id);
-          if (note !== null) {
-            try {
-              const html = processXRef(id, note.cloneNode(true));
-              instance.setContent(html);
-            } finally {
-              instance.enable();
-              instance.show();
-            }
-          } else {
-            // See if we can fetch this
-            fetch(url.split('#')[0])
-            .then(res => res.text())
-            .then(html => {
-              const parser = new DOMParser();
-              const htmlDoc = parser.parseFromString(html, "text/html");
-              const note = htmlDoc.getElementById(id);
-              if (note !== null) {
-                const html = processXRef(id, note);
-                instance.setContent(html);
-              } 
-            }).finally(() => {
-              instance.enable();
-              instance.show();
-            });
-          }
-        } else {
-          // See if we can fetch a full url (with no hash to target)
-          // This is a special case and we should probably do some content thinning / targeting
-          fetch(url)
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.querySelector('main.content');
-            if (note !== null) {
-              // This should only happen for chapter cross references
-              // (since there is no id in the URL)
-              // remove the first header
-              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-                note.children[0].remove();
-              }
-              const html = processXRef(null, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      }, function(instance) {
-      });
-    }
-        let selectedAnnoteEl;
-        const selectorForAnnotation = ( cell, annotation) => {
-          let cellAttr = 'data-code-cell="' + cell + '"';
-          let lineAttr = 'data-code-annotation="' +  annotation + '"';
-          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-          return selector;
-        }
-        const selectCodeLines = (annoteEl) => {
-          const doc = window.document;
-          const targetCell = annoteEl.getAttribute("data-target-cell");
-          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-          const lineIds = lines.map((line) => {
-            return targetCell + "-" + line;
-          })
-          // Each band is positioned against its own containing block, which is
-          // not the offsetParent of the lines, so place it from client rects.
-          const placeBand = (band, firstEl, lastEl, codeBlock) => {
-            const container = band.offsetParent;
-            if (container === null) {
-              return;
-            }
-            const containerRect = container.getBoundingClientRect();
-            // Reveal.js scales slides with a transform, so convert client
-            // pixels back to the CSS pixels of the container.
-            const scale = containerRect.height / container.offsetHeight || 1;
-            const firstRect = firstEl.getBoundingClientRect();
-            const lastRect = lastEl.getBoundingClientRect();
-            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
-            const height = (lastRect.bottom - firstRect.top) / scale;
-            band.style.top = top - 2 + "px";
-            band.style.height = height + 4 + "px";
-            if (codeBlock) {
-              // Without the copy button wrapper, the containing block is wider
-              // than the code block, so span the code block explicitly.
-              const blockRect = codeBlock.getBoundingClientRect();
-              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
-              band.style.width = blockRect.width / scale + "px";
-            }
-          };
-          if (lineIds.length > 0) {
-            const el = window.document.getElementById(lineIds[0]);
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const parent = el.parentElement.parentElement;
-            // cook up a div (if necessary) and position it
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            placeBand(gutterDiv, el, lastEl);
-            selectedAnnoteEl = annoteEl;
-          }
-        };
-        const unselectCodeLines = () => {
-          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-          elementsIds.forEach((elId) => {
-            const div = window.document.getElementById(elId);
-            if (div) {
-              div.remove();
-            }
-          });
-          selectedAnnoteEl = undefined;
-        };
-          // Handle positioning of the toggle
-      window.addEventListener(
-        "resize",
-        throttle(() => {
-          elRect = undefined;
-          if (selectedAnnoteEl) {
-            selectCodeLines(selectedAnnoteEl);
-          }
-        }, 10)
-      );
-      function throttle(fn, ms) {
-      let throttle = false;
-      let timer;
-        return (...args) => {
-          if(!throttle) { // first call gets through
-              fn.apply(this, args);
-              throttle = true;
-          } else { // all the others get throttled
-              if(timer) clearTimeout(timer); // cancel #2
-              timer = setTimeout(() => {
-                fn.apply(this, args);
-                timer = throttle = false;
-              }, ms);
-          }
-        };
-      }
-        // Attach click handler to the DT
-        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-        for (const annoteDlNode of annoteDls) {
-          annoteDlNode.addEventListener('click', (event) => {
-            const clickedEl = event.target;
-            if (clickedEl !== selectedAnnoteEl) {
-              unselectCodeLines();
-              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-              if (activeEl) {
-                activeEl.classList.remove('code-annotation-active');
-              }
-              selectCodeLines(clickedEl);
-              clickedEl.classList.add('code-annotation-active');
-            } else {
-              // Unselect the line
-              unselectCodeLines();
-              clickedEl.classList.remove('code-annotation-active');
-            }
-          });
-        }
-    const findCites = (el) => {
-      const parentEl = el.parentElement;
-      if (parentEl) {
-        const cites = parentEl.dataset.cites;
-        if (cites) {
-          return {
-            el,
-            cites: cites.split(' ')
-          };
-        } else {
-          return findCites(el.parentElement)
-        }
-      } else {
-        return undefined;
-      }
-    };
-    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-    for (var i=0; i<bibliorefs.length; i++) {
-      const ref = bibliorefs[i];
-      const citeInfo = findCites(ref);
-      if (citeInfo) {
-        tippyHover(citeInfo.el, function() {
-          var popup = window.document.createElement('div');
-          citeInfo.cites.forEach(function(cite) {
-            var citeDiv = window.document.createElement('div');
-            citeDiv.classList.add('hanging-indent');
-            citeDiv.classList.add('csl-entry');
-            var biblioDiv = window.document.getElementById('ref-' + cite);
-            if (biblioDiv) {
-              citeDiv.innerHTML = biblioDiv.innerHTML;
-            }
-            popup.appendChild(citeDiv);
-          });
-          return popup.innerHTML;
-        });
-      }
-    }
-  });
-  </script>
-  <script type="application/javascript">
-  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
-  </script>
-<nav class="page-navigation" aria-label="Page">
-  <div class="nav-page nav-page-previous">
-      <a href="../radvel/index.html" class="pagination-link" aria-label="Exoplanet Detection via Radial Velocity">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">28</span>&nbsp; <span class="chapter-title">Exoplanet Detection via Radial Velocity</span></span>
-      </a>          
-  </div>
-  <div class="nav-page nav-page-next">
-      <a href="../flood/index.html" class="pagination-link" aria-label="Flood Frequency Analysis">
-        <span class="nav-page-text"><span class="chapter-number">30</span>&nbsp; <span class="chapter-title">Flood Frequency Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
-      </a>
-  </div>
-</nav>
-</div> <!-- /content -->
+</main>
 
 
-
-
-<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/gvwilson/rstx/edit/main/elasticity/index.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/gvwilson/rstx/blob/main/elasticity/index.qmd" class="toc-action"><i class="bi empty"></i>View source</a></li><li><a href="https://github.com/gvwilson/rstx/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div></div></footer></body></html>
+</body></html>
