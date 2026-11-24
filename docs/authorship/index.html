@@ -45,23 +45,23 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">9.1</span> The Problem</a></li>
-<li><a href="#character-n-gram-profiles" id="toc-character-n-gram-profiles"><span class="header-section-number">9.2</span> Character N-gram Profiles</a></li>
-<li><a href="#cosine-similarity" id="toc-cosine-similarity"><span class="header-section-number">9.3</span> Cosine Similarity</a></li>
-<li><a href="#generating-synthetic-texts" id="toc-generating-synthetic-texts"><span class="header-section-number">9.4</span> Generating Synthetic Texts</a></li>
-<li><a href="#building-n-gram-profiles" id="toc-building-n-gram-profiles"><span class="header-section-number">9.5</span> Building N-gram Profiles</a></li>
-<li><a href="#computing-cosine-similarity" id="toc-computing-cosine-similarity"><span class="header-section-number">9.6</span> Computing Cosine Similarity</a></li>
-<li><a href="#attributing-an-unknown-text" id="toc-attributing-an-unknown-text"><span class="header-section-number">9.7</span> Attributing an Unknown Text</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">9.8</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">9.9</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">9.10</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">10.1</span> The Problem</a></li>
+<li><a href="#character-n-gram-profiles" id="toc-character-n-gram-profiles"><span class="header-section-number">10.2</span> Character N-gram Profiles</a></li>
+<li><a href="#cosine-similarity" id="toc-cosine-similarity"><span class="header-section-number">10.3</span> Cosine Similarity</a></li>
+<li><a href="#generating-synthetic-texts" id="toc-generating-synthetic-texts"><span class="header-section-number">10.4</span> Generating Synthetic Texts</a></li>
+<li><a href="#building-n-gram-profiles" id="toc-building-n-gram-profiles"><span class="header-section-number">10.5</span> Building N-gram Profiles</a></li>
+<li><a href="#computing-cosine-similarity" id="toc-computing-cosine-similarity"><span class="header-section-number">10.6</span> Computing Cosine Similarity</a></li>
+<li><a href="#attributing-an-unknown-text" id="toc-attributing-an-unknown-text"><span class="header-section-number">10.7</span> Attributing an Unknown Text</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">10.8</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">10.9</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">10.10</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Authorship Attribution by N-gram Profiles</h1>
-<h2 data-number="9.1" id="the-problem"><span class="header-section-number">9.1</span> The Problem</h2>
+<h2 data-number="10.1" id="the-problem"><span class="header-section-number">10.1</span> The Problem</h2>
 <ul>
 <li><a href="../glossary/index.html#authorship_attribution">Authorship attribution</a> asks, “Given an anonymous text and a set of candidate authors, whose writing style does the text most resemble?”</li>
 <li>Applications include forensic linguistics (disputed documents, plagiarism detection) and literary studies (anonymous or pseudonymous works)</li>
@@ -93,7 +93,7 @@ Wrong: although n-grams can be applied across languages, this is not the reason 
 </dd>
 </dl>
 </div>
-<h2 data-number="9.2" id="character-n-gram-profiles"><span class="header-section-number">9.2</span> Character N-gram Profiles</h2>
+<h2 data-number="10.2" id="character-n-gram-profiles"><span class="header-section-number">10.2</span> Character N-gram Profiles</h2>
 <ul>
 <li>A <a href="../glossary/index.html#char_ngram">character n-gram</a> is a sequence of <span class="math inline">\(n\)</span> consecutive characters in a text
 <ul>
@@ -106,7 +106,7 @@ Wrong: although n-grams can be applied across languages, this is not the reason 
 <ul>
 <li>The profile is a probability distribution over the set of observed n-grams</li>
 </ul>
-<h2 data-number="9.3" id="cosine-similarity"><span class="header-section-number">9.3</span> Cosine Similarity</h2>
+<h2 data-number="10.3" id="cosine-similarity"><span class="header-section-number">10.3</span> Cosine Similarity</h2>
 <ul>
 <li>Given two profiles <span class="math inline">\(\mathbf{p}_A\)</span> and <span class="math inline">\(\mathbf{p}_B\)</span> (treated as vectors indexed by n-gram), with <span class="math inline">\(\|\mathbf{p}\| = \sqrt{\sum_{ng} p(ng)^2}\)</span>, the cosine similarity is:</li>
 </ul>
@@ -115,7 +115,7 @@ Wrong: although n-grams can be applied across languages, this is not the reason 
 <li>Cosine similarity ranges from 0 (no shared n-grams) to 1 (identical profiles)</li>
 <li>Dividing by the norms makes the measure length-independent: a short text and a long text with the same relative frequencies score 1</li>
 </ul>
-<h2 data-number="9.4" id="generating-synthetic-texts"><span class="header-section-number">9.4</span> Generating Synthetic Texts</h2>
+<h2 data-number="10.4" id="generating-synthetic-texts"><span class="header-section-number">10.4</span> Generating Synthetic Texts</h2>
 <ul>
 <li>The 15-character alphabet “abcdefghijklmno” is divided into three equal groups of five</li>
 <li>Each author favors one group</li>
@@ -125,12 +125,12 @@ Wrong: although n-grams can be applied across languages, this is not the reason 
 <li>The last of the four texts per author serves as the <a href="../glossary/index.html#hold_out">held-out</a> test text</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="9.5" id="building-n-gram-profiles"><span class="header-section-number">9.5</span> Building N-gram Profiles</h2>
+<h2 data-number="10.5" id="building-n-gram-profiles"><span class="header-section-number">10.5</span> Building N-gram Profiles</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="9.6" id="computing-cosine-similarity"><span class="header-section-number">9.6</span> Computing Cosine Similarity</h2>
+<h2 data-number="10.6" id="computing-cosine-similarity"><span class="header-section-number">10.6</span> Computing Cosine Similarity</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="9.7" id="attributing-an-unknown-text"><span class="header-section-number">9.7</span> Attributing an Unknown Text</h2>
+<h2 data-number="10.7" id="attributing-an-unknown-text"><span class="header-section-number">10.7</span> Attributing an Unknown Text</h2>
 <ul>
 <li>For each candidate author, build a profile from their training texts</li>
 <li>Compute the cosine similarity between the unknown text’s profile and each candidate profile</li>
@@ -157,7 +157,7 @@ Wrong: the method returns a ranking; reporting a tie requires a separate statist
 </dd>
 </dl>
 </div>
-<h2 data-number="9.8" id="visualizing-the-results"><span class="header-section-number">9.8</span> Visualizing the Results</h2>
+<h2 data-number="10.8" id="visualizing-the-results"><span class="header-section-number">10.8</span> Visualizing the Results</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-authorship-similarity" class="quarto-float quarto-figure quarto-figure-center" alt="A horizontal bar chart with three bars. The bar for Author C extends to approximately 0.94 on the similarity axis while the bars for Author A and Author B each reach approximately 0.33 and 0.30.">
 <figure class="quarto-float quarto-float-fig">
@@ -165,11 +165,11 @@ Wrong: the method returns a ranking; reporting a tie requires a separate statist
 <img src="authorship-similarity.svg" alt="A horizontal bar chart with three bars. The bar for Author C extends to approximately 0.94 on the similarity axis while the bars for Author A and Author B each reach approximately 0.33 and 0.30.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-authorship-similarity-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: Cosine similarity of the Author C test text against each candidate’s training profile (NGRAM_SIZE=2). Author C scores 0.94; Authors A and B score 0.33 and 0.30, correctly identifying the author with a large margin.
+Figure&nbsp;10.1: Cosine similarity of the Author C test text against each candidate’s training profile (NGRAM_SIZE=2). Author C scores 0.94; Authors A and B score 0.33 and 0.30, correctly identifying the author with a large margin.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="9.9" id="testing"><span class="header-section-number">9.9</span> Testing</h2>
+<h2 data-number="10.9" id="testing"><span class="header-section-number">10.9</span> Testing</h2>
 <ul>
 <li>Bigram counts
 <ul>
@@ -261,16 +261,16 @@ The difference between the top candidate’s similarity score and the next-highe
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="9.10" id="exercises"><span class="header-section-number">9.10</span> Exercises</h2>
-<h3 data-number="9.10.1" id="do-the-math"><span class="header-section-number">9.10.1</span> Do the math</h3>
+<h2 data-number="10.10" id="exercises"><span class="header-section-number">10.10</span> Exercises</h2>
+<h3 data-number="10.10.1" id="do-the-math"><span class="header-section-number">10.10.1</span> Do the math</h3>
 <p>Profile A has bigrams “ab” with frequency 0.6 and “cd” with frequency 0.8 (it contains no other bigrams, and the two frequencies form a unit vector). Profile B has “ab” with frequency 0.8 and “cd” with frequency 0.6. What is the cosine similarity of A and B?</p>
-<h3 data-number="9.10.2" id="effect-of-n-gram-size"><span class="header-section-number">9.10.2</span> Effect of n-gram size</h3>
+<h3 data-number="10.10.2" id="effect-of-n-gram-size"><span class="header-section-number">10.10.2</span> Effect of n-gram size</h3>
 <p>Repeat the attribution experiment with <span class="math inline">\(n = 1\)</span>, <span class="math inline">\(2\)</span>, <span class="math inline">\(3\)</span>, and <span class="math inline">\(4\)</span>. Plot the similarity scores for all three test texts at each <span class="math inline">\(n\)</span>. At which n-gram size does the margin between the correct author and the next-best candidate peak? Explain why very large <span class="math inline">\(n\)</span> might reduce accuracy on short texts.</p>
-<h3 data-number="9.10.3" id="profile-distance-matrix"><span class="header-section-number">9.10.3</span> Profile distance matrix</h3>
+<h3 data-number="10.10.3" id="profile-distance-matrix"><span class="header-section-number">10.10.3</span> Profile distance matrix</h3>
 <p>Build profiles for all training texts (not averaged per author) and compute the pairwise cosine similarity matrix. Visualize it as a heatmap. Do texts from the same author cluster together?</p>
-<h3 data-number="9.10.4" id="cross-validation"><span class="header-section-number">9.10.4</span> Cross-validation</h3>
+<h3 data-number="10.10.4" id="cross-validation"><span class="header-section-number">10.10.4</span> Cross-validation</h3>
 <p>Modify the experiment so that for each author, one of the training texts is held out as the test text while the remaining training texts are used to build the profile. Repeat for each training text in turn (leave-one-out cross-validation) and report the attribution accuracy rate.</p>
-<h3 data-number="9.10.5" id="impostor-experiment"><span class="header-section-number">9.10.5</span> Impostor experiment</h3>
+<h3 data-number="10.10.5" id="impostor-experiment"><span class="header-section-number">10.10.5</span> Impostor experiment</h3>
 <p>Create a fourth author whose preferred character set overlaps 50% with Author A’s. Does the attribution method correctly distinguish Author A from the impostor? What similarity score threshold would you set to report “uncertain” rather than making a forced choice?</p>
 </section>
 

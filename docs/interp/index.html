@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">18.1</span> The Problem</a></li>
-<li><a href="#inverse-distance-weighting" id="toc-inverse-distance-weighting"><span class="header-section-number">18.2</span> Inverse-Distance Weighting</a></li>
-<li><a href="#generating-synthetic-station-data" id="toc-generating-synthetic-station-data"><span class="header-section-number">18.3</span> Generating Synthetic Station Data</a></li>
-<li><a href="#computing-the-idw-grid" id="toc-computing-the-idw-grid"><span class="header-section-number">18.4</span> Computing the IDW Grid</a></li>
-<li><a href="#visualizing-the-interpolation" id="toc-visualizing-the-interpolation"><span class="header-section-number">18.5</span> Visualizing the Interpolation</a></li>
-<li><a href="#cross-validation" id="toc-cross-validation"><span class="header-section-number">18.6</span> Cross-Validation</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">18.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">18.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">19.1</span> The Problem</a></li>
+<li><a href="#inverse-distance-weighting" id="toc-inverse-distance-weighting"><span class="header-section-number">19.2</span> Inverse-Distance Weighting</a></li>
+<li><a href="#generating-synthetic-station-data" id="toc-generating-synthetic-station-data"><span class="header-section-number">19.3</span> Generating Synthetic Station Data</a></li>
+<li><a href="#computing-the-idw-grid" id="toc-computing-the-idw-grid"><span class="header-section-number">19.4</span> Computing the IDW Grid</a></li>
+<li><a href="#visualizing-the-interpolation" id="toc-visualizing-the-interpolation"><span class="header-section-number">19.5</span> Visualizing the Interpolation</a></li>
+<li><a href="#cross-validation" id="toc-cross-validation"><span class="header-section-number">19.6</span> Cross-Validation</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">19.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">19.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Spatial Interpolation of Climate Data</h1>
-<h2 data-number="18.1" id="the-problem"><span class="header-section-number">18.1</span> The Problem</h2>
+<h2 data-number="19.1" id="the-problem"><span class="header-section-number">19.1</span> The Problem</h2>
 <ul>
 <li>Weather stations record temperature and precipitation at discrete locations, but models and maps need values everywhere in the study region</li>
 <li><a href="../glossary/index.html#spatial_interpolation">Spatial interpolation</a> estimates the value at unsampled locations by combining observations from nearby stations</li>
@@ -91,7 +91,7 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 </dd>
 </dl>
 </div>
-<h2 data-number="18.2" id="inverse-distance-weighting"><span class="header-section-number">18.2</span> Inverse-Distance Weighting</h2>
+<h2 data-number="19.2" id="inverse-distance-weighting"><span class="header-section-number">19.2</span> Inverse-Distance Weighting</h2>
 <ul>
 <li>For a query point <span class="math inline">\(\mathbf{q}\)</span>, let <span class="math inline">\(d_i = \|\mathbf{q} - \mathbf{s}_i\|\)</span> be the Euclidean distance to station <span class="math inline">\(i\)</span> with observed value <span class="math inline">\(z_i\)</span></li>
 <li>The IDW estimate is:</li>
@@ -105,7 +105,7 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 <li>A small constant <span class="math inline">\(\varepsilon = 10^{-10}\)</span> is added to each <span class="math inline">\(d_i\)</span> to prevent division by zero when a query point coincides with a station</li>
 <li>Because the weights are non-negative and sum to one after normalization, IDW is a <a href="../glossary/index.html#convexity">convex combination</a>: all estimates lie within <span class="math inline">\([\min_i z_i,\, \max_i z_i]\)</span></li>
 </ul>
-<h2 data-number="18.3" id="generating-synthetic-station-data"><span class="header-section-number">18.3</span> Generating Synthetic Station Data</h2>
+<h2 data-number="19.3" id="generating-synthetic-station-data"><span class="header-section-number">19.3</span> Generating Synthetic Station Data</h2>
 <ul>
 <li>The true temperature field is <span class="math inline">\(T(x, y) = \sin(3\pi x)\cos(2\pi y)\)</span> on <span class="math inline">\([0,1]^2\)</span>, producing three warm-cool bands in <span class="math inline">\(x\)</span> and two in <span class="math inline">\(y\)</span></li>
 <li>Station locations are drawn uniformly at random
@@ -115,7 +115,7 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 <li>Using a noise-free reference separates interpolation error from measurement error when evaluating the method</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="18.4" id="computing-the-idw-grid"><span class="header-section-number">18.4</span> Computing the IDW Grid</h2>
+<h2 data-number="19.4" id="computing-the-idw-grid"><span class="header-section-number">19.4</span> Computing the IDW Grid</h2>
 <ul>
 <li>Each of the grid points is treated as an independent query</li>
 <li>All <span class="math inline">\((m \times n)\)</span> distances are computed at once by broadcasting: <code>diff = query_xy[:, newaxis, :] - station_xy[newaxis, :, :]</code> yields an <span class="math inline">\((m, n, 2)\)</span> array</li>
@@ -127,7 +127,7 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 <p>Order the steps to compute an IDW estimate at a single query point.</p>
 <p>Compute the Euclidean distance from the query point to each station, adding epsilon to prevent division by zero. Compute inverse-distance weights: w_i = d_i^(-p). Form the weighted sum of station values. Divide by the total weight to obtain the normalized estimate.</p>
 </div>
-<h2 data-number="18.5" id="visualizing-the-interpolation"><span class="header-section-number">18.5</span> Visualizing the Interpolation</h2>
+<h2 data-number="19.5" id="visualizing-the-interpolation"><span class="header-section-number">19.5</span> Visualizing the Interpolation</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-interp-fields" class="quarto-float quarto-figure quarto-figure-center" alt="Two side-by-side heatmaps on a unit square. The left panel shows the true sinusoidal temperature field as alternating red and blue bands. The right panel shows the IDW interpolation, which broadly reproduces the band pattern with some blurring near the edges. Black crosses mark the 30 station locations.">
 <figure class="quarto-float quarto-float-fig">
@@ -135,11 +135,11 @@ Wrong: an equal-weight average is not systematically biased, but it ignores spat
 <img src="interp-fields.svg" alt="Two side-by-side heatmaps on a unit square. The left panel shows the true sinusoidal temperature field as alternating red and blue bands. The right panel shows the IDW interpolation, which broadly reproduces the band pattern with some blurring near the edges. Black crosses mark the 30 station locations.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interp-fields-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.1: True temperature field (left) and IDW interpolation from 30 synthetic weather stations (right, p = 2). The interpolation captures the large-scale structure but smooths detail in regions with sparse station coverage.
+Figure&nbsp;19.1: True temperature field (left) and IDW interpolation from 30 synthetic weather stations (right, p = 2). The interpolation captures the large-scale structure but smooths detail in regions with sparse station coverage.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="18.6" id="cross-validation"><span class="header-section-number">18.6</span> Cross-Validation</h2>
+<h2 data-number="19.6" id="cross-validation"><span class="header-section-number">19.6</span> Cross-Validation</h2>
 <ul>
 <li>Leave-one-out cross-validation (LOO-CV) measures how well the interpolation predicts the value at a completely unsampled location</li>
 <li>For each of the <span class="math inline">\(n\)</span> stations:
@@ -154,7 +154,7 @@ Figure&nbsp;18.1: True temperature field (left) and IDW interpolation from 30 sy
 <li>Evaluating accuracy on training data would systematically underestimate the true prediction error</li>
 </ul></li>
 </ul>
-<h2 data-number="18.7" id="testing"><span class="header-section-number">18.7</span> Testing</h2>
+<h2 data-number="19.7" id="testing"><span class="header-section-number">19.7</span> Testing</h2>
 <dl>
 <dt>Station count</dt>
 <dd>
@@ -265,16 +265,16 @@ A model-evaluation procedure in which each observation is held out in turn, the 
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="18.8" id="exercises"><span class="header-section-number">18.8</span> Exercises</h2>
-<h3 data-number="18.8.1" id="do-the-math"><span class="header-section-number">18.8.1</span> Do the math</h3>
+<h2 data-number="19.8" id="exercises"><span class="header-section-number">19.8</span> Exercises</h2>
+<h3 data-number="19.8.1" id="do-the-math"><span class="header-section-number">19.8.1</span> Do the math</h3>
 <p>Station A is 1 unit from the query point and has value 1.0. Station B is 2 units away and has value 0.0. Using p = 2, what is the IDW estimate at the query point?</p>
-<h3 data-number="18.8.2" id="effect-of-the-power-parameter"><span class="header-section-number">18.8.2</span> Effect of the power parameter</h3>
+<h3 data-number="19.8.2" id="effect-of-the-power-parameter"><span class="header-section-number">19.8.2</span> Effect of the power parameter</h3>
 <p>Run IDW with <span class="math inline">\(p\)</span> values of 1, 2, 4, and 8 on the synthetic station data. For each value compute the LOO-CV MAE and plot the interpolated field. How does the surface change as <span class="math inline">\(p\)</span> increases? Which <span class="math inline">\(p\)</span> minimises LOO-CV error on this dataset?</p>
-<h3 data-number="18.8.3" id="nearest-neighbour-interpolation"><span class="header-section-number">18.8.3</span> Nearest-neighbour interpolation</h3>
+<h3 data-number="19.8.3" id="nearest-neighbour-interpolation"><span class="header-section-number">19.8.3</span> Nearest-neighbour interpolation</h3>
 <p>Implement nearest-neighbour interpolation: assign each grid point the value of its closest station, equivalent to IDW as <span class="math inline">\(p \to \infty\)</span>. Compare the MAE and visual appearance of the nearest-neighbour field to the IDW field at <span class="math inline">\(p = 2\)</span>.</p>
-<h3 data-number="18.8.4" id="station-density-sensitivity"><span class="header-section-number">18.8.4</span> Station density sensitivity</h3>
+<h3 data-number="19.8.4" id="station-density-sensitivity"><span class="header-section-number">19.8.4</span> Station density sensitivity</h3>
 <p>Generate station sets of size 5, 15, 30, and 60, each with a different random seed, and compute the LOO-CV MAE for each. Plot MAE as a function of station count. Does the error halve when the station count doubles?</p>
-<h3 data-number="18.8.5" id="measurement-noise"><span class="header-section-number">18.8.5</span> Measurement noise</h3>
+<h3 data-number="19.8.5" id="measurement-noise"><span class="header-section-number">19.8.5</span> Measurement noise</h3>
 <p>Modify the generator to add Gaussian noise with standard deviation 0.1 to each station’s observed value. How does the LOO-CV MAE change compared to the noise-free case? Is there an optimal <span class="math inline">\(p\)</span> that reduces the impact of measurement noise?</p>
 </section>
 

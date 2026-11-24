@@ -45,20 +45,20 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">15.1</span> The Problem</a></li>
-<li><a href="#the-gini-coefficient" id="toc-the-gini-coefficient"><span class="header-section-number">15.2</span> The Gini Coefficient</a></li>
-<li><a href="#the-exchange-simulation" id="toc-the-exchange-simulation"><span class="header-section-number">15.3</span> The Exchange Simulation</a></li>
-<li><a href="#the-lorenz-curve" id="toc-the-lorenz-curve"><span class="header-section-number">15.4</span> The Lorenz Curve</a></li>
-<li><a href="#gini-trajectory" id="toc-gini-trajectory"><span class="header-section-number">15.5</span> Gini Trajectory</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">15.6</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">15.7</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">16.1</span> The Problem</a></li>
+<li><a href="#the-gini-coefficient" id="toc-the-gini-coefficient"><span class="header-section-number">16.2</span> The Gini Coefficient</a></li>
+<li><a href="#the-exchange-simulation" id="toc-the-exchange-simulation"><span class="header-section-number">16.3</span> The Exchange Simulation</a></li>
+<li><a href="#the-lorenz-curve" id="toc-the-lorenz-curve"><span class="header-section-number">16.4</span> The Lorenz Curve</a></li>
+<li><a href="#gini-trajectory" id="toc-gini-trajectory"><span class="header-section-number">16.5</span> Gini Trajectory</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">16.6</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">16.7</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Wealth Inequality in an Exchange Economy</h1>
-<h2 data-number="15.1" id="the-problem"><span class="header-section-number">15.1</span> The Problem</h2>
+<h2 data-number="16.1" id="the-problem"><span class="header-section-number">16.1</span> The Problem</h2>
 <ul>
 <li>Even when individuals exchange resources randomly with no deliberate hoarding, wealth concentrates in a small number of hands over time.</li>
 <li>This is the central insight of agent-based models of exchange: inequality can emerge from random processes, not only from skill differences or deliberate exploitation.</li>
@@ -90,7 +90,7 @@ Wrong: A is the poorer agent and must transfer wealth to B.
 </dd>
 </dl>
 </div>
-<h2 data-number="15.2" id="the-gini-coefficient"><span class="header-section-number">15.2</span> The Gini Coefficient</h2>
+<h2 data-number="16.2" id="the-gini-coefficient"><span class="header-section-number">16.2</span> The Gini Coefficient</h2>
 <ul>
 <li>The <a href="../glossary/index.html#gini_coefficient">Gini coefficient</a> <span class="math inline">\(G\)</span> is the most widely used scalar summary of inequality: it equals 0 for perfect equality and approaches 1 when all wealth is concentrated in one agent.</li>
 <li>It is defined as the mean absolute difference in wealth between all pairs, normalised by twice the mean wealth:</li>
@@ -101,7 +101,7 @@ Wrong: A is the poorer agent and must transfer wealth to B.
 </ul>
 <p><span class="math display">\[G = \frac{2\sum_{i=1}^n i\,w_{(i)} - (n+1)\sum_i w_i}{n \sum_i w_i}\]</span></p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="15.3" id="the-exchange-simulation"><span class="header-section-number">15.3</span> The Exchange Simulation</h2>
+<h2 data-number="16.3" id="the-exchange-simulation"><span class="header-section-number">16.3</span> The Exchange Simulation</h2>
 <ul>
 <li>The simulation records the Gini coefficient after every exchange so we can watch inequality grow from zero.</li>
 <li>A key invariant: total wealth <span class="math inline">\(\sum_i w_i = N\)</span> is conserved exactly at every step because each transfer moves wealth without creating or destroying it.</li>
@@ -117,7 +117,7 @@ Wrong: A is the poorer agent and must transfer wealth to B.
 <li>Update <span class="math inline">\(w_i \leftarrow w_i - \delta\)</span> and <span class="math inline">\(w_j \leftarrow w_j + \delta\)</span></li>
 </ol>
 </div>
-<h2 data-number="15.4" id="the-lorenz-curve"><span class="header-section-number">15.4</span> The Lorenz Curve</h2>
+<h2 data-number="16.4" id="the-lorenz-curve"><span class="header-section-number">16.4</span> The Lorenz Curve</h2>
 <ul>
 <li>The <a href="../glossary/index.html#lorenz_curve">Lorenz curve</a> gives a visual picture of the whole distribution, not just a single number.</li>
 <li>Sort agents by wealth ascending; the curve plots the cumulative fraction of total wealth held by the bottom <span class="math inline">\(x\)</span> fraction of the population.</li>
@@ -132,7 +132,7 @@ Wrong: A is the poorer agent and must transfer wealth to B.
 <img src="wealth-lorenz.svg" alt="Lorenz curve bowing well below the diagonal line of equality, with the bottom 80% of agents holding roughly 20% of total wealth.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wealth-lorenz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.1: Lorenz curve after 2000 exchanges with 200 agents (seed 7493418). The bottom 80% of agents hold roughly 20% of total wealth; the final Gini coefficient is 0.88.
+Figure&nbsp;16.1: Lorenz curve after 2000 exchanges with 200 agents (seed 7493418). The bottom 80% of agents hold roughly 20% of total wealth; the final Gini coefficient is 0.88.
 </figcaption>
 </figure>
 </div>
@@ -157,7 +157,7 @@ Wrong: the Gini is twice the area between the Lorenz curve and the diagonal, not
 </dd>
 </dl>
 </div>
-<h2 data-number="15.5" id="gini-trajectory"><span class="header-section-number">15.5</span> Gini Trajectory</h2>
+<h2 data-number="16.5" id="gini-trajectory"><span class="header-section-number">16.5</span> Gini Trajectory</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-wealth-gini" class="quarto-float quarto-figure quarto-figure-center" alt="Line chart rising steeply from 0 in the first few hundred steps, then levelling off near 0.88 by step 2000.">
 <figure class="quarto-float quarto-float-fig">
@@ -165,7 +165,7 @@ Wrong: the Gini is twice the area between the Lorenz curve and the diagonal, not
 <img src="wealth-gini.svg" alt="Line chart rising steeply from 0 in the first few hundred steps, then levelling off near 0.88 by step 2000.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-wealth-gini-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.2: Gini coefficient over 2000 pairwise exchanges with 200 agents. The coefficient rises from 0.00 (perfect equality) to 0.88, consistent with the exponential steady-state distribution whose theoretical Gini is 0.50 — the simulation has not yet fully converged but is still rising.
+Figure&nbsp;16.2: Gini coefficient over 2000 pairwise exchanges with 200 agents. The coefficient rises from 0.00 (perfect equality) to 0.88, consistent with the exponential steady-state distribution whose theoretical Gini is 0.50 — the simulation has not yet fully converged but is still rising.
 </figcaption>
 </figure>
 </div>
@@ -174,7 +174,7 @@ Figure&nbsp;15.2: Gini coefficient over 2000 pairwise exchanges with 200 agents.
 <li>Growth slows as wealth concentrates: the few richest agents now dominate exchanges, but the model has no way to reverse concentration once it is established.</li>
 <li>The theoretical steady-state Gini for an exponential wealth distribution is exactly 0.5 (see Exercises), but the yardsale model’s convergence is slow and in practice the simulated Gini often exceeds 0.5 because the distribution is not yet truly exponential.</li>
 </ul>
-<h2 data-number="15.6" id="testing"><span class="header-section-number">15.6</span> Testing</h2>
+<h2 data-number="16.6" id="testing"><span class="header-section-number">16.6</span> Testing</h2>
 <dl>
 <dt>Equal-distribution baseline</dt>
 <dd>
@@ -257,16 +257,16 @@ Random exchange rule in which the poorer agent transfers a random fraction of th
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="15.7" id="exercises"><span class="header-section-number">15.7</span> Exercises</h2>
-<h3 data-number="15.7.1" id="do-the-math"><span class="header-section-number">15.7.1</span> Do the math</h3>
+<h2 data-number="16.7" id="exercises"><span class="header-section-number">16.7</span> Exercises</h2>
+<h3 data-number="16.7.1" id="do-the-math"><span class="header-section-number">16.7.1</span> Do the math</h3>
 <p>Three agents hold 1, 1, and 1 unit of wealth respectively. Using the formula <span class="math inline">\(G = (2\sum i\,w_{(i)} - (n+1)\sum w) / (n\sum w)\)</span> with <span class="math inline">\(n=3\)</span>, compute the Gini coefficient.</p>
-<h3 data-number="15.7.2" id="theoretical-steady-state-gini"><span class="header-section-number">15.7.2</span> Theoretical steady-state Gini</h3>
+<h3 data-number="16.7.2" id="theoretical-steady-state-gini"><span class="header-section-number">16.7.2</span> Theoretical steady-state Gini</h3>
 <p>For an exponential distribution with rate <span class="math inline">\(\lambda\)</span>, all agents draw wealth <span class="math inline">\(w \sim \text{Exp}(\lambda)\)</span> independently. Show algebraically that the Gini coefficient of this distribution is exactly 0.5. (Hint: use the formula <span class="math inline">\(G = 1 - 2\int_0^\infty S(w)^2 \, dw / \text{E}[W]\)</span> where <span class="math inline">\(S(w) = e^{-\lambda w}\)</span> is the survival function.)</p>
-<h3 data-number="15.7.3" id="convergence-as-a-function-of-n"><span class="header-section-number">15.7.3</span> Convergence as a function of <span class="math inline">\(N\)</span></h3>
+<h3 data-number="16.7.3" id="convergence-as-a-function-of-n"><span class="header-section-number">16.7.3</span> Convergence as a function of <span class="math inline">\(N\)</span></h3>
 <p>Run the simulation with 50, 200, and 1000 agents for 10 000 steps each and plot the final Gini as a function of <span class="math inline">\(N\)</span>. Does the steady-state Gini depend on the population size, or does it converge to the same value regardless of <span class="math inline">\(N\)</span>?</p>
-<h3 data-number="15.7.4" id="redistribution-policy"><span class="header-section-number">15.7.4</span> Redistribution policy</h3>
+<h3 data-number="16.7.4" id="redistribution-policy"><span class="header-section-number">16.7.4</span> Redistribution policy</h3>
 <p>Add a “redistribution step” every 100 exchanges: take 10% of the total wealth held by the top decile (wealthiest 10% of agents) and distribute it equally to all agents. How does this change the trajectory and steady-state Gini?</p>
-<h3 data-number="15.7.5" id="symmetric-exchange-rule"><span class="header-section-number">15.7.5</span> Symmetric exchange rule</h3>
+<h3 data-number="16.7.5" id="symmetric-exchange-rule"><span class="header-section-number">16.7.5</span> Symmetric exchange rule</h3>
 <p>Change the transfer rule: instead of the poorer agent transferring a fraction of their own wealth, both agents contribute a fraction of their own wealth to a pool and the pool is split 50/50. Show that total wealth is still conserved under this rule, then compare the resulting Gini trajectory to the original yardsale model.</p>
 </section>
 

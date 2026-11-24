@@ -45,22 +45,22 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">2.1</span> The Problem</a></li>
-<li><a href="#the-grid-and-neighbourhood" id="toc-the-grid-and-neighbourhood"><span class="header-section-number">2.2</span> The Grid and Neighbourhood</a></li>
-<li><a href="#initializing-the-grid" id="toc-initializing-the-grid"><span class="header-section-number">2.3</span> Initializing the Grid</a></li>
-<li><a href="#computing-the-same-neighbour-fraction" id="toc-computing-the-same-neighbour-fraction"><span class="header-section-number">2.4</span> Computing the Same-Neighbour Fraction</a></li>
-<li><a href="#one-simulation-step" id="toc-one-simulation-step"><span class="header-section-number">2.5</span> One Simulation Step</a></li>
-<li><a href="#measuring-segregation" id="toc-measuring-segregation"><span class="header-section-number">2.6</span> Measuring Segregation</a></li>
-<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">2.7</span> Running the Simulation</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">2.8</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">2.9</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">3.1</span> The Problem</a></li>
+<li><a href="#the-grid-and-neighbourhood" id="toc-the-grid-and-neighbourhood"><span class="header-section-number">3.2</span> The Grid and Neighbourhood</a></li>
+<li><a href="#initializing-the-grid" id="toc-initializing-the-grid"><span class="header-section-number">3.3</span> Initializing the Grid</a></li>
+<li><a href="#computing-the-same-neighbour-fraction" id="toc-computing-the-same-neighbour-fraction"><span class="header-section-number">3.4</span> Computing the Same-Neighbour Fraction</a></li>
+<li><a href="#one-simulation-step" id="toc-one-simulation-step"><span class="header-section-number">3.5</span> One Simulation Step</a></li>
+<li><a href="#measuring-segregation" id="toc-measuring-segregation"><span class="header-section-number">3.6</span> Measuring Segregation</a></li>
+<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">3.7</span> Running the Simulation</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">3.8</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">3.9</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Schelling Segregation Model</h1>
-<h2 data-number="2.1" id="the-problem"><span class="header-section-number">2.1</span> The Problem</h2>
+<h2 data-number="3.1" id="the-problem"><span class="header-section-number">3.1</span> The Problem</h2>
 <ul>
 <li>In 1971, economist Thomas Schelling asked whether mild individual preferences for similar neighbours could produce large-scale residential segregation</li>
 <li>The answer is yes: even when each agent requires only 30% of occupied neighbours to share its type, the population self-organises into sharply segregated clusters</li>
@@ -92,7 +92,7 @@ Wrong: random movement does not preserve spatial structure; systematic movement 
 </dd>
 </dl>
 </div>
-<h2 data-number="2.2" id="the-grid-and-neighbourhood"><span class="header-section-number">2.2</span> The Grid and Neighbourhood</h2>
+<h2 data-number="3.2" id="the-grid-and-neighbourhood"><span class="header-section-number">3.2</span> The Grid and Neighbourhood</h2>
 <ul>
 <li>The grid is an <span class="math inline">\(N \times N\)</span> array. Each cell holds one of three values: 0 (empty), 1 (red agent), or 2 (blue agent)</li>
 <li>The <a href="../glossary/index.html#moore_neighborhood">Moore neighbourhood</a> of a cell is the set of up to eight surrounding cells (horizontal, vertical, and diagonal)</li>
@@ -103,19 +103,19 @@ Wrong: random movement does not preserve spatial structure; systematic movement 
 <li>An agent is satisfied when <span class="math inline">\(f(r,c) \geq \theta\)</span>, where <span class="math inline">\(\theta\)</span> is the threshold</li>
 <li>An agent with no occupied neighbours is treated as satisfied (<span class="math inline">\(f = 1\)</span>) so that isolated agents do not drift endlessly across empty space</li>
 </ul>
-<h2 data-number="2.3" id="initializing-the-grid"><span class="header-section-number">2.3</span> Initializing the Grid</h2>
+<h2 data-number="3.3" id="initializing-the-grid"><span class="header-section-number">3.3</span> Initializing the Grid</h2>
 <ul>
 <li>Equal numbers of red and blue agents are placed at random in a fraction <span class="math inline">\((1 - p_e)\)</span> of cells, where <span class="math inline">\(p_e\)</span> is the empty fraction</li>
 <li>The empty cells provide the vacancies that dissatisfied agents move into</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="2.4" id="computing-the-same-neighbour-fraction"><span class="header-section-number">2.4</span> Computing the Same-Neighbour Fraction</h2>
+<h2 data-number="3.4" id="computing-the-same-neighbour-fraction"><span class="header-section-number">3.4</span> Computing the Same-Neighbour Fraction</h2>
 <ul>
 <li>Iterating over the 8 relative offsets <span class="math inline">\((\Delta r, \Delta c) \in \{-1,0,1\}^2 \setminus \{(0,0)\}\)</span> visits each neighbour exactly once</li>
 <li>Grid boundaries are handled by checking that the neighbour index lies within <span class="math inline">\([0, N)\)</span></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="2.5" id="one-simulation-step"><span class="header-section-number">2.5</span> One Simulation Step</h2>
+<h2 data-number="3.5" id="one-simulation-step"><span class="header-section-number">3.5</span> One Simulation Step</h2>
 <ul>
 <li>All dissatisfied agents are identified first, then all empty cells</li>
 <li>Both lists are shuffled independently and paired in order</li>
@@ -123,7 +123,7 @@ Wrong: random movement does not preserve spatial structure; systematic movement 
 <li>Shuffling before pairing ensures no agent is systematically favoured</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="2.6" id="measuring-segregation"><span class="header-section-number">2.6</span> Measuring Segregation</h2>
+<h2 data-number="3.6" id="measuring-segregation"><span class="header-section-number">3.6</span> Measuring Segregation</h2>
 <ul>
 <li>The satisfaction rate (i.e., the fraction of agents that meet the threshold) rises as the grid segregates and reaches 1.0 when every agent is happy with its neighbourhood</li>
 </ul>
@@ -149,7 +149,7 @@ Wrong: the threshold is 0.3, not 1.0; an agent with even one same-type neighbour
 </dd>
 </dl>
 </div>
-<h2 data-number="2.7" id="running-the-simulation"><span class="header-section-number">2.7</span> Running the Simulation</h2>
+<h2 data-number="3.7" id="running-the-simulation"><span class="header-section-number">3.7</span> Running the Simulation</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-schelling-grid" class="quarto-float quarto-figure quarto-figure-center" alt="Four grid snapshots at steps 0, 5, 10, and 20. Step 0 shows a random mix of red and blue. By step 20 large patches of each colour have formed.">
@@ -158,11 +158,11 @@ Wrong: the threshold is 0.3, not 1.0; an agent with even one same-type neighbour
 <img src="schelling-grid.svg" alt="Four grid snapshots at steps 0, 5, 10, and 20. Step 0 shows a random mix of red and blue. By step 20 large patches of each colour have formed.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-schelling-grid-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2.1: Grid state at steps 0, 5, 10, and 20 (GRID_SIZE=50, EMPTY_FRACTION=0.2, THRESHOLD=0.3). The initially random arrangement self-organises into large segregated clusters. The satisfaction rate rises from 0.832 at step 0 to 1.000 at step 20.
+Figure&nbsp;3.1: Grid state at steps 0, 5, 10, and 20 (GRID_SIZE=50, EMPTY_FRACTION=0.2, THRESHOLD=0.3). The initially random arrangement self-organises into large segregated clusters. The satisfaction rate rises from 0.832 at step 0 to 1.000 at step 20.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="2.8" id="testing"><span class="header-section-number">2.8</span> Testing</h2>
+<h2 data-number="3.8" id="testing"><span class="header-section-number">3.8</span> Testing</h2>
 <ul>
 <li>Grid shape and contents
 <ul>
@@ -274,16 +274,16 @@ Large-scale spatial separation of agent types arising from individual satisfacti
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="2.9" id="exercises"><span class="header-section-number">2.9</span> Exercises</h2>
-<h3 data-number="2.9.1" id="do-the-math"><span class="header-section-number">2.9.1</span> Do the math</h3>
+<h2 data-number="3.9" id="exercises"><span class="header-section-number">3.9</span> Exercises</h2>
+<h3 data-number="3.9.1" id="do-the-math"><span class="header-section-number">3.9.1</span> Do the math</h3>
 <p>An agent has 8 fully occupied Moore neighbours, of which 3 are the same type. What is its same-neighbour fraction?</p>
-<h3 data-number="2.9.2" id="effect-of-threshold"><span class="header-section-number">2.9.2</span> Effect of threshold</h3>
+<h3 data-number="3.9.2" id="effect-of-threshold"><span class="header-section-number">3.9.2</span> Effect of threshold</h3>
 <p>Run the simulation with thresholds of 0.1, 0.3, 0.5, and 0.7. Plot the satisfaction rate over time for each threshold on the same axes. At what threshold does the model fail to reach a satisfaction rate above 0.95 within 50 steps?</p>
-<h3 data-number="2.9.3" id="asymmetric-populations"><span class="header-section-number">2.9.3</span> Asymmetric populations</h3>
+<h3 data-number="3.9.3" id="asymmetric-populations"><span class="header-section-number">3.9.3</span> Asymmetric populations</h3>
 <p>Modify <code>make_grid</code> so that red agents make up 70% of the occupied cells and blue agents make up 30%. Run the simulation with threshold 0.3 and compare the final satisfaction rate with the balanced case. Which type ends up more satisfied, and why?</p>
-<h3 data-number="2.9.4" id="segregation-index"><span class="header-section-number">2.9.4</span> Segregation index</h3>
+<h3 data-number="3.9.4" id="segregation-index"><span class="header-section-number">3.9.4</span> Segregation index</h3>
 <p>The satisfaction rate measures individual happiness, not the spatial extent of clustering. Implement a <code>mean_cluster_size</code> function that computes the mean size of same-type connected components using <code>scipy.ndimage.label</code>. Plot mean cluster size over time alongside the satisfaction rate.</p>
-<h3 data-number="2.9.5" id="convergence-detection"><span class="header-section-number">2.9.5</span> Convergence detection</h3>
+<h3 data-number="3.9.5" id="convergence-detection"><span class="header-section-number">3.9.5</span> Convergence detection</h3>
 <p>Add a <code>converged</code> parameter to <code>run</code> that stops early when fewer than 1% of agents are dissatisfied. How many steps are needed to converge at threshold 0.3 for a 100x100 grid?</p>
 </section>
 

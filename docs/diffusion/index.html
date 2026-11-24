@@ -45,29 +45,29 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">21.1</span> The Problem</a></li>
-<li><a href="#setting-up-the-grid" id="toc-setting-up-the-grid"><span class="header-section-number">21.2</span> Setting Up the Grid</a></li>
-<li><a href="#deriving-the-update-rule" id="toc-deriving-the-update-rule"><span class="header-section-number">21.3</span> Deriving the Update Rule</a></li>
-<li><a href="#stability" id="toc-stability"><span class="header-section-number">21.4</span> Stability</a></li>
-<li><a href="#boundary-conditions" id="toc-boundary-conditions"><span class="header-section-number">21.5</span> Boundary Conditions</a></li>
-<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">21.6</span> Running the Simulation</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">21.7</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">21.8</span> Testing</a></li>
-<li><a href="#choosing-the-tolerance" id="toc-choosing-the-tolerance"><span class="header-section-number">21.9</span> Choosing the tolerance</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">21.10</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">22.1</span> The Problem</a></li>
+<li><a href="#setting-up-the-grid" id="toc-setting-up-the-grid"><span class="header-section-number">22.2</span> Setting Up the Grid</a></li>
+<li><a href="#deriving-the-update-rule" id="toc-deriving-the-update-rule"><span class="header-section-number">22.3</span> Deriving the Update Rule</a></li>
+<li><a href="#stability" id="toc-stability"><span class="header-section-number">22.4</span> Stability</a></li>
+<li><a href="#boundary-conditions" id="toc-boundary-conditions"><span class="header-section-number">22.5</span> Boundary Conditions</a></li>
+<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">22.6</span> Running the Simulation</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">22.7</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">22.8</span> Testing</a></li>
+<li><a href="#choosing-the-tolerance" id="toc-choosing-the-tolerance"><span class="header-section-number">22.9</span> Choosing the tolerance</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">22.10</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">1D Diffusion Simulation</h1>
-<h2 data-number="21.1" id="the-problem"><span class="header-section-number">21.1</span> The Problem</h2>
+<h2 data-number="22.1" id="the-problem"><span class="header-section-number">22.1</span> The Problem</h2>
 <ul>
 <li>Diffusion describes how a dissolved substance spreads through a stationary medium over time</li>
 <li>The key physical idea is that the substance moves from regions of high concentration toward regions of low concentration</li>
 <li>The rate of change at any point is proportional to how much its concentration differs from the average of its immediate neighbours</li>
 </ul>
-<h2 data-number="21.2" id="setting-up-the-grid"><span class="header-section-number">21.2</span> Setting Up the Grid</h2>
+<h2 data-number="22.2" id="setting-up-the-grid"><span class="header-section-number">22.2</span> Setting Up the Grid</h2>
 <ul>
 <li>Discretize the domain <span class="math inline">\([0, 1]\)</span> into evenly spaced grid points separated by <span class="math inline">\(\Delta x\)</span></li>
 <li>Represent concentration as a 1D NumPy array, one value per grid point</li>
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>The initial concentration is a Gaussian pulse centered in the domain:</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="21.3" id="deriving-the-update-rule"><span class="header-section-number">21.3</span> Deriving the Update Rule</h2>
+<h2 data-number="22.3" id="deriving-the-update-rule"><span class="header-section-number">22.3</span> Deriving the Update Rule</h2>
 <ul>
 <li>Label grid points <span class="math inline">\(i = 0, 1, \ldots, N-1\)</span> and time steps <span class="math inline">\(n = 0, 1, 2, \ldots\)</span></li>
 <li>Write <span class="math inline">\(c_i^n\)</span> for the concentration at point <span class="math inline">\(i\)</span> after <span class="math inline">\(n\)</span> steps</li>
@@ -105,7 +105,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <ul>
 <li><span class="math inline">\(r = D\,\Delta t / \Delta x^2\)</span> is called the stability ratio.</li>
 </ul>
-<h2 data-number="21.4" id="stability"><span class="header-section-number">21.4</span> Stability</h2>
+<h2 data-number="22.4" id="stability"><span class="header-section-number">22.4</span> Stability</h2>
 <ul>
 <li>The explicit scheme only produces physically correct results when <span class="math inline">\(r \le 0.5\)</span></li>
 <li>If <span class="math inline">\(r &gt; 0.5\)</span> the numerical solution grows without bound, producing meaningless results</li>
@@ -133,7 +133,7 @@ Wrong: the number of steps does not affect r — it only determines how long the
 </dd>
 </dl>
 </div>
-<h2 data-number="21.5" id="boundary-conditions"><span class="header-section-number">21.5</span> Boundary Conditions</h2>
+<h2 data-number="22.5" id="boundary-conditions"><span class="header-section-number">22.5</span> Boundary Conditions</h2>
 <ul>
 <li>At the two ends of the grid (<span class="math inline">\(i = 0\)</span> and <span class="math inline">\(i = N-1\)</span>), the centred difference formula requires values at <span class="math inline">\(i = -1\)</span> and <span class="math inline">\(i = N\)</span>, which do not exist</li>
 <li>We use <a href="../glossary/index.html#zero_flux_boundary">zero-flux boundary conditions</a>: no material enters or leaves the domain</li>
@@ -176,13 +176,13 @@ Wrong: without an explicit boundary condition the update formula has no informat
 </dd>
 </dl>
 </div>
-<h2 data-number="21.6" id="running-the-simulation"><span class="header-section-number">21.6</span> Running the Simulation</h2>
+<h2 data-number="22.6" id="running-the-simulation"><span class="header-section-number">22.6</span> Running the Simulation</h2>
 <ul>
 <li>Advance the concentration array one step at a time, saving a snapshot every <code>SNAPSHOT_INTERVAL</code> steps</li>
 <li>Store snapshots in a Polars dataframe with columns <code>x</code>, <code>concentration</code>, and <code>time</code></li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="21.7" id="visualizing-the-results"><span class="header-section-number">21.7</span> Visualizing the Results</h2>
+<h2 data-number="22.7" id="visualizing-the-results"><span class="header-section-number">22.7</span> Visualizing the Results</h2>
 <ul>
 <li>Plot each snapshot as a separate line, color-coded by time, to show how the pulse spreads</li>
 </ul>
@@ -193,11 +193,11 @@ Wrong: without an explicit boundary condition the update formula has no informat
 <img src="diffusion.svg" alt="Five concentration profiles at t=0 through t=0.83, showing a Gaussian pulse flattening and broadening over time.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diffusion-profiles-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;21.1: Concentration profiles at five equally-spaced snapshots. The pulse spreads and flattens; the area under each curve (total mass) is constant.
+Figure&nbsp;22.1: Concentration profiles at five equally-spaced snapshots. The pulse spreads and flattens; the area under each curve (total mass) is constant.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="21.8" id="testing"><span class="header-section-number">21.8</span> Testing</h2>
+<h2 data-number="22.8" id="testing"><span class="header-section-number">22.8</span> Testing</h2>
 <ul>
 <li>Stability check
 <ul>
@@ -232,7 +232,7 @@ Figure&nbsp;21.1: Concentration profiles at five equally-spaced snapshots. The p
 <li>We compare the numerical solution to this analytical formula.</li>
 </ul></li>
 </ul>
-<h2 data-number="21.9" id="choosing-the-tolerance"><span class="header-section-number">21.9</span> Choosing the tolerance</h2>
+<h2 data-number="22.9" id="choosing-the-tolerance"><span class="header-section-number">22.9</span> Choosing the tolerance</h2>
 <ul>
 <li>The explicit scheme has global <a href="../glossary/index.html#truncation_error">truncation error</a> <span class="math inline">\(O(\Delta t + \Delta x^2)\)</span>. This notation means the error scales with <span class="math inline">\(\Delta t\)</span> and <span class="math inline">\(\Delta x^2\)</span> as those quantities shrink, but it says nothing about the coefficient in front of them.</li>
 <li>With our parameters, <span class="math inline">\(\Delta t + \Delta x^2 \approx 2\times 10^{-3}\)</span>.</li>
@@ -306,16 +306,16 @@ Figure&nbsp;21.1: Concentration profiles at five equally-spaced snapshots. The p
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>    )</span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.<span class="bu">max</span>(np.<span class="bu">abs</span>(c <span class="op">-</span> analytical)) <span class="op">&lt;</span> <span class="fl">5e-3</span></span></code></pre></div>
 <section class="exercises">
-<h2 data-number="21.10" id="exercises"><span class="header-section-number">21.10</span> Exercises</h2>
-<h3 data-number="21.10.1" id="do-the-math"><span class="header-section-number">21.10.1</span> Do the math</h3>
+<h2 data-number="22.10" id="exercises"><span class="header-section-number">22.10</span> Exercises</h2>
+<h3 data-number="22.10.1" id="do-the-math"><span class="header-section-number">22.10.1</span> Do the math</h3>
 <p>Using the analytical formula <span class="math inline">\(\sigma^2(t) = \sigma_0^2 + 2Dt\)</span>, compute <span class="math inline">\(\sigma^2\)</span> after <code>N_STEPS</code> = 500 steps. Use <code>PULSE_WIDTH</code> = 0.05 for <span class="math inline">\(\sigma_0\)</span>, <code>DIFFUSIVITY</code> = 0.1, <code>GRID_POINTS</code> = 50, <code>LENGTH</code> = 1.0, and note that <code>DT</code> = <code>STABILITY_RATIO * DX**2 / DIFFUSIVITY</code>. Give your answer to three decimal places.</p>
-<h3 data-number="21.10.2" id="step-function-initial-condition"><span class="header-section-number">21.10.2</span> Step-function initial condition</h3>
+<h3 data-number="22.10.2" id="step-function-initial-condition"><span class="header-section-number">22.10.2</span> Step-function initial condition</h3>
 <p>Replace the Gaussian initial condition in <code>make_initial</code> with a step function: <span class="math inline">\(c(x) = 1\)</span> for <span class="math inline">\(x &lt; 0.5\)</span> and <span class="math inline">\(c(x) = 0\)</span> for <span class="math inline">\(x \ge 0.5\)</span>. Run the simulation and plot the results. Does <code>test_mass_conservation</code> still pass? Does <code>test_symmetry</code> pass or fail, and why?</p>
-<h3 data-number="21.10.3" id="absorbing-boundaries"><span class="header-section-number">21.10.3</span> Absorbing boundaries</h3>
+<h3 data-number="22.10.3" id="absorbing-boundaries"><span class="header-section-number">22.10.3</span> Absorbing boundaries</h3>
 <p>Change the boundary conditions from zero-flux to absorbing: set <code>c[0] = 0</code> and <code>c[-1] = 0</code> after each update instead of using ghost cells. Run the simulation and observe how the total mass changes over time. Modify <code>test_mass_conservation</code> to check that mass decreases monotonically rather than remaining constant.</p>
-<h3 data-number="21.10.4" id="demonstrating-instability"><span class="header-section-number">21.10.4</span> Demonstrating instability</h3>
+<h3 data-number="22.10.4" id="demonstrating-instability"><span class="header-section-number">22.10.4</span> Demonstrating instability</h3>
 <p>Set <code>STABILITY_RATIO = 0.6</code> (above the stability limit of 0.5) and run the simulation for 20 steps. Describe what happens to the concentration values. Confirm that <code>test_stability_ratio</code> catches this before any time-stepping occurs.</p>
-<h3 data-number="21.10.5" id="grid-refinement-and-convergence"><span class="header-section-number">21.10.5</span> Grid refinement and convergence</h3>
+<h3 data-number="22.10.5" id="grid-refinement-and-convergence"><span class="header-section-number">22.10.5</span> Grid refinement and convergence</h3>
 <p>Double <code>GRID_POINTS</code> to 100 (leaving <code>STABILITY_RATIO</code> unchanged so <code>DT</code> is recalculated automatically). Measure the new maximum error in <code>test_matches_analytical</code> at <span class="math inline">\(n = 20\)</span> steps. The truncation error scales as <span class="math inline">\(O(\Delta t + \Delta x^2)\)</span>; with twice as many points, <span class="math inline">\(\Delta x\)</span> halves and <span class="math inline">\(\Delta t\)</span> (derived from <span class="math inline">\(\Delta x^2\)</span>) quarters. Is the observed reduction in error consistent with this prediction?</p>
 </section>
 

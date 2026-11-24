@@ -45,28 +45,28 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">14.1</span> The Problem</a></li>
-<li><a href="#representing-a-fluorescence-image" id="toc-representing-a-fluorescence-image"><span class="header-section-number">14.2</span> Representing a Fluorescence Image</a></li>
-<li><a href="#step-1-smoothing" id="toc-step-1-smoothing"><span class="header-section-number">14.3</span> Step 1: Smoothing</a></li>
-<li><a href="#step-2-thresholding-and-labelling" id="toc-step-2-thresholding-and-labelling"><span class="header-section-number">14.4</span> Step 2: Thresholding and Labelling</a></li>
-<li><a href="#choosing-the-threshold" id="toc-choosing-the-threshold"><span class="header-section-number">14.5</span> Choosing the Threshold</a></li>
-<li><a href="#what-the-segmenter-finds-in-pure-noise" id="toc-what-the-segmenter-finds-in-pure-noise"><span class="header-section-number">14.6</span> What the Segmenter Finds in Pure Noise</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">14.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">14.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">15.1</span> The Problem</a></li>
+<li><a href="#representing-a-fluorescence-image" id="toc-representing-a-fluorescence-image"><span class="header-section-number">15.2</span> Representing a Fluorescence Image</a></li>
+<li><a href="#step-1-smoothing" id="toc-step-1-smoothing"><span class="header-section-number">15.3</span> Step 1: Smoothing</a></li>
+<li><a href="#step-2-thresholding-and-labelling" id="toc-step-2-thresholding-and-labelling"><span class="header-section-number">15.4</span> Step 2: Thresholding and Labelling</a></li>
+<li><a href="#choosing-the-threshold" id="toc-choosing-the-threshold"><span class="header-section-number">15.5</span> Choosing the Threshold</a></li>
+<li><a href="#what-the-segmenter-finds-in-pure-noise" id="toc-what-the-segmenter-finds-in-pure-noise"><span class="header-section-number">15.6</span> What the Segmenter Finds in Pure Noise</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">15.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">15.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Cell Segmentation in Microscopy Images</h1>
-<h2 data-number="14.1" id="the-problem"><span class="header-section-number">14.1</span> The Problem</h2>
+<h2 data-number="15.1" id="the-problem"><span class="header-section-number">15.1</span> The Problem</h2>
 <ul>
 <li>Fluorescence microscopy makes individual cells visible as bright spots on a dark background</li>
 <li>Counting cells and measuring their sizes by hand is impractical at scale</li>
 <li>Automated segmentation identifies which pixels belong to which cell using image processing</li>
 <li>The same pipeline is used in drug-discovery assays, developmental biology, and pathology</li>
 </ul>
-<h2 data-number="14.2" id="representing-a-fluorescence-image"><span class="header-section-number">14.2</span> Representing a Fluorescence Image</h2>
+<h2 data-number="15.2" id="representing-a-fluorescence-image"><span class="header-section-number">15.2</span> Representing a Fluorescence Image</h2>
 <ul>
 <li>Each cell is modelled as a 2-D Gaussian blob centred at <span class="math inline">\((x_c, y_c)\)</span>:</li>
 </ul>
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </ul></li>
 </ul>
 <p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
-<h2 data-number="14.3" id="step-1-smoothing"><span class="header-section-number">14.3</span> Step 1: Smoothing</h2>
+<h2 data-number="15.3" id="step-1-smoothing"><span class="header-section-number">15.3</span> Step 1: Smoothing</h2>
 <ul>
 <li>Raw images are noisy, so the <a href="../glossary/index.html#gaussian_filter">Gaussian filter</a> replaces each pixel with a weighted average of its neighbourhood, suppressing point-to-point fluctuations</li>
 <li><a href="../glossary/index.html#convolution">Convolving</a> the signal Gaussian (<span class="math inline">\(\sigma\)</span>) with the filter Gaussian (<span class="math inline">\(\sigma_s\)</span>) gives a smoothed cell with sigma <span class="math inline">\(\sqrt{\sigma^2 + \sigma_s^2}\)</span> and peak brightness:</li>
@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>With <span class="math inline">\(\sigma = 6\)</span> and <span class="math inline">\(\sigma_s = 2\)</span> this gives <span class="math inline">\(B_\text{smooth} = 36/40 = 0.90\)</span></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="14.4" id="step-2-thresholding-and-labelling"><span class="header-section-number">14.4</span> Step 2: Thresholding and Labelling</h2>
+<h2 data-number="15.4" id="step-2-thresholding-and-labelling"><span class="header-section-number">15.4</span> Step 2: Thresholding and Labelling</h2>
 <ul>
 <li>Pixels above a threshold form a <a href="../glossary/index.html#binary_mask">binary mask</a>
 <ul>
@@ -114,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>Discard components smaller than <code>MIN_CELL_SIZE</code> pixels</li>
 </ol>
 </div>
-<h2 data-number="14.5" id="choosing-the-threshold"><span class="header-section-number">14.5</span> Choosing the Threshold</h2>
+<h2 data-number="15.5" id="choosing-the-threshold"><span class="header-section-number">15.5</span> Choosing the Threshold</h2>
 <ul>
 <li>The smoothed noise has standard deviation:</li>
 </ul>
@@ -145,7 +145,7 @@ Wrong: the separation is derived from the threshold and cell brightness, not fro
 </dd>
 </dl>
 </div>
-<h2 data-number="14.6" id="what-the-segmenter-finds-in-pure-noise"><span class="header-section-number">14.6</span> What the Segmenter Finds in Pure Noise</h2>
+<h2 data-number="15.6" id="what-the-segmenter-finds-in-pure-noise"><span class="header-section-number">15.6</span> What the Segmenter Finds in Pure Noise</h2>
 <ul>
 <li>The same pipeline applied to an image with no cells at all produces false detections when the threshold is too low</li>
 </ul>
@@ -156,7 +156,7 @@ Wrong: the separation is derived from the threshold and cell brightness, not fro
 <img src="cellseg_noise.png" alt="Pure-noise image with 4 false cell detections shown in colour.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cellseg-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.1: Pure Gaussian noise (no cells) smoothed and segmented at threshold 0.05 with no size filter. Four spurious regions are labelled. The same image at the operating threshold of 0.50 produces zero detections.
+Figure&nbsp;15.1: Pure Gaussian noise (no cells) smoothed and segmented at threshold 0.05 with no size filter. Four spurious regions are labelled. The same image at the operating threshold of 0.50 produces zero detections.
 </figcaption>
 </figure>
 </div>
@@ -174,7 +174,7 @@ Figure&nbsp;14.1: Pure Gaussian noise (no cells) smoothed and segmented at thres
 <img src="cellseg.png" alt="Left: raw synthetic image with 8 Gaussian blobs. Right: segmented image with each cell in a different colour and true centres marked with red crosses.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cellseg-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;14.2: Eight synthetic cells recovered by the segmentation pipeline. All 8 are found; cell areas range from 143 to 150 pixels squared, close to the analytic value of 148 pixels squared.
+Figure&nbsp;15.2: Eight synthetic cells recovered by the segmentation pipeline. All 8 are found; cell areas range from 143 to 150 pixels squared, close to the analytic value of 148 pixels squared.
 </figcaption>
 </figure>
 </div>
@@ -199,7 +199,7 @@ Correct: at 0.50 <span class="math inline">\(\approx 24\sigma\)</span>, noise ex
 </dd>
 </dl>
 </div>
-<h2 data-number="14.7" id="testing"><span class="header-section-number">14.7</span> Testing</h2>
+<h2 data-number="15.7" id="testing"><span class="header-section-number">15.7</span> Testing</h2>
 <dl>
 <dt>Noise reduction</dt>
 <dd>
@@ -277,16 +277,16 @@ At threshold 0.05 pure noise must produce at least one false detection, showing 
 <span id="cb4-45"><a href="#cb4-45" aria-hidden="true" tabindex="-1"></a>    _, n_safe <span class="op">=</span> segment(smooth(noise), threshold<span class="op">=</span>THRESHOLD)</span>
 <span id="cb4-46"><a href="#cb4-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> n_safe <span class="op">==</span> <span class="dv">0</span>, <span class="st">"Operating threshold should reject all noise blobs"</span></span></code></pre></div>
 <section class="exercises">
-<h2 data-number="14.8" id="exercises"><span class="header-section-number">14.8</span> Exercises</h2>
-<h3 data-number="14.8.1" id="do-the-math"><span class="header-section-number">14.8.1</span> Do the math</h3>
+<h2 data-number="15.8" id="exercises"><span class="header-section-number">15.8</span> Exercises</h2>
+<h3 data-number="15.8.1" id="do-the-math"><span class="header-section-number">15.8.1</span> Do the math</h3>
 <p>A cell has peak brightness <span class="math inline">\(B = 1.0\)</span> and Gaussian width <span class="math inline">\(\sigma = 6\)</span> pixels. After smoothing with a Gaussian filter of width <span class="math inline">\(\sigma_s = 2\)</span> pixels, the smoothed peak brightness is <span class="math inline">\(B \cdot \sigma^2 / (\sigma^2 + \sigma_s^2)\)</span>. What is the result? Give your answer to two decimal places.</p>
-<h3 data-number="14.8.2" id="watershed-segmentation"><span class="header-section-number">14.8.2</span> Watershed segmentation</h3>
+<h3 data-number="15.8.2" id="watershed-segmentation"><span class="header-section-number">15.8.2</span> Watershed segmentation</h3>
 <p>The thresholding approach fails when two cells overlap and merge into a single connected component. Implement watershed segmentation: compute the distance transform of the binary mask (<code>scipy.ndimage.distance_transform_edt</code>), find local maxima of the distance map as seed points, and use <code>scipy.ndimage.watershed_ift</code> (or <code>skimage.segmentation.watershed</code>) to split overlapping regions. Demonstrate that it correctly separates two cells whose centres are only 14 pixels apart (closer than <code>MIN_SEPARATION</code>).</p>
-<h3 data-number="14.8.3" id="intensity-based-cell-classification"><span class="header-section-number">14.8.3</span> Intensity-based cell classification</h3>
+<h3 data-number="15.8.3" id="intensity-based-cell-classification"><span class="header-section-number">15.8.3</span> Intensity-based cell classification</h3>
 <p>Add a second cell type to <code>make_image</code>: dim cells with <code>brightness=0.4</code> alongside the standard bright cells with <code>brightness=1.0</code>. Extend <code>segment</code> to return a label array and a list of per-cell mean intensities, then classify each detected cell as bright or dim using a simple intensity threshold. Report precision and recall for each class.</p>
-<h3 data-number="14.8.4" id="effect-of-noise-on-count-accuracy"><span class="header-section-number">14.8.4</span> Effect of noise on count accuracy</h3>
+<h3 data-number="15.8.4" id="effect-of-noise-on-count-accuracy"><span class="header-section-number">15.8.4</span> Effect of noise on count accuracy</h3>
 <p>Generate 50 images for each of five noise levels: <span class="math inline">\(\sigma_\text{noise} \in \{0.05, 0.10, 0.15, 0.20, 0.25\}\)</span>. Run the full pipeline on each image and record the number of cells found. Plot mean and standard deviation of the cell count as a function of noise level and identify the noise level at which the pipeline begins to fail consistently.</p>
-<h3 data-number="14.8.5" id="adaptive-thresholding"><span class="header-section-number">14.8.5</span> Adaptive thresholding</h3>
+<h3 data-number="15.8.5" id="adaptive-thresholding"><span class="header-section-number">15.8.5</span> Adaptive thresholding</h3>
 <p>Real microscopy images often have uneven illumination: the background is brighter in some regions than others. Simulate this by adding a low-frequency gradient:</p>
 <p>
 <span class="math inline">\(G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}\)</span>

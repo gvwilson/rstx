@@ -45,26 +45,26 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">25.1</span> The Problem</a></li>
-<li><a href="#generating-synthetic-geochemical-data" id="toc-generating-synthetic-geochemical-data"><span class="header-section-number">25.2</span> Generating Synthetic Geochemical Data</a></li>
-<li><a href="#the-logistic-regression-model" id="toc-the-logistic-regression-model"><span class="header-section-number">25.3</span> The Logistic Regression Model</a></li>
-<li><a href="#training-by-gradient-descent" id="toc-training-by-gradient-descent"><span class="header-section-number">25.4</span> Training by Gradient Descent</a></li>
-<li><a href="#decision-boundary-and-classification" id="toc-decision-boundary-and-classification"><span class="header-section-number">25.5</span> Decision Boundary and Classification</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">25.6</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">25.7</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">26.1</span> The Problem</a></li>
+<li><a href="#generating-synthetic-geochemical-data" id="toc-generating-synthetic-geochemical-data"><span class="header-section-number">26.2</span> Generating Synthetic Geochemical Data</a></li>
+<li><a href="#the-logistic-regression-model" id="toc-the-logistic-regression-model"><span class="header-section-number">26.3</span> The Logistic Regression Model</a></li>
+<li><a href="#training-by-gradient-descent" id="toc-training-by-gradient-descent"><span class="header-section-number">26.4</span> Training by Gradient Descent</a></li>
+<li><a href="#decision-boundary-and-classification" id="toc-decision-boundary-and-classification"><span class="header-section-number">26.5</span> Decision Boundary and Classification</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">26.6</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">26.7</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Mineral Classification by Geochemistry</h1>
-<h2 data-number="25.1" id="the-problem"><span class="header-section-number">25.1</span> The Problem</h2>
+<h2 data-number="26.1" id="the-problem"><span class="header-section-number">26.1</span> The Problem</h2>
 <ul>
 <li>Geochemists measure rock samples as oxide weight percentages (wt%), which is the fraction of each chemical compound in the rock</li>
 <li>A classifier that assigns samples to mineral classes from their chemistry automates a task that otherwise requires expert visual inspection of thin sections under a microscope</li>
 <li>We train a <a href="../glossary/index.html#logistic_regression">logistic regression</a> model on <span class="math inline">\(\text{SiO}_2\)</span> (silica) and <span class="math inline">\(\text{Al}_2\text{O}_3\)</span> (alumina) to separate felsic rocks (granite-like, silica-rich) from mafic rocks (basalt-like, silica-poor)</li>
 </ul>
-<h2 data-number="25.2" id="generating-synthetic-geochemical-data"><span class="header-section-number">25.2</span> Generating Synthetic Geochemical Data</h2>
+<h2 data-number="26.2" id="generating-synthetic-geochemical-data"><span class="header-section-number">26.2</span> Generating Synthetic Geochemical Data</h2>
 <ul>
 <li>We start with synthetic data drawn from two Gaussian distributions that mimic the composition ranges reported in igneous petrology textbooks</li>
 <li>Felsic rocks average 70 wt% <span class="math inline">\(\text{SiO}_2\)</span> and 14 wt% <span class="math inline">\(\text{Al}_2\text{O}_3\)</span>
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>The two distributions overlap because real mineral classification is never perfectly clean</li>
 </ul>
 <p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
-<h2 data-number="25.3" id="the-logistic-regression-model"><span class="header-section-number">25.3</span> The Logistic Regression Model</h2>
+<h2 data-number="26.3" id="the-logistic-regression-model"><span class="header-section-number">26.3</span> The Logistic Regression Model</h2>
 <ul>
 <li>The model predicts the probability that a sample is mafic (class 1):</li>
 </ul>
@@ -106,7 +106,7 @@ Wrong: the sigmoid is defined for all real numbers; the <span class="math inline
 </dl>
 </div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="25.4" id="training-by-gradient-descent"><span class="header-section-number">25.4</span> Training by Gradient Descent</h2>
+<h2 data-number="26.4" id="training-by-gradient-descent"><span class="header-section-number">26.4</span> Training by Gradient Descent</h2>
 <ul>
 <li>At each iteration, the model computes the <a href="../glossary/index.html#cross_entropy">binary cross-entropy</a> loss:</li>
 </ul>
@@ -126,7 +126,7 @@ Wrong: the sigmoid is defined for all real numbers; the <span class="math inline
 <li>Update weights: <span class="math inline">\(w \leftarrow w - \alpha \cdot \partial \mathcal{L}/\partial w\)</span></li>
 </ol>
 </div>
-<h2 data-number="25.5" id="decision-boundary-and-classification"><span class="header-section-number">25.5</span> Decision Boundary and Classification</h2>
+<h2 data-number="26.5" id="decision-boundary-and-classification"><span class="header-section-number">26.5</span> Decision Boundary and Classification</h2>
 <ul>
 <li>The decision boundary is the line where <span class="math inline">\(p = 0.5\)</span>, i.e., where <span class="math inline">\(w_0 x_0 + w_1 x_1 + b = 0\)</span></li>
 <li>Rearranging for <span class="math inline">\(x_1\)</span> (<span class="math inline">\(\text{Al}_2\text{O}_3\)</span>) as a function of <span class="math inline">\(x_0\)</span> (<span class="math inline">\(\text{SiO}_2\)</span>) gives:</li>
@@ -142,7 +142,7 @@ Wrong: the sigmoid is defined for all real numbers; the <span class="math inline
 <img src="mineral.svg" alt="Scatter plot of SiO₂ vs Al₂O₃ with felsic (blue circles) and mafic (red triangles) training samples and a dashed decision boundary.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mineral-boundary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;25.1: Training data for 120 samples (80% of 160 total). The dashed line is the learned decision boundary. The two classes are well separated in SiO₂ but overlap slightly in Al₂O₃.
+Figure&nbsp;26.1: Training data for 120 samples (80% of 160 total). The dashed line is the learned decision boundary. The two classes are well separated in SiO₂ but overlap slightly in Al₂O₃.
 </figcaption>
 </figure>
 </div>
@@ -179,7 +179,7 @@ Figure&nbsp;25.1: Training data for 120 samples (80% of 160 total). The dashed l
 </tbody>
 </table>
 </div>
-<h2 data-number="25.6" id="testing"><span class="header-section-number">25.6</span> Testing</h2>
+<h2 data-number="26.6" id="testing"><span class="header-section-number">26.6</span> Testing</h2>
 <dl>
 <dt>Sigmoid known values</dt>
 <dd>
@@ -305,16 +305,16 @@ Iterative optimisation that moves weights in the direction that most rapidly dec
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="25.7" id="exercises"><span class="header-section-number">25.7</span> Exercises</h2>
-<h3 data-number="25.7.1" id="do-the-math"><span class="header-section-number">25.7.1</span> Do the math</h3>
+<h2 data-number="26.7" id="exercises"><span class="header-section-number">26.7</span> Exercises</h2>
+<h3 data-number="26.7.1" id="do-the-math"><span class="header-section-number">26.7.1</span> Do the math</h3>
 <p>The Mahalanobis distance between two univariate Gaussians with means <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span> and equal standard deviation <span class="math inline">\(\sigma\)</span> is <span class="math inline">\(|\mu_1 - \mu_2| / \sigma\)</span>. Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>, what fraction of the <span class="math inline">\(\text{SiO}_2\)</span> distributions overlap? (Hint: use the 68-95-99.7 rule: the distance is about <span class="math inline">\(6.7\sigma\)</span>, so overlap <span class="math inline">\(\approx 0\)</span>.)</p>
-<h3 data-number="25.7.2" id="three-class-classification"><span class="header-section-number">25.7.2</span> Three-class classification</h3>
+<h3 data-number="26.7.2" id="three-class-classification"><span class="header-section-number">26.7.2</span> Three-class classification</h3>
 <p>Add a third class (ultramafic rocks, e.g.&nbsp;peridotite, with <span class="math inline">\(\text{SiO}_2 \approx 42\)</span> wt% and <span class="math inline">\(\text{Al}_2\text{O}_3 \approx 3\)</span> wt%). Extend <code>train</code> to use the softmax function and categorical cross-entropy loss instead of the binary formulation. Report per-class precision and recall on a held-out test set.</p>
-<h3 data-number="25.7.3" id="learning-rate-sensitivity"><span class="header-section-number">25.7.3</span> Learning-rate sensitivity</h3>
+<h3 data-number="26.7.3" id="learning-rate-sensitivity"><span class="header-section-number">26.7.3</span> Learning-rate sensitivity</h3>
 <p>Run <code>train</code> with learning rates <span class="math inline">\(\alpha \in \{0.001, 0.01, 0.1, 1.0, 10.0\}\)</span> for 500 iterations each. Plot the final training loss as a function of <span class="math inline">\(\alpha\)</span> and identify the range where gradient descent converges reliably. Explain why very large learning rates cause divergence.</p>
-<h3 data-number="25.7.4" id="decision-boundary-as-a-function-of-iteration-count"><span class="header-section-number">25.7.4</span> Decision boundary as a function of iteration count</h3>
+<h3 data-number="26.7.4" id="decision-boundary-as-a-function-of-iteration-count"><span class="header-section-number">26.7.4</span> Decision boundary as a function of iteration count</h3>
 <p>Save the weights <span class="math inline">\(w\)</span> and bias <span class="math inline">\(b\)</span> every 50 iterations during training. Plot the decision boundary at each checkpoint on the same scatter plot. Show that the boundary rotates and shifts as training progresses and stabilises near the optimum.</p>
-<h3 data-number="25.7.5" id="effect-of-class-imbalance"><span class="header-section-number">25.7.5</span> Effect of class imbalance</h3>
+<h3 data-number="26.7.5" id="effect-of-class-imbalance"><span class="header-section-number">26.7.5</span> Effect of class imbalance</h3>
 <p>Generate a dataset with 160 felsic samples and 20 mafic samples. Train the classifier and report the confusion matrix. Show that the model achieves high overall accuracy by predicting felsic almost everywhere, then implement class-weighted cross-entropy loss (multiply the mafic term by <code>n_felsic / n_mafic</code>) and show that it recovers better detection of the minority class.</p>
 </section>
 

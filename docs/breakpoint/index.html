@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">32.1</span> The Problem</a></li>
-<li><a href="#the-cusum-statistic" id="toc-the-cusum-statistic"><span class="header-section-number">32.2</span> The CUSUM Statistic</a></li>
-<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">32.3</span> Generating Synthetic Data</a></li>
-<li><a href="#mean-only-residuals-and-cusum" id="toc-mean-only-residuals-and-cusum"><span class="header-section-number">32.4</span> Mean-Only Residuals and CUSUM</a></li>
-<li><a href="#linear-trend-residuals-and-cusum" id="toc-linear-trend-residuals-and-cusum"><span class="header-section-number">32.5</span> Linear-Trend Residuals and CUSUM</a></li>
-<li><a href="#plotting" id="toc-plotting"><span class="header-section-number">32.6</span> Plotting</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">32.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">32.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">33.1</span> The Problem</a></li>
+<li><a href="#the-cusum-statistic" id="toc-the-cusum-statistic"><span class="header-section-number">33.2</span> The CUSUM Statistic</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">33.3</span> Generating Synthetic Data</a></li>
+<li><a href="#mean-only-residuals-and-cusum" id="toc-mean-only-residuals-and-cusum"><span class="header-section-number">33.4</span> Mean-Only Residuals and CUSUM</a></li>
+<li><a href="#linear-trend-residuals-and-cusum" id="toc-linear-trend-residuals-and-cusum"><span class="header-section-number">33.5</span> Linear-Trend Residuals and CUSUM</a></li>
+<li><a href="#plotting" id="toc-plotting"><span class="header-section-number">33.6</span> Plotting</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">33.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">33.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Structural Break Detection in Economic Time Series</h1>
-<h2 data-number="32.1" id="the-problem"><span class="header-section-number">32.1</span> The Problem</h2>
+<h2 data-number="33.1" id="the-problem"><span class="header-section-number">33.1</span> The Problem</h2>
 <ul>
 <li>An economic indicator like inflation can shift abruptly when policy changes or a crisis hits</li>
 <li>A <a href="../glossary/index.html#structural_break">structural break</a> is a point in time where the statistical properties of the series change permanently</li>
@@ -94,7 +94,7 @@ Wrong: absolute size alone does not cause drift; it is the consistent sign that 
 </dd>
 </dl>
 </div>
-<h2 data-number="32.2" id="the-cusum-statistic"><span class="header-section-number">32.2</span> The CUSUM Statistic</h2>
+<h2 data-number="33.2" id="the-cusum-statistic"><span class="header-section-number">33.2</span> The CUSUM Statistic</h2>
 <ul>
 <li>Given a time series <span class="math inline">\(y_0, \ldots, y_{T-1}\)</span> and a fitted model with residuals <span class="math inline">\(\hat{e}_t = y_t - \hat{y}_t\)</span>, the cumulative sum (CUSUM) at step <span class="math inline">\(t\)</span> is:</li>
 </ul>
@@ -108,13 +108,13 @@ Wrong: absolute size alone does not cause drift; it is the consistent sign that 
 <ul>
 <li>Because detect_break returns the last index before the estimated break, the estimated break location in terms of steps is <span class="math inline">\(\hat{\tau} + 1\)</span></li>
 </ul>
-<h2 data-number="32.3" id="generating-synthetic-data"><span class="header-section-number">32.3</span> Generating Synthetic Data</h2>
+<h2 data-number="33.3" id="generating-synthetic-data"><span class="header-section-number">33.3</span> Generating Synthetic Data</h2>
 <ul>
 <li>The series has a single abrupt break at step 100: the mean shifts from 0.0 to 3.0, a change of three standard deviations (<span class="math inline">\(\sigma = 1.0\)</span>)</li>
 <li>This signal-to-noise ratio of 3 gives reliable detection with 200 observations while still leaving visible scatter in the plots</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="32.4" id="mean-only-residuals-and-cusum"><span class="header-section-number">32.4</span> Mean-Only Residuals and CUSUM</h2>
+<h2 data-number="33.4" id="mean-only-residuals-and-cusum"><span class="header-section-number">33.4</span> Mean-Only Residuals and CUSUM</h2>
 <ul>
 <li>Subtract the sample mean from each observation: <span class="math inline">\(\hat{e}_t = y_t - \bar{y}\)</span></li>
 <li>If there is no break, these residuals fluctuate randomly around zero with no consistent pattern</li>
@@ -130,7 +130,7 @@ Wrong: absolute size alone does not cause drift; it is the consistent sign that 
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="32.5" id="linear-trend-residuals-and-cusum"><span class="header-section-number">32.5</span> Linear-Trend Residuals and CUSUM</h2>
+<h2 data-number="33.5" id="linear-trend-residuals-and-cusum"><span class="header-section-number">33.5</span> Linear-Trend Residuals and CUSUM</h2>
 <ul>
 <li>If the series also has a linear trend, subtracting only the mean conflates the trend with the break
 <ul>
@@ -167,7 +167,7 @@ Wrong: even a modest trend, cumulated over many steps, will dominate the CUSUM a
 </dd>
 </dl>
 </div>
-<h2 data-number="32.6" id="plotting"><span class="header-section-number">32.6</span> Plotting</h2>
+<h2 data-number="33.6" id="plotting"><span class="header-section-number">33.6</span> Plotting</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-breakpoint-series" class="quarto-float quarto-figure quarto-figure-center" alt="Time series of 200 values with a clear upward jump around step 100 and a dashed vertical rule at that step.">
 <figure class="quarto-float quarto-float-fig">
@@ -175,7 +175,7 @@ Wrong: even a modest trend, cumulated over many steps, will dominate the CUSUM a
 <img src="breakpoint-series.svg" alt="Time series of 200 values with a clear upward jump around step 100 and a dashed vertical rule at that step.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-breakpoint-series-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.1: Synthetic time series with a mean shift from 0.0 to 3.0 at step 100. The dashed red rule shows the break detected by the mean-only CUSUM at step 100 — exact agreement with the true break.
+Figure&nbsp;33.1: Synthetic time series with a mean shift from 0.0 to 3.0 at step 100. The dashed red rule shows the break detected by the mean-only CUSUM at step 100 — exact agreement with the true break.
 </figcaption>
 </figure>
 </div>
@@ -185,11 +185,11 @@ Figure&nbsp;32.1: Synthetic time series with a mean shift from 0.0 to 3.0 at ste
 <img src="breakpoint-cusum.svg" alt="Two overlapping CUSUM curves both reaching their minimum near step 99 and returning toward zero by step 199; a dashed gray vertical line marks step 100.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-breakpoint-cusum-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;32.2: CUSUM trajectories for mean-only (blue) and linear-trend (orange) OLS residuals. Both methods reach their maximum absolute value near step 99 and detect the break at step 100. With no trend in the data the two CUSUMs are nearly identical; the gray dashed line marks the true break.
+Figure&nbsp;33.2: CUSUM trajectories for mean-only (blue) and linear-trend (orange) OLS residuals. Both methods reach their maximum absolute value near step 99 and detect the break at step 100. With no trend in the data the two CUSUMs are nearly identical; the gray dashed line marks the true break.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="32.7" id="testing"><span class="header-section-number">32.7</span> Testing</h2>
+<h2 data-number="33.7" id="testing"><span class="header-section-number">33.7</span> Testing</h2>
 <dl>
 <dt>CUSUM of zero residuals</dt>
 <dd>
@@ -282,16 +282,16 @@ A point in time at which the statistical properties of a time series (mean, vari
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="32.8" id="exercises"><span class="header-section-number">32.8</span> Exercises</h2>
-<h3 data-number="32.8.1" id="do-the-math"><span class="header-section-number">32.8.1</span> Do the math</h3>
+<h2 data-number="33.8" id="exercises"><span class="header-section-number">33.8</span> Exercises</h2>
+<h3 data-number="33.8.1" id="do-the-math"><span class="header-section-number">33.8.1</span> Do the math</h3>
 <p>A noise-free series has value 0 for steps 0-99 and value 3 for steps 100-199. The global mean is 1.5. At which step index (0-based) does <span class="math inline">\(|C_t|\)</span> reach its maximum?</p>
-<h3 data-number="32.8.2" id="two-break-points"><span class="header-section-number">32.8.2</span> Two break points</h3>
+<h3 data-number="33.8.2" id="two-break-points"><span class="header-section-number">33.8.2</span> Two break points</h3>
 <p>Modify <code>make_breakpoint_data</code> to introduce a second break: the mean shifts from 0.0 to 3.0 at step 60 and then from 3.0 to 1.0 at step 140. Plot the CUSUM of the mean-only residuals and explain why the statistic now shows two local extrema. Does <code>detect_break</code> find the larger or smaller break?</p>
-<h3 data-number="32.8.3" id="effect-of-signal-to-noise-ratio"><span class="header-section-number">32.8.3</span> Effect of signal-to-noise ratio</h3>
+<h3 data-number="33.8.3" id="effect-of-signal-to-noise-ratio"><span class="header-section-number">33.8.3</span> Effect of signal-to-noise ratio</h3>
 <p>Run the detection algorithm for five signal-to-noise ratios ($/ = $ 0.5, 1, 2, 3, 5) while keeping all other parameters fixed. For each ratio, report the detected break location and its distance from the true break. At what SNR does reliable detection (within 5 steps) become consistent across different random seeds?</p>
-<h3 data-number="32.8.4" id="trend-with-a-break"><span class="header-section-number">32.8.4</span> Trend with a break</h3>
+<h3 data-number="33.8.4" id="trend-with-a-break"><span class="header-section-number">33.8.4</span> Trend with a break</h3>
 <p>Generate a series with a linear trend (<span class="math inline">\(b = 0.05\)</span> per step) and a mean break at step 100. Apply both the mean-only and linear-trend CUSUM and compare the detected break locations. Show that the mean-only CUSUM gives a biased estimate when a trend is present.</p>
-<h3 data-number="32.8.5" id="scaled-cusum-and-critical-values"><span class="header-section-number">32.8.5</span> Scaled CUSUM and critical values</h3>
+<h3 data-number="33.8.5" id="scaled-cusum-and-critical-values"><span class="header-section-number">33.8.5</span> Scaled CUSUM and critical values</h3>
 <p>The raw CUSUM is not scale-invariant: a larger noise standard deviation produces larger CUSUM values even with no break. Normalise the CUSUM by dividing by <span class="math inline">\(\hat{\sigma}\sqrt{T}\)</span> where <span class="math inline">\(\hat{\sigma}\)</span> is the residual standard error and <span class="math inline">\(T\)</span> is the series length. The scaled statistic exceeds 1.36 with probability 5% under the null hypothesis of no break (Brown-Durbin-Evans critical value). Apply this threshold to the synthetic data and report whether the break is detected at the 5% level.</p>
 </section>
 

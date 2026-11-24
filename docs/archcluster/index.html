@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">6.1</span> The Problem</a></li>
-<li><a href="#dividing-the-region-into-a-grid" id="toc-dividing-the-region-into-a-grid"><span class="header-section-number">6.2</span> Dividing the Region into a Grid</a></li>
-<li><a href="#identifying-concentration-cells" id="toc-identifying-concentration-cells"><span class="header-section-number">6.3</span> Identifying Concentration Cells</a></li>
-<li><a href="#finding-clusters-with-depth-first-search" id="toc-finding-clusters-with-depth-first-search"><span class="header-section-number">6.4</span> Finding Clusters with Depth-First Search</a></li>
-<li><a href="#assigning-sites-to-clusters" id="toc-assigning-sites-to-clusters"><span class="header-section-number">6.5</span> Assigning Sites to Clusters</a></li>
-<li><a href="#cluster-centroids" id="toc-cluster-centroids"><span class="header-section-number">6.6</span> Cluster Centroids</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">6.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">6.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">7.1</span> The Problem</a></li>
+<li><a href="#dividing-the-region-into-a-grid" id="toc-dividing-the-region-into-a-grid"><span class="header-section-number">7.2</span> Dividing the Region into a Grid</a></li>
+<li><a href="#identifying-concentration-cells" id="toc-identifying-concentration-cells"><span class="header-section-number">7.3</span> Identifying Concentration Cells</a></li>
+<li><a href="#finding-clusters-with-depth-first-search" id="toc-finding-clusters-with-depth-first-search"><span class="header-section-number">7.4</span> Finding Clusters with Depth-First Search</a></li>
+<li><a href="#assigning-sites-to-clusters" id="toc-assigning-sites-to-clusters"><span class="header-section-number">7.5</span> Assigning Sites to Clusters</a></li>
+<li><a href="#cluster-centroids" id="toc-cluster-centroids"><span class="header-section-number">7.6</span> Cluster Centroids</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">7.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">7.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Spatial Clustering of Archaeological Sites</h1>
-<h2 data-number="6.1" id="the-problem"><span class="header-section-number">6.1</span> The Problem</h2>
+<h2 data-number="7.1" id="the-problem"><span class="header-section-number">7.1</span> The Problem</h2>
 <ul>
 <li>Archaeological surveys record the locations of sites (settlements, hearths, burial mounds) as 2-D coordinates on a map</li>
 <li>Sites are rarely distributed uniformly:
@@ -97,7 +97,7 @@ Wrong: in the synthetic data there are 20 noise points and 60 cluster sites, but
 </dd>
 </dl>
 </div>
-<h2 data-number="6.2" id="dividing-the-region-into-a-grid"><span class="header-section-number">6.2</span> Dividing the Region into a Grid</h2>
+<h2 data-number="7.2" id="dividing-the-region-into-a-grid"><span class="header-section-number">7.2</span> Dividing the Region into a Grid</h2>
 <ul>
 <li>The survey region spans <span class="math inline">\([\text{region\_min}, \text{region\_max}]\)</span> in both easting and northing</li>
 <li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline">\(w = (\text{region\_max} - \text{region\_min}) / \text{grid\_size}\)</span></li>
@@ -112,7 +112,7 @@ Wrong: in the synthetic data there are 20 noise points and 60 cluster sites, but
 <li>Count the number of sites in each cell; the result is a 2D integer array of shape <code>(grid_size, grid_size)</code></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="6.3" id="identifying-concentration-cells"><span class="header-section-number">6.3</span> Identifying Concentration Cells</h2>
+<h2 data-number="7.3" id="identifying-concentration-cells"><span class="header-section-number">7.3</span> Identifying Concentration Cells</h2>
 <ul>
 <li>A cell with <code>count &gt;= HOT_THRESHOLD</code> is called a “hot” cell
 <ul>
@@ -149,7 +149,7 @@ Wrong: larger cells aggregate more sites; the tendency is to merge clusters, not
 </dd>
 </dl>
 </div>
-<h2 data-number="6.4" id="finding-clusters-with-depth-first-search"><span class="header-section-number">6.4</span> Finding Clusters with Depth-First Search</h2>
+<h2 data-number="7.4" id="finding-clusters-with-depth-first-search"><span class="header-section-number">7.4</span> Finding Clusters with Depth-First Search</h2>
 <ul>
 <li>Two hot cells belong to the same cluster if they are connected through a chain of adjacent hot cells</li>
 <li>8-connectivity counts all eight neighbors (four cardinal, four diagonal), so clusters that touch only at corners are still merged</li>
@@ -194,7 +194,7 @@ Wrong: raising the threshold removes cells from the hot set, so more sites end u
 </dd>
 </dl>
 </div>
-<h2 data-number="6.5" id="assigning-sites-to-clusters"><span class="header-section-number">6.5</span> Assigning Sites to Clusters</h2>
+<h2 data-number="7.5" id="assigning-sites-to-clusters"><span class="header-section-number">7.5</span> Assigning Sites to Clusters</h2>
 <ul>
 <li>Each site is mapped to a grid cell using the same floor-division formula as <code>build_grid</code></li>
 <li>The site receives the cluster label of its cell</li>
@@ -226,7 +226,7 @@ Wrong: the grid method assigns labels by cell membership, not by distance to clu
 </dd>
 </dl>
 </div>
-<h2 data-number="6.6" id="cluster-centroids"><span class="header-section-number">6.6</span> Cluster Centroids</h2>
+<h2 data-number="7.6" id="cluster-centroids"><span class="header-section-number">7.6</span> Cluster Centroids</h2>
 <ul>
 <li>The centroid of a cluster is the mean easting and mean northing of all sites assigned to that cluster</li>
 <li>Centroids summarize each cluster’s geographic location and can be compared with known landscape features</li>
@@ -239,7 +239,7 @@ Wrong: the grid method assigns labels by cell membership, not by distance to clu
 <li>The offset is the estimation error</li>
 </ul></li>
 </ul>
-<h2 data-number="6.7" id="testing"><span class="header-section-number">6.7</span> Testing</h2>
+<h2 data-number="7.7" id="testing"><span class="header-section-number">7.7</span> Testing</h2>
 <dl>
 <dt>Grid shape and total count</dt>
 <dd>
@@ -375,19 +375,19 @@ The mean easting and northing of all sites assigned to a cluster; summarizes the
 <li>It requires a more advanced algorithms course.</li>
 </ul>
 <section class="exercises">
-<h2 data-number="6.8" id="exercises"><span class="header-section-number">6.8</span> Exercises</h2>
-<h3 data-number="6.8.1" id="do-the-math"><span class="header-section-number">6.8.1</span> Do the math</h3>
+<h2 data-number="7.8" id="exercises"><span class="header-section-number">7.8</span> Exercises</h2>
+<h3 data-number="7.8.1" id="do-the-math"><span class="header-section-number">7.8.1</span> Do the math</h3>
 <ol type="1">
 <li><p>A survey region runs from 0 to 100 units. <code>GRID_SIZE</code> is 20, so each cell is 5 units wide. A site at easting 27.3 maps to which column index?</p></li>
 <li><p>Four clusters are planted in the synthetic data. How many entries does the dict returned by <code>cluster_centroids</code> contain, assuming all four are recovered?</p></li>
 </ol>
-<h3 data-number="6.8.2" id="parameter-sensitivity"><span class="header-section-number">6.8.2</span> Parameter sensitivity</h3>
+<h3 data-number="7.8.2" id="parameter-sensitivity"><span class="header-section-number">7.8.2</span> Parameter sensitivity</h3>
 <p>Run the pipeline on the synthetic data with <code>GRID_SIZE</code> values of 10, 20, and 40 and <code>HOT_THRESHOLD</code> values of 1, 2, and 4 (nine combinations in total). Record the number of clusters and noise sites for each combination. Which settings merge the four planted clusters into fewer groups? Which settings fragment them into many small pieces?</p>
-<h3 data-number="6.8.3" id="cluster-purity"><span class="header-section-number">6.8.3</span> Cluster purity</h3>
+<h3 data-number="7.8.3" id="cluster-purity"><span class="header-section-number">7.8.3</span> Cluster purity</h3>
 <p>For each recovered cluster, compute the fraction of its member sites that share the same <code>true_cluster</code> value from the generator. A perfectly recovered cluster has purity 1.0. What is the minimum purity across all recovered clusters at the default parameters?</p>
-<h3 data-number="6.8.4" id="boundary-sensitivity"><span class="header-section-number">6.8.4</span> Boundary sensitivity</h3>
+<h3 data-number="7.8.4" id="boundary-sensitivity"><span class="header-section-number">7.8.4</span> Boundary sensitivity</h3>
 <p>Move one planted cluster center 10 units closer to another and regenerate the synthetic data. Do the two clusters merge into one under the default parameters? At what separation distance do they first appear as a single cluster?</p>
-<h3 data-number="6.8.5" id="centroid-error"><span class="header-section-number">6.8.5</span> Centroid error</h3>
+<h3 data-number="7.8.5" id="centroid-error"><span class="header-section-number">7.8.5</span> Centroid error</h3>
 <p>For each recovered cluster, compute the Euclidean distance between its centroid and the nearest planted cluster center. Is the error consistent across all four clusters, or does it vary with cluster size?</p>
 </section>
 

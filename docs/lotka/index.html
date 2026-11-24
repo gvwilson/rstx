@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">23.1</span> The Problem</a></li>
-<li><a href="#the-equations" id="toc-the-equations"><span class="header-section-number">23.2</span> The Equations</a></li>
-<li><a href="#parameters-and-equilibrium" id="toc-parameters-and-equilibrium"><span class="header-section-number">23.3</span> Parameters and Equilibrium</a></li>
-<li><a href="#implementing-the-right-hand-side" id="toc-implementing-the-right-hand-side"><span class="header-section-number">23.4</span> Implementing the Right-Hand Side</a></li>
-<li><a href="#solving-the-system" id="toc-solving-the-system"><span class="header-section-number">23.5</span> Solving the System</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">23.6</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">23.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">23.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">24.1</span> The Problem</a></li>
+<li><a href="#the-equations" id="toc-the-equations"><span class="header-section-number">24.2</span> The Equations</a></li>
+<li><a href="#parameters-and-equilibrium" id="toc-parameters-and-equilibrium"><span class="header-section-number">24.3</span> Parameters and Equilibrium</a></li>
+<li><a href="#implementing-the-right-hand-side" id="toc-implementing-the-right-hand-side"><span class="header-section-number">24.4</span> Implementing the Right-Hand Side</a></li>
+<li><a href="#solving-the-system" id="toc-solving-the-system"><span class="header-section-number">24.5</span> Solving the System</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">24.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">24.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Predator-Prey Dynamics</h1>
-<h2 data-number="23.1" id="the-problem"><span class="header-section-number">23.1</span> The Problem</h2>
+<h2 data-number="24.1" id="the-problem"><span class="header-section-number">24.1</span> The Problem</h2>
 <ul>
 <li>A common dynamic in predator-prey systems:
 <ul>
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>It is also used in chemistry (autocatalytic reactions) and economics (supply and demand cycles).</li>
 </ul></li>
 </ul>
-<h2 data-number="23.2" id="the-equations"><span class="header-section-number">23.2</span> The Equations</h2>
+<h2 data-number="24.2" id="the-equations"><span class="header-section-number">24.2</span> The Equations</h2>
 <ul>
 <li>Let <span class="math inline">\(x(t)\)</span> be prey population and <span class="math inline">\(y(t)\)</span> be predator population.</li>
 <li>The model is a pair of ordinary differential equations:</li>
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><span class="math inline">\(dy\)</span>: predators die at a constant per-capita rate <span class="math inline">\(d\)</span></li>
 </ul></li>
 </ul>
-<h2 data-number="23.3" id="parameters-and-equilibrium"><span class="header-section-number">23.3</span> Parameters and Equilibrium</h2>
+<h2 data-number="24.3" id="parameters-and-equilibrium"><span class="header-section-number">24.3</span> Parameters and Equilibrium</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Setting both derivatives to zero gives the equilibrium: <span class="math inline">\(x^* = d/c\)</span> and <span class="math inline">\(y^* = a/b\)</span>.</li>
@@ -121,7 +121,7 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 </dd>
 </dl>
 </div>
-<h2 data-number="23.4" id="implementing-the-right-hand-side"><span class="header-section-number">23.4</span> Implementing the Right-Hand Side</h2>
+<h2 data-number="24.4" id="implementing-the-right-hand-side"><span class="header-section-number">24.4</span> Implementing the Right-Hand Side</h2>
 <ul>
 <li><code>solve_ivp</code> requires a function that takes time <span class="math inline">\(t\)</span> and state vector <span class="math inline">\(z = [x, y]\)</span> and returns <span class="math inline">\([dx/dt,\; dy/dt]\)</span></li>
 <li>The function must not modify <span class="math inline">\(z\)</span>; instead, it should return a new list</li>
@@ -153,7 +153,7 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 <span class="math inline">\(cxy\)</span> | Predators gain population from consuming prey |<br>
 <span class="math inline">\(dy\)</span> | Predators die at a constant per-capita rate |</div>
 </div>
-<h2 data-number="23.5" id="solving-the-system"><span class="header-section-number">23.5</span> Solving the System</h2>
+<h2 data-number="24.5" id="solving-the-system"><span class="header-section-number">24.5</span> Solving the System</h2>
 <ul>
 <li><code>solve_ivp</code> advances the state from <span class="math inline">\(t = 0\)</span> to <code>T_MAX</code> using an adaptive Runge-Kutta method</li>
 <li><code>t_eval</code> specifies the output times; it does not control the internal step size</li>
@@ -163,7 +163,7 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="23.6" id="visualizing-the-results"><span class="header-section-number">23.6</span> Visualizing the Results</h2>
+<h2 data-number="24.6" id="visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</h2>
 <ul>
 <li>Two views of the solution complement each other.</li>
 </ul>
@@ -185,7 +185,7 @@ Wrong: <code>PREY_BIRTH</code> = 1.0 is a rate parameter, not the equilibrium pr
 <img src="lotka_timeseries.svg" alt="Prey and predator populations oscillating over time, with predator peaks lagging prey peaks.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lotka-timeseries-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.1: Prey (blue) and predator (orange) populations over 53 time units. Predator peaks follow prey peaks by roughly a quarter-period.
+Figure&nbsp;24.1: Prey (blue) and predator (orange) populations over 53 time units. Predator peaks follow prey peaks by roughly a quarter-period.
 </figcaption>
 </figure>
 </div>
@@ -202,11 +202,11 @@ Figure&nbsp;23.1: Prey (blue) and predator (orange) populations over 53 time uni
 <img src="lotka_trajectory.svg" alt="A closed loop in the prey-predator plane showing the repeating population cycle.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-lotka-trajectory-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.2: Population trajectory: prey (<span class="math inline">\(x\)</span>-axis) versus predator (<span class="math inline">\(y\)</span>-axis). The loop closes because the populations repeat the same cycle.
+Figure&nbsp;24.2: Population trajectory: prey (<span class="math inline">\(x\)</span>-axis) versus predator (<span class="math inline">\(y\)</span>-axis). The loop closes because the populations repeat the same cycle.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="23.7" id="testing"><span class="header-section-number">23.7</span> Testing</h2>
+<h2 data-number="24.7" id="testing"><span class="header-section-number">24.7</span> Testing</h2>
 <dl>
 <dt>Populations remain positive</dt>
 <dd>
@@ -261,14 +261,14 @@ Linearising the LV equations around equilibrium gives small oscillations with pe
 <span id="cb5-38"><a href="#cb5-38" aria-hidden="true" tabindex="-1"></a>    measured_period <span class="op">=</span> np.diff(t_peaks).mean()</span>
 <span id="cb5-39"><a href="#cb5-39" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(measured_period <span class="op">-</span> PERIOD_APPROX) <span class="op">/</span> PERIOD_APPROX <span class="op">&lt;</span> <span class="fl">0.10</span></span></code></pre></div>
 <section class="exercises">
-<h2 data-number="23.8" id="exercises"><span class="header-section-number">23.8</span> Exercises</h2>
-<h3 data-number="23.8.1" id="starting-at-the-equilibrium"><span class="header-section-number">23.8.1</span> Starting at the equilibrium</h3>
+<h2 data-number="24.8" id="exercises"><span class="header-section-number">24.8</span> Exercises</h2>
+<h3 data-number="24.8.1" id="starting-at-the-equilibrium"><span class="header-section-number">24.8.1</span> Starting at the equilibrium</h3>
 <p>Set <code>PREY_INIT = PREY_EQ</code> and <code>PRED_INIT = PRED_EQ</code> and run the simulation. What does <code>plot_time_series</code> show? What does <code>plot_trajectory</code> show? Explain why in terms of the fixed-point analysis.</p>
-<h3 data-number="23.8.2" id="effect-of-initial-conditions-on-period"><span class="header-section-number">23.8.2</span> Effect of initial conditions on period</h3>
+<h3 data-number="24.8.2" id="effect-of-initial-conditions-on-period"><span class="header-section-number">24.8.2</span> Effect of initial conditions on period</h3>
 <p>Run the simulation with three different starting points: <span class="math inline">\((x_0, y_0)\)</span> = (21, 10.5), (25, 5), and (40, 2). Plot the population trajectories on the same axes using different colors. Measure the period of each orbit using <code>find_peaks</code>. Is the period the same for all three orbits, or does it vary with amplitude? Compare each measured period to <code>PERIOD_APPROX</code>.</p>
-<h3 data-number="23.8.3" id="harvesting-prey"><span class="header-section-number">23.8.3</span> Harvesting prey</h3>
+<h3 data-number="24.8.3" id="harvesting-prey"><span class="header-section-number">24.8.3</span> Harvesting prey</h3>
 <p>Add a constant harvesting term to the prey equation: <span class="math inline">\(dx/dt = ax - bxy - h\)</span>, where <span class="math inline">\(h &gt; 0\)</span> represents the rate at which prey are removed by fishing, hunting, or sampling. Derive the new equilibrium <span class="math inline">\((x_h^*, y_h^*)\)</span> algebraically. Implement the modified <code>rhs</code> and verify your algebra by checking that the simulation stays constant when started exactly at the new equilibrium.</p>
-<h3 data-number="23.8.4" id="numerical-accuracy-and-solver-tolerance"><span class="header-section-number">23.8.4</span> Numerical accuracy and solver tolerance</h3>
+<h3 data-number="24.8.4" id="numerical-accuracy-and-solver-tolerance"><span class="header-section-number">24.8.4</span> Numerical accuracy and solver tolerance</h3>
 <p>Reduce <code>rtol</code> and <code>atol</code> by a factor of 100 (to <span class="math inline">\(10^{-6}\)</span> and <span class="math inline">\(10^{-8}\)</span>) and re-run the simulation. Run the simulation for <code>T_MAX</code> time units and check whether the population trajectory still forms a nearly closed loop. At what tolerance does the loop visibly fail to close? What does this tell you about the relationship between solver accuracy and the appearance of the trajectory?</p>
 </section>
 

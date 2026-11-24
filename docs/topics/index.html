@@ -45,24 +45,24 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">16.1</span> The Problem</a></li>
-<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">16.2</span> Generating Synthetic Data</a></li>
-<li><a href="#building-tf-vectors" id="toc-building-tf-vectors"><span class="header-section-number">16.3</span> Building TF Vectors</a></li>
-<li><a href="#length-normalization" id="toc-length-normalization"><span class="header-section-number">16.4</span> Length Normalization</a></li>
-<li><a href="#the-k-means-algorithm" id="toc-the-k-means-algorithm"><span class="header-section-number">16.5</span> The K-Means Algorithm</a></li>
-<li><a href="#top-words-per-cluster" id="toc-top-words-per-cluster"><span class="header-section-number">16.6</span> Top Words Per Cluster</a></li>
-<li><a href="#raw-tf-vs.-normalized-tf" id="toc-raw-tf-vs.-normalized-tf"><span class="header-section-number">16.7</span> Raw TF vs.&nbsp;Normalized TF</a></li>
-<li><a href="#visualizing-cluster-centroids" id="toc-visualizing-cluster-centroids"><span class="header-section-number">16.8</span> Visualizing Cluster Centroids</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">16.9</span> Testing</a></li>
-<li><a href="#from-k-means-to-probabilistic-topic-models" id="toc-from-k-means-to-probabilistic-topic-models"><span class="header-section-number">16.10</span> From K-Means to Probabilistic Topic Models</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">16.11</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">17.1</span> The Problem</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">17.2</span> Generating Synthetic Data</a></li>
+<li><a href="#building-tf-vectors" id="toc-building-tf-vectors"><span class="header-section-number">17.3</span> Building TF Vectors</a></li>
+<li><a href="#length-normalization" id="toc-length-normalization"><span class="header-section-number">17.4</span> Length Normalization</a></li>
+<li><a href="#the-k-means-algorithm" id="toc-the-k-means-algorithm"><span class="header-section-number">17.5</span> The K-Means Algorithm</a></li>
+<li><a href="#top-words-per-cluster" id="toc-top-words-per-cluster"><span class="header-section-number">17.6</span> Top Words Per Cluster</a></li>
+<li><a href="#raw-tf-vs.-normalized-tf" id="toc-raw-tf-vs.-normalized-tf"><span class="header-section-number">17.7</span> Raw TF vs.&nbsp;Normalized TF</a></li>
+<li><a href="#visualizing-cluster-centroids" id="toc-visualizing-cluster-centroids"><span class="header-section-number">17.8</span> Visualizing Cluster Centroids</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">17.9</span> Testing</a></li>
+<li><a href="#from-k-means-to-probabilistic-topic-models" id="toc-from-k-means-to-probabilistic-topic-models"><span class="header-section-number">17.10</span> From K-Means to Probabilistic Topic Models</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">17.11</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Topic Modeling a Document Corpus</h1>
-<h2 data-number="16.1" id="the-problem"><span class="header-section-number">16.1</span> The Problem</h2>
+<h2 data-number="17.1" id="the-problem"><span class="header-section-number">17.1</span> The Problem</h2>
 <ul>
 <li>A corpus of documents often covers several recurring themes, but labeling each document by hand is slow and subjective.</li>
 <li>Topic modeling discovers those themes automatically by finding groups of words that tend to appear together across documents.</li>
@@ -94,7 +94,7 @@ Wrong: ignoring word order (the bag-of-words assumption) is a modeling choice, n
 </dd>
 </dl>
 </div>
-<h2 data-number="16.2" id="generating-synthetic-data"><span class="header-section-number">16.2</span> Generating Synthetic Data</h2>
+<h2 data-number="17.2" id="generating-synthetic-data"><span class="header-section-number">17.2</span> Generating Synthetic Data</h2>
 <ul>
 <li>The corpus has three topics; each topic owns six consecutive words from a twenty-word vocabulary.</li>
 <li>Words from a topic’s own set are sampled with weight 20; all other words receive weight 0.5, so about 96% of each document’s tokens come from the document’s true topic.</li>
@@ -103,13 +103,13 @@ Wrong: ignoring word order (the bag-of-words assumption) is a modeling choice, n
 <li><code>true_topic</code> records which topic generated each document and is used only in tests.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="16.3" id="building-tf-vectors"><span class="header-section-number">16.3</span> Building TF Vectors</h2>
+<h2 data-number="17.3" id="building-tf-vectors"><span class="header-section-number">17.3</span> Building TF Vectors</h2>
 <ul>
 <li>A term-frequency vector for document <span class="math inline">\(d\)</span> is the vector <span class="math inline">\(\mathbf{t}_d \in \mathbb{Z}_{\geq 0}^V\)</span> where <span class="math inline">\(V\)</span> is the vocabulary size and <span class="math inline">\(t_{dw}\)</span> counts how many times word <span class="math inline">\(w\)</span> appears in document <span class="math inline">\(d\)</span>.</li>
 <li>Extracting word-count columns from the DataFrame and converting to a NumPy matrix gives a two-dimensional array with shape <span class="math inline">\((\text{n\_docs},\, V)\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="16.4" id="length-normalization"><span class="header-section-number">16.4</span> Length Normalization</h2>
+<h2 data-number="17.4" id="length-normalization"><span class="header-section-number">17.4</span> Length Normalization</h2>
 <ul>
 <li>Raw TF vectors are proportional to document length: a document twice as long will have roughly twice the counts for every word, even if its topic mix is identical.</li>
 <li>Dividing each document vector by its L2 norm removes this length effect:</li>
@@ -141,7 +141,7 @@ Wrong: <span class="math inline">\(\sqrt{8}\)</span> would be the L2 norm of <sp
 </dd>
 </dl>
 </div>
-<h2 data-number="16.5" id="the-k-means-algorithm"><span class="header-section-number">16.5</span> The K-Means Algorithm</h2>
+<h2 data-number="17.5" id="the-k-means-algorithm"><span class="header-section-number">17.5</span> The K-Means Algorithm</h2>
 <ul>
 <li>K-means partitions <span class="math inline">\(n\)</span> documents into <span class="math inline">\(K\)</span> clusters by alternating two steps until assignments stop changing:
 <ol type="1">
@@ -156,19 +156,19 @@ Wrong: <span class="math inline">\(\sqrt{8}\)</span> would be the L2 norm of <sp
 <li>The algorithm needs <span class="math inline">\(K\)</span> to be chosen before running it; topic modeling uses domain knowledge or model selection criteria to pick <span class="math inline">\(K\)</span>.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="16.6" id="top-words-per-cluster"><span class="header-section-number">16.6</span> Top Words Per Cluster</h2>
+<h2 data-number="17.6" id="top-words-per-cluster"><span class="header-section-number">17.6</span> Top Words Per Cluster</h2>
 <ul>
 <li>After k-means converges, the top words for each cluster are those with the highest value in the cluster’s centroid vector.</li>
 <li>A high centroid coordinate for word <span class="math inline">\(w\)</span> means that documents in the cluster tend to use word <span class="math inline">\(w\)</span> frequently, making it a good label for the cluster’s theme.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="16.7" id="raw-tf-vs.-normalized-tf"><span class="header-section-number">16.7</span> Raw TF vs.&nbsp;Normalized TF</h2>
+<h2 data-number="17.7" id="raw-tf-vs.-normalized-tf"><span class="header-section-number">17.7</span> Raw TF vs.&nbsp;Normalized TF</h2>
 <ul>
 <li>With raw TF vectors, longer documents pull centroids upward uniformly across all words, which can make centroid coordinates reflect document length as much as topic content.</li>
 <li>With normalized TF vectors, centroids reflect the typical word-use pattern (shape) for documents in each cluster, independent of length.</li>
 <li>For this synthetic corpus both approaches recover the three topics because all documents have similar Poisson-distributed lengths; in a corpus with very unequal document lengths, normalization matters more.</li>
 </ul>
-<h2 data-number="16.8" id="visualizing-cluster-centroids"><span class="header-section-number">16.8</span> Visualizing Cluster Centroids</h2>
+<h2 data-number="17.8" id="visualizing-cluster-centroids"><span class="header-section-number">17.8</span> Visualizing Cluster Centroids</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-topics-heatmap" class="quarto-float quarto-figure quarto-figure-center" alt="A heatmap with three cluster rows and twenty word columns. Each row shows a band of dark blue cells concentrated in one-third of the vocabulary (words w00-w05, w06-w11, or w12-w17), with near-white elsewhere. The three dark bands do not overlap.">
 <figure class="quarto-float quarto-float-fig">
@@ -176,7 +176,7 @@ Wrong: <span class="math inline">\(\sqrt{8}\)</span> would be the L2 norm of <sp
 <img src="topics-heatmap.svg" alt="A heatmap with three cluster rows and twenty word columns. Each row shows a band of dark blue cells concentrated in one-third of the vocabulary (words w00-w05, w06-w11, or w12-w17), with near-white elsewhere. The three dark bands do not overlap.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-topics-heatmap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;16.1: Cluster centroid weights after k-means on normalized TF vectors. Each cluster’s centroid has high weight on the six words belonging to its generating topic and near-zero weight on the rest.
+Figure&nbsp;17.1: Cluster centroid weights after k-means on normalized TF vectors. Each cluster’s centroid has high weight on the six words belonging to its generating topic and near-zero weight on the rest.
 </figcaption>
 </figure>
 </div>
@@ -201,7 +201,7 @@ Wrong: the centroid is a mean over all cluster members, not a selection of one p
 </dd>
 </dl>
 </div>
-<h2 data-number="16.9" id="testing"><span class="header-section-number">16.9</span> Testing</h2>
+<h2 data-number="17.9" id="testing"><span class="header-section-number">17.9</span> Testing</h2>
 <ul>
 <li>TF matrix shape
 <ul>
@@ -312,7 +312,7 @@ Dividing a vector by its Euclidean length <span class="math inline">\(\|\mathbf{
 </dd>
 </dl>
 </div>
-<h2 data-number="16.10" id="from-k-means-to-probabilistic-topic-models"><span class="header-section-number">16.10</span> From K-Means to Probabilistic Topic Models</h2>
+<h2 data-number="17.10" id="from-k-means-to-probabilistic-topic-models"><span class="header-section-number">17.10</span> From K-Means to Probabilistic Topic Models</h2>
 <pre><code>-   K-means assigns each document to exactly one cluster.
 -   In practice, a document can be about more than one topic: a biology paper might
     discuss both genetics and statistics.
@@ -322,16 +322,16 @@ Dividing a vector by its Euclidean length <span class="math inline">\(\|\mathbf{
 -   LDA inference uses Bayesian methods (specifically collapsed Gibbs sampling, a form
     of Markov chain Monte Carlo) and requires more advanced statistics than k-means.</code></pre>
 <section class="exercises">
-<h2 data-number="16.11" id="exercises"><span class="header-section-number">16.11</span> Exercises</h2>
-<h3 data-number="16.11.1" id="do-the-math"><span class="header-section-number">16.11.1</span> Do the math</h3>
+<h2 data-number="17.11" id="exercises"><span class="header-section-number">17.11</span> Exercises</h2>
+<h3 data-number="17.11.1" id="do-the-math"><span class="header-section-number">17.11.1</span> Do the math</h3>
 <p>Consider two document vectors <span class="math inline">\(\mathbf{a} = [3, 4]\)</span> and centroid <span class="math inline">\(\mathbf{c} = [0, 0]\)</span>. What is the Euclidean distance <span class="math inline">\(d(\mathbf{a}, \mathbf{c})\)</span>?</p>
-<h3 data-number="16.11.2" id="effect-of-k"><span class="header-section-number">16.11.2</span> Effect of K</h3>
+<h3 data-number="17.11.2" id="effect-of-k"><span class="header-section-number">17.11.2</span> Effect of K</h3>
 <p>Run k-means on the normalized TF matrix with <span class="math inline">\(K \in \{2, 3, 4, 5\}\)</span>. For <span class="math inline">\(K = 3\)</span>, the three clusters should match the three generating topics. What happens to the cluster centroid heatmap when <span class="math inline">\(K = 4\)</span>? Does the extra cluster split one of the true topics in two, or does it find a different grouping? Explain why increasing <span class="math inline">\(K\)</span> beyond the true number of topics does not necessarily improve the result.</p>
-<h3 data-number="16.11.3" id="effect-of-initialization"><span class="header-section-number">16.11.3</span> Effect of initialization</h3>
+<h3 data-number="17.11.3" id="effect-of-initialization"><span class="header-section-number">17.11.3</span> Effect of initialization</h3>
 <p>K-means can converge to different solutions depending on which documents are chosen as initial centroids. Run k-means on the normalized TF matrix 10 times, each time with a different random seed. How often does the algorithm recover all three true topics? What happens in the runs that fail to recover them?</p>
-<h3 data-number="16.11.4" id="mixed-documents"><span class="header-section-number">16.11.4</span> Mixed documents</h3>
+<h3 data-number="17.11.4" id="mixed-documents"><span class="header-section-number">17.11.4</span> Mixed documents</h3>
 <p>Modify <code>make_corpus</code> to generate five documents that draw 50% of their tokens from topic 0 and 50% from topic 1. Add those documents to the corpus and re-run k-means. Which cluster do the mixed documents end up in? Plot the centroid weights for those documents alongside the cluster centroids to show why the algorithm places them where it does.</p>
-<h3 data-number="16.11.5" id="inertia"><span class="header-section-number">16.11.5</span> Inertia</h3>
+<h3 data-number="17.11.5" id="inertia"><span class="header-section-number">17.11.5</span> Inertia</h3>
 <p>The within-cluster sum of squared distances (inertia) measures how tightly packed each cluster is:</p>
 <p><span class="math display">\[\text{inertia} = \sum_{k=0}^{K-1} \sum_{d:\,\text{label}(d)=k} \|\hat{\mathbf{t}}_d - \mathbf{c}_k\|_2^2\]</span></p>
 <p>Implement <code>inertia(matrix, labels, centroids)</code> and plot inertia against <span class="math inline">\(K\)</span> for <span class="math inline">\(K \in \{2, 3, 4, 5, 6\}\)</span>. The “elbow” in the plot (where inertia stops dropping sharply) is a common heuristic for choosing <span class="math inline">\(K\)</span>. Does the elbow occur at <span class="math inline">\(K = 3\)</span> for this corpus?</p>

@@ -45,22 +45,22 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">19.1</span> The Problem</a></li>
-<li><a href="#the-contingency-table" id="toc-the-contingency-table"><span class="header-section-number">19.2</span> The Contingency Table</a></li>
-<li><a href="#cohens-kappa" id="toc-cohens-kappa"><span class="header-section-number">19.3</span> Cohen’s Kappa</a></li>
-<li><a href="#the-expected-agreement-p_e" id="toc-the-expected-agreement-p_e"><span class="header-section-number">19.4</span> The Expected Agreement P_e</a></li>
-<li><a href="#generating-synthetic-rating-data" id="toc-generating-synthetic-rating-data"><span class="header-section-number">19.5</span> Generating Synthetic Rating Data</a></li>
-<li><a href="#standard-error-of-kappa" id="toc-standard-error-of-kappa"><span class="header-section-number">19.6</span> Standard Error of Kappa</a></li>
-<li><a href="#comparing-scenarios" id="toc-comparing-scenarios"><span class="header-section-number">19.7</span> Comparing Scenarios</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">19.8</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">19.9</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">20.1</span> The Problem</a></li>
+<li><a href="#the-contingency-table" id="toc-the-contingency-table"><span class="header-section-number">20.2</span> The Contingency Table</a></li>
+<li><a href="#cohens-kappa" id="toc-cohens-kappa"><span class="header-section-number">20.3</span> Cohen’s Kappa</a></li>
+<li><a href="#the-expected-agreement-p_e" id="toc-the-expected-agreement-p_e"><span class="header-section-number">20.4</span> The Expected Agreement P_e</a></li>
+<li><a href="#generating-synthetic-rating-data" id="toc-generating-synthetic-rating-data"><span class="header-section-number">20.5</span> Generating Synthetic Rating Data</a></li>
+<li><a href="#standard-error-of-kappa" id="toc-standard-error-of-kappa"><span class="header-section-number">20.6</span> Standard Error of Kappa</a></li>
+<li><a href="#comparing-scenarios" id="toc-comparing-scenarios"><span class="header-section-number">20.7</span> Comparing Scenarios</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">20.8</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">20.9</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Inter-Rater Agreement</h1>
-<h2 data-number="19.1" id="the-problem"><span class="header-section-number">19.1</span> The Problem</h2>
+<h2 data-number="20.1" id="the-problem"><span class="header-section-number">20.1</span> The Problem</h2>
 <ul>
 <li>In qualitative research, clinical coding, or data annotation, two or more human raters independently assign categories to the same observations</li>
 <li>The fraction of observations on which raters agree is straightforward to compute, but it is inflated by the agreement that would occur by chance even if raters were assigning labels randomly.</li>
@@ -92,14 +92,14 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 </dd>
 </dl>
 </div>
-<h2 data-number="19.2" id="the-contingency-table"><span class="header-section-number">19.2</span> The Contingency Table</h2>
+<h2 data-number="20.2" id="the-contingency-table"><span class="header-section-number">20.2</span> The Contingency Table</h2>
 <ul>
 <li>For <span class="math inline">\(K\)</span> categories, the contingency table is a <span class="math inline">\(K \times K\)</span> integer matrix where entry <span class="math inline">\(C_{ij}\)</span> is the number of items for which rater A assigned category <span class="math inline">\(i\)</span> and rater B assigned category <span class="math inline">\(j\)</span></li>
 <li>The diagonal entries <span class="math inline">\(C_{ii}\)</span> represent agreements, while off-diagonal entries represent disagreements</li>
 <li>The table summarises all information needed to compute kappa</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="19.3" id="cohens-kappa"><span class="header-section-number">19.3</span> Cohen’s Kappa</h2>
+<h2 data-number="20.3" id="cohens-kappa"><span class="header-section-number">20.3</span> Cohen’s Kappa</h2>
 <ul>
 <li>Let <span class="math inline">\(N\)</span> be the total number of items and:
 <ul>
@@ -117,7 +117,7 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 <li><span class="math inline">\(\kappa &lt; 0\)</span> is possible when observed agreement falls below chance, though this rarely occurs in practice</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="19.4" id="the-expected-agreement-p_e"><span class="header-section-number">19.4</span> The Expected Agreement P_e</h2>
+<h2 data-number="20.4" id="the-expected-agreement-p_e"><span class="header-section-number">20.4</span> The Expected Agreement P_e</h2>
 <ul>
 <li><span class="math inline">\(P_e = \sum_i p_i q_i\)</span> is the probability that two independently drawn labels (one from rater A’s marginal, one from rater B’s) happen to match</li>
 <li>Under the generation model used here, with probability <code>agree_prob</code> both raters draw the same uniform label, and otherwise they draw independently</li>
@@ -129,9 +129,9 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 <li>Substituting into the kappa formula and simplifying gives <span class="math inline">\(\kappa = \text{agree\_prob}\)</span>.</li>
 <li>So the synthetic generator produces data where the expected kappa directly equals the underlying agreement probability, making it easy to verify the implementation</li>
 </ul>
-<h2 data-number="19.5" id="generating-synthetic-rating-data"><span class="header-section-number">19.5</span> Generating Synthetic Rating Data</h2>
+<h2 data-number="20.5" id="generating-synthetic-rating-data"><span class="header-section-number">20.5</span> Generating Synthetic Rating Data</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="19.6" id="standard-error-of-kappa"><span class="header-section-number">19.6</span> Standard Error of Kappa</h2>
+<h2 data-number="20.6" id="standard-error-of-kappa"><span class="header-section-number">20.6</span> Standard Error of Kappa</h2>
 <ul>
 <li>The asymptotic standard error is:</li>
 </ul>
@@ -140,7 +140,7 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 <li>This approximates <span class="math inline">\(\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}\)</span> (each item is an independent Bernoulli trial for agreement) and propagates it through the kappa formula by dividing by <span class="math inline">\((1 - P_e)\)</span></li>
 <li>A 95% confidence interval for <span class="math inline">\(\kappa\)</span> is <span class="math inline">\(\kappa \pm 1.96 \cdot \text{SE}(\kappa)\)</span></li>
 </ul>
-<h2 data-number="19.7" id="comparing-scenarios"><span class="header-section-number">19.7</span> Comparing Scenarios</h2>
+<h2 data-number="20.7" id="comparing-scenarios"><span class="header-section-number">20.7</span> Comparing Scenarios</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-agreement-kappa" class="quarto-float quarto-figure quarto-figure-center" alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa.">
 <figure class="quarto-float quarto-float-fig">
@@ -148,11 +148,11 @@ Wrong: practice is not relevant here; the calculation is a probability under the
 <img src="agreement-kappa.svg" alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-agreement-kappa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;19.1: Cohen’s kappa for five synthetic rating scenarios (N = 100 items, K = 3 categories). Kappa closely tracks the underlying agreement probability, confirming the theoretical result that expected kappa equals agree_prob under the uniform marginal model.
+Figure&nbsp;20.1: Cohen’s kappa for five synthetic rating scenarios (N = 100 items, K = 3 categories). Kappa closely tracks the underlying agreement probability, confirming the theoretical result that expected kappa equals agree_prob under the uniform marginal model.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="19.8" id="testing"><span class="header-section-number">19.8</span> Testing</h2>
+<h2 data-number="20.8" id="testing"><span class="header-section-number">20.8</span> Testing</h2>
 <dl>
 <dt>Table shape</dt>
 <dd>
@@ -254,16 +254,16 @@ The probability that two raters would agree purely by chance, computed as the su
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="19.9" id="exercises"><span class="header-section-number">19.9</span> Exercises</h2>
-<h3 data-number="19.9.1" id="do-the-math"><span class="header-section-number">19.9.1</span> Do the math</h3>
+<h2 data-number="20.9" id="exercises"><span class="header-section-number">20.9</span> Exercises</h2>
+<h3 data-number="20.9.1" id="do-the-math"><span class="header-section-number">20.9.1</span> Do the math</h3>
 <p>A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?</p>
-<h3 data-number="19.9.2" id="weighted-kappa"><span class="header-section-number">19.9.2</span> Weighted kappa</h3>
+<h3 data-number="20.9.2" id="weighted-kappa"><span class="header-section-number">20.9.2</span> Weighted kappa</h3>
 <p>In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the diagonal should be penalised less than disagreements far from it. Implement weighted kappa using linear weights: <span class="math inline">\(w_{ij} = 1 - |i - j| / (K - 1)\)</span>. Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa. When does the difference between weighted and unweighted kappa matter most?</p>
-<h3 data-number="19.9.3" id="confidence-intervals-across-scenarios"><span class="header-section-number">19.9.3</span> Confidence intervals across scenarios</h3>
+<h3 data-number="20.9.3" id="confidence-intervals-across-scenarios"><span class="header-section-number">20.9.3</span> Confidence intervals across scenarios</h3>
 <p>For each of the five <code>SCENARIOS</code> in <code>agreement.py</code>, compute the 95% confidence interval for kappa using the standard error formula. Add error bars to the bar chart. Do the confidence intervals for adjacent scenarios overlap?</p>
-<h3 data-number="19.9.4" id="three-or-more-raters"><span class="header-section-number">19.9.4</span> Three or more raters</h3>
+<h3 data-number="20.9.4" id="three-or-more-raters"><span class="header-section-number">20.9.4</span> Three or more raters</h3>
 <p>Extend the generator to produce ratings from three raters. Compute all three pairwise kappa values and the mean pairwise kappa. How do pairwise kappas relate to each other when one rater is systematically more conservative than the others?</p>
-<h3 data-number="19.9.5" id="category-prevalence"><span class="header-section-number">19.9.5</span> Category prevalence</h3>
+<h3 data-number="20.9.5" id="category-prevalence"><span class="header-section-number">20.9.5</span> Category prevalence</h3>
 <p>The expected-agreement correction assumes the marginal distributions are determined by chance. Generate a dataset where rater A’s marginals are highly skewed (e.g., 70% in category 0) and compute kappa. How does a skewed marginal affect kappa relative to percent agreement?</p>
 </section>
 

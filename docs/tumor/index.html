@@ -45,27 +45,27 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">26.1</span> The Problem</a></li>
-<li><a href="#the-logistic-regression-model" id="toc-the-logistic-regression-model"><span class="header-section-number">26.2</span> The Logistic Regression Model</a></li>
-<li><a href="#training-minimising-binary-cross-entropy" id="toc-training-minimising-binary-cross-entropy"><span class="header-section-number">26.3</span> Training: Minimising Binary Cross-Entropy</a></li>
-<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">26.4</span> Generating Synthetic Data</a></li>
-<li><a href="#evaluating-the-classifier" id="toc-evaluating-the-classifier"><span class="header-section-number">26.5</span> Evaluating the Classifier</a></li>
-<li><a href="#visualizing-the-decision-boundary" id="toc-visualizing-the-decision-boundary"><span class="header-section-number">26.6</span> Visualizing the Decision Boundary</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">26.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">26.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">27.1</span> The Problem</a></li>
+<li><a href="#the-logistic-regression-model" id="toc-the-logistic-regression-model"><span class="header-section-number">27.2</span> The Logistic Regression Model</a></li>
+<li><a href="#training-minimising-binary-cross-entropy" id="toc-training-minimising-binary-cross-entropy"><span class="header-section-number">27.3</span> Training: Minimising Binary Cross-Entropy</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">27.4</span> Generating Synthetic Data</a></li>
+<li><a href="#evaluating-the-classifier" id="toc-evaluating-the-classifier"><span class="header-section-number">27.5</span> Evaluating the Classifier</a></li>
+<li><a href="#visualizing-the-decision-boundary" id="toc-visualizing-the-decision-boundary"><span class="header-section-number">27.6</span> Visualizing the Decision Boundary</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">27.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">27.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Tumor Classification by Logistic Regression</h1>
-<h2 data-number="26.1" id="the-problem"><span class="header-section-number">26.1</span> The Problem</h2>
+<h2 data-number="27.1" id="the-problem"><span class="header-section-number">27.1</span> The Problem</h2>
 <ul>
 <li>Computational pathology extracts quantitative features from tissue images — cell size, shape irregularity, nuclear-to-cytoplasm ratio — and uses them to predict whether a sample is benign or malignant.</li>
 <li>Logistic regression is the simplest model that outputs a probability rather than a raw score: the predicted class-1 probability lies in <span class="math inline">\((0, 1)\)</span> so it can be interpreted directly as a risk estimate.</li>
 <li>It fits a linear boundary in feature space and is easy to train, interpret, and test; more complex models often offer little additional accuracy when the classes are linearly separable.</li>
 </ul>
-<h2 data-number="26.2" id="the-logistic-regression-model"><span class="header-section-number">26.2</span> The Logistic Regression Model</h2>
+<h2 data-number="27.2" id="the-logistic-regression-model"><span class="header-section-number">27.2</span> The Logistic Regression Model</h2>
 <ul>
 <li>A linear combination of features <span class="math inline">\(\mathbf{x}\)</span> produces a score <span class="math inline">\(z = \mathbf{w} \cdot \mathbf{x} + b\)</span>.</li>
 <li>The sigmoid function <span class="math inline">\(\sigma(z) = 1/(1 + e^{-z})\)</span> maps <span class="math inline">\(z\)</span> to a probability in <span class="math inline">\((0, 1)\)</span>:</li>
@@ -77,7 +77,7 @@ document.addEventListener("DOMContentLoaded", function () {
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="26.3" id="training-minimising-binary-cross-entropy"><span class="header-section-number">26.3</span> Training: Minimising Binary Cross-Entropy</h2>
+<h2 data-number="27.3" id="training-minimising-binary-cross-entropy"><span class="header-section-number">27.3</span> Training: Minimising Binary Cross-Entropy</h2>
 <ul>
 <li>The binary cross-entropy loss penalises confident wrong predictions:</li>
 </ul>
@@ -111,14 +111,14 @@ Wrong: the learning rate is a separate scalar <code>lr</code>; <code>residual</c
 </dd>
 </dl>
 </div>
-<h2 data-number="26.4" id="generating-synthetic-data"><span class="header-section-number">26.4</span> Generating Synthetic Data</h2>
+<h2 data-number="27.4" id="generating-synthetic-data"><span class="header-section-number">27.4</span> Generating Synthetic Data</h2>
 <ul>
 <li>Two isotropic Gaussian clusters in 2D simulate benign (centred at <span class="math inline">\([1.5, 1.5]\)</span>) and malignant (centred at <span class="math inline">\([3.5, 3.5]\)</span>) cell populations.</li>
 <li>The Euclidean distance between class means is <span class="math inline">\(\sqrt{8} \approx 2.83\)</span> standard deviations, making the classes well-separated but not trivially so.</li>
 </ul>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="26.5" id="evaluating-the-classifier"><span class="header-section-number">26.5</span> Evaluating the Classifier</h2>
+<h2 data-number="27.5" id="evaluating-the-classifier"><span class="header-section-number">27.5</span> Evaluating the Classifier</h2>
 <ul>
 <li>A <a href="../glossary/index.html#confusion_matrix">confusion matrix</a> tabulates the four combinations of actual and predicted class: true negatives (TN), false positives (FP), false negatives (FN), and true positives (TP).</li>
 <li>False negatives (malignant predicted as benign) are typically more harmful than false positives in cancer screening, which motivates choosing a threshold below 0.5 in practice.</li>
@@ -157,7 +157,7 @@ Wrong: the learning rate is a separate scalar <code>lr</code>; <code>residual</c
 </tbody>
 </table>
 </div>
-<h2 data-number="26.6" id="visualizing-the-decision-boundary"><span class="header-section-number">26.6</span> Visualizing the Decision Boundary</h2>
+<h2 data-number="27.6" id="visualizing-the-decision-boundary"><span class="header-section-number">27.6</span> Visualizing the Decision Boundary</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-tumor-boundary" class="quarto-float quarto-figure quarto-figure-center" alt="2D scatter plot of 300 samples in two colours (benign=blue, malignant=red) separated by a dashed diagonal decision boundary.">
 <figure class="quarto-float quarto-float-fig">
@@ -165,11 +165,11 @@ Wrong: the learning rate is a separate scalar <code>lr</code>; <code>residual</c
 <img src="tumor.svg" alt="2D scatter plot of 300 samples in two colours (benign=blue, malignant=red) separated by a dashed diagonal decision boundary.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tumor-boundary-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;26.1: Logistic regression applied to 300 synthetic tumour samples. The dashed black line is the learned decision boundary <span class="math inline">\(w_1 x_1 + w_2 x_2 + b = 0\)</span>. Test accuracy 96.7%: two benign samples misclassified as malignant, zero malignant samples missed.
+Figure&nbsp;27.1: Logistic regression applied to 300 synthetic tumour samples. The dashed black line is the learned decision boundary <span class="math inline">\(w_1 x_1 + w_2 x_2 + b = 0\)</span>. Test accuracy 96.7%: two benign samples misclassified as malignant, zero malignant samples missed.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="26.7" id="testing"><span class="header-section-number">26.7</span> Testing</h2>
+<h2 data-number="27.7" id="testing"><span class="header-section-number">27.7</span> Testing</h2>
 <ul>
 <li>Sigmoid exact values
 <ul>
@@ -276,16 +276,16 @@ A <span class="math inline">\(2\times2\)</span> table of TN, FP, FN, TP counts; 
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="26.8" id="exercises"><span class="header-section-number">26.8</span> Exercises</h2>
-<h3 data-number="26.8.1" id="do-the-math"><span class="header-section-number">26.8.1</span> Do the math</h3>
+<h2 data-number="27.8" id="exercises"><span class="header-section-number">27.8</span> Exercises</h2>
+<h3 data-number="27.8.1" id="do-the-math"><span class="header-section-number">27.8.1</span> Do the math</h3>
 <p>A logistic regression model with <span class="math inline">\(\mathbf{w} = [1, 0]\)</span> and <span class="math inline">\(b = 1\)</span> receives input <span class="math inline">\(\mathbf{x} = [0, 0]\)</span>. Compute <span class="math inline">\(\sigma(0 \cdot 1 + 0 \cdot 0 + 1) = \sigma(1)\)</span> to three decimal places.</p>
-<h3 data-number="26.8.2" id="feature-normalisation"><span class="header-section-number">26.8.2</span> Feature normalisation</h3>
+<h3 data-number="27.8.2" id="feature-normalisation"><span class="header-section-number">27.8.2</span> Feature normalisation</h3>
 <p>Logistic regression is sensitive to feature scale: a feature with large absolute values dominates the dot product before training has adjusted the corresponding weight. Normalise each feature to zero mean and unit variance before training: <span class="math inline">\(x' = (x - \bar{x}) / \hat{\sigma}\)</span>. Show that normalisation speeds up convergence (reaches the same accuracy in fewer iterations) when the two features have very different scales (e.g.&nbsp;feature 1 in <span class="math inline">\([0, 100]\)</span> and feature 2 in <span class="math inline">\([0, 1]\)</span>).</p>
-<h3 data-number="26.8.3" id="precision-recall-and-f1"><span class="header-section-number">26.8.3</span> Precision, recall, and F1</h3>
+<h3 data-number="27.8.3" id="precision-recall-and-f1"><span class="header-section-number">27.8.3</span> Precision, recall, and F1</h3>
 <p>Overall accuracy can be misleading when classes are imbalanced. Implement functions for precision <span class="math inline">\(= \text{TP}/(\text{TP}+\text{FP})\)</span>, recall <span class="math inline">\(= \text{TP}/(\text{TP}+\text{FN})\)</span>, and <span class="math inline">\(F_1 = 2 \cdot \text{precision} \cdot \text{recall} / (\text{precision} + \text{recall})\)</span>. Generate a dataset where class 1 is 10% of the data and show that high accuracy is achievable by predicting class 0 always — while precision, recall, and <span class="math inline">\(F_1\)</span> expose the failure.</p>
-<h3 data-number="26.8.4" id="decision-threshold-adjustment"><span class="header-section-number">26.8.4</span> Decision threshold adjustment</h3>
+<h3 data-number="27.8.4" id="decision-threshold-adjustment"><span class="header-section-number">27.8.4</span> Decision threshold adjustment</h3>
 <p>The default threshold of 0.5 minimises misclassification rate on balanced classes. For cancer screening, false negatives (missed malignancies) should be penalised more than false positives. Plot precision and recall as functions of the decision threshold from 0.1 to 0.9. Find the threshold that achieves recall <span class="math inline">\(\geq 0.98\)</span> with the highest possible precision.</p>
-<h3 data-number="26.8.5" id="multinomial-extension"><span class="header-section-number">26.8.5</span> Multinomial extension</h3>
+<h3 data-number="27.8.5" id="multinomial-extension"><span class="header-section-number">27.8.5</span> Multinomial extension</h3>
 <p>Extend the binary classifier to three classes (benign, low-grade malignant, high-grade malignant). Generate three Gaussian clusters and implement softmax regression using the one-vs-rest strategy: train one binary classifier per class and predict the class with the highest predicted probability. Report the three-class confusion matrix.</p>
 </section>
 

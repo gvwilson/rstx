@@ -45,28 +45,28 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">24.1</span> The Problem</a></li>
-<li><a href="#the-sir-equations" id="toc-the-sir-equations"><span class="header-section-number">24.2</span> The SIR Equations</a></li>
-<li><a href="#integrating-the-model" id="toc-integrating-the-model"><span class="header-section-number">24.3</span> Integrating the Model</a></li>
-<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">24.4</span> Generating Synthetic Data</a></li>
-<li><a href="#fitting-the-model" id="toc-fitting-the-model"><span class="header-section-number">24.5</span> Fitting the Model</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">24.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">24.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">25.1</span> The Problem</a></li>
+<li><a href="#the-sir-equations" id="toc-the-sir-equations"><span class="header-section-number">25.2</span> The SIR Equations</a></li>
+<li><a href="#integrating-the-model" id="toc-integrating-the-model"><span class="header-section-number">25.3</span> Integrating the Model</a></li>
+<li><a href="#generating-synthetic-data" id="toc-generating-synthetic-data"><span class="header-section-number">25.4</span> Generating Synthetic Data</a></li>
+<li><a href="#fitting-the-model" id="toc-fitting-the-model"><span class="header-section-number">25.5</span> Fitting the Model</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">25.6</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">25.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">25.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Fitting an SIR Epidemic Model</h1>
-<h2 data-number="24.1" id="the-problem"><span class="header-section-number">24.1</span> The Problem</h2>
+<h2 data-number="25.1" id="the-problem"><span class="header-section-number">25.1</span> The Problem</h2>
 <ul>
 <li>During an outbreak, public health officials observe daily case counts but do not know the underlying transmission dynamics</li>
 <li>Estimating the transmission rate and recovery rate from the observed curve allows prediction of the epidemic’s peak and total size</li>
 <li>The <a href="../glossary/index.html#sir_model">SIR model</a> is the simplest compartmental model that captures this</li>
 <li>It divides a fixed population into Susceptible, Infectious, and Recovered (immune) individuals</li>
 </ul>
-<h2 data-number="24.2" id="the-sir-equations"><span class="header-section-number">24.2</span> The SIR Equations</h2>
+<h2 data-number="25.2" id="the-sir-equations"><span class="header-section-number">25.2</span> The SIR Equations</h2>
 <ul>
 <li>The population <span class="math inline">\(N\)</span> is constant; individuals move only from S to I to R:</li>
 </ul>
@@ -101,7 +101,7 @@ Wrong: <span class="math inline">\(R_0\)</span> is not a percentage; final epide
 </dd>
 </dl>
 </div>
-<h2 data-number="24.3" id="integrating-the-model"><span class="header-section-number">24.3</span> Integrating the Model</h2>
+<h2 data-number="25.3" id="integrating-the-model"><span class="header-section-number">25.3</span> Integrating the Model</h2>
 <ul>
 <li><code>scipy.integrate.solve_ivp</code> advances the ODE system from <span class="math inline">\(t=0\)</span> to <span class="math inline">\(t_\text{max}\)</span> using an adaptive <a href="../glossary/index.html#runge_kutta">Runge-Kutta method</a></li>
 <li>The observable quantity is the daily incidence
@@ -133,7 +133,7 @@ Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, n
 </dd>
 </dl>
 </div>
-<h2 data-number="24.4" id="generating-synthetic-data"><span class="header-section-number">24.4</span> Generating Synthetic Data</h2>
+<h2 data-number="25.4" id="generating-synthetic-data"><span class="header-section-number">25.4</span> Generating Synthetic Data</h2>
 <ul>
 <li>We generate 160 days of daily case counts from known parameters and add Poisson observation noise.</li>
 <li>Poisson noise models the stochasticity of real disease reporting
@@ -152,14 +152,14 @@ Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, n
 <li>Draw Poisson samples with means equal to the clipped incidence values</li>
 </ol>
 </div>
-<h2 data-number="24.5" id="fitting-the-model"><span class="header-section-number">24.5</span> Fitting the Model</h2>
+<h2 data-number="25.5" id="fitting-the-model"><span class="header-section-number">25.5</span> Fitting the Model</h2>
 <ul>
 <li><code>scipy.optimize.least_squares</code> minimises the sum of squared residuals <span class="math inline">\(\sum_t (\hat{c}_t - c_t)^2\)</span>, where <span class="math inline">\(\hat{c}_t\)</span> is the modelled incidence and <span class="math inline">\(c_t\)</span> is the observed count</li>
 <li>Both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> must be positive, so we impose box constraints with <code>bounds</code></li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="24.6" id="visualizing-the-results"><span class="header-section-number">24.6</span> Visualizing the Results</h2>
+<h2 data-number="25.6" id="visualizing-the-results"><span class="header-section-number">25.6</span> Visualizing the Results</h2>
 <div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-sir-fit" class="quarto-float quarto-figure quarto-figure-center" alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely.">
 <figure class="quarto-float quarto-float-fig">
@@ -167,11 +167,11 @@ Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, n
 <img src="sir.svg" alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sir-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;24.1: Observed daily cases (with Poisson noise) and the fitted SIR model. The fitted curve recovers the epidemic shape despite the observation noise.
+Figure&nbsp;25.1: Observed daily cases (with Poisson noise) and the fitted SIR model. The fitted curve recovers the epidemic shape despite the observation noise.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="24.7" id="testing"><span class="header-section-number">24.7</span> Testing</h2>
+<h2 data-number="25.7" id="testing"><span class="header-section-number">25.7</span> Testing</h2>
 <ul>
 <li>Population conservation
 <ul>
@@ -255,16 +255,16 @@ Figure&nbsp;24.1: Observed daily cases (with Poisson noise) and the fitted SIR m
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(beta_fit <span class="op">-</span> BETA_TRUE) <span class="op">/</span> BETA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span>
 <span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(gamma_fit <span class="op">-</span> GAMMA_TRUE) <span class="op">/</span> GAMMA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span></code></pre></div>
 <section class="exercises">
-<h2 data-number="24.8" id="exercises"><span class="header-section-number">24.8</span> Exercises</h2>
-<h3 data-number="24.8.1" id="do-the-math"><span class="header-section-number">24.8.1</span> Do the math</h3>
+<h2 data-number="25.8" id="exercises"><span class="header-section-number">25.8</span> Exercises</h2>
+<h3 data-number="25.8.1" id="do-the-math"><span class="header-section-number">25.8.1</span> Do the math</h3>
 <p>Using <code>BETA_TRUE</code> = 0.30 day<span class="math inline">\(^{-1}\)</span> and <code>GAMMA_TRUE</code> = 0.10 day<span class="math inline">\(^{-1}\)</span>, compute <span class="math inline">\(R_0 = \beta / \gamma\)</span>. Give your answer to one decimal place.</p>
-<h3 data-number="24.8.2" id="herd-immunity-threshold"><span class="header-section-number">24.8.2</span> Herd immunity threshold</h3>
+<h3 data-number="25.8.2" id="herd-immunity-threshold"><span class="header-section-number">25.8.2</span> Herd immunity threshold</h3>
 <p>The epidemic stops growing when <span class="math inline">\(S/N\)</span> falls below <span class="math inline">\(1/R_0\)</span> (the herd immunity threshold). For the true parameters, compute the fraction of the population that has been infected by the time <span class="math inline">\(I(t)\)</span> reaches its peak. Compare this to <span class="math inline">\(1 - 1/R_0\)</span>. Are they the same?</p>
-<h3 data-number="24.8.3" id="fitting-r_0-instead-of-beta-and-gamma"><span class="header-section-number">24.8.3</span> Fitting <span class="math inline">\(R_0\)</span> instead of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span></h3>
+<h3 data-number="25.8.3" id="fitting-r_0-instead-of-beta-and-gamma"><span class="header-section-number">25.8.3</span> Fitting <span class="math inline">\(R_0\)</span> instead of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span></h3>
 <p>Instead of fitting <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> separately, reparametrise the model with <span class="math inline">\(R_0\)</span> and <span class="math inline">\(\gamma\)</span> as the two parameters (so <span class="math inline">\(\beta = R_0 \gamma\)</span>). Does the optimiser converge faster? Are the confidence intervals on <span class="math inline">\(R_0\)</span> narrower than when computing <span class="math inline">\(R_0 = \hat{\beta}/\hat{\gamma}\)</span> from independently fitted parameters?</p>
-<h3 data-number="24.8.4" id="seir-extension"><span class="header-section-number">24.8.4</span> SEIR extension</h3>
+<h3 data-number="25.8.4" id="seir-extension"><span class="header-section-number">25.8.4</span> SEIR extension</h3>
 <p>Add an exposed (latent) compartment <span class="math inline">\(E\)</span> between <span class="math inline">\(S\)</span> and <span class="math inline">\(I\)</span>: <span class="math inline">\(dE/dt = \beta SI/N - \sigma E\)</span> and <span class="math inline">\(dI/dt = \sigma E - \gamma I\)</span>, where <span class="math inline">\(\sigma^{-1}\)</span> is the mean latent period. Generate synthetic data with <span class="math inline">\(\sigma = 0.2\)</span> day<span class="math inline">\(^{-1}\)</span> (mean 5-day latent period) and fit the four-parameter SEIR model. Does the SIR fit to SEIR data give biased estimates of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>?</p>
-<h3 data-number="24.8.5" id="sensitivity-analysis"><span class="header-section-number">24.8.5</span> Sensitivity analysis</h3>
+<h3 data-number="25.8.5" id="sensitivity-analysis"><span class="header-section-number">25.8.5</span> Sensitivity analysis</h3>
 <p>Vary <span class="math inline">\(\beta\)</span> from 0.1 to 0.5 (holding <span class="math inline">\(\gamma = 0.1\)</span> fixed) and plot the epidemic peak size and peak timing as functions of <span class="math inline">\(\beta\)</span>. At what value of <span class="math inline">\(\beta\)</span> does the epidemic just barely cross the threshold (peak in <span class="math inline">\(I\)</span> is very small)? How close is this to the theoretical threshold <span class="math inline">\(\beta = \gamma\)</span>?</p>
 </section>
 

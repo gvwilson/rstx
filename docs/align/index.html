@@ -45,23 +45,23 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">8.1</span> The Problem</a></li>
-<li><a href="#a-warm-up-edit-distance" id="toc-a-warm-up-edit-distance"><span class="header-section-number">8.2</span> A Warm-Up: Edit Distance</a></li>
-<li><a href="#scoring-an-alignment" id="toc-scoring-an-alignment"><span class="header-section-number">8.3</span> Scoring an Alignment</a></li>
-<li><a href="#the-needleman-wunsch-algorithm" id="toc-the-needleman-wunsch-algorithm"><span class="header-section-number">8.4</span> The Needleman-Wunsch Algorithm</a></li>
-<li><a href="#an-example-dp-table" id="toc-an-example-dp-table"><span class="header-section-number">8.5</span> An Example DP Table</a></li>
-<li><a href="#traceback" id="toc-traceback"><span class="header-section-number">8.6</span> Traceback</a></li>
-<li><a href="#displaying-the-alignment" id="toc-displaying-the-alignment"><span class="header-section-number">8.7</span> Displaying the Alignment</a></li>
-<li><a href="#visualizing-the-scoring-matrix" id="toc-visualizing-the-scoring-matrix"><span class="header-section-number">8.8</span> Visualizing the Scoring Matrix</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">8.9</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">8.10</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">9.1</span> The Problem</a></li>
+<li><a href="#a-warm-up-edit-distance" id="toc-a-warm-up-edit-distance"><span class="header-section-number">9.2</span> A Warm-Up: Edit Distance</a></li>
+<li><a href="#scoring-an-alignment" id="toc-scoring-an-alignment"><span class="header-section-number">9.3</span> Scoring an Alignment</a></li>
+<li><a href="#the-needleman-wunsch-algorithm" id="toc-the-needleman-wunsch-algorithm"><span class="header-section-number">9.4</span> The Needleman-Wunsch Algorithm</a></li>
+<li><a href="#an-example-dp-table" id="toc-an-example-dp-table"><span class="header-section-number">9.5</span> An Example DP Table</a></li>
+<li><a href="#traceback" id="toc-traceback"><span class="header-section-number">9.6</span> Traceback</a></li>
+<li><a href="#displaying-the-alignment" id="toc-displaying-the-alignment"><span class="header-section-number">9.7</span> Displaying the Alignment</a></li>
+<li><a href="#visualizing-the-scoring-matrix" id="toc-visualizing-the-scoring-matrix"><span class="header-section-number">9.8</span> Visualizing the Scoring Matrix</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">9.9</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">9.10</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Pairwise Sequence Alignment</h1>
-<h2 data-number="8.1" id="the-problem"><span class="header-section-number">8.1</span> The Problem</h2>
+<h2 data-number="9.1" id="the-problem"><span class="header-section-number">9.1</span> The Problem</h2>
 <ul>
 <li>Two DNA sequences often share regions of similarity because they evolved from a common ancestor or perform a similar function</li>
 <li>Identifying those shared regions by eye is impractical for sequences longer than a few dozen characters</li>
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>A gap corresponds to an insertion or deletion event during evolution</li>
 <li>Before building the full algorithm, it helps to see a simpler problem with the same structure: computing the minimum number of single-character edits needed to turn one string into another</li>
 </ul>
-<h2 data-number="8.2" id="a-warm-up-edit-distance"><span class="header-section-number">8.2</span> A Warm-Up: Edit Distance</h2>
+<h2 data-number="9.2" id="a-warm-up-edit-distance"><span class="header-section-number">9.2</span> A Warm-Up: Edit Distance</h2>
 <ul>
 <li>The edit distance between two strings is the minimum number of insertions, deletions, or substitutions needed to transform one into the other</li>
 <li>Define <span class="math inline">\(d(i,j)\)</span> as the edit distance between the first <span class="math inline">\(i\)</span> characters of string <span class="math inline">\(a\)</span> and the first <span class="math inline">\(j\)</span> characters of string <span class="math inline">\(b\)</span></li>
@@ -101,7 +101,7 @@ Wrong: if both sequences are identical the edit distance is zero, regardless of 
 </dd>
 </dl>
 </div>
-<h2 data-number="8.3" id="scoring-an-alignment"><span class="header-section-number">8.3</span> Scoring an Alignment</h2>
+<h2 data-number="9.3" id="scoring-an-alignment"><span class="header-section-number">9.3</span> Scoring an Alignment</h2>
 <ul>
 <li>Global alignment assigns a score to each aligned pair of positions rather than a uniform cost:
 <ul>
@@ -122,7 +122,7 @@ Wrong: if both sequences are identical the edit distance is zero, regardless of 
 <li>More elaborate aligners use larger gap-open penalties to discourage fragmented alignments</li>
 </ul></li>
 </ul>
-<h2 data-number="8.4" id="the-needleman-wunsch-algorithm"><span class="header-section-number">8.4</span> The Needleman-Wunsch Algorithm</h2>
+<h2 data-number="9.4" id="the-needleman-wunsch-algorithm"><span class="header-section-number">9.4</span> The Needleman-Wunsch Algorithm</h2>
 <ul>
 <li><a href="../glossary/index.html#needleman_wunsch">Needleman-Wunsch</a> solves global alignment exactly using dynamic programming</li>
 <li>Build a matrix <span class="math inline">\(H\)</span> of size <span class="math inline">\((m+1)\times(n+1)\)</span> where <span class="math inline">\(m\)</span> and <span class="math inline">\(n\)</span> are the sequence lengths</li>
@@ -158,7 +158,7 @@ Wrong: the relative penalties are set by <code>MISMATCH_PENALTY</code> and <code
 </dd>
 </dl>
 </div>
-<h2 data-number="8.5" id="an-example-dp-table"><span class="header-section-number">8.5</span> An Example DP Table</h2>
+<h2 data-number="9.5" id="an-example-dp-table"><span class="header-section-number">9.5</span> An Example DP Table</h2>
 <ul>
 <li>Aligning <code>SEQ_A = "ACGT"</code> with <code>SEQ_B = "AGT"</code> using <code>MATCH_SCORE = 2</code>, <code>MISMATCH_PENALTY = -1</code>, <code>GAP_PENALTY = -1</code>:</li>
 </ul>
@@ -219,7 +219,7 @@ Wrong: the relative penalties are set by <code>MISMATCH_PENALTY</code> and <code
 </ul></li>
 <li><span class="math inline">\(H[4,3] = 5\)</span>: the score of the best global alignment</li>
 </ul>
-<h2 data-number="8.6" id="traceback"><span class="header-section-number">8.6</span> Traceback</h2>
+<h2 data-number="9.6" id="traceback"><span class="header-section-number">9.6</span> Traceback</h2>
 <ul>
 <li>The best global alignment ends at <span class="math inline">\(H[m, n]\)</span> (bottom-right cell)</li>
 <li>Follow the path that produced each cell’s score back through <span class="math inline">\(H\)</span> until reaching <span class="math inline">\(H[0,0]\)</span></li>
@@ -276,7 +276,7 @@ Wrong: the relative penalties are set by <code>MISMATCH_PENALTY</code> and <code
 </tbody>
 </table>
 </div>
-<h2 data-number="8.7" id="displaying-the-alignment"><span class="header-section-number">8.7</span> Displaying the Alignment</h2>
+<h2 data-number="9.7" id="displaying-the-alignment"><span class="header-section-number">9.7</span> Displaying the Alignment</h2>
 <div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>Running the algorithm on <code>SEQ_A = "ACGT"</code> and <code>SEQ_B = "AGT"</code> produces:</li>
@@ -288,7 +288,7 @@ b: A-GT</code></pre>
 <li>The gap in <code>seq_b</code> at position 2 accounts for the <code>C</code> in <code>seq_a</code> that has no counterpart</li>
 <li>The score is <span class="math inline">\(3 \times 2 + (-1) = 5\)</span>: three matches at <code>MATCH_SCORE</code> = 2 and one gap at <code>GAP_PENALTY</code> = -1</li>
 </ul>
-<h2 data-number="8.8" id="visualizing-the-scoring-matrix"><span class="header-section-number">8.8</span> Visualizing the Scoring Matrix</h2>
+<h2 data-number="9.8" id="visualizing-the-scoring-matrix"><span class="header-section-number">9.8</span> Visualizing the Scoring Matrix</h2>
 <ul>
 <li>Plotting <span class="math inline">\(H\)</span> as a heatmap shows where high-scoring regions form</li>
 <li>Bright cells cluster along diagonals where the sequences share runs of matching characters</li>
@@ -300,11 +300,11 @@ b: A-GT</code></pre>
 <img src="align.svg" alt="Heatmap of the Needleman-Wunsch scoring matrix for ACGT vs AGT, with brightest cell at bottom right.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-align-matrix-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;8.1: Scoring matrix for SEQ_A = ‘ACGT’ vs SEQ_B = ‘AGT’. The traceback follows the brightest path from H[m,n] (bottom right) back to H[0,0] (top left).
+Figure&nbsp;9.1: Scoring matrix for SEQ_A = ‘ACGT’ vs SEQ_B = ‘AGT’. The traceback follows the brightest path from H[m,n] (bottom right) back to H[0,0] (top left).
 </figcaption>
 </figure>
 </div>
-<h2 data-number="8.9" id="testing"><span class="header-section-number">8.9</span> Testing</h2>
+<h2 data-number="9.9" id="testing"><span class="header-section-number">9.9</span> Testing</h2>
 <p>Unlike the <a href="@/diffusion/">diffusion</a> and <a href="@/lotka/">Lotka-Volterra</a> lessons, all scores here are integers computed by exact arithmetic: no floating-point rounding occurs and no tolerance is needed in any test.</p>
 <dl>
 <dt>Matrix shape</dt>
@@ -395,16 +395,16 @@ When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALT
 <span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> aligned_b <span class="op">==</span> <span class="st">"A-GT"</span></span>
 <span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> score <span class="op">==</span> <span class="dv">5</span></span></code></pre></div>
 <section class="exercises">
-<h2 data-number="8.10" id="exercises"><span class="header-section-number">8.10</span> Exercises</h2>
-<h3 data-number="8.10.1" id="do-the-math"><span class="header-section-number">8.10.1</span> Do the math</h3>
+<h2 data-number="9.10" id="exercises"><span class="header-section-number">9.10</span> Exercises</h2>
+<h3 data-number="9.10.1" id="do-the-math"><span class="header-section-number">9.10.1</span> Do the math</h3>
 <p>Aligning “AGTC” with “AGC” using <code>MATCH_SCORE = 2</code>, <code>MISMATCH_PENALTY = -1</code>, <code>GAP_PENALTY = -1</code>: the best global alignment has three matches and one gap. What is the total alignment score?</p>
-<h3 data-number="8.10.2" id="effect-of-gap-penalty"><span class="header-section-number">8.10.2</span> Effect of gap penalty</h3>
+<h3 data-number="9.10.2" id="effect-of-gap-penalty"><span class="header-section-number">9.10.2</span> Effect of gap penalty</h3>
 <p>Change <code>GAP_PENALTY</code> from -1 to -3 (while keeping <code>MISMATCH_PENALTY = -1</code>) and re-run <code>align("ACGT", "AGT")</code>. Does the alignment still contain a gap, or does it change? Explain the result in terms of the recurrence relation.</p>
-<h3 data-number="8.10.3" id="local-alignment-smith-waterman"><span class="header-section-number">8.10.3</span> Local alignment (Smith-Waterman)</h3>
+<h3 data-number="9.10.3" id="local-alignment-smith-waterman"><span class="header-section-number">9.10.3</span> Local alignment (Smith-Waterman)</h3>
 <p>The Smith-Waterman algorithm for local alignment differs from Needleman-Wunsch in exactly two ways: the first row and column are all zeros (not cumulative gap penalties), and each cell uses <code>max(0, diag, delete, insert)</code> instead of <code>max(diag, delete, insert)</code>. Implement <code>fill_local(seq_a, seq_b)</code> and <code>traceback_local(H, seq_a, seq_b)</code> where the traceback starts at the cell with the highest value and stops when it reaches a zero. Verify that aligning <code>"AAACGT"</code> with <code>"CCGT"</code> locally produces a different result than aligning them globally.</p>
-<h3 data-number="8.10.4" id="scoring-matrix-for-amino-acids"><span class="header-section-number">8.10.4</span> Scoring matrix for amino acids</h3>
+<h3 data-number="9.10.4" id="scoring-matrix-for-amino-acids"><span class="header-section-number">9.10.4</span> Scoring matrix for amino acids</h3>
 <p>Biological sequence aligners use substitution matrices such as BLOSUM62 that assign different scores to each pair of amino acid characters, reflecting how often each substitution occurs in evolution. Replace <code>_nt_score</code> with a function that looks up scores in a small hand-written <span class="math inline">\(4 \times 4\)</span> substitution matrix for the four DNA bases A, C, G, T. Assign a higher score to transitions (A vs G, C vs T) than transversions (A vs C, A vs T, etc.), since transitions are more common mutations. Verify that aligning <code>"ATCG"</code> with <code>"AGCG"</code> now gives a different score than with the flat <code>MATCH_SCORE</code> / <code>MISMATCH_PENALTY</code> scheme.</p>
-<h3 data-number="8.10.5" id="affine-gap-penalty"><span class="header-section-number">8.10.5</span> Affine gap penalty</h3>
+<h3 data-number="9.10.5" id="affine-gap-penalty"><span class="header-section-number">9.10.5</span> Affine gap penalty</h3>
 <p>The linear gap penalty <span class="math inline">\(g\)</span> treats opening a gap and extending an existing gap identically. A more realistic affine gap penalty charges a higher cost <span class="math inline">\(g_o\)</span> to open a gap and a lower cost <span class="math inline">\(g_e\)</span> to extend it: a gap of length <span class="math inline">\(k\)</span> costs <span class="math inline">\(g_o + (k-1)g_e\)</span>. Look up the three-matrix formulation of Needleman-Wunsch with affine gaps (using matrices <span class="math inline">\(H\)</span>, <span class="math inline">\(E\)</span>, <span class="math inline">\(F\)</span>) and implement it. Verify that with <span class="math inline">\(g_o = -3\)</span> and <span class="math inline">\(g_e = -1\)</span> the alignment of <code>"ACCCGT"</code> with <code>"AGT"</code> produces a single gap of length 3 rather than three individual gaps.</p>
 </section>
 

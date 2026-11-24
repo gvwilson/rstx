@@ -45,20 +45,20 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">7.1</span> The Problem</a></li>
-<li><a href="#the-cost-surface" id="toc-the-cost-surface"><span class="header-section-number">7.2</span> The Cost Surface</a></li>
-<li><a href="#generating-synthetic-terrain" id="toc-generating-synthetic-terrain"><span class="header-section-number">7.3</span> Generating Synthetic Terrain</a></li>
-<li><a href="#dijkstras-algorithm-on-a-grid" id="toc-dijkstras-algorithm-on-a-grid"><span class="header-section-number">7.4</span> Dijkstra’s Algorithm on a Grid</a></li>
-<li><a href="#visualizing-the-path" id="toc-visualizing-the-path"><span class="header-section-number">7.5</span> Visualizing the Path</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">7.6</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">7.7</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">8.1</span> The Problem</a></li>
+<li><a href="#the-cost-surface" id="toc-the-cost-surface"><span class="header-section-number">8.2</span> The Cost Surface</a></li>
+<li><a href="#generating-synthetic-terrain" id="toc-generating-synthetic-terrain"><span class="header-section-number">8.3</span> Generating Synthetic Terrain</a></li>
+<li><a href="#dijkstras-algorithm-on-a-grid" id="toc-dijkstras-algorithm-on-a-grid"><span class="header-section-number">8.4</span> Dijkstra’s Algorithm on a Grid</a></li>
+<li><a href="#visualizing-the-path" id="toc-visualizing-the-path"><span class="header-section-number">8.5</span> Visualizing the Path</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">8.6</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">8.7</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Least-Cost Path Analysis for Trade Routes</h1>
-<h2 data-number="7.1" id="the-problem"><span class="header-section-number">7.1</span> The Problem</h2>
+<h2 data-number="8.1" id="the-problem"><span class="header-section-number">8.1</span> The Problem</h2>
 <ul>
 <li>Modern roads follow valleys and passes because crossing ridges is slow and exhausting, and ancient routes did the same</li>
 <li><a href="../glossary/index.html#landscape_archaeology">Landscape archaeology</a> asks where historical travelers and traders were most likely to move through a terrain</li>
@@ -90,7 +90,7 @@ Wrong: Dijkstra’s minimises accumulated cost, not geometric length; a longer v
 </dd>
 </dl>
 </div>
-<h2 data-number="7.2" id="the-cost-surface"><span class="header-section-number">7.2</span> The Cost Surface</h2>
+<h2 data-number="8.2" id="the-cost-surface"><span class="header-section-number">8.2</span> The Cost Surface</h2>
 <ul>
 <li>The elevation grid is a 2-D array with values normalised to <span class="math inline">\([0, 1]\)</span>
 <ul>
@@ -103,14 +103,14 @@ Wrong: Dijkstra’s minimises accumulated cost, not geometric length; a longer v
 <li>Averaging the endpoint elevations penalises entering a ridge from a valley proportionally (and vice versa).</li>
 <li><span class="math inline">\(d(A, B) = 1\)</span> for orthogonal moves and <span class="math inline">\(\sqrt{2}\)</span> for diagonal moves, so longer edges cost proportionally more.</li>
 </ul>
-<h2 data-number="7.3" id="generating-synthetic-terrain"><span class="header-section-number">7.3</span> Generating Synthetic Terrain</h2>
+<h2 data-number="8.3" id="generating-synthetic-terrain"><span class="header-section-number">8.3</span> Generating Synthetic Terrain</h2>
 <ul>
 <li>The terrain is a superposition of sinusoidal waves at four octaves</li>
 <li>Each successive octave has half the amplitude and twice the spatial frequency of the previous, producing a fractal-like surface of ridges and valleys</li>
 <li>The result is normalised to <span class="math inline">\([0, 1]\)</span> so that cost surface values are comparable regardless of the raw wave amplitudes</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="7.4" id="dijkstras-algorithm-on-a-grid"><span class="header-section-number">7.4</span> Dijkstra’s Algorithm on a Grid</h2>
+<h2 data-number="8.4" id="dijkstras-algorithm-on-a-grid"><span class="header-section-number">8.4</span> Dijkstra’s Algorithm on a Grid</h2>
 <ul>
 <li>Dijkstra’s algorithm maintains a priority queue of cells ordered by their current best-known distance from the source</li>
 <li>At each step it pops the cheapest cell, examines its eight neighbors, and updates any neighbor whose new cost would be lower than its current best</li>
@@ -121,7 +121,7 @@ Wrong: Dijkstra’s minimises accumulated cost, not geometric length; a longer v
 <p>Order the steps of Dijkstra’s algorithm as applied to this terrain grid.</p>
 <p>Initialize all distances to infinity; set distance of start cell to 0 and push it onto the priority queue. Pop the cell with the lowest accumulated cost from the priority queue. For each unvisited neighbor, compute the edge cost and update distance if the new route is cheaper. Stop when the destination cell is popped; trace back through the predecessor map to recover the path.</p>
 </div>
-<h2 data-number="7.5" id="visualizing-the-path"><span class="header-section-number">7.5</span> Visualizing the Path</h2>
+<h2 data-number="8.5" id="visualizing-the-path"><span class="header-section-number">8.5</span> Visualizing the Path</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-leastcost-path" class="quarto-float quarto-figure quarto-figure-center" alt="A terrain colour map ranging from dark blue (low elevation) to white (high elevation). A red line traces a route from the top-left corner to the bottom-right corner, winding through the darker low-elevation regions and avoiding the bright high-elevation ridges.">
 <figure class="quarto-float quarto-float-fig">
@@ -129,11 +129,11 @@ Wrong: Dijkstra’s minimises accumulated cost, not geometric length; a longer v
 <img src="leastcost-path.svg" alt="A terrain colour map ranging from dark blue (low elevation) to white (high elevation). A red line traces a route from the top-left corner to the bottom-right corner, winding through the darker low-elevation regions and avoiding the bright high-elevation ridges.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-leastcost-path-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;7.1: Least-cost trade route through a synthetic 40x60 terrain grid. The path avoids the high-elevation ridges (bright) and follows valley corridors (dark) to minimise accumulated travel cost.
+Figure&nbsp;8.1: Least-cost trade route through a synthetic 40x60 terrain grid. The path avoids the high-elevation ridges (bright) and follows valley corridors (dark) to minimise accumulated travel cost.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="7.6" id="testing"><span class="header-section-number">7.6</span> Testing</h2>
+<h2 data-number="8.6" id="testing"><span class="header-section-number">8.6</span> Testing</h2>
 <dl>
 <dt>Terrain shape</dt>
 <dd>
@@ -272,16 +272,16 @@ The cost assigned to moving from one grid cell to an adjacent cell; computed her
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="7.7" id="exercises"><span class="header-section-number">7.7</span> Exercises</h2>
-<h3 data-number="7.7.1" id="do-the-math"><span class="header-section-number">7.7.1</span> Do the math</h3>
+<h2 data-number="8.7" id="exercises"><span class="header-section-number">8.7</span> Exercises</h2>
+<h3 data-number="8.7.1" id="do-the-math"><span class="header-section-number">8.7.1</span> Do the math</h3>
 <p>Cell A has elevation 0.5 and orthogonally adjacent cell B has elevation 1.0. What is the edge cost from A to B?</p>
-<h3 data-number="7.7.2" id="slope-based-cost"><span class="header-section-number">7.7.2</span> Slope-based cost</h3>
+<h3 data-number="8.7.2" id="slope-based-cost"><span class="header-section-number">8.7.2</span> Slope-based cost</h3>
 <p>Replace the elevation-averaging cost with a slope-based cost: the absolute elevation difference between the two cells divided by the step distance. Compare the resulting path to the elevation-average path. Does the slope cost prefer steeper or gentler routes?</p>
-<h3 data-number="7.7.3" id="anisotropic-cost"><span class="header-section-number">7.7.3</span> Anisotropic cost</h3>
+<h3 data-number="8.7.3" id="anisotropic-cost"><span class="header-section-number">8.7.3</span> Anisotropic cost</h3>
 <p>Historical travelers going downhill moved faster than travelers going uphill. Modify the edge cost so that moving to a lower cell costs less than moving to a higher cell (for example, multiply by a factor of 0.5 for downhill moves). How does the preferred route change?</p>
-<h3 data-number="7.7.4" id="multiple-waypoints"><span class="header-section-number">7.7.4</span> Multiple waypoints</h3>
+<h3 data-number="8.7.4" id="multiple-waypoints"><span class="header-section-number">8.7.4</span> Multiple waypoints</h3>
 <p>Extend <code>least_cost_path</code> to accept a list of waypoints and return the path that passes through every waypoint in order at minimum total cost. Apply this to the synthetic terrain with two intermediate waypoints and compare the total cost to the direct source-to-destination path.</p>
-<h3 data-number="7.7.5" id="sensitivity-to-epsilon"><span class="header-section-number">7.7.5</span> Sensitivity to epsilon</h3>
+<h3 data-number="8.7.5" id="sensitivity-to-epsilon"><span class="header-section-number">8.7.5</span> Sensitivity to epsilon</h3>
 <p>Generate terrain at three different random seeds and run least-cost path analysis on each. For each terrain, compute the total path cost and the fraction of cells on the path that lie below the mean elevation. Does a lower mean elevation on the path reliably predict lower total cost?</p>
 </section>
 

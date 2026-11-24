@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">27.1</span> The Problem</a></li>
-<li><a href="#the-power-law-learning-model" id="toc-the-power-law-learning-model"><span class="header-section-number">27.2</span> The Power-Law Learning Model</a></li>
-<li><a href="#generating-synthetic-trial-data" id="toc-generating-synthetic-trial-data"><span class="header-section-number">27.3</span> Generating Synthetic Trial Data</a></li>
-<li><a href="#fitting-with-curve_fit" id="toc-fitting-with-curve_fit"><span class="header-section-number">27.4</span> Fitting with curve_fit</a></li>
-<li><a href="#confidence-interval-from-the-covariance-matrix" id="toc-confidence-interval-from-the-covariance-matrix"><span class="header-section-number">27.5</span> Confidence Interval from the Covariance Matrix</a></li>
-<li><a href="#visualizing-the-fit" id="toc-visualizing-the-fit"><span class="header-section-number">27.6</span> Visualizing the Fit</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">27.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">27.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">28.1</span> The Problem</a></li>
+<li><a href="#the-power-law-learning-model" id="toc-the-power-law-learning-model"><span class="header-section-number">28.2</span> The Power-Law Learning Model</a></li>
+<li><a href="#generating-synthetic-trial-data" id="toc-generating-synthetic-trial-data"><span class="header-section-number">28.3</span> Generating Synthetic Trial Data</a></li>
+<li><a href="#fitting-with-curve_fit" id="toc-fitting-with-curve_fit"><span class="header-section-number">28.4</span> Fitting with curve_fit</a></li>
+<li><a href="#confidence-interval-from-the-covariance-matrix" id="toc-confidence-interval-from-the-covariance-matrix"><span class="header-section-number">28.5</span> Confidence Interval from the Covariance Matrix</a></li>
+<li><a href="#visualizing-the-fit" id="toc-visualizing-the-fit"><span class="header-section-number">28.6</span> Visualizing the Fit</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">28.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">28.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Fitting a Learning Curve to Experimental Data</h1>
-<h2 data-number="27.1" id="the-problem"><span class="header-section-number">27.1</span> The Problem</h2>
+<h2 data-number="28.1" id="the-problem"><span class="header-section-number">28.1</span> The Problem</h2>
 <ul>
 <li>Practice improves performance: reaction times fall and error rates decrease</li>
 <li><a href="../glossary/index.html#learning_curve">Learning curves</a> quantify how quickly this improvement happens and how much improvement can be expected with more practice</li>
@@ -91,7 +91,7 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 </dd>
 </dl>
 </div>
-<h2 data-number="27.2" id="the-power-law-learning-model"><span class="header-section-number">27.2</span> The Power-Law Learning Model</h2>
+<h2 data-number="28.2" id="the-power-law-learning-model"><span class="header-section-number">28.2</span> The Power-Law Learning Model</h2>
 <ul>
 <li>The model is <span class="math inline">\(\text{RT}(n) = A \cdot n^{-b}\)</span> where:
 <ul>
@@ -102,7 +102,7 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 <li>Taking logarithms gives <span class="math inline">\(\ln \text{RT} = \ln A - b \ln n\)</span>, showing that the power law is linear in log-log space</li>
 <li>The parameters <span class="math inline">\(A\)</span> and <span class="math inline">\(b\)</span> are estimated simultaneously by nonlinear least squares rather than log-linearizing, which avoids distorting the noise structure when reaction times have additive Gaussian noise.</li>
 </ul>
-<h2 data-number="27.3" id="generating-synthetic-trial-data"><span class="header-section-number">27.3</span> Generating Synthetic Trial Data</h2>
+<h2 data-number="28.3" id="generating-synthetic-trial-data"><span class="header-section-number">28.3</span> Generating Synthetic Trial Data</h2>
 <ul>
 <li>The true parameters are <span class="math inline">\(A = 500\)</span> ms and <span class="math inline">\(b = 0.3\)</span>, which are within the empirical range for simple motor tasks</li>
 <li>Gaussian noise with standard deviation 20 ms is added to each trial
@@ -111,7 +111,7 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 </ul></li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="27.4" id="fitting-with-curve_fit"><span class="header-section-number">27.4</span> Fitting with curve_fit</h2>
+<h2 data-number="28.4" id="fitting-with-curve_fit"><span class="header-section-number">28.4</span> Fitting with curve_fit</h2>
 <ul>
 <li><code>scipy.optimize.curve_fit(f, x, y, p0)</code> finds the parameter values that minimise <span class="math inline">\(\sum_i (y_i - f(x_i, \theta))^2\)</span> starting from initial guess <code>p0</code></li>
 <li>It returns two objects:
@@ -123,7 +123,7 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 <li>Its square root is the standard error <span class="math inline">\(\text{SE}(b)\)</span></li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="27.5" id="confidence-interval-from-the-covariance-matrix"><span class="header-section-number">27.5</span> Confidence Interval from the Covariance Matrix</h2>
+<h2 data-number="28.5" id="confidence-interval-from-the-covariance-matrix"><span class="header-section-number">28.5</span> Confidence Interval from the Covariance Matrix</h2>
 <ul>
 <li>The approximate 95% confidence interval for <span class="math inline">\(b\)</span> is:</li>
 </ul>
@@ -139,7 +139,7 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 <p>Order the steps to fit a power-law learning curve and report a confidence interval for b.</p>
 <p>Choose initial parameter guesses p0 = [first RT, 0.2]. Call curve_fit(power_law, trials, rt, p0=p0) to obtain popt and pcov. Extract the fitted exponent: b = popt[1]. Compute the standard error: SE = sqrt(pcov[1, 1]). Form the 95% CI: (b - 1.96 * SE, b + 1.96 * SE).</p>
 </div>
-<h2 data-number="27.6" id="visualizing-the-fit"><span class="header-section-number">27.6</span> Visualizing the Fit</h2>
+<h2 data-number="28.6" id="visualizing-the-fit"><span class="header-section-number">28.6</span> Visualizing the Fit</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-learning-curve" class="quarto-float quarto-figure quarto-figure-center" alt="A scatter plot with trial number on the x-axis and reaction time in milliseconds on the y-axis. Blue points show the noisy per-trial observations, decreasing from around 500 ms at trial 1 to around 280 ms by trial 80. A red power-law curve fits through the data, closely following the decreasing trend.">
 <figure class="quarto-float quarto-float-fig">
@@ -147,11 +147,11 @@ Wrong: nonlinear fitting is more complex than linear fitting; the power-law is u
 <img src="learning-curve.svg" alt="A scatter plot with trial number on the x-axis and reaction time in milliseconds on the y-axis. Blue points show the noisy per-trial observations, decreasing from around 500 ms at trial 1 to around 280 ms by trial 80. A red power-law curve fits through the data, closely following the decreasing trend.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-learning-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;27.1: Per-trial reaction times (blue points) and the fitted power-law learning curve (red line) for 80 synthetic trials. The fitted exponent b = 0.298 is close to the true value of 0.30; the 95% confidence interval [0.278, 0.318] brackets the true value.
+Figure&nbsp;28.1: Per-trial reaction times (blue points) and the fitted power-law learning curve (red line) for 80 synthetic trials. The fitted exponent b = 0.298 is close to the true value of 0.30; the 95% confidence interval [0.278, 0.318] brackets the true value.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="27.7" id="testing"><span class="header-section-number">27.7</span> Testing</h2>
+<h2 data-number="28.7" id="testing"><span class="header-section-number">28.7</span> Testing</h2>
 <dl>
 <dt>Trial count</dt>
 <dd>
@@ -231,16 +231,16 @@ An interval constructed from data such that, over many repetitions of the experi
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="27.8" id="exercises"><span class="header-section-number">27.8</span> Exercises</h2>
-<h3 data-number="27.8.1" id="do-the-math"><span class="header-section-number">27.8.1</span> Do the math</h3>
+<h2 data-number="28.8" id="exercises"><span class="header-section-number">28.8</span> Exercises</h2>
+<h3 data-number="28.8.1" id="do-the-math"><span class="header-section-number">28.8.1</span> Do the math</h3>
 <p>If A = 400 ms and b = 0.5, what is the predicted reaction time (in ms) on trial 4?</p>
-<h3 data-number="27.8.2" id="log-log-linearity"><span class="header-section-number">27.8.2</span> Log-log linearity</h3>
+<h3 data-number="28.8.2" id="log-log-linearity"><span class="header-section-number">28.8.2</span> Log-log linearity</h3>
 <p>Take the logarithm of both <code>trial</code> and <code>rt</code> from the synthetic data and fit a straight line using <code>numpy.polyfit</code>. Compare the slope of the line to the exponent <span class="math inline">\(b\)</span> returned by <code>curve_fit</code>. Are they equal? If not, explain why the two estimates differ.</p>
-<h3 data-number="27.8.3" id="effect-of-noise-level"><span class="header-section-number">27.8.3</span> Effect of noise level</h3>
+<h3 data-number="28.8.3" id="effect-of-noise-level"><span class="header-section-number">28.8.3</span> Effect of noise level</h3>
 <p>Re-run the generator and fitter with noise standard deviations of 5, 20, 50, and 100 ms. For each noise level record the fitted <span class="math inline">\(b\)</span>, the width of the 95% CI for <span class="math inline">\(b\)</span>, and whether the CI brackets <code>TRUE_B</code>. At what noise level does the CI first fail to contain the true value?</p>
-<h3 data-number="27.8.4" id="confidence-interval-coverage"><span class="header-section-number">27.8.4</span> Confidence interval coverage</h3>
+<h3 data-number="28.8.4" id="confidence-interval-coverage"><span class="header-section-number">28.8.4</span> Confidence interval coverage</h3>
 <p>Generate 200 independent datasets using different random seeds and fit the power-law model to each. Record what fraction of the 95% confidence intervals contain <code>TRUE_B</code>. Is the empirical coverage close to 95%? What does it mean if the coverage is systematically lower?</p>
-<h3 data-number="27.8.5" id="alternative-model"><span class="header-section-number">27.8.5</span> Alternative model</h3>
+<h3 data-number="28.8.5" id="alternative-model"><span class="header-section-number">28.8.5</span> Alternative model</h3>
 <p>Fit an exponential learning model <span class="math inline">\(\text{RT}(n) = c + (A - c)\,e^{-\lambda n}\)</span>, where <span class="math inline">\(c\)</span> is the asymptotic RT, <span class="math inline">\(A\)</span> is the initial RT, and <span class="math inline">\(\lambda\)</span> is the decay rate. Compare the sum of squared residuals of the exponential and power-law fits on the synthetic data. Which model fits better?</p>
 </section>
 

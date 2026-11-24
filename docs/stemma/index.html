@@ -45,23 +45,23 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">10.1</span> The Problem</a></li>
-<li><a href="#variant-loci-and-hamming-distance" id="toc-variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</a></li>
-<li><a href="#distance-matrix-for-the-reference-stemma" id="toc-distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</a></li>
-<li><a href="#the-upgma-algorithm" id="toc-the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</a></li>
-<li><a href="#a-worked-example" id="toc-a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</a></li>
-<li><a href="#hamming-distance-function" id="toc-hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</a></li>
-<li><a href="#visualizing-the-stemma" id="toc-visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</a></li>
-<li><a href="#generating-synthetic-manuscripts" id="toc-generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">10.9</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">10.10</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">11.1</span> The Problem</a></li>
+<li><a href="#variant-loci-and-hamming-distance" id="toc-variant-loci-and-hamming-distance"><span class="header-section-number">11.2</span> Variant Loci and Hamming Distance</a></li>
+<li><a href="#distance-matrix-for-the-reference-stemma" id="toc-distance-matrix-for-the-reference-stemma"><span class="header-section-number">11.3</span> Distance Matrix for the Reference Stemma</a></li>
+<li><a href="#the-upgma-algorithm" id="toc-the-upgma-algorithm"><span class="header-section-number">11.4</span> The UPGMA Algorithm</a></li>
+<li><a href="#a-worked-example" id="toc-a-worked-example"><span class="header-section-number">11.5</span> A Worked Example</a></li>
+<li><a href="#hamming-distance-function" id="toc-hamming-distance-function"><span class="header-section-number">11.6</span> Hamming Distance Function</a></li>
+<li><a href="#visualizing-the-stemma" id="toc-visualizing-the-stemma"><span class="header-section-number">11.7</span> Visualizing the Stemma</a></li>
+<li><a href="#generating-synthetic-manuscripts" id="toc-generating-synthetic-manuscripts"><span class="header-section-number">11.8</span> Generating Synthetic Manuscripts</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">11.9</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">11.10</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Manuscript Stemma Reconstruction</h1>
-<h2 data-number="10.1" id="the-problem"><span class="header-section-number">10.1</span> The Problem</h2>
+<h2 data-number="11.1" id="the-problem"><span class="header-section-number">11.1</span> The Problem</h2>
 <ul>
 <li>A historical text often survives in multiple manuscript copies, each introduced by scribes who occasionally made errors, omitted passages, or substituted words.</li>
 <li>A <a href="../glossary/index.html#stemma">stemma</a> is the family tree of those copies: it shows which manuscripts descend from which others and reconstructs lost intermediate ancestors.</li>
@@ -94,7 +94,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </dd>
 </dl>
 </div>
-<h2 data-number="10.2" id="variant-loci-and-hamming-distance"><span class="header-section-number">10.2</span> Variant Loci and Hamming Distance</h2>
+<h2 data-number="11.2" id="variant-loci-and-hamming-distance"><span class="header-section-number">11.2</span> Variant Loci and Hamming Distance</h2>
 <ul>
 <li>A variant locus is a specific position in a manuscript where at least one copy reads differently from the others.</li>
 <li>We represent each manuscript as a binary sequence: 0 if the reading at a locus matches the <a href="../glossary/index.html#archetype">archetype</a>, 1 if it has been corrupted.</li>
@@ -104,7 +104,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 <ul>
 <li>Manuscripts that share a common intermediate ancestor will have a smaller Hamming distance to each other than to manuscripts from a different family, because they share inherited variants in addition to their unique ones.</li>
 </ul>
-<h2 data-number="10.3" id="distance-matrix-for-the-reference-stemma"><span class="header-section-number">10.3</span> Distance Matrix for the Reference Stemma</h2>
+<h2 data-number="11.3" id="distance-matrix-for-the-reference-stemma"><span class="header-section-number">11.3</span> Distance Matrix for the Reference Stemma</h2>
 <ul>
 <li>The reference stemma is:</li>
 </ul>
@@ -148,7 +148,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 </tbody>
 </table>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="10.4" id="the-upgma-algorithm"><span class="header-section-number">10.4</span> The UPGMA Algorithm</h2>
+<h2 data-number="11.4" id="the-upgma-algorithm"><span class="header-section-number">11.4</span> The UPGMA Algorithm</h2>
 <ul>
 <li>UPGMA (Unweighted Pair-Group Method with Arithmetic means) builds a rooted tree by iteratively merging the pair of nodes with the smallest pairwise distance.</li>
 <li>At each step:
@@ -167,7 +167,7 @@ Wrong: shared unique errors in the same positions are statistically very unlikel
 <li>UPGMA assumes a constant rate of scribal error across all manuscripts (analogous to the molecular clock in phylogenetics). The neighbor-joining algorithm relaxes this assumption but requires more advanced mathematics.</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="10.5" id="a-worked-example"><span class="header-section-number">10.5</span> A Worked Example</h2>
+<h2 data-number="11.5" id="a-worked-example"><span class="header-section-number">11.5</span> A Worked Example</h2>
 <p>Starting with <span class="math inline">\(n = 4\)</span> manuscripts and the distances from the reference stemma:</p>
 <table class="caption-top">
 <thead>
@@ -294,9 +294,9 @@ Wrong: D(C, D) = 0.10 is the global minimum and is smaller than both cross-famil
 </dd>
 </dl>
 </div>
-<h2 data-number="10.6" id="hamming-distance-function"><span class="header-section-number">10.6</span> Hamming Distance Function</h2>
+<h2 data-number="11.6" id="hamming-distance-function"><span class="header-section-number">11.6</span> Hamming Distance Function</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="10.7" id="visualizing-the-stemma"><span class="header-section-number">10.7</span> Visualizing the Stemma</h2>
+<h2 data-number="11.7" id="visualizing-the-stemma"><span class="header-section-number">11.7</span> Visualizing the Stemma</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-stemma-tree" class="quarto-float quarto-figure quarto-figure-center" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
 <figure class="quarto-float quarto-float-fig">
@@ -304,18 +304,18 @@ Wrong: D(C, D) = 0.10 is the global minimum and is smaller than both cross-famil
 <img src="stemma-tree.svg" alt="Unrooted tree with four blue leaf nodes labelled A, B, C, D and two grey internal nodes. A and B are connected through one internal node; C and D through another; the two internal nodes are joined by a central edge.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-stemma-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;10.1: Reconstructed stemma for the four-manuscript reference example. The two internal (grey) nodes correspond to the lost intermediate ancestors alpha (A–B family) and beta (C–D family). Branch lengths give the fraction of loci that differ along each copying step.
+Figure&nbsp;11.1: Reconstructed stemma for the four-manuscript reference example. The two internal (grey) nodes correspond to the lost intermediate ancestors alpha (A–B family) and beta (C–D family). Branch lengths give the fraction of loci that differ along each copying step.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="10.8" id="generating-synthetic-manuscripts"><span class="header-section-number">10.8</span> Generating Synthetic Manuscripts</h2>
+<h2 data-number="11.8" id="generating-synthetic-manuscripts"><span class="header-section-number">11.8</span> Generating Synthetic Manuscripts</h2>
 <ul>
 <li>The stochastic generator simulates a known copying tree by propagating random mutations from the archetype through each branch.</li>
 <li>Each locus flips independently with probability <code>MUTATION_PROB = 0.05</code>.</li>
 <li>Only the four surviving manuscripts A, B, C, D are returned; the archetype and intermediate ancestors are not observed.</li>
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="10.9" id="testing"><span class="header-section-number">10.9</span> Testing</h2>
+<h2 data-number="11.9" id="testing"><span class="header-section-number">11.9</span> Testing</h2>
 <ul>
 <li>Hamming distance edge cases
 <ul>
@@ -496,19 +496,19 @@ Unweighted Pair-Group Method with Arithmetic means; a clustering algorithm that 
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="10.10" id="exercises"><span class="header-section-number">10.10</span> Exercises</h2>
-<h3 data-number="10.10.1" id="do-the-math"><span class="header-section-number">10.10.1</span> Do the math</h3>
+<h2 data-number="11.10" id="exercises"><span class="header-section-number">11.10</span> Exercises</h2>
+<h3 data-number="11.10.1" id="do-the-math"><span class="header-section-number">11.10.1</span> Do the math</h3>
 <ol type="1">
 <li><p>Two manuscripts each have 100 variant loci. Manuscript A differs from the archetype at loci 1–10 and 21–30. Manuscript B differs from the archetype at loci 1–10 and 41–55. What is the Hamming distance between A and B?</p></li>
 <li><p>After merging A and B into node4 in the first UPGMA step, <span class="math inline">\(D(A, C) = 0.23\)</span> and <span class="math inline">\(D(B, C) = 0.21\)</span>. Using the UPGMA averaging rule <span class="math inline">\(D(\text{node4}, C) = (D(A,C) + D(B,C)) / 2\)</span>, what is <span class="math inline">\(D(\text{node4}, C)\)</span>?</p></li>
 </ol>
-<h3 data-number="10.10.2" id="hamming-distance-from-manuscript-sequences"><span class="header-section-number">10.10.2</span> Hamming distance from manuscript sequences</h3>
+<h3 data-number="11.10.2" id="hamming-distance-from-manuscript-sequences"><span class="header-section-number">11.10.2</span> Hamming distance from manuscript sequences</h3>
 <p>The <code>generate_stemma</code> module produces actual sequences, not just distances. Write <code>build_distance_matrix(mss)</code> that accepts the dict returned by <code>make_manuscripts</code> and computes the full <span class="math inline">\(4 \times 4\)</span> Hamming distance matrix. Run UPGMA on this matrix and compare the recovered topology to the one from <code>make_distance_matrix</code>. Do the stochastic distances give the same grouping?</p>
-<h3 data-number="10.10.3" id="effect-of-mutation-rate"><span class="header-section-number">10.10.3</span> Effect of mutation rate</h3>
+<h3 data-number="11.10.3" id="effect-of-mutation-rate"><span class="header-section-number">11.10.3</span> Effect of mutation rate</h3>
 <p>Re-run <code>make_manuscripts</code> with <code>mutation_prob</code> values of 0.01, 0.05, 0.10, and 0.20. For each rate, compute the distance matrix and check whether UPGMA recovers the correct two-family topology. At what mutation rate does the signal begin to fail, and why?</p>
-<h3 data-number="10.10.4" id="effect-of-noise-on-upgma"><span class="header-section-number">10.10.4</span> Effect of noise on UPGMA</h3>
+<h3 data-number="11.10.4" id="effect-of-noise-on-upgma"><span class="header-section-number">11.10.4</span> Effect of noise on UPGMA</h3>
 <p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline">\(s \in \{0.01, 0.02, 0.05\}\)</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
-<h3 data-number="10.10.5" id="adding-a-contaminated-manuscript"><span class="header-section-number">10.10.5</span> Adding a contaminated manuscript</h3>
+<h3 data-number="11.10.5" id="adding-a-contaminated-manuscript"><span class="header-section-number">11.10.5</span> Adding a contaminated manuscript</h3>
 <p>A contaminated manuscript (one that was copied partly from two different sources) does not fit a tree model. Add a fifth manuscript E whose sequence is a 50/50 mix of A and C. Compute the distance matrix for all five manuscripts and run UPGMA. Does the algorithm detect the problem, and if so, how is it visible in the recovered tree?</p>
 </section>
 

@@ -45,27 +45,27 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">13.1</span> The Problem</a></li>
-<li><a href="#representing-a-spectrum" id="toc-representing-a-spectrum"><span class="header-section-number">13.2</span> Representing a Spectrum</a></li>
-<li><a href="#smoothing" id="toc-smoothing"><span class="header-section-number">13.3</span> Smoothing</a></li>
-<li><a href="#peak-detection" id="toc-peak-detection"><span class="header-section-number">13.4</span> Peak Detection</a></li>
-<li><a href="#what-the-detector-finds-in-pure-noise" id="toc-what-the-detector-finds-in-pure-noise"><span class="header-section-number">13.5</span> What the Detector Finds in Pure Noise</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">13.6</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">13.7</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">14.1</span> The Problem</a></li>
+<li><a href="#representing-a-spectrum" id="toc-representing-a-spectrum"><span class="header-section-number">14.2</span> Representing a Spectrum</a></li>
+<li><a href="#smoothing" id="toc-smoothing"><span class="header-section-number">14.3</span> Smoothing</a></li>
+<li><a href="#peak-detection" id="toc-peak-detection"><span class="header-section-number">14.4</span> Peak Detection</a></li>
+<li><a href="#what-the-detector-finds-in-pure-noise" id="toc-what-the-detector-finds-in-pure-noise"><span class="header-section-number">14.5</span> What the Detector Finds in Pure Noise</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">14.6</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">14.7</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Peak Detection in Mass Spectra</h1>
-<h2 data-number="13.1" id="the-problem"><span class="header-section-number">13.1</span> The Problem</h2>
+<h2 data-number="14.1" id="the-problem"><span class="header-section-number">14.1</span> The Problem</h2>
 <ul>
 <li>A mass spectrometer measures how many ions in a sample have each mass-to-charge ratio (m/z)</li>
 <li>The output is a spectrum, i.e., a curve of intensity versus m/z, with a peak wherever a compound is present</li>
 <li>In practice the spectrum is noisy, so the peaks must be found algorithmically rather than by eye</li>
 <li>Peak detection is a preprocessing step in proteomics, metabolomics, and analytical chemistry</li>
 </ul>
-<h2 data-number="13.2" id="representing-a-spectrum"><span class="header-section-number">13.2</span> Representing a Spectrum</h2>
+<h2 data-number="14.2" id="representing-a-spectrum"><span class="header-section-number">14.2</span> Representing a Spectrum</h2>
 <ul>
 <li>A synthetic spectrum is a sum of Gaussian peaks at known m/z values plus Gaussian noise:</li>
 </ul>
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>Intensities are clipped to zero because a negative ion count has no physical meaning</li>
 </ul>
 <p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
-<h2 data-number="13.3" id="smoothing"><span class="header-section-number">13.3</span> Smoothing</h2>
+<h2 data-number="14.3" id="smoothing"><span class="header-section-number">14.3</span> Smoothing</h2>
 <ul>
 <li>Noise causes random local maxima that look like peaks but carry no chemical information</li>
 <li>A <a href="../glossary/index.html#moving_average">moving-average</a> filter replaces each point with the mean of its <span class="math inline">\(w\)</span> nearest neighbours, reducing point-to-point variance by a factor of <span class="math inline">\(w\)</span>:</li>
@@ -106,7 +106,7 @@ Wrong: smoothing reduces noise, not increases it.
 </dd>
 </dl>
 </div>
-<h2 data-number="13.4" id="peak-detection"><span class="header-section-number">13.4</span> Peak Detection</h2>
+<h2 data-number="14.4" id="peak-detection"><span class="header-section-number">14.4</span> Peak Detection</h2>
 <ul>
 <li>After smoothing, a peak candidate is any point that is a strict local maximum and whose smoothed intensity exceeds a threshold</li>
 <li>A single broad peak can produce several adjacent local maxima after smoothing</li>
@@ -158,11 +158,11 @@ Wrong: smoothing reduces noise, not increases it.
 <img src="massspec.svg" alt="Mass spectrum showing raw intensity in grey, smoothed in blue, and detected peaks as red vertical lines.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-massspec-signal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: Synthetic spectrum with four compounds. Grey: raw signal. Blue: smoothed signal (window = 5). Red rules: detected peak positions. All four compounds are recovered within 1 Da of their true m/z values.
+Figure&nbsp;14.1: Synthetic spectrum with four compounds. Grey: raw signal. Blue: smoothed signal (window = 5). Red rules: detected peak positions. All four compounds are recovered within 1 Da of their true m/z values.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="13.5" id="what-the-detector-finds-in-pure-noise"><span class="header-section-number">13.5</span> What the Detector Finds in Pure Noise</h2>
+<h2 data-number="14.5" id="what-the-detector-finds-in-pure-noise"><span class="header-section-number">14.5</span> What the Detector Finds in Pure Noise</h2>
 <ul>
 <li>The same detector, with the same threshold, applied to a spectrum that contains no signal at all produces false peaks</li>
 </ul>
@@ -173,7 +173,7 @@ Figure&nbsp;13.1: Synthetic spectrum with four compounds. Grey: raw signal. Blue
 <img src="massspec_noise.svg" alt="Pure-noise spectrum with 9 false peaks marked by red vertical lines.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-massspec-noise-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: Pure Gaussian noise (no signal) smoothed and searched with a threshold of 0.04. Nine false peaks are reported. The same noise searched at the normal threshold of 0.10 produces zero false peaks.
+Figure&nbsp;14.2: Pure Gaussian noise (no signal) smoothed and searched with a threshold of 0.04. Nine false peaks are reported. The same noise searched at the normal threshold of 0.10 produces zero false peaks.
 </figcaption>
 </figure>
 </div>
@@ -210,7 +210,7 @@ Wrong: more smoothing reduces noise amplitude but cannot reduce it to zero; fals
 </dd>
 </dl>
 </div>
-<h2 data-number="13.6" id="testing"><span class="header-section-number">13.6</span> Testing</h2>
+<h2 data-number="14.6" id="testing"><span class="header-section-number">14.6</span> Testing</h2>
 <dl>
 <dt>Smoothing a constant</dt>
 <dd>
@@ -307,14 +307,14 @@ Running the detector on pure noise at a low threshold must return at least one f
 <span id="cb5-64"><a href="#cb5-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Normal threshold should reject all noise peaks"</span></span>
 <span id="cb5-65"><a href="#cb5-65" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <section class="exercises">
-<h2 data-number="13.7" id="exercises"><span class="header-section-number">13.7</span> Exercises</h2>
-<h3 data-number="13.7.1" id="savitzky-golay-filter"><span class="header-section-number">13.7.1</span> Savitzky-Golay filter</h3>
+<h2 data-number="14.7" id="exercises"><span class="header-section-number">14.7</span> Exercises</h2>
+<h3 data-number="14.7.1" id="savitzky-golay-filter"><span class="header-section-number">14.7.1</span> Savitzky-Golay filter</h3>
 <p>Replace the moving-average smoother with a Savitzky-Golay filter, which fits a low-degree polynomial to each window rather than taking a plain mean. The advantage is that the filter preserves peak heights more accurately. Use <code>scipy.signal.savgol_filter</code> and compare the peak positions and heights it reports to those from the moving-average filter on the same synthetic spectrum.</p>
-<h3 data-number="13.7.2" id="baseline-correction"><span class="header-section-number">13.7.2</span> Baseline correction</h3>
+<h3 data-number="14.7.2" id="baseline-correction"><span class="header-section-number">14.7.2</span> Baseline correction</h3>
 <p>Real spectra often have a slowly varying baseline (background signal) that shifts all intensities upward. Simulate this by adding a low-frequency sinusoid <span class="math inline">\(B(m) = 0.3 \sin(2\pi m / 800)\)</span> to the synthetic spectrum before adding noise. Implement <code>subtract_baseline(mz, intensity, window)</code> that uses a moving minimum over a large window to estimate and remove the baseline, then show that peak detection on the corrected spectrum recovers the same four compounds.</p>
-<h3 data-number="13.7.3" id="peak-area"><span class="header-section-number">13.7.3</span> Peak area</h3>
+<h3 data-number="14.7.3" id="peak-area"><span class="header-section-number">14.7.3</span> Peak area</h3>
 <p>The area under a Gaussian peak is <span class="math inline">\(h \sigma \sqrt{2\pi}\)</span> and is proportional to compound abundance. After detecting each peak, fit a Gaussian to the smoothed signal in a small window around it using <code>scipy.optimize.curve_fit</code> and report the fitted height, center, and area. Compare the fitted values to the ground truth in <code>PEAKS</code>.</p>
-<h3 data-number="13.7.4" id="receiver-operating-characteristic"><span class="header-section-number">13.7.4</span> Receiver operating characteristic</h3>
+<h3 data-number="14.7.4" id="receiver-operating-characteristic"><span class="header-section-number">14.7.4</span> Receiver operating characteristic</h3>
 <p>Use <code>make_pure_noise</code> to generate 200 noise-only spectra and <code>make_spectrum</code> to generate 200 signal spectra. For each, record whether the detector finds at least one peak. Sweep the threshold from 0.01 to 0.30 and plot the ROC curve (true positive rate vs. false positive rate). Report the threshold that maximises the F1 score.</p>
 </section>
 

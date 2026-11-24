@@ -45,36 +45,36 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">12.1</span> The Problem</a></li>
-<li><a href="#rolling-statistics" id="toc-rolling-statistics"><span class="header-section-number">12.2</span> Rolling Statistics</a></li>
-<li><a href="#detecting-anomalies" id="toc-detecting-anomalies"><span class="header-section-number">12.3</span> Detecting Anomalies</a></li>
-<li><a href="#generating-synthetic-vital-signs" id="toc-generating-synthetic-vital-signs"><span class="header-section-number">12.4</span> Generating Synthetic Vital Signs</a></li>
-<li><a href="#rolling-mean-and-standard-deviation" id="toc-rolling-mean-and-standard-deviation"><span class="header-section-number">12.5</span> Rolling Mean and Standard Deviation</a></li>
-<li><a href="#flagging-anomalies" id="toc-flagging-anomalies"><span class="header-section-number">12.6</span> Flagging Anomalies</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">12.7</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">12.8</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">12.9</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">13.1</span> The Problem</a></li>
+<li><a href="#rolling-statistics" id="toc-rolling-statistics"><span class="header-section-number">13.2</span> Rolling Statistics</a></li>
+<li><a href="#detecting-anomalies" id="toc-detecting-anomalies"><span class="header-section-number">13.3</span> Detecting Anomalies</a></li>
+<li><a href="#generating-synthetic-vital-signs" id="toc-generating-synthetic-vital-signs"><span class="header-section-number">13.4</span> Generating Synthetic Vital Signs</a></li>
+<li><a href="#rolling-mean-and-standard-deviation" id="toc-rolling-mean-and-standard-deviation"><span class="header-section-number">13.5</span> Rolling Mean and Standard Deviation</a></li>
+<li><a href="#flagging-anomalies" id="toc-flagging-anomalies"><span class="header-section-number">13.6</span> Flagging Anomalies</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">13.7</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">13.8</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">13.9</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Anomaly Detection in Patient Vital Signs</h1>
-<h2 data-number="12.1" id="the-problem"><span class="header-section-number">12.1</span> The Problem</h2>
+<h2 data-number="13.1" id="the-problem"><span class="header-section-number">13.1</span> The Problem</h2>
 <ul>
 <li>Intensive care units record physiological signals continuously: heart rate, blood pressure, oxygen saturation, respiratory rate.</li>
 <li>Clinicians cannot watch every channel at every moment, so automated flagging of unusual readings reduces the chance of a dangerous change going unnoticed.</li>
 <li>Two qualitatively different anomalies are common: sustained <a href="../glossary/index.html#step_change">step changes</a> (the baseline shifts to a new level) and isolated <a href="../glossary/index.html#spike_outlier">spikes</a> (a single reading is far from the local trend).</li>
 <li>A simple but effective detector compares each reading to a local reference built from the most recent <span class="math inline">\(w\)</span> readings; a deviation beyond a chosen threshold raises a flag.</li>
 </ul>
-<h2 data-number="12.2" id="rolling-statistics"><span class="header-section-number">12.2</span> Rolling Statistics</h2>
+<h2 data-number="13.2" id="rolling-statistics"><span class="header-section-number">13.2</span> Rolling Statistics</h2>
 <ul>
 <li>A <a href="../glossary/index.html#rolling_window">rolling window</a> of width <span class="math inline">\(w\)</span> centred (or trailing) at position <span class="math inline">\(i\)</span> uses only the <span class="math inline">\(w\)</span> most recent observations to estimate the local mean and variance.</li>
 <li>This makes the reference adaptive: it follows slow drifts in the baseline without permanently inflating the variance estimate when a sustained shift begins.</li>
 <li>If <span class="math inline">\(\bar{x}_i\)</span> and <span class="math inline">\(\hat{\sigma}_i\)</span> are the rolling mean and standard deviation, the <a href="../glossary/index.html#z_score">z-score</a> of reading <span class="math inline">\(x_i\)</span> against the rolling window is:</li>
 </ul>
 <p><span class="math display">\[z_i = \frac{x_i - \bar{x}_i}{\hat{\sigma}_i}\]</span></p>
-<h2 data-number="12.3" id="detecting-anomalies"><span class="header-section-number">12.3</span> Detecting Anomalies</h2>
+<h2 data-number="13.3" id="detecting-anomalies"><span class="header-section-number">13.3</span> Detecting Anomalies</h2>
 <ul>
 <li>A reading is flagged when <span class="math inline">\(|z_i| &gt; \theta\)</span>, where <span class="math inline">\(\theta\)</span> is the detection threshold.</li>
 <li>Raising <span class="math inline">\(\theta\)</span> reduces false positives (normal variation incorrectly flagged) at the cost of more false negatives (real anomalies missed); lowering it does the reverse.</li>
@@ -101,7 +101,7 @@ Wrong: the standard deviation is computed from the data; changing the threshold 
 </dd>
 </dl>
 </div>
-<h2 data-number="12.4" id="generating-synthetic-vital-signs"><span class="header-section-number">12.4</span> Generating Synthetic Vital Signs</h2>
+<h2 data-number="13.4" id="generating-synthetic-vital-signs"><span class="header-section-number">13.4</span> Generating Synthetic Vital Signs</h2>
 <ul>
 <li>The baseline is Gaussian noise around 70 bpm (a typical resting heart rate).</li>
 <li>A sustained step change of 12 bpm begins at minute 90, simulating a fever or haemodynamic deterioration.</li>
@@ -109,13 +109,13 @@ Wrong: the standard deviation is computed from the data; changing the threshold 
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="12.5" id="rolling-mean-and-standard-deviation"><span class="header-section-number">12.5</span> Rolling Mean and Standard Deviation</h2>
+<h2 data-number="13.5" id="rolling-mean-and-standard-deviation"><span class="header-section-number">13.5</span> Rolling Mean and Standard Deviation</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>The trailing window (ending at the current position) is the natural choice for real-time monitoring: a reading can only be compared against previous observations.</li>
 <li>The first <span class="math inline">\(w - 1\)</span> positions use a shorter window as data accumulates; this warm-up period means the detector is less reliable at the very start of the recording.</li>
 </ul>
-<h2 data-number="12.6" id="flagging-anomalies"><span class="header-section-number">12.6</span> Flagging Anomalies</h2>
+<h2 data-number="13.6" id="flagging-anomalies"><span class="header-section-number">13.6</span> Flagging Anomalies</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-matching" data-lang="en" data-markdown="1">
 <p>Match each anomaly type to the property that makes it detectable.</p>
@@ -146,7 +146,7 @@ Wrong: the standard deviation is computed from the data; changing the threshold 
 </tbody>
 </table>
 </div>
-<h2 data-number="12.7" id="visualizing-the-results"><span class="header-section-number">12.7</span> Visualizing the Results</h2>
+<h2 data-number="13.7" id="visualizing-the-results"><span class="header-section-number">13.7</span> Visualizing the Results</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-vitals-anomalies" class="quarto-float quarto-figure quarto-figure-center" alt="Time series of heart rate with rolling mean overlay and red triangle markers at four flagged anomaly positions.">
 <figure class="quarto-float quarto-float-fig">
@@ -154,11 +154,11 @@ Wrong: the standard deviation is computed from the data; changing the threshold 
 <img src="vitals.svg" alt="Time series of heart rate with rolling mean overlay and red triangle markers at four flagged anomaly positions.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vitals-anomalies-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;12.1: Two hundred minutes of synthetic heart rate (blue line) with 20-minute rolling mean (orange). Red triangles mark the four readings flagged at threshold 3: all three injected spikes and the first point where the step change raises the z-score above 3.
+Figure&nbsp;13.1: Two hundred minutes of synthetic heart rate (blue line) with 20-minute rolling mean (orange). Red triangles mark the four readings flagged at threshold 3: all three injected spikes and the first point where the step change raises the z-score above 3.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="12.8" id="testing"><span class="header-section-number">12.8</span> Testing</h2>
+<h2 data-number="13.8" id="testing"><span class="header-section-number">13.8</span> Testing</h2>
 <dl>
 <dt>Rolling statistics length</dt>
 <dd>
@@ -269,18 +269,18 @@ An isolated outlier reading that returns to baseline immediately; the rolling wi
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="12.9" id="exercises"><span class="header-section-number">12.9</span> Exercises</h2>
-<h3 data-number="12.9.1" id="do-the-math"><span class="header-section-number">12.9.1</span> Do the math</h3>
+<h2 data-number="13.9" id="exercises"><span class="header-section-number">13.9</span> Exercises</h2>
+<h3 data-number="13.9.1" id="do-the-math"><span class="header-section-number">13.9.1</span> Do the math</h3>
 <p>A trailing window of width 3 contains values [68, 70, 72]. The window mean is 70, and the sample standard deviation is 2. A new reading of 74 arrives. What is the z-score of 74 against this window?</p>
-<h3 data-number="12.9.2" id="bidirectional-window"><span class="header-section-number">12.9.2</span> Bidirectional window</h3>
+<h3 data-number="13.9.2" id="bidirectional-window"><span class="header-section-number">13.9.2</span> Bidirectional window</h3>
 <p>The trailing window can react only after the anomaly has entered the window. Replace the trailing window with a centred window that looks <span class="math inline">\(w/2\)</span> steps back and <span class="math inline">\(w/2\)</span> steps forward. Show that this detects a spike at the exact position it occurs rather than <span class="math inline">\(w/2\)</span> steps after. What is the cost of using a centred window in a real-time application?</p>
-<h3 data-number="12.9.3" id="threshold-sweep"><span class="header-section-number">12.9.3</span> Threshold sweep</h3>
+<h3 data-number="13.9.3" id="threshold-sweep"><span class="header-section-number">13.9.3</span> Threshold sweep</h3>
 <p>Generate 100 replicate datasets with the same parameters but different random seeds. For each dataset count the true positive rate (fraction of injected anomalies flagged) and false positive rate (fraction of normal readings flagged) at thresholds <span class="math inline">\(1, 2, 3, 4\)</span>. Plot the resulting ROC curve and find the threshold that maximises the F1 score.</p>
-<h3 data-number="12.9.4" id="exponentially-weighted-mean"><span class="header-section-number">12.9.4</span> Exponentially weighted mean</h3>
+<h3 data-number="13.9.4" id="exponentially-weighted-mean"><span class="header-section-number">13.9.4</span> Exponentially weighted mean</h3>
 <p>Replace the uniform rolling window with an exponentially weighted moving average (EWMA):</p>
 <p><span class="math display">\[\bar{x}_i = \alpha x_i + (1 - \alpha) \bar{x}_{i-1}\]</span></p>
 <p>with smoothing factor <span class="math inline">\(\alpha \in (0, 1)\)</span>. Derive the corresponding EWMA variance estimator and re-implement <code>rolling_stats</code> using it. Compare the detection lag between the uniform and EWMA detectors on the step-change data.</p>
-<h3 data-number="12.9.5" id="multivariate-anomaly-score"><span class="header-section-number">12.9.5</span> Multivariate anomaly score</h3>
+<h3 data-number="13.9.5" id="multivariate-anomaly-score"><span class="header-section-number">13.9.5</span> Multivariate anomaly score</h3>
 <p>A patient has two simultaneous signals: heart rate and respiratory rate. Anomalies in both signals at the same time are more clinically significant than anomalies in just one. Combine the two individual z-scores into a single multivariate score (e.g.&nbsp;the Euclidean norm of the two z-score vectors) and show that it improves detection of anomalies that affect both signals simultaneously while maintaining the per-signal false-positive rate.</p>
 </section>
 

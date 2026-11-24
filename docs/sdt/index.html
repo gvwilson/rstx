@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">17.1</span> The Problem</a></li>
-<li><a href="#computing-hit-rate-and-false-alarm-rate" id="toc-computing-hit-rate-and-false-alarm-rate"><span class="header-section-number">17.2</span> Computing Hit Rate and False Alarm Rate</a></li>
-<li><a href="#the-roc-curve-as-a-threshold-sweep" id="toc-the-roc-curve-as-a-threshold-sweep"><span class="header-section-number">17.3</span> The ROC Curve as a Threshold Sweep</a></li>
-<li><a href="#area-under-the-roc-curve" id="toc-area-under-the-roc-curve"><span class="header-section-number">17.4</span> Area Under the ROC Curve</a></li>
-<li><a href="#visualizing-the-roc-curve" id="toc-visualizing-the-roc-curve"><span class="header-section-number">17.5</span> Visualizing the ROC Curve</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">17.6</span> Testing</a></li>
-<li><a href="#note-on-the-gaussian-model" id="toc-note-on-the-gaussian-model"><span class="header-section-number">17.7</span> Note on the Gaussian Model</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">17.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">18.1</span> The Problem</a></li>
+<li><a href="#computing-hit-rate-and-false-alarm-rate" id="toc-computing-hit-rate-and-false-alarm-rate"><span class="header-section-number">18.2</span> Computing Hit Rate and False Alarm Rate</a></li>
+<li><a href="#the-roc-curve-as-a-threshold-sweep" id="toc-the-roc-curve-as-a-threshold-sweep"><span class="header-section-number">18.3</span> The ROC Curve as a Threshold Sweep</a></li>
+<li><a href="#area-under-the-roc-curve" id="toc-area-under-the-roc-curve"><span class="header-section-number">18.4</span> Area Under the ROC Curve</a></li>
+<li><a href="#visualizing-the-roc-curve" id="toc-visualizing-the-roc-curve"><span class="header-section-number">18.5</span> Visualizing the ROC Curve</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">18.6</span> Testing</a></li>
+<li><a href="#note-on-the-gaussian-model" id="toc-note-on-the-gaussian-model"><span class="header-section-number">18.7</span> Note on the Gaussian Model</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">18.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Signal Detection Theory Analysis</h1>
-<h2 data-number="17.1" id="the-problem"><span class="header-section-number">17.1</span> The Problem</h2>
+<h2 data-number="18.1" id="the-problem"><span class="header-section-number">18.1</span> The Problem</h2>
 <ul>
 <li>In a detection experiment, an observer responds “yes” or “no” to each stimulus</li>
 <li>Some stimuli contain a signal, others do not</li>
@@ -122,7 +122,7 @@ Wrong: hits and false alarms have been swapped; hits come from signal trials and
 </dd>
 </dl>
 </div>
-<h2 data-number="17.2" id="computing-hit-rate-and-false-alarm-rate"><span class="header-section-number">17.2</span> Computing Hit Rate and False Alarm Rate</h2>
+<h2 data-number="18.2" id="computing-hit-rate-and-false-alarm-rate"><span class="header-section-number">18.2</span> Computing Hit Rate and False Alarm Rate</h2>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li><code>labels</code> is an array of 1 (signal) and 0 (noise) for each trial.</li>
@@ -133,7 +133,7 @@ Wrong: hits and false alarms have been swapped; hits come from signal trials and
 <p>Order the steps to compute the hit rate from experiment data.</p>
 <p>Count the number of trials on which a signal was present. Count the number of those signal trials on which the observer responded “yes” (hits). Divide the hit count by the total number of signal trials.</p>
 </div>
-<h2 data-number="17.3" id="the-roc-curve-as-a-threshold-sweep"><span class="header-section-number">17.3</span> The ROC Curve as a Threshold Sweep</h2>
+<h2 data-number="18.3" id="the-roc-curve-as-a-threshold-sweep"><span class="header-section-number">18.3</span> The ROC Curve as a Threshold Sweep</h2>
 <ul>
 <li>An observer does not simply say “yes” or “no”
 <ul>
@@ -183,7 +183,7 @@ Intermediate hit rate and false alarm rate (moderate operating point).
 </dd>
 </dl>
 </div>
-<h2 data-number="17.4" id="area-under-the-roc-curve"><span class="header-section-number">17.4</span> Area Under the ROC Curve</h2>
+<h2 data-number="18.4" id="area-under-the-roc-curve"><span class="header-section-number">18.4</span> Area Under the ROC Curve</h2>
 <ul>
 <li>Any single (FAR, HR) pair depends on the threshold chosen, which may vary between observers or experiments</li>
 <li>The <a href="../glossary/index.html#area_under_curve">area under the ROC curve</a> (AUC) summarizes performance across all thresholds with a single number</li>
@@ -201,7 +201,7 @@ Intermediate hit rate and false alarm rate (moderate operating point).
 <li>As the number of threshold steps increases, the sum converges to the true area</li>
 </ul>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="17.5" id="visualizing-the-roc-curve"><span class="header-section-number">17.5</span> Visualizing the ROC Curve</h2>
+<h2 data-number="18.5" id="visualizing-the-roc-curve"><span class="header-section-number">18.5</span> Visualizing the ROC Curve</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-sdt-roc" class="quarto-float quarto-figure quarto-figure-center" alt="A square plot with false alarm rate on the x-axis and hit rate on the y-axis, both ranging from 0 to 1. A blue curve bows toward the upper-left corner above the gray diagonal chance line.">
 <figure class="quarto-float quarto-float-fig">
@@ -209,11 +209,11 @@ Intermediate hit rate and false alarm rate (moderate operating point).
 <img src="sdt-roc.svg" alt="A square plot with false alarm rate on the x-axis and hit rate on the y-axis, both ranging from 0 to 1. A blue curve bows toward the upper-left corner above the gray diagonal chance line.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sdt-roc-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.1: ROC curve produced by sweeping over score thresholds (blue). The gray dashed diagonal represents chance performance (AUC = 0.5). The bowing of the curve above the diagonal indicates the observer can discriminate signal from noise.
+Figure&nbsp;18.1: ROC curve produced by sweeping over score thresholds (blue). The gray dashed diagonal represents chance performance (AUC = 0.5). The bowing of the curve above the diagonal indicates the observer can discriminate signal from noise.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="17.6" id="testing"><span class="header-section-number">17.6</span> Testing</h2>
+<h2 data-number="18.6" id="testing"><span class="header-section-number">18.6</span> Testing</h2>
 <ul>
 <li>Hit rate is 1.0 when all signal trials are detected
 <ul>
@@ -371,7 +371,7 @@ A summary of ROC performance computed using the trapezoidal rule; AUC = 0.5 for 
 </dd>
 </dl>
 </div>
-<h2 data-number="17.7" id="note-on-the-gaussian-model"><span class="header-section-number">17.7</span> Note on the Gaussian Model</h2>
+<h2 data-number="18.7" id="note-on-the-gaussian-model"><span class="header-section-number">18.7</span> Note on the Gaussian Model</h2>
 <ul>
 <li>The equal-variance Gaussian model summarizes performance compactly via <span class="math inline">\(d' = \Phi^{-1}(\text{HR}) - \Phi^{-1}(\text{FAR})\)</span>, where <span class="math inline">\(\Phi^{-1}\)</span> is the inverse of the standard normal CDF</li>
 <li>This assumes both the noise distribution and the signal distribution are normal with equal variance
@@ -384,16 +384,16 @@ A summary of ROC performance computed using the trapezoidal rule; AUC = 0.5 for 
 </ul></li>
 </ul>
 <section class="exercises">
-<h2 data-number="17.8" id="exercises"><span class="header-section-number">17.8</span> Exercises</h2>
-<h3 data-number="17.8.1" id="do-the-math"><span class="header-section-number">17.8.1</span> Do the math</h3>
+<h2 data-number="18.8" id="exercises"><span class="header-section-number">18.8</span> Exercises</h2>
+<h3 data-number="18.8.1" id="do-the-math"><span class="header-section-number">18.8.1</span> Do the math</h3>
 <p>An observer’s evidence scores are identical for signal and noise trials, so their ROC curve follows the diagonal exactly. What is their AUC?</p>
-<h3 data-number="17.8.2" id="compute-auc-from-a-small-example"><span class="header-section-number">17.8.2</span> Compute AUC from a small example</h3>
+<h3 data-number="18.8.2" id="compute-auc-from-a-small-example"><span class="header-section-number">18.8.2</span> Compute AUC from a small example</h3>
 <p>Given evidence scores <code>[0.1, 0.4, 0.35, 0.8]</code> and labels <code>[0, 0, 1, 1]</code> (0 = noise, 1 = signal), trace through <code>roc_curve</code> by hand at each unique score threshold. Compute the AUC using the trapezoidal rule. Check your answer against the function.</p>
-<h3 data-number="17.8.3" id="effect-of-threshold-on-the-confusion-matrix"><span class="header-section-number">17.8.3</span> Effect of threshold on the confusion matrix</h3>
+<h3 data-number="18.8.3" id="effect-of-threshold-on-the-confusion-matrix"><span class="header-section-number">18.8.3</span> Effect of threshold on the confusion matrix</h3>
 <p>Using the synthetic data from <code>generate_sdt.py</code>, choose three thresholds: the 25th, 50th, and 75th percentile of all scores. For each threshold, compute HR and FAR and mark the corresponding point on the ROC curve. How does moving from a conservative threshold to a liberal threshold change the confusion matrix?</p>
-<h3 data-number="17.8.4" id="comparing-two-observers"><span class="header-section-number">17.8.4</span> Comparing two observers</h3>
+<h3 data-number="18.8.4" id="comparing-two-observers"><span class="header-section-number">18.8.4</span> Comparing two observers</h3>
 <p>Observer A has evidence scores that follow N(0, 1) for noise and N(1.0, 1) for signal. Observer B has scores that follow N(0, 1) for noise and N(2.0, 1) for signal. Generate 200 trials for each observer (RNG seed 7493418), compute their ROC curves and AUCs, and plot both curves on the same axes. Which observer has the higher AUC and why?</p>
-<h3 data-number="17.8.5" id="trapezoidal-approximation-error"><span class="header-section-number">17.8.5</span> Trapezoidal approximation error</h3>
+<h3 data-number="18.8.5" id="trapezoidal-approximation-error"><span class="header-section-number">18.8.5</span> Trapezoidal approximation error</h3>
 <p>The trapezoidal rule is exact only when the curve is piecewise linear. Generate a fine-grained ROC (1 000 signal and 1 000 noise trials) and a coarse-grained ROC (20 signal and 20 noise trials) from the same underlying score distributions. Compare their AUC estimates. How large is the approximation error in the coarse case?</p>
 </section>
 

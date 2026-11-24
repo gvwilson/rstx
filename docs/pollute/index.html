@@ -45,27 +45,27 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">4.1</span> The Problem</a></li>
-<li><a href="#representing-the-river-network" id="toc-representing-the-river-network"><span class="header-section-number">4.2</span> Representing the River Network</a></li>
-<li><a href="#the-transport-model" id="toc-the-transport-model"><span class="header-section-number">4.3</span> The Transport Model</a></li>
-<li><a href="#building-the-upstream-table" id="toc-building-the-upstream-table"><span class="header-section-number">4.4</span> Building the Upstream Table</a></li>
-<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">4.5</span> Running the Simulation</a></li>
-<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">4.6</span> Visualizing the Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">4.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">4.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">5.1</span> The Problem</a></li>
+<li><a href="#representing-the-river-network" id="toc-representing-the-river-network"><span class="header-section-number">5.2</span> Representing the River Network</a></li>
+<li><a href="#the-transport-model" id="toc-the-transport-model"><span class="header-section-number">5.3</span> The Transport Model</a></li>
+<li><a href="#building-the-upstream-table" id="toc-building-the-upstream-table"><span class="header-section-number">5.4</span> Building the Upstream Table</a></li>
+<li><a href="#running-the-simulation" id="toc-running-the-simulation"><span class="header-section-number">5.5</span> Running the Simulation</a></li>
+<li><a href="#visualizing-the-results" id="toc-visualizing-the-results"><span class="header-section-number">5.6</span> Visualizing the Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">5.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">5.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Pollutant Spread in a River Network</h1>
-<h2 data-number="4.1" id="the-problem"><span class="header-section-number">4.1</span> The Problem</h2>
+<h2 data-number="5.1" id="the-problem"><span class="header-section-number">5.1</span> The Problem</h2>
 <ul>
 <li>River networks branch and merge: pollutant introduced at one node is carried to all nodes reachable from it</li>
 <li>We want to track the concentration at each node over time to predict when downstream communities are affected</li>
 <li>This is a <a href="../glossary/index.html#flow_network">flow network</a> problem: a directed graph where edges carry material from node to node</li>
 </ul>
-<h2 data-number="4.2" id="representing-the-river-network"><span class="header-section-number">4.2</span> Representing the River Network</h2>
+<h2 data-number="5.2" id="representing-the-river-network"><span class="header-section-number">5.2</span> Representing the River Network</h2>
 <ul>
 <li>The network is a directed tree: water flows from headwaters to an outlet, with no cycles</li>
 <li>Nodes represent measurement stations or junctions; edges represent river reaches</li>
@@ -103,7 +103,7 @@ Wrong: undirected graphs support weighted edges just as directed graphs do.
 </dd>
 </dl>
 </div>
-<h2 data-number="4.3" id="the-transport-model"><span class="header-section-number">4.3</span> The Transport Model</h2>
+<h2 data-number="5.3" id="the-transport-model"><span class="header-section-number">5.3</span> The Transport Model</h2>
 <ul>
 <li>At each time step, a fraction <code>TRANSPORT_RATE</code> of the concentration at each non-sink node moves downstream</li>
 <li>The remaining fraction <span class="math inline">\((1 - \text{TRANSPORT\_RATE})\)</span> stays at the node (representing mixing and retention in the water column)</li>
@@ -115,7 +115,7 @@ Wrong: undirected graphs support weighted edges just as directed graphs do.
 <li>When a node drains into a single successor, <span class="math inline">\(f_k = \alpha\)</span></li>
 <li>When a node splits equally among two successors, each receives <span class="math inline">\(\alpha / 2\)</span></li>
 </ul>
-<h2 data-number="4.4" id="building-the-upstream-table"><span class="header-section-number">4.4</span> Building the Upstream Table</h2>
+<h2 data-number="5.4" id="building-the-upstream-table"><span class="header-section-number">5.4</span> Building the Upstream Table</h2>
 <ul>
 <li>Rather than building a matrix, we pre-compute the list of <span class="math inline">\((u, f)\)</span> pairs for each node <span class="math inline">\(v\)</span>, where <span class="math inline">\(u\)</span> is an upstream neighbour and <span class="math inline">\(f\)</span> is the fraction of <span class="math inline">\(u\)</span>’s concentration that flows into <span class="math inline">\(v\)</span></li>
 <li>This list is empty for headwater nodes (no upstream neighbours) and for isolated nodes</li>
@@ -151,13 +151,13 @@ Wrong: 1.0 would mean all concentration moves downstream and none is retained.
 </dd>
 </dl>
 </div>
-<h2 data-number="4.5" id="running-the-simulation"><span class="header-section-number">4.5</span> Running the Simulation</h2>
+<h2 data-number="5.5" id="running-the-simulation"><span class="header-section-number">5.5</span> Running the Simulation</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <ul>
 <li>For each time step and each node <span class="math inline">\(v\)</span>, <code>retained</code> is the fraction staying put and <code>inflow</code> is the sum of fractions arriving from upstream neighbours</li>
 <li>The loop saves a snapshot every <code>SNAPSHOT_INTERVAL</code> steps so that only a small table is stored</li>
 </ul>
-<h2 data-number="4.6" id="visualizing-the-results"><span class="header-section-number">4.6</span> Visualizing the Results</h2>
+<h2 data-number="5.6" id="visualizing-the-results"><span class="header-section-number">5.6</span> Visualizing the Results</h2>
 <div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-pollute-concentrations" class="quarto-float quarto-figure quarto-figure-center" alt="Line chart showing concentration at each node over 20 time steps. upstream_a decays from 1.0; junction and reach rise then fall; outlet rises monotonically.">
 <figure class="quarto-float quarto-float-fig">
@@ -165,11 +165,11 @@ Wrong: 1.0 would mean all concentration moves downstream and none is retained.
 <img src="pollute.svg" alt="Line chart showing concentration at each node over 20 time steps. upstream_a decays from 1.0; junction and reach rise then fall; outlet rises monotonically.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pollute-concentrations-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pulse travels from the spill site (upstream_a) through the network toward the outlet.
+Figure&nbsp;5.1: Concentration at each node over 20 time steps. The pollutant pulse travels from the spill site (upstream_a) through the network toward the outlet.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="4.7" id="testing"><span class="header-section-number">4.7</span> Testing</h2>
+<h2 data-number="5.7" id="testing"><span class="header-section-number">5.7</span> Testing</h2>
 <ul>
 <li>Mass conservation
 <ul>
@@ -325,17 +325,17 @@ Figure&nbsp;4.1: Concentration at each node over 20 time steps. The pollutant pu
 <span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"node </span><span class="sc">{</span>NODE_NAMES[u]<span class="sc">}</span><span class="ss"> sends </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">, expected </span><span class="sc">{</span>TRANSPORT_RATE<span class="sc">}</span><span class="ss">"</span></span>
 <span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
 <section class="exercises">
-<h2 data-number="4.8" id="exercises"><span class="header-section-number">4.8</span> Exercises</h2>
-<h3 data-number="4.8.1" id="do-the-math"><span class="header-section-number">4.8.1</span> Do the math</h3>
+<h2 data-number="5.8" id="exercises"><span class="header-section-number">5.8</span> Exercises</h2>
+<h3 data-number="5.8.1" id="do-the-math"><span class="header-section-number">5.8.1</span> Do the math</h3>
 <p>Starting from <span class="math inline">\(c = [1, 0, 0, 0, 0]\)</span> and using <code>TRANSPORT_RATE</code> = 0.4, what is the concentration at <code>junction</code> (node 2) after exactly 2 time steps? Give your answer to two decimal places.</p>
 <p>Hint: trace through the update rule step by step. At step 1, junction receives <span class="math inline">\(0.4 \times c_0[\text{upstream\_a}]\)</span> from upstream_a. At step 2, junction retains <span class="math inline">\(0.6\)</span> of its step-1 value and receives another inflow from upstream_a.</p>
-<h3 data-number="4.8.2" id="adding-a-tributary"><span class="header-section-number">4.8.2</span> Adding a tributary</h3>
+<h3 data-number="5.8.2" id="adding-a-tributary"><span class="header-section-number">5.8.2</span> Adding a tributary</h3>
 <p>Add a sixth node <code>tributary</code> (node 5) that joins at <code>reach</code> (node 3) with edge weight 2.0. Update <code>build_network</code> and rerun the simulation. Does <code>test_mass_conservation</code> still pass? Does the pollutant reach the outlet faster or slower?</p>
-<h3 data-number="4.8.3" id="variable-transport-rate"><span class="header-section-number">4.8.3</span> Variable transport rate</h3>
+<h3 data-number="5.8.3" id="variable-transport-rate"><span class="header-section-number">5.8.3</span> Variable transport rate</h3>
 <p>Replace the uniform <code>TRANSPORT_RATE</code> with per-edge rates stored in a dictionary keyed by <code>(src, dst)</code>. Assign higher rates to high-flow edges (e.g., rate proportional to edge weight / max edge weight). Modify <code>build_upstream</code> to use per-edge rates and update <code>simulate</code> accordingly. How does the arrival time at the outlet change compared to the uniform-rate model?</p>
-<h3 data-number="4.8.4" id="continuous-spill"><span class="header-section-number">4.8.4</span> Continuous spill</h3>
+<h3 data-number="5.8.4" id="continuous-spill"><span class="header-section-number">5.8.4</span> Continuous spill</h3>
 <p>Change the initial condition so that <code>upstream_a</code> receives a constant input of 0.1 concentration units per step (a continuous source rather than an instantaneous spill). Modify <code>simulate</code> to add this source term to <code>new_c[SPILL_NODE]</code> after each update step. Is mass still conserved? At what step does the outlet concentration stabilise?</p>
-<h3 data-number="4.8.5" id="two-spill-comparison"><span class="header-section-number">4.8.5</span> Two-spill comparison</h3>
+<h3 data-number="5.8.5" id="two-spill-comparison"><span class="header-section-number">5.8.5</span> Two-spill comparison</h3>
 <p>Run two separate simulations: one with the spill at <code>upstream_a</code> and one with a spill at <code>upstream_b</code>. Add the two concentration lists at each step. Compare the result to a single simulation that starts with concentration 1.0 at both headwater nodes simultaneously. Are the results identical? Explain why in terms of the structure of the update rule.</p>
 </section>
 

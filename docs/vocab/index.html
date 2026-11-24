@@ -45,21 +45,21 @@ document.addEventListener("DOMContentLoaded", function () {
     <div class="topnav-dropdown">
       <span class="topnav-item">Contents</span>
       <div class="topnav-menu"><ul>
-<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">3.1</span> The Problem</a></li>
-<li><a href="#type-token-ratio-and-mattr" id="toc-type-token-ratio-and-mattr"><span class="header-section-number">3.2</span> Type-Token Ratio and MATTR</a></li>
-<li><a href="#generating-synthetic-texts" id="toc-generating-synthetic-texts"><span class="header-section-number">3.3</span> Generating Synthetic Texts</a></li>
-<li><a href="#computing-ttr-and-mattr" id="toc-computing-ttr-and-mattr"><span class="header-section-number">3.4</span> Computing TTR and MATTR</a></li>
-<li><a href="#aggregating-richness-scores" id="toc-aggregating-richness-scores"><span class="header-section-number">3.5</span> Aggregating Richness Scores</a></li>
-<li><a href="#visualizing-results" id="toc-visualizing-results"><span class="header-section-number">3.6</span> Visualizing Results</a></li>
-<li><a href="#testing" id="toc-testing"><span class="header-section-number">3.7</span> Testing</a></li>
-<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">3.8</span> Exercises</a></li>
+<li><a href="#the-problem" id="toc-the-problem"><span class="header-section-number">4.1</span> The Problem</a></li>
+<li><a href="#type-token-ratio-and-mattr" id="toc-type-token-ratio-and-mattr"><span class="header-section-number">4.2</span> Type-Token Ratio and MATTR</a></li>
+<li><a href="#generating-synthetic-texts" id="toc-generating-synthetic-texts"><span class="header-section-number">4.3</span> Generating Synthetic Texts</a></li>
+<li><a href="#computing-ttr-and-mattr" id="toc-computing-ttr-and-mattr"><span class="header-section-number">4.4</span> Computing TTR and MATTR</a></li>
+<li><a href="#aggregating-richness-scores" id="toc-aggregating-richness-scores"><span class="header-section-number">4.5</span> Aggregating Richness Scores</a></li>
+<li><a href="#visualizing-results" id="toc-visualizing-results"><span class="header-section-number">4.6</span> Visualizing Results</a></li>
+<li><a href="#testing" id="toc-testing"><span class="header-section-number">4.7</span> Testing</a></li>
+<li><a href="#exercises" id="toc-exercises"><span class="header-section-number">4.8</span> Exercises</a></li>
 </ul></div>
     </div>
   </nav>
 </header>
 <main class="content"><header id="title-block-header" class="quarto-title-block"></header>
 <h1 class="title">Vocabulary Richness in Historical Texts</h1>
-<h2 data-number="3.1" id="the-problem"><span class="header-section-number">3.1</span> The Problem</h2>
+<h2 data-number="4.1" id="the-problem"><span class="header-section-number">4.1</span> The Problem</h2>
 <ul>
 <li>Lexical richness — how varied an author’s word choices are — is used in authorship studies, language acquisition research, and digital humanities.</li>
 <li>The simplest measure is the <a href="../glossary/index.html#type_token_ratio">type-token ratio</a> (TTR): the number of distinct word types divided by the total number of word tokens.</li>
@@ -92,7 +92,7 @@ Wrong: TTR is a purely statistical property of the token sequence and is indepen
 </dd>
 </dl>
 </div>
-<h2 data-number="3.2" id="type-token-ratio-and-mattr"><span class="header-section-number">3.2</span> Type-Token Ratio and MATTR</h2>
+<h2 data-number="4.2" id="type-token-ratio-and-mattr"><span class="header-section-number">4.2</span> Type-Token Ratio and MATTR</h2>
 <ul>
 <li>Given a text of <span class="math inline">\(T\)</span> tokens containing <span class="math inline">\(V\)</span> distinct word types, the TTR is:</li>
 </ul>
@@ -105,17 +105,17 @@ Wrong: TTR is a purely statistical property of the token sequence and is indepen
 <li>Each window has the same length <span class="math inline">\(w\)</span>, so each window TTR is on the same scale; averaging them gives a length-fair summary.</li>
 <li>When <span class="math inline">\(T \leq w\)</span> there is only one window and MATTR equals the global TTR.</li>
 </ul>
-<h2 data-number="3.3" id="generating-synthetic-texts"><span class="header-section-number">3.3</span> Generating Synthetic Texts</h2>
+<h2 data-number="4.3" id="generating-synthetic-texts"><span class="header-section-number">4.3</span> Generating Synthetic Texts</h2>
 <ul>
 <li>Word frequencies in natural language follow Zipf’s law: the <span class="math inline">\(k\)</span>-th most common word appears with frequency proportional to <span class="math inline">\(1/k\)</span>.</li>
 <li>Sampling from this distribution with different vocabulary sizes reproduces the richness differences between authors with limited and extensive lexicons.</li>
 </ul>
 <div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="3.4" id="computing-ttr-and-mattr"><span class="header-section-number">3.4</span> Computing TTR and MATTR</h2>
+<h2 data-number="4.4" id="computing-ttr-and-mattr"><span class="header-section-number">4.4</span> Computing TTR and MATTR</h2>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="3.5" id="aggregating-richness-scores"><span class="header-section-number">3.5</span> Aggregating Richness Scores</h2>
+<h2 data-number="4.5" id="aggregating-richness-scores"><span class="header-section-number">4.5</span> Aggregating Richness Scores</h2>
 <div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<h2 data-number="3.6" id="visualizing-results"><span class="header-section-number">3.6</span> Visualizing Results</h2>
+<h2 data-number="4.6" id="visualizing-results"><span class="header-section-number">4.6</span> Visualizing Results</h2>
 <div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-vocab-richness" class="quarto-float quarto-figure quarto-figure-center" alt="Bar chart with six bars. Author A bars are shortest, Author B bars are middle height, Author C bars are tallest.">
 <figure class="quarto-float quarto-float-fig">
@@ -123,11 +123,11 @@ Wrong: TTR is a purely statistical property of the token sequence and is indepen
 <img src="vocab-richness.svg" alt="Bar chart with six bars. Author A bars are shortest, Author B bars are middle height, Author C bars are tallest.">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-vocab-richness-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: MATTR for each text in the synthetic corpus. Author A (vocabulary 200), Author B (400), and Author C (800) produce texts with MATTR of roughly 0.63, 0.68, and 0.72 respectively, confirming that the metric distinguishes authors by lexical richness regardless of text length.
+Figure&nbsp;4.1: MATTR for each text in the synthetic corpus. Author A (vocabulary 200), Author B (400), and Author C (800) produce texts with MATTR of roughly 0.63, 0.68, and 0.72 respectively, confirming that the metric distinguishes authors by lexical richness regardless of text length.
 </figcaption>
 </figure>
 </div>
-<h2 data-number="3.7" id="testing"><span class="header-section-number">3.7</span> Testing</h2>
+<h2 data-number="4.7" id="testing"><span class="header-section-number">4.7</span> Testing</h2>
 <ul>
 <li>TTR edge cases
 <ul>
@@ -203,16 +203,16 @@ The fixed number of tokens in each local TTR window; must be short enough to kee
 </dl>
 </div>
 <section class="exercises">
-<h2 data-number="3.8" id="exercises"><span class="header-section-number">3.8</span> Exercises</h2>
-<h3 data-number="3.8.1" id="do-the-math"><span class="header-section-number">3.8.1</span> Do the math</h3>
+<h2 data-number="4.8" id="exercises"><span class="header-section-number">4.8</span> Exercises</h2>
+<h3 data-number="4.8.1" id="do-the-math"><span class="header-section-number">4.8.1</span> Do the math</h3>
 <p>A 100-word text contains 60 distinct word types. What is its type-token ratio?</p>
-<h3 data-number="3.8.2" id="effect-of-window-width"><span class="header-section-number">3.8.2</span> Effect of window width</h3>
+<h3 data-number="4.8.2" id="effect-of-window-width"><span class="header-section-number">4.8.2</span> Effect of window width</h3>
 <p>Compute MATTR for window widths of 10, 25, 50, 100, and 200 for one of the Author C texts. Plot MATTR against window width and explain why MATTR approaches the global TTR as the window grows toward the text length.</p>
-<h3 data-number="3.8.3" id="ttr-length-dependence"><span class="header-section-number">3.8.3</span> TTR length dependence</h3>
+<h3 data-number="4.8.3" id="ttr-length-dependence"><span class="header-section-number">4.8.3</span> TTR length dependence</h3>
 <p>Generate texts of 100, 200, 400, and 800 tokens from the same Zipfian distribution (vocabulary size 400). Plot both TTR and MATTR against text length on the same axes. At what length does the difference between TTR and MATTR become noticeable?</p>
-<h3 data-number="3.8.4" id="real-corpus-comparison"><span class="header-section-number">3.8.4</span> Real corpus comparison</h3>
+<h3 data-number="4.8.4" id="real-corpus-comparison"><span class="header-section-number">4.8.4</span> Real corpus comparison</h3>
 <p>Download two public-domain texts of very different lengths from Project Gutenberg. Tokenise each into lowercase words (strip punctuation), then compute TTR and MATTR with a 50-word window. Does MATTR correct the length bias visible in TTR?</p>
-<h3 data-number="3.8.5" id="hapax-legomena-rate"><span class="header-section-number">3.8.5</span> Hapax legomena rate</h3>
+<h3 data-number="4.8.5" id="hapax-legomena-rate"><span class="header-section-number">4.8.5</span> Hapax legomena rate</h3>
 <p>A hapax legomenon is a word that appears exactly once in a text. Implement <code>hapax_rate(words)</code> that returns the fraction of total tokens that are hapax legomena. Compare hapax rate with MATTR across the three synthetic authors and discuss whether hapax rate is also length-independent.</p>
 </section>
 
