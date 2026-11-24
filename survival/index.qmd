@@ -152,9 +152,13 @@ Naive bias
 
 </div>
 
-> The Kaplan-Meier estimator handles censored observations more carefully using conditional
-> probabilities at each event time, and does not assume an exponential distribution; it requires
-> more advanced statistics.
+::: {.note}
+
+The Kaplan-Meier estimator handles censored observations more carefully using conditional
+probabilities at each event time, and does not assume an exponential distribution; it requires
+more advanced statistics.
+
+:::
 
 <section class="exercises" markdown="1">
 
