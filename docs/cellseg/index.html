@@ -83,7 +83,18 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>This separation is chosen large enough that the midpoint intensity between two adjacent cells falls below the operating threshold (below)</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+<p><code class="sourceCode python">SEED <span class="op">=</span> <span class="dv">7493418</span>  <span class="co"># RNG seed</span>
+IMAGE_SIZE <span class="op">=</span> <span class="dv">128</span>  <span class="co"># pixels per side; kept small for fast tests</span>
+N_CELLS <span class="op">=</span> <span class="dv">8</span>  <span class="co"># number of cells to place</span>
+CELL_SIGMA <span class="op">=</span> <span class="dv">6</span>  <span class="co"># Gaussian half-width of each cell (pixels)</span>
+CELL_BRIGHTNESS <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># peak intensity (image values are in [0, 1])</span>
+NOISE_SCALE <span class="op">=</span> <span class="fl">0.15</span>  <span class="co"># std dev of additive Gaussian noise</span>
+<span class="co"># Minimum centre-to-centre separation that keeps midpoint intensity below the</span>
+<span class="co"># operating threshold of 0.5.  For two Gaussians of amplitude A and sigma σ</span>
+<span class="co"># separated by distance d, the midpoint value is 2A·exp(−d²/(8σ²)).</span>
+<span class="co"># Setting this below 0.5 gives d &gt; 2σ·sqrt(2·ln(4A)) = 2·6·sqrt(2·ln(4)) ≈ 19.8.</span>
+<span class="co"># We use 24 pixels for a comfortable margin.</span>
+MIN_SEPARATION <span class="op">=</span> <span class="dv">24</span></code> <code class="sourceCode python"></code></p>
 <h2 data-number="15.3" id="step-1-smoothing"><span class="header-section-number">15.3</span> Step 1: Smoothing</h2>
 <ul>
 <li>Raw images are noisy, so the <a href="../glossary/index.html#gaussian_filter">Gaussian filter</a> replaces each pixel with a weighted average of its neighbourhood, suppressing point-to-point fluctuations</li>
@@ -93,7 +104,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <ul>
 <li>With <span class="math inline">\(\sigma = 6\)</span> and <span class="math inline">\(\sigma_s = 2\)</span> this gives <span class="math inline">\(B_\text{smooth} = 36/40 = 0.90\)</span></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> smooth(image, sigma<span class="op">=</span>SMOOTH_SIGMA):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return the image after 2-D Gaussian smoothing with the given sigma."""</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> ndimage.gaussian_filter(image.astype(<span class="bu">float</span>), sigma<span class="op">=</span>sigma)</span></code></pre></div>
 <h2 data-number="15.4" id="step-2-thresholding-and-labelling"><span class="header-section-number">15.4</span> Step 2: Thresholding and Labelling</h2>
 <ul>
 <li>Pixels above a threshold form a <a href="../glossary/index.html#binary_mask">binary mask</a>
@@ -103,7 +116,26 @@ document.addEventListener("DOMContentLoaded", function () {
 <li><code>scipy.ndimage.label</code> assigns a unique integer to each connected component</li>
 <li>Components smaller than <code>MIN_CELL_SIZE</code> pixels are discarded to remove noise artefacts</li>
 </ul>
-<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+<p><code class="sourceCode python"><span class="kw">def</span> segment(image, threshold<span class="op">=</span>THRESHOLD, min_size<span class="op">=</span>MIN_CELL_SIZE):
+    <span class="co">"""Return (labeled, n_cells) from a smoothed image.</span>
+<span class="co">    Steps:</span>
+<span class="co">    1. Threshold to a binary mask (pixels above `threshold` → True).</span>
+<span class="co">    2. Label connected components with scipy.ndimage.label.</span>
+<span class="co">    3. Discard components smaller than `min_size` pixels.</span>
+<span class="co">    `labeled` is an integer array where 0 is background and 1..n_cells</span>
+<span class="co">    are the detected cells.  Components are re-numbered consecutively</span>
+<span class="co">    after size filtering so the label values are always contiguous.</span>
+<span class="co">    """</span>
+    binary <span class="op">=</span> image <span class="op">&gt;</span> threshold
+    raw_labeled, n_raw <span class="op">=</span> ndimage.label(binary)
+    <span class="co"># Filter by size and re-number labels.</span>
+    filtered <span class="op">=</span> np.zeros_like(raw_labeled)
+    new_label <span class="op">=</span> <span class="dv">1</span>
+    <span class="cf">for</span> old_label <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">1</span>, n_raw <span class="op">+</span> <span class="dv">1</span>):
+        <span class="cf">if</span> np.<span class="bu">sum</span>(raw_labeled <span class="op">==</span> old_label) <span class="op">&gt;=</span> min_size:
+            filtered[raw_labeled <span class="op">==</span> old_label] <span class="op">=</span> new_label
+            new_label <span class="op">+=</span> <span class="dv">1</span>
+    <span class="cf">return</span> filtered, new_label <span class="op">-</span> <span class="dv">1</span></code> <code class="sourceCode python"></code></p>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these cell-segmentation steps in the correct order.</p>
 <ol type="1">
@@ -124,7 +156,15 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>The operating threshold of 0.50 is approximately <span class="math inline">\(24\,\sigma_\text{noise,smooth}\)</span>, so the probability of a noise pixel exceeding it is vanishingly small</li>
 <li>The minimum cell separation (24 px) ensures the midpoint between two adjacent cells has intensity <span class="math inline">\(2 B \exp(-d^2 / 8\sigma^2) = 2 \exp(-2.25) \approx 0.21\)</span>, well below the threshold, so adjacent cells are never merged into one component</li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SMOOTH_SIGMA <span class="op">=</span> <span class="fl">2.0</span>  <span class="co"># std dev of the Gaussian smoothing kernel (pixels)</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># After smoothing, cell peak brightness ≈ σ²/(σ²+σ_s²) = 36/40 ≈ 0.90.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Threshold 0.5 sits comfortably below 0.90 and well above the smoothed-noise</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># ceiling (≈ 5× the smoothed-noise std dev of 0.021; see lesson for derivation).</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>THRESHOLD <span class="op">=</span> <span class="fl">0.50</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Expected cell area at the operating threshold ≈ π·r_t² where</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># r_t = sqrt(−2·ln(threshold/peak)) · σ_eff ≈ 1.085 · 6.32 ≈ 6.9 px, area ≈ 148 px².</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># MIN_CELL_SIZE is set well below this to keep real cells while removing noise blobs.</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>MIN_CELL_SIZE <span class="op">=</span> <span class="dv">30</span>  <span class="co"># minimum pixel count for a detected cell</span></span></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p><code>MIN_SEPARATION</code> is set to 24 pixels rather than a smaller value. Why?</p>
 <dl>
@@ -290,7 +330,7 @@ At threshold 0.05 pure noise must produce at least one false detection, showing 
 <h3 data-number="15.8.5" id="adaptive-thresholding"><span class="header-section-number">15.8.5</span> Adaptive thresholding</h3>
 <p>Real microscopy images often have uneven illumination: the background is brighter in some regions than others. Simulate this by adding a low-frequency gradient:</p>
 <p>
-<span class="math inline">\(G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}\)</span>
+<span class="math inline">\(G(x,y) = 0.2 \cdot x / \text{IMAGE_SIZE}\)</span>
 </p>
 <p>to the synthetic image before adding noise. Show that the global threshold misses cells in dark regions or over-detects in bright regions, then implement local thresholding (<code>scipy.ndimage.generic_filter</code> with a percentile-based local estimate) and show that it restores accurate cell counts.</p>
 </section>

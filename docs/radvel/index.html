@@ -83,7 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
 <ul>
 <li>Observation times are drawn uniformly at random across the time baseline to simulate a realistic (unevenly spaced) survey schedule</li>
 </ul>
-<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+<p><code class="sourceCode python">SEED <span class="op">=</span> <span class="dv">7493418</span>  <span class="co"># RNG seed</span>
+PERIOD <span class="op">=</span> <span class="fl">10.0</span>  <span class="co"># orbital period (days)</span>
+AMPLITUDE <span class="op">=</span> <span class="fl">50.0</span>  <span class="co"># radial-velocity semi-amplitude (m/s)</span>
+PHASE <span class="op">=</span> <span class="fl">0.3</span>  <span class="co"># initial orbital phase (radians)</span>
+V_SYSTEMIC <span class="op">=</span> <span class="fl">0.0</span>  <span class="co"># centre-of-mass (systemic) velocity (m/s)</span>
+NOISE_SCALE <span class="op">=</span> <span class="fl">10.0</span>  <span class="co"># per-observation measurement noise (m/s); 20% of AMPLITUDE</span>
+N_POINTS <span class="op">=</span> <span class="dv">50</span>  <span class="co"># number of observations</span>
+T_MAX <span class="op">=</span> <span class="fl">30.0</span>  <span class="co"># time baseline (days); spans 3 complete periods</span></code> <code class="sourceCode python"></code></p>
 <h2 data-number="29.4" id="fitting-the-model"><span class="header-section-number">29.4</span> Fitting the Model</h2>
 <ul>
 <li><code>scipy.optimize.curve_fit</code> minimises the sum of squared residuals between the data and <code>model_rv</code>, returning the best-fit parameters and their <a href="../glossary/index.html#covariance_matrix">covariance matrix</a></li>
@@ -94,7 +101,31 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>The period guess assumes roughly three cycles are visible in the baseline</li>
 </ul></li>
 </ul>
-<p><code class="sourceCode python"></code> <code class="sourceCode python"></code></p>
+<p><code class="sourceCode python"><span class="kw">def</span> model_rv(t, amplitude, period, phase, v_sys):
+    <span class="co">"""Sinusoidal radial-velocity model for a single planet.</span>
+<span class="co">    v(t) = amplitude * sin(2π t / period + phase) + v_sys</span>
+<span class="co">    """</span>
+    <span class="cf">return</span> amplitude <span class="op">*</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> t <span class="op">/</span> period <span class="op">+</span> phase) <span class="op">+</span> v_sys</code> <code class="sourceCode python"><span class="kw">def</span> fit_sinusoid(t, rv):
+    <span class="co">"""Fit model_rv to the data and return (params, errors).</span>
+<span class="co">    params = [amplitude, period, phase, v_sys]</span>
+<span class="co">    errors = one-standard-deviation uncertainties from the covariance matrix</span>
+<span class="co">    Initial guesses:</span>
+<span class="co">      amplitude ← std(rv) * sqrt(2)   (std of a sinusoid = K / sqrt(2))</span>
+<span class="co">      period    ← time span / 3       (assumes ≈3 cycles are visible)</span>
+<span class="co">      phase     ← 0</span>
+<span class="co">      v_sys     ← mean(rv)</span>
+<span class="co">    Bounds keep amplitude positive and period within [0.5 day, full baseline].</span>
+<span class="co">    """</span>
+    amp_guess <span class="op">=</span> np.std(rv) <span class="op">*</span> np.sqrt(<span class="dv">2</span>)
+    period_guess <span class="op">=</span> (t[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> t[<span class="dv">0</span>]) <span class="op">/</span> <span class="fl">3.0</span>
+    p0 <span class="op">=</span> [amp_guess, period_guess, <span class="fl">0.0</span>, np.mean(rv)]
+    bounds <span class="op">=</span> (
+        [<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="op">-</span>np.pi, <span class="op">-</span>np.inf],
+        [np.inf, t[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> t[<span class="dv">0</span>], np.pi, np.inf],
+    )
+    popt, pcov <span class="op">=</span> curve_fit(model_rv, t, rv, p0<span class="op">=</span>p0, bounds<span class="op">=</span>bounds, max_nfev<span class="op">=</span><span class="dv">10_000</span>)
+    perr <span class="op">=</span> np.sqrt(np.diag(pcov))
+    <span class="cf">return</span> popt, perr</code></p>
 <div class="forma-matching" data-lang="en" data-markdown="1">
 <p>Match each initial-guess formula to the property of a sinusoid it exploits.</p>
 <table class="caption-top">

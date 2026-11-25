@@ -44,7 +44,7 @@ Because Dijkstra's algorithm always prefers shorter paths.
     -   0 is the lowest point in the landscape, 1 is the highest
 -   Moving from cell $A$ to an adjacent cell $B$ incurs an edge cost:
 
-$$\text{edge\_cost}(A, B) = \frac{\text{elev}(A) + \text{elev}(B)}{2} \times d(A, B)$$
+$$\text{edge_cost}(A, B) = \frac{\text{elev}(A) + \text{elev}(B)}{2} \times d(A, B)$$
 
 -   Averaging the endpoint elevations penalises entering a ridge from a valley proportionally
     (and vice versa).

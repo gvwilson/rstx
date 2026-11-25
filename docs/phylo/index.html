@@ -93,7 +93,18 @@ Wrong: this would require N=6 leaves.
 <li>A <a href="../glossary/index.html#distance_matrix">distance matrix</a> <span class="math inline">\(D\)</span> stores the evolutionary distance between every pair of taxa</li>
 <li>Distances are estimated from aligned sequences: the fraction of positions that differ, corrected for multiple substitutions</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>TAXA <span class="op">=</span> [<span class="st">"Bat"</span>, <span class="st">"Chimp"</span>, <span class="st">"Human"</span>, <span class="st">"Gorilla"</span>]</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># True branch lengths from the reference tree used to generate distances.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># The tree is: ((Bat:0.6, Chimp:0.8):1.2, (Human:0.4, Gorilla:0.5))</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Pairwise distances are sums of branches on the path between each pair.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>_BRANCH <span class="op">=</span> {</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Bat"</span>, <span class="st">"Chimp"</span>): <span class="fl">0.6</span> <span class="op">+</span> <span class="fl">0.8</span>,       <span class="co"># 1.4</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Bat"</span>, <span class="st">"Human"</span>): <span class="fl">0.6</span> <span class="op">+</span> <span class="fl">1.2</span> <span class="op">+</span> <span class="fl">0.4</span>, <span class="co"># 2.2</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Bat"</span>, <span class="st">"Gorilla"</span>): <span class="fl">0.6</span> <span class="op">+</span> <span class="fl">1.2</span> <span class="op">+</span> <span class="fl">0.5</span>, <span class="co"># 2.3</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Chimp"</span>, <span class="st">"Human"</span>): <span class="fl">0.8</span> <span class="op">+</span> <span class="fl">1.2</span> <span class="op">+</span> <span class="fl">0.4</span>, <span class="co"># 2.4</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Chimp"</span>, <span class="st">"Gorilla"</span>): <span class="fl">0.8</span> <span class="op">+</span> <span class="fl">1.2</span> <span class="op">+</span> <span class="fl">0.5</span>, <span class="co"># 2.5</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    (<span class="st">"Human"</span>, <span class="st">"Gorilla"</span>): <span class="fl">0.4</span> <span class="op">+</span> <span class="fl">0.5</span>,   <span class="co"># 0.9</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>}</span></code></pre></div>
 <p>The six pairwise distances for our four-taxon example:</p>
 <table class="caption-top">
 <thead>
@@ -181,7 +192,36 @@ Wrong: whether a tree is rooted or unrooted is independent of the clock assumpti
 </dl>
 </div>
 <h2 data-number="12.5" id="displaying-the-tree"><span class="header-section-number">12.5</span> Displaying the Tree</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> draw_tree(edges, taxa, filename):</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Save a rooted tree diagram to `filename`.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Leaf nodes (members of `taxa`) are drawn in blue; internal nodes in grey.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    Edge labels show branch lengths rounded to two decimal places.</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    G <span class="op">=</span> nx.DiGraph()</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> parent, child, length <span class="kw">in</span> edges:</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        G.add_edge(parent, child, weight<span class="op">=</span><span class="bu">round</span>(length, <span class="dv">4</span>))</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Use a simple hierarchical layout via networkx spring layout.</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    pos <span class="op">=</span> nx.spring_layout(G.to_undirected(), seed<span class="op">=</span><span class="dv">7</span>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    leaf_nodes <span class="op">=</span> [nd <span class="cf">for</span> nd <span class="kw">in</span> G.nodes() <span class="cf">if</span> nd <span class="kw">in</span> taxa]</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    internal_nodes <span class="op">=</span> [nd <span class="cf">for</span> nd <span class="kw">in</span> G.nodes() <span class="cf">if</span> nd <span class="kw">not</span> <span class="kw">in</span> taxa]</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>    fig, ax <span class="op">=</span> plt.subplots(figsize<span class="op">=</span>(<span class="dv">6</span>, <span class="dv">5</span>))</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_nodes(</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>        G, pos, nodelist<span class="op">=</span>leaf_nodes, node_color<span class="op">=</span><span class="st">"steelblue"</span>, node_size<span class="op">=</span><span class="dv">600</span>, ax<span class="op">=</span>ax</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_nodes(</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        G, pos, nodelist<span class="op">=</span>internal_nodes, node_color<span class="op">=</span><span class="st">"lightgrey"</span>, node_size<span class="op">=</span><span class="dv">400</span>, ax<span class="op">=</span>ax</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_labels(G, pos, ax<span class="op">=</span>ax, font_size<span class="op">=</span><span class="dv">9</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_edges(G, pos, ax<span class="op">=</span>ax, arrows<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>    edge_labels <span class="op">=</span> {(p, c): <span class="ss">f"</span><span class="sc">{</span>length<span class="sc">:.2f}</span><span class="ss">"</span> <span class="cf">for</span> p, c, length <span class="kw">in</span> edges}</span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    nx.draw_networkx_edge_labels(</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>        G, pos, edge_labels<span class="op">=</span>edge_labels, font_size<span class="op">=</span><span class="dv">7</span>, ax<span class="op">=</span>ax</span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>    ax.set_title(<span class="st">"UPGMA tree"</span>)</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>    ax.axis(<span class="st">"off"</span>)</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>    plt.tight_layout()</span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>    plt.savefig(filename)</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>    plt.close(fig)</span></code></pre></div>
 <div id="fig-phylo-tree" class="quarto-float quarto-figure quarto-figure-center" alt="Rooted UPGMA tree for Bat, Chimp, Human, Gorilla with branch lengths labelled.">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-phylo-tree-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

@@ -13,7 +13,6 @@ format:
 book:
   title: "Research Software Testing by Example"
   repo-url: "https://github.com/gvwilson/rstx"
-  repo-actions: [edit, source, issue]
   chapters:
     - index.qmd
     - intro/index.qmd
