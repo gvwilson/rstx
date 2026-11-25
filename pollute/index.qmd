@@ -44,14 +44,14 @@ Edge weights cannot be stored on undirected graphs.
 ## The Transport Model
 
 -   At each time step, a fraction `TRANSPORT_RATE` of the concentration at each non-sink node moves downstream
--   The remaining fraction $(1 - \text{TRANSPORT_RATE})$ stays at the node
+-   The remaining fraction $(1 - \text{TRANSPORT\_RATE})$ stays at the node
     (representing mixing and retention in the water column)
 -   For a node $v$ with upstream neighbours $u_1, u_2, \ldots$ each contributing fraction $f_k$,
     the update rule is:
 
 $$c_v^{n+1} = (1 - \alpha)\,c_v^n + \sum_k f_k\,c_{u_k}^n$$
 
--   $\alpha = \text{TRANSPORT_RATE}$
+-   $\alpha = \text{TRANSPORT\_RATE}$
     and $f_k = \alpha / \text{(number of downstream neighbours of } u_k\text{)}$
 -   When a node drains into a single successor, $f_k = \alpha$
 -   When a node splits equally among two successors, each receives $\alpha / 2$
@@ -151,8 +151,8 @@ Starting from $c = [1, 0, 0, 0, 0]$ and using `TRANSPORT_RATE` = 0.4, what is th
 Give your answer to two decimal places.
 
 Hint: trace through the update rule step by step.
-At step 1, junction receives $0.4 \times c_0[\text{upstream_a}]$ from upstream_a.
-At step 2, junction retains $0.6$ of its step-1 value and receives another inflow from upstream_a.
+At step 1, junction receives $0.4 \times c_0[\text{upstream\_a}]$ from `upstream_a`.
+At step 2, junction retains $0.6$ of its step-1 value and receives another inflow from `upstream_a`.
 
 ### Adding a tributary
 

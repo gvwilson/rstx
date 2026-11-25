@@ -411,7 +411,7 @@ The matrix must have one extra row and column for the gap-penalty border. An off
 </dd>
 <dt>Identical sequences</dt>
 <dd>
-Aligning a sequence with itself must match at every position with no gaps or mismatches. The score is exactly <span class="math inline">\(\text{len} \times \text{MATCH_SCORE}\)</span>. This test also checks that the aligned strings are returned in the correct order (not reversed).
+Aligning a sequence with itself must match at every position with no gaps or mismatches. The score is exactly <span class="math inline">\(\text{len} \times \text{MATCH\_SCORE}\)</span>. This test also checks that the aligned strings are returned in the correct order (not reversed).
 </dd>
 <dt>Mismatch in alignment</dt>
 <dd>
@@ -423,7 +423,7 @@ Aligning a sequence with itself must match at every position with no gaps or mis
 </dd>
 <dt>All mismatches</dt>
 <dd>
-When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALTY</code>, the optimal global alignment still pairs all characters (no gaps), since introducing a gap would not improve the score. Score = <span class="math inline">\(\text{len} \times \text{MISMATCH_PENALTY}\)</span>. Note the difference from Smith-Waterman, which would return an empty alignment with score 0.
+When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALTY</code>, the optimal global alignment still pairs all characters (no gaps), since introducing a gap would not improve the score. Score = <span class="math inline">\(\text{len} \times \text{MISMATCH\_PENALTY}\)</span>. Note the difference from Smith-Waterman, which would return an empty alignment with score 0.
 </dd>
 </dl>
 <div class="sourceCode" id="cb9"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> align <span class="im">import</span> (</span>

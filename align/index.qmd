@@ -205,7 +205,7 @@ Border initialization
 
 Identical sequences
 :   Aligning a sequence with itself must match at every position with no gaps or mismatches.
-    The score is exactly $\text{len} \times \text{MATCH_SCORE}$.
+    The score is exactly $\text{len} \times \text{MATCH\_SCORE}$.
     This test also checks that the aligned strings are returned in the correct order (not reversed).
 
 Mismatch in alignment
@@ -223,7 +223,7 @@ All mismatches
 :   When every character pair is a mismatch and `GAP_PENALTY == MISMATCH_PENALTY`,
     the optimal global alignment still pairs all characters (no gaps),
     since introducing a gap would not improve the score.
-    Score = $\text{len} \times \text{MISMATCH_PENALTY}$.
+    Score = $\text{len} \times \text{MISMATCH\_PENALTY}$.
     Note the difference from Smith-Waterman, which would return an empty alignment with score 0.
 
 {{< inc align/test_align.py >}}

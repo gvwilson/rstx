@@ -62,6 +62,7 @@ Match each physical quantity to its definition.
     -   So no averaging formula is needed at layer interfaces
 
 {{< inc heatwall/heatwall.py mark=constants >}}
+
 {{< inc heatwall/heatwall.py mark=grid >}}
 
 <div class="forma-ordering" data-lang="en" markdown="1">

@@ -22,6 +22,7 @@ $$I(x, y) = B \exp\!\left(-\frac{(x - x_c)^2 + (y - y_c)^2}{2\sigma^2}\right)$$
         the midpoint intensity between two adjacent cells falls below the operating threshold (below)
 
 {{< inc cellseg/generate_image.py mark=constants >}}
+
 {{< inc cellseg/generate_image.py mark=make-image >}}
 
 ## Step 1: Smoothing
@@ -46,7 +47,8 @@ $$B_\text{smooth} = B \cdot \frac{\sigma^2}{\sigma^2 + \sigma_s^2}$$
 -   Components smaller than `MIN_CELL_SIZE` pixels are discarded to remove noise artefacts
 
 {{< inc cellseg/cellseg.py mark=segment >}}
-{{< inc cellseg/cellseg.py mark=cell-sizes >}}
+
+{{< inc cellseg/cellseg.py mark=cellsizes >}}
 
 <div class="forma-ordering" data-lang="en" markdown="1">
 
@@ -204,7 +206,7 @@ identify the noise level at which the pipeline begins to fail consistently.
 Real microscopy images often have uneven illumination: the background is brighter in some
 regions than others.  Simulate this by adding a low-frequency gradient:
 
-<p>$G(x,y) = 0.2 \cdot x / \text{IMAGE_SIZE}$</p>
+<p>$G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}$</p>
 
 to the synthetic image before adding noise.
 Show that the global threshold misses cells in dark regions or over-detects in bright

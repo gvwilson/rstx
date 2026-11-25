@@ -82,7 +82,7 @@ $$\kappa = \frac{P_o - P_e}{1 - P_e}$$
     and otherwise they draw independently
 -   With $K$ categories this gives:
 
-$$P_o = \text{agree_prob} + \frac{1 - \text{agree_prob}}{K}$$
+$$P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}$$
 
 -   When marginals are uniform ($p_i = q_i = 1/K$):
     $P_e = K \cdot (1/K)^2 = 1/K$

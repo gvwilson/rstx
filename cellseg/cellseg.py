@@ -53,12 +53,12 @@ def segment(image, threshold=THRESHOLD, min_size=MIN_CELL_SIZE):
 # mccole: /segment
 
 
-# mccole: cell-sizes
+# mccole: cellsizes
 def cell_sizes(labeled):
     """Return an array of pixel counts, one per detected cell."""
     n = labeled.max()
     return np.array([np.sum(labeled == i) for i in range(1, n + 1)])
-# mccole: /cell-sizes
+# mccole: /cellsizes
 
 
 # mccole: plot
