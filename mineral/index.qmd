@@ -19,6 +19,7 @@
 -   The two distributions overlap because real mineral classification is never perfectly clean
 
 {{< inc mineral/generate_mineral.py mark=constants >}}
+
 {{< inc mineral/generate_mineral.py mark=make-data >}}
 
 ## The Logistic Regression Model
@@ -91,6 +92,7 @@ $$x_1 = -\frac{w_0 x_0 + b}{w_1}$$
     the boundary must be mapped back to original units before plotting
 
 {{< inc mineral/mineral.py mark=boundary >}}
+
 {{< inc mineral/mineral.py mark=predict >}}
 
 ![Training data for 120 samples (80% of 160 total). The dashed line is the learned decision boundary. The two classes are well separated in SiO₂ but overlap slightly in Al₂O₃.](mineral.svg){#fig-mineral-boundary fig-alt="Scatter plot of SiO₂ vs Al₂O₃ with felsic (blue circles) and mafic (red triangles) training samples and a dashed decision boundary."}

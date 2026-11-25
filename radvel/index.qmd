@@ -33,6 +33,7 @@ $$K = \left(\frac{2\pi G}{P}\right)^{1/3} \frac{M_p \sin i}{(M_\star + M_p)^{2/3
     to simulate a realistic (unevenly spaced) survey schedule
 
 {{< inc radvel/generate_rv.py mark=constants >}}
+
 {{< inc radvel/generate_rv.py mark=make-rv >}}
 
 ## Fitting the Model
@@ -45,6 +46,7 @@ $$K = \left(\frac{2\pi G}{P}\right)^{1/3} \frac{M_p \sin i}{(M_\star + M_p)^{2/3
     -   The period guess assumes roughly three cycles are visible in the baseline
 
 {{< inc radvel/radvel.py mark=model >}}
+
 {{< inc radvel/radvel.py mark=fit >}}
 
 <div class="forma-matching" data-lang="en" markdown="1">

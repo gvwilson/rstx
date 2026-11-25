@@ -17,6 +17,7 @@ $$I(m) = \sum_k h_k \exp\!\left(-\frac{(m - \mu_k)^2}{2\sigma_k^2}\right) + \var
 -   Intensities are clipped to zero because a negative ion count has no physical meaning
 
 {{< inc massspec/generate_spectrum.py mark=constants >}}
+
 {{< inc massspec/generate_spectrum.py mark=make-spectrum >}}
 
 ## Smoothing
