@@ -175,8 +175,6 @@ Because it produces a rooted tree rather than an unrooted tree.
 
 {{< inc phylo/test_generate_tree.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -216,5 +214,3 @@ Verify that the exact matrix passes and a noisy matrix fails.
 Extend `make_distance_matrix` to accept an arbitrary Newick-format string such as
 `"((A:0.1,B:0.2):0.3,(C:0.4,D:0.5):0.6)"` and compute the full distance matrix from it.
 Use this to generate a 10-taxon example and confirm that UPGMA recovers the correct topology.
-
-</section>

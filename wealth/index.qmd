@@ -177,8 +177,6 @@ Wealth conservation invariant
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -215,5 +213,3 @@ own wealth, both agents contribute a fraction of their own wealth to a pool and 
 is split 50/50.
 Show that total wealth is still conserved under this rule, then compare the resulting
 Gini trajectory to the original yardsale model.
-
-</section>

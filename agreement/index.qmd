@@ -168,8 +168,6 @@ Expected agreement P_e
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -207,5 +205,3 @@ determined by chance.
 Generate a dataset where rater A's marginals are highly skewed (e.g., 70%
 in category 0) and compute kappa.
 How does a skewed marginal affect kappa relative to percent agreement?
-
-</section>

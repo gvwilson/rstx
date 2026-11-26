@@ -171,8 +171,6 @@ Emergent segregation
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -208,5 +206,3 @@ Plot mean cluster size over time alongside the satisfaction rate.
 Add a `converged` parameter to `run` that stops early when fewer than 1% of
 agents are dissatisfied.
 How many steps are needed to converge at threshold 0.3 for a 100x100 grid?
-
-</section>

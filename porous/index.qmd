@@ -113,8 +113,6 @@ Marking after popping would cause the algorithm to miss cells in the last row.
 
 {{< inc porous/test_porous.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -150,5 +148,3 @@ Instead of returning only a boolean, modify `percolates` to return the sizes of 
 found during the DFS.
 At $p = p_c$, the largest cluster grows as a power law of the grid size $N$.
 Run sweeps at several grid sizes and plot the largest cluster size vs. $N$ near the threshold.
-
-</section>

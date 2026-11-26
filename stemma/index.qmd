@@ -258,8 +258,6 @@ UPGMA
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -306,5 +304,3 @@ Add a fifth manuscript E whose sequence is a 50/50 mix of A and C.
 Compute the distance matrix for all five manuscripts and run UPGMA.
 Does the algorithm detect the problem, and if so, how is it visible in the
 recovered tree?
-
-</section>

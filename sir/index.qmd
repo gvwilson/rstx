@@ -137,8 +137,6 @@ Put these steps in the correct order to generate a synthetic SIR outbreak with P
 
 {{< inc sir/test_sir.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -177,5 +175,3 @@ Vary $\beta$ from 0.1 to 0.5 (holding $\gamma = 0.1$ fixed) and plot the epidemi
 peak timing as functions of $\beta$.
 At what value of $\beta$ does the epidemic just barely cross the threshold (peak in $I$ is very small)?
 How close is this to the theoretical threshold $\beta = \gamma$?
-
-</section>

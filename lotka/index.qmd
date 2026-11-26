@@ -141,8 +141,6 @@ Period matches linearised estimate
 
 {{< inc lotka/test_lotka.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Starting at the equilibrium
@@ -177,5 +175,3 @@ Run the simulation for `T_MAX` time units and check whether the population traje
 nearly closed loop.
 At what tolerance does the loop visibly fail to close?
 What does this tell you about the relationship between solver accuracy and the appearance of the trajectory?
-
-</section>

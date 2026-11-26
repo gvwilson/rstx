@@ -168,8 +168,6 @@ Gradient descent
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -206,5 +204,3 @@ report the confusion matrix.  Show that the model achieves high overall accuracy
 predicting felsic almost everywhere, then implement class-weighted cross-entropy loss
 (multiply the mafic term by `n_felsic / n_mafic`) and show that it recovers better
 detection of the minority class.
-
-</section>

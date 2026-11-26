@@ -255,8 +255,6 @@ Cluster centroid
 -   DBSCAN handles clusters of irregular shape and density without discretizing space
 -   It requires a more advanced algorithms course.
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -294,5 +292,3 @@ At what separation distance do they first appear as a single cluster?
 For each recovered cluster, compute the Euclidean distance between its centroid
 and the nearest planted cluster center.
 Is the error consistent across all four clusters, or does it vary with cluster size?
-
-</section>

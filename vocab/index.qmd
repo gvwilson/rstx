@@ -121,8 +121,6 @@ Window width (MATTR)
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -158,5 +156,3 @@ Implement `hapax_rate(words)` that returns the fraction of total tokens that are
 hapax legomena.
 Compare hapax rate with MATTR across the three synthetic authors and discuss
 whether hapax rate is also length-independent.
-
-</section>

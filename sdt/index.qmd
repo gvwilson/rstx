@@ -209,8 +209,6 @@ Area under the curve (AUC)
 -   The threshold-sweep ROC presented in this lesson makes no distributional assumptions
     -   It works for any numeric evidence score and any underlying distribution
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -253,5 +251,3 @@ coarse-grained ROC (20 signal and 20 noise trials) from the same underlying
 score distributions.
 Compare their AUC estimates.
 How large is the approximation error in the coarse case?
-
-</section>

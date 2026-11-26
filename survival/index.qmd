@@ -160,8 +160,6 @@ more advanced statistics.
 
 :::
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -197,5 +195,3 @@ Generate two groups with true rates $\lambda_1 = 0.04$ and $\lambda_2 = 0.06$.
 Estimate the corrected rate for each group and test whether the ratio $\hat{\lambda}_1 / \hat{\lambda}_2$
 differs significantly from 1 using the fact that $\ln(\hat{\lambda}_1 / \hat{\lambda}_2)$ is
 approximately normal with standard error $\sqrt{1/d_1 + 1/d_2}$.
-
-</section>

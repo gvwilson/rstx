@@ -192,8 +192,6 @@ Break detection rule
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -237,5 +235,3 @@ The scaled statistic exceeds 1.36 with probability 5% under the null hypothesis 
 break (Brown-Durbin-Evans critical value).
 Apply this threshold to the synthetic data and report whether the break is detected
 at the 5% level.
-
-</section>

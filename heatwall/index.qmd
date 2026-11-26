@@ -226,8 +226,6 @@ Jacobi iteration
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -284,5 +282,3 @@ Let the inner slab have thickness $t$ ($0 \le t \le 0.05$ m) and the outer slab 
 Compute the heat flux for each split and show that the total resistance — and therefore
 the heat flux — is independent of how the insulation is distributed.
 Explain this result using the series-resistance formula.
-
-</section>

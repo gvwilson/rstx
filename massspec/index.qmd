@@ -169,8 +169,6 @@ Pure noise
 
 {{< inc massspec/test_massspec.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Savitzky-Golay filter
@@ -203,5 +201,3 @@ Use `make_pure_noise` to generate 200 noise-only spectra and `make_spectrum` to 
 200 signal spectra.  For each, record whether the detector finds at least one peak.
 Sweep the threshold from 0.01 to 0.30 and plot the ROC curve (true positive rate vs.
 false positive rate).  Report the threshold that maximises the F1 score.
-
-</section>

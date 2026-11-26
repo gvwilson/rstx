@@ -156,8 +156,6 @@ Edge cost (terrain)
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -193,5 +191,3 @@ analysis on each.
 For each terrain, compute the total path cost and the fraction of cells on
 the path that lie below the mean elevation.
 Does a lower mean elevation on the path reliably predict lower total cost?
-
-</section>

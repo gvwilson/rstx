@@ -148,8 +148,6 @@ Spike
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -191,5 +189,3 @@ in just one.  Combine the two individual z-scores into a single multivariate sco
 (e.g. the Euclidean norm of the two z-score vectors) and show that it improves detection
 of anomalies that affect both signals simultaneously while maintaining the per-signal
 false-positive rate.
-
-</section>

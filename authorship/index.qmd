@@ -171,8 +171,6 @@ Attribution margin
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -211,5 +209,3 @@ Create a fourth author whose preferred character set overlaps 50% with Author A'
 Does the attribution method correctly distinguish Author A from the impostor?
 What similarity score threshold would you set to report "uncertain" rather than
 making a forced choice?
-
-</section>

@@ -183,8 +183,6 @@ assert r <= 0.5
 
 {{< inc diffusion/test_diffusion.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -223,5 +221,3 @@ Measure the new maximum error in `test_matches_analytical` at $n = 20$ steps.
 The truncation error scales as $O(\Delta t + \Delta x^2)$; with twice as many points,
 $\Delta x$ halves and $\Delta t$ (derived from $\Delta x^2$) quarters.
 Is the observed reduction in error consistent with this prediction?
-
-</section>

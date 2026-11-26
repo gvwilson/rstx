@@ -151,8 +151,6 @@ Fractional amplitude uncertainty $\sigma_K / K$
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -194,5 +192,3 @@ Generate 200 data sets for each of ten noise levels from 2 to 50 m/s.
 For each data set, run `fit_sinusoid` and classify the result as a detection when
 $\sigma_K / K < 0.1$.  Plot the detection fraction as a function of noise level and
 identify the noise floor at which detection drops below 50%.
-
-</section>

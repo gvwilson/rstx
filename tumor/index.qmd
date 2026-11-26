@@ -144,8 +144,6 @@ Confusion matrix
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -186,5 +184,3 @@ Extend the binary classifier to three classes (benign, low-grade malignant, high
 Generate three Gaussian clusters and implement softmax regression using the one-vs-rest
 strategy: train one binary classifier per class and predict the class with the highest
 predicted probability.  Report the three-class confusion matrix.
-
-</section>

@@ -228,8 +228,6 @@ All mismatches
 
 {{< inc align/test_align.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -276,5 +274,3 @@ Look up the three-matrix formulation of Needleman-Wunsch with affine gaps
 (using matrices $H$, $E$, $F$) and implement it.
 Verify that with $g_o = -3$ and $g_e = -1$ the alignment of `"ACCCGT"` with `"AGT"`
 produces a single gap of length 3 rather than three individual gaps.
-
-</section>

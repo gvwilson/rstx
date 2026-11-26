@@ -140,8 +140,6 @@ TRANSPORT_RATE
 
 {{< inc pollute/test_pollute.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -183,5 +181,3 @@ Add the two concentration lists at each step.
 Compare the result to a single simulation that starts with concentration 1.0 at both headwater nodes simultaneously.
 Are the results identical?
 Explain why in terms of the structure of the update rule.
-
-</section>

@@ -151,8 +151,6 @@ Exactly 50%
 
 {{< inc flood/test_flood.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -196,5 +194,3 @@ Fit the log-normal distribution to the maxima and plot the result on a normal
 probability plot.
 How does the quality of the fit compare to the case where the data were drawn
 directly from a log-normal distribution?
-
-</section>

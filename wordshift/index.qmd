@@ -146,8 +146,6 @@ OLS slope
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -191,5 +189,3 @@ Download word-frequency data for two contrasting words from a public corpus such
 Google Ngrams.
 Normalize by total token count per year, aggregate to decades, and apply `linear_trend`.
 Does the recovered slope match the visual trend in the trajectory plot?
-
-</section>

@@ -167,8 +167,6 @@ Leave-one-out cross-validation
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -204,5 +202,3 @@ Modify the generator to add Gaussian noise with standard deviation 0.1 to each
 station's observed value.
 How does the LOO-CV MAE change compared to the noise-free case?
 Is there an optimal $p$ that reduces the impact of measurement noise?
-
-</section>

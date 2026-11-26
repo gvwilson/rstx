@@ -143,8 +143,6 @@ Residual standard error
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -184,5 +182,3 @@ Implement a bootstrap estimate: resample the 80 observations with replacement, f
 log-log model to each resample, and take the 2.5th and 97.5th percentiles of the 1000
 bootstrapped slopes as the CI.
 Compare the bootstrap CI with the analytic CI; do they agree closely for the synthetic data?
-
-</section>

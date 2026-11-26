@@ -166,8 +166,6 @@ Pure noise
 
 {{< inc cellseg/test_cellseg.py >}}
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -212,5 +210,3 @@ to the synthetic image before adding noise.
 Show that the global threshold misses cells in dark regions or over-detects in bright
 regions, then implement local thresholding (`scipy.ndimage.generic_filter` with a
 percentile-based local estimate) and show that it restores accurate cell counts.
-
-</section>

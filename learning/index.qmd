@@ -150,8 +150,6 @@ Confidence interval (parameter)
 
 </div>
 
-<section class="exercises" markdown="1">
-
 ## Exercises
 
 ### Do the math
@@ -190,5 +188,3 @@ decay rate.
 Compare the sum of squared residuals of the exponential and power-law fits on
 the synthetic data.
 Which model fits better?
-
-</section>
