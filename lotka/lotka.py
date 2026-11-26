@@ -3,7 +3,7 @@ from scipy.integrate import solve_ivp
 import polars as pl
 import altair as alt
 
-# mccole: params
+# mccole:params
 # Rate parameters (arbitrary units).
 # PREY_BIRTH: per-capita prey growth rate in the absence of predators.
 # PREDATION:  rate at which one predator removes prey (per predator per prey).
@@ -34,10 +34,10 @@ T_MAX = 53.0
 
 # Dense output resolution: one point per 0.05 time units.
 N_EVAL = int(T_MAX / 0.05) + 1
-# mccole: /params
+# mccole:/params
 
 
-# mccole: rhs
+# mccole:rhs
 def rhs(t, z):
     """Return [dx/dt, dy/dt] for the Lotka-Volterra equations.
 
@@ -48,10 +48,10 @@ def rhs(t, z):
     dxdt = PREY_BIRTH * x - PREDATION * x * y
     dydt = PRED_GROWTH * x * y - PRED_DEATH * y
     return [dxdt, dydt]
-# mccole: /rhs
+# mccole:/rhs
 
 
-# mccole: solve
+# mccole:solve
 def solve():
     """Integrate the Lotka-Volterra equations and return results as a DataFrame."""
     t_eval = np.linspace(0, T_MAX, N_EVAL)
@@ -65,10 +65,10 @@ def solve():
         atol=1e-10,
     )
     return pl.DataFrame({"t": sol.t, "prey": sol.y[0], "predator": sol.y[1]})
-# mccole: /solve
+# mccole:/solve
 
 
-# mccole: plots
+# mccole:plots
 def plot_time_series(df):
     """Return an Altair chart of prey and predator populations over time."""
     long = df.unpivot(
@@ -100,7 +100,7 @@ def plot_trajectory(df):
         )
         .properties(width=300, height=300, title="Population trajectory")
     )
-# mccole: /plots
+# mccole:/plots
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@ import numpy as np
 import polars as pl
 import altair as alt
 
-# mccole: constants
+# mccole:constants
 # Spatial grid: 50 points give dx = 0.02, fine enough to resolve a Gaussian
 # pulse of width 0.05 (about 2.5 grid cells per standard deviation).
 GRID_POINTS = 50
@@ -26,19 +26,19 @@ SNAPSHOT_INTERVAL = 100
 # more than 4 standard deviations from each boundary throughout the full run.
 PULSE_CENTER = 0.5
 PULSE_WIDTH = 0.05
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: make-initial
+# mccole:make-initial
 def make_initial():
     """Return spatial grid and Gaussian initial concentration profile."""
     x = np.linspace(0, LENGTH, GRID_POINTS)
     c = np.exp(-((x - PULSE_CENTER) ** 2) / (2 * PULSE_WIDTH**2))
     return x, c
-# mccole: /make-initial
+# mccole:/make-initial
 
 
-# mccole: step
+# mccole:step
 def step(c):
     """Return concentration after one explicit finite-difference time step.
 
@@ -49,10 +49,10 @@ def step(c):
     r = DIFFUSIVITY * DT / DX**2
     padded = np.concatenate([[c[0]], c, [c[-1]]])
     return c + r * (padded[2:] - 2 * padded[1:-1] + padded[:-2])
-# mccole: /step
+# mccole:/step
 
 
-# mccole: simulate
+# mccole:simulate
 def simulate():
     """Run the simulation and return concentration snapshots as a DataFrame."""
     x, c = make_initial()
@@ -69,10 +69,10 @@ def _make_records(x, c, time):
         {"x": float(xi), "concentration": float(ci), "time": time}
         for xi, ci in zip(x, c)
     ]
-# mccole: /simulate
+# mccole:/simulate
 
 
-# mccole: plot
+# mccole:plot
 def plot(df):
     """Return an Altair line chart of concentration profiles over time."""
     return (
@@ -85,7 +85,7 @@ def plot(df):
         )
         .properties(width=400, height=300)
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

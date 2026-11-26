@@ -4,14 +4,14 @@ import altair as alt
 from generate_tumor import make_tumor_data
 
 
-# mccole: sigmoid
+# mccole:sigmoid
 def sigmoid(z):
     """Map any real number to (0, 1) via the logistic function 1 / (1 + exp(-z))."""
     return 1.0 / (1.0 + np.exp(-z))
-# mccole: /sigmoid
+# mccole:/sigmoid
 
 
-# mccole: model
+# mccole:model
 def predict_proba(X, w, b):
     """Return predicted class-1 probability for each row of X.
 
@@ -23,10 +23,10 @@ def predict_proba(X, w, b):
 def predict(X, w, b):
     """Return predicted class labels (0 or 1) by thresholding probabilities at 0.5."""
     return (predict_proba(X, w, b) >= 0.5).astype(int)
-# mccole: /model
+# mccole:/model
 
 
-# mccole: train
+# mccole:train
 def train(X, y, lr=0.1, n_iter=2000):
     """Fit logistic regression by gradient descent on binary cross-entropy loss.
 
@@ -47,10 +47,10 @@ def train(X, y, lr=0.1, n_iter=2000):
         w -= lr * (X.T @ residual) / n
         b -= lr * np.mean(residual)
     return w, b
-# mccole: /train
+# mccole:/train
 
 
-# mccole: evaluate
+# mccole:evaluate
 def confusion_matrix(y_true, y_pred):
     """Return a 2x2 confusion matrix [[TN, FP], [FN, TP]].
 
@@ -67,10 +67,10 @@ def confusion_matrix(y_true, y_pred):
 def accuracy(y_true, y_pred):
     """Return the fraction of correctly classified samples."""
     return float(np.mean(y_true == y_pred))
-# mccole: /evaluate
+# mccole:/evaluate
 
 
-# mccole: plot
+# mccole:plot
 def plot_boundary(X, y, w, b, filename):
     """Save a scatter plot of the two classes with the logistic regression decision boundary.
 
@@ -108,7 +108,7 @@ def plot_boundary(X, y, w, b, filename):
         width=400, height=350, title="Logistic regression decision boundary"
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

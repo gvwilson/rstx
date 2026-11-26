@@ -2,7 +2,7 @@ import numpy as np
 import polars as pl
 import altair as alt
 
-# mccole: constants
+# mccole:constants
 # Three-layer composite wall: brick | mineral wool insulation | concrete
 LAYER_WIDTHS = [0.10, 0.05, 0.15]  # layer thicknesses (m)
 LAYER_K = [0.72, 0.04, 1.20]  # thermal conductivities (W m⁻¹ K⁻¹)
@@ -19,10 +19,10 @@ N_PER_LAYER = 20
 # change in any nodal temperature between successive sweeps falls below this value.
 # 1e-6 °C is well below measurement precision for building physics calculations.
 TOLERANCE = 1e-6
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: grid
+# mccole:grid
 def build_grid(widths=LAYER_WIDTHS, conductivities=LAYER_K, n_per_layer=N_PER_LAYER):
     """Return (x, k_seg) for a node-centred composite-wall grid.
 
@@ -45,10 +45,10 @@ def build_grid(widths=LAYER_WIDTHS, conductivities=LAYER_K, n_per_layer=N_PER_LA
         k_seg.extend([kval] * n_per_layer)
         x_start += width
     return np.concatenate(x_parts), np.array(k_seg)
-# mccole: /grid
+# mccole:/grid
 
 
-# mccole: jacobi
+# mccole:jacobi
 def jacobi_solve(x, k_seg, t_left=T_LEFT, t_right=T_RIGHT, tolerance=TOLERANCE):
     """Solve for steady-state temperatures using Jacobi (relaxation) iteration.
 
@@ -91,10 +91,10 @@ def jacobi_solve(x, k_seg, t_left=T_LEFT, t_right=T_RIGHT, tolerance=TOLERANCE):
         if np.max(np.abs(T_new - T)) < tolerance:
             return T_new, n_iters
         T = T_new
-# mccole: /jacobi
+# mccole:/jacobi
 
 
-# mccole: solve
+# mccole:solve
 def solve_temperatures(
     widths=LAYER_WIDTHS,
     conductivities=LAYER_K,
@@ -106,10 +106,10 @@ def solve_temperatures(
     x, k_seg = build_grid(widths, conductivities, n_per_layer)
     T, _ = jacobi_solve(x, k_seg, t_left, t_right)
     return x, T
-# mccole: /solve
+# mccole:/solve
 
 
-# mccole: snapshots
+# mccole:snapshots
 def convergence_snapshots(
     x, k_seg, t_left=T_LEFT, t_right=T_RIGHT, snap_iters=(0, 10, 100)
 ):
@@ -142,10 +142,10 @@ def convergence_snapshots(
         if converged:
             records.append(("converged", T.copy()))
             return records
-# mccole: /snapshots
+# mccole:/snapshots
 
 
-# mccole: flux
+# mccole:flux
 def layer_heat_flux(x, T, k_seg, widths=LAYER_WIDTHS):
     """Return the heat flux (W m⁻²) in each layer.
 
@@ -166,10 +166,10 @@ def layer_heat_flux(x, T, k_seg, widths=LAYER_WIDTHS):
         fluxes.append(float(np.mean(layer_q)))
         x_start = x_end
     return np.array(fluxes)
-# mccole: /flux
+# mccole:/flux
 
 
-# mccole: analytic
+# mccole:analytic
 def analytic_solution(
     widths=LAYER_WIDTHS, conductivities=LAYER_K, t_left=T_LEFT, t_right=T_RIGHT
 ):
@@ -193,10 +193,10 @@ def analytic_solution(
     for r in resistances:
         interface_temps.append(interface_temps[-1] - q * r)
     return q, resistances, interface_temps
-# mccole: /analytic
+# mccole:/analytic
 
 
-# mccole: plot
+# mccole:plot
 def plot_profile(
     x, T, widths=LAYER_WIDTHS, layer_names=LAYER_NAMES, filename="heatwall.svg"
 ):
@@ -221,10 +221,10 @@ def plot_profile(
     )
 
     (rules + profile).properties(width=480, height=280).save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
-# mccole: plot_convergence
+# mccole:plot_convergence
 def plot_convergence(
     x, records, widths=LAYER_WIDTHS, filename="heatwall_convergence.svg"
 ):
@@ -257,7 +257,7 @@ def plot_convergence(
     )
 
     (rules + profiles).properties(width=480, height=280).save(filename)
-# mccole: /plot_convergence
+# mccole:/plot_convergence
 
 
 if __name__ == "__main__":

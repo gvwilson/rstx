@@ -25,7 +25,7 @@ WORDS_PER_TEXT = 150
 TEXTS_PER_AUTHOR = 4
 
 
-# mccole: generate
+# mccole:generate
 def make_corpus(
     authors=AUTHORS,
     chars=CHARS,
@@ -77,7 +77,7 @@ def make_corpus(
             text_id += 1
 
     return pl.DataFrame(records)
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

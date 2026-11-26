@@ -27,7 +27,7 @@ TARGET_BASE_FREQ = [0.005, 0.025, 0.015]
 TARGET_SLOPE = [0.002, -0.002, 0.000]
 
 
-# mccole: generate
+# mccole:generate
 def make_corpus(
     decades=DECADES,
     tokens_per_decade=TOKENS_PER_DECADE,
@@ -65,7 +65,7 @@ def make_corpus(
             records.append({"decade": decade, "word": word, "count": int(count)})
 
     return pl.DataFrame(records)
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

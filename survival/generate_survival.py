@@ -1,7 +1,7 @@
 import numpy as np
 import polars as pl
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed for reproducibility
 N_PATIENTS = 100  # number of patients in the study
 MEAN_SURVIVAL = (
@@ -11,10 +11,10 @@ MEAN_SURVIVAL = (
 # duration, with the study ending if the event has not yet occurred.
 CENSOR_MIN = 10.0  # minimum follow-up time (days)
 CENSOR_MAX = 35.0  # maximum follow-up time (days)
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def make_survival_data(
     n=N_PATIENTS,
     mean_survival=MEAN_SURVIVAL,
@@ -35,7 +35,7 @@ def make_survival_data(
     observed = (true_event_times <= censoring_times).astype(int)
     times = np.minimum(true_event_times, censoring_times)
     return pl.DataFrame({"time": times, "observed": observed})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

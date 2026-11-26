@@ -15,7 +15,7 @@ N_CATS = 3
 AGREE_PROB = 0.7
 
 
-# mccole: generate
+# mccole:generate
 def make_ratings(n_items=N_ITEMS, n_cats=N_CATS, agree_prob=AGREE_PROB, seed=SEED):
     """Return a Polars DataFrame of paired rater label vectors.
 
@@ -41,7 +41,7 @@ def make_ratings(n_items=N_ITEMS, n_cats=N_CATS, agree_prob=AGREE_PROB, seed=SEE
             a_labels[i] = int(rng.integers(0, n_cats))
             b_labels[i] = int(rng.integers(0, n_cats))
     return pl.DataFrame({"rater_a": a_labels.tolist(), "rater_b": b_labels.tolist()})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

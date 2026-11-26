@@ -4,7 +4,7 @@ import networkx as nx
 
 SEED = 7493418
 
-# mccole: taxa
+# mccole:taxa
 TAXA = ["Bat", "Chimp", "Human", "Gorilla"]
 
 # True branch lengths from the reference tree used to generate distances.
@@ -18,10 +18,10 @@ _BRANCH = {
     ("Chimp", "Gorilla"): 0.8 + 1.2 + 0.5, # 2.5
     ("Human", "Gorilla"): 0.4 + 0.5,   # 0.9
 }
-# mccole: /taxa
+# mccole:/taxa
 
 
-# mccole: make-dist
+# mccole:make-dist
 def make_distance_matrix(noise_scale=0.0, seed=SEED):
     """Return (names, D) where D is the symmetric pairwise distance matrix.
 
@@ -43,7 +43,7 @@ def make_distance_matrix(noise_scale=0.0, seed=SEED):
         np.fill_diagonal(noise, 0)
         D = np.maximum(D + noise, 0)  # distances must be non-negative
     return list(TAXA), D
-# mccole: /make-dist
+# mccole:/make-dist
 
 
 # neighbor_joining is retained for use by test_generate_tree.py.
@@ -75,7 +75,7 @@ def neighbor_joining(names, D):
     return edges
 
 
-# mccole: upgma
+# mccole:upgma
 def upgma(names, D):
     """Run the UPGMA algorithm and return a list of (parent, child, length) edges.
 
@@ -135,10 +135,10 @@ def upgma(names, D):
         names = [names[k] for k in keep] + [u_name]
 
     return edges
-# mccole: /upgma
+# mccole:/upgma
 
 
-# mccole: draw
+# mccole:draw
 def draw_tree(edges, taxa, filename):
     """Save a rooted tree diagram to `filename`.
 
@@ -174,7 +174,7 @@ def draw_tree(edges, taxa, filename):
     plt.tight_layout()
     plt.savefig(filename)
     plt.close(fig)
-# mccole: /draw
+# mccole:/draw
 
 
 if __name__ == "__main__":

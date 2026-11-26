@@ -7,15 +7,15 @@
 -   The fraction of observations on which raters agree is straightforward to compute,
     but it is inflated by the agreement that would occur by chance
     even if raters were assigning labels randomly.
--   {{< g cohens_kappa "Cohen's kappa" >}} corrects for chance agreement
+-   {{< g cohens_kappa "Cohen's $\kappa$" >}} corrects for chance agreement
     and produces a standardized measure of
     how much the observed agreement exceeds the expectation under independence
 -   Our approach:
     -   Generate synthetic rating pairs with a known underlying agreement probability
         using a controlled random model
     -   Construct the {{< g contingency_table_raters "contingency table" >}} of rater label pairs
-        and compute kappa with its standard error
-    - Compare kappa across several scenarios with different agreement levels
+        and compute $\kappa$ with its standard error
+    - Compare $\kappa$ across several scenarios with different agreement levels
 
 <div class="forma-multiple-choice" data-lang="en" markdown="1">
 
@@ -50,18 +50,18 @@ About 50%, because raters tend to pick the most common category.
     and rater B assigned category $j$
 -   The diagonal entries $C_{ii}$ represent agreements,
     while off-diagonal entries represent disagreements
--   The table summarises all information needed to compute kappa
+-   The table summarises all information needed to compute $\kappa$
 
 {{< inc agreement/agreement.py mark=table >}}
 
-## Cohen's Kappa
+## Cohen's $\kappa$
 
 -   Let $N$ be the total number of items and:
     -   $P_o = \sum_i C_{ii} / N$: observed agreement proportion
     -   $p_i = \sum_j C_{ij} / N$: rater A's marginal probability for category $i$
     -   $q_j = \sum_i C_{ij} / N$: rater B's marginal probability for category $j$
     -   $P_e = \sum_i p_i q_i$: expected agreement under independence
--   Cohen's kappa is:
+-   Cohen's $\kappa$ is:
 
 $$\kappa = \frac{P_o - P_e}{1 - P_e}$$
 
@@ -82,21 +82,21 @@ $$\kappa = \frac{P_o - P_e}{1 - P_e}$$
     and otherwise they draw independently
 -   With $K$ categories this gives:
 
-$$P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}$$
+$$P_o = \text{agree_prob} + \frac{1 - \text{agree_prob}}{K}$$
 
 -   When marginals are uniform ($p_i = q_i = 1/K$):
     $P_e = K \cdot (1/K)^2 = 1/K$
--   Substituting into the kappa formula and simplifying gives
-    $\kappa = \text{agree\_prob}$.
+-   Substituting into the $\kappa$ formula and simplifying gives
+    $\kappa = \text{agree_prob}$.
 -   So the synthetic generator produces data where
-    the expected kappa directly equals the underlying agreement probability,
+    the expected $\kappa$ directly equals the underlying agreement probability,
     making it easy to verify the implementation
 
 ## Generating Synthetic Rating Data
 
 {{< inc agreement/generate_agreement.py mark=generate >}}
 
-## Standard Error of Kappa
+## Standard Error of $\kappa$
 
 -   The asymptotic standard error is:
 
@@ -104,14 +104,14 @@ $$\text{SE}(\kappa) = \sqrt{\frac{P_o(1 - P_o)}{N(1 - P_e)^2}}$$
 
 -   This approximates $\text{SE}(P_o) = \sqrt{P_o(1-P_o)/N}$
     (each item is an independent Bernoulli trial for agreement)
-    and propagates it through the kappa formula by dividing by $(1 - P_e)$
+    and propagates it through the $\kappa$ formula by dividing by $(1 - P_e)$
 -   A 95% confidence interval for $\kappa$ is $\kappa \pm 1.96 \cdot \text{SE}(\kappa)$
 
 ## Comparing Scenarios
 
 {{< inc agreement/agreement.py mark=plot >}}
 
-![Cohen's kappa for five synthetic rating scenarios (N = 100 items, K = 3 categories). Kappa closely tracks the underlying agreement probability, confirming the theoretical result that expected kappa equals agree_prob under the uniform marginal model.](agreement-kappa.svg){#fig-agreement-kappa fig-alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's kappa from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa."}
+![Cohen's $\kappa$ for five synthetic rating scenarios (N = 100 items, K = 3 categories). $\kappa$ closely tracks the underlying agreement probability, confirming the theoretical result that expected $\kappa$ equals agree_prob under the uniform marginal model.](agreement-kappa.svg){#fig-agreement-kappa fig-alt="A bar chart with five bars. The x-axis shows underlying agreement probabilities of 0.2, 0.4, 0.6, 0.8, and 0.95. The y-axis shows Cohen's $\kappa$ from 0 to 1. The bars increase from left to right, reaching close to 1 for the highest agreement probability. Bar color darkens with increasing kappa."}
 
 ## Testing
 
@@ -121,21 +121,21 @@ Table shape
 Table sum equals item count
 :   All entries in the contingency table must sum to `N_ITEMS`.
 
-Perfect agreement gives kappa = 1
+Perfect agreement gives $\kappa = 1$
 :   When both raters assign identical labels,
-    every item is on the diagonal and kappa must equal 1.0 regardless of the marginal distribution.
+    every item is on the diagonal and $\kappa$ must equal 1.0 regardless of the marginal distribution.
 
-Chance agreement gives kappa near zero
+Chance agreement gives $\kappa$ near zero
 :   Independent uniform labels have $P_o \approx P_e = 1/K$,
-    so kappa should be near zero.
+    so $\kappa$ should be near zero.
     The tolerance 0.15 accounts for sampling variability.
 
 Standard error positive and finite
 :   The standard error must be a positive finite number for any valid table.
 
-Kappa close to agree_prob
+$\kappa$ close to agree_prob
 :   With `N_ITEMS = 100` and uniform marginals,
-    the observed kappa must be within 0.15 of `AGREE_PROB`.
+    the observed $\kappa$ must be within 0.15 of `AGREE_PROB`.
     This is conservative given the sampling variability of approximately $\text{SE} \approx 0.05$
     at this sample size
 
@@ -148,20 +148,20 @@ Inter-rater agreement key terms
 Inter-rater agreement
 :   The degree to which two or more raters independently assign the same
     category to the same observations; raw percent agreement is easy to compute
-    but is inflated by chance; Cohen's kappa corrects for this inflation
+    but is inflated by chance; Cohen's $\kappa$ corrects for this inflation
 
 Contingency table (raters)
 :   A K x K matrix whose entry C[i, j] counts the number of observations for
     which rater A assigned category i and rater B assigned category j; diagonal
     entries are agreements, off-diagonal entries are disagreements
 
-Cohen's kappa
+Cohen's $\kappa$
 :   A chance-corrected measure of inter-rater agreement:
-    kappa = (P_o - P_e) / (1 - P_e), where P_o is the observed agreement
-    proportion and P_e is the agreement expected under independence; kappa = 0
-    at chance, kappa = 1 at perfect agreement, kappa < 0 below chance
+    $\kappa = (P_o - P_e) / (1 - P_e)$, where $P_o$ is the observed agreement
+    proportion and $P_e$ is the agreement expected under independence; $\kappa = 0$
+    at chance, $\kappa = 1$ at perfect agreement, $\kappa < 0$ below chance
 
-Expected agreement P_e
+Expected agreement $P_e$
 :   The probability that two raters would agree purely by chance, computed as
     the sum over categories of the product of rater A's marginal probability
     and rater B's marginal probability for that category
@@ -173,29 +173,29 @@ Expected agreement P_e
 ### Do the math
 
 A 3x3 contingency table has 20 items on each diagonal cell and 5 items on each
-off-diagonal cell (N = 90). Given P_o = 2/3 and P_e = 1/3, what is kappa?
+off-diagonal cell (N = 90). Given $P_o = 2/3$ and $P_e = 1/3$, what is $\kappa$?
 
-### Weighted kappa
+### Weighted $\kappa$
 
 In ordinal coding (e.g., severity on a 1-5 scale) disagreements near the
 diagonal should be penalised less than disagreements far from it.
-Implement weighted kappa using linear weights:
+Implement weighted $\kappa$ using linear weights:
 $w_{ij} = 1 - |i - j| / (K - 1)$.
-Apply it to a 5-category synthetic dataset and compare it to the unweighted kappa.
-When does the difference between weighted and unweighted kappa matter most?
+Apply it to a 5-category synthetic dataset and compare it to the unweighted $\kappa$.
+When does the difference between weighted and unweighted $\kappa$ matter most?
 
 ### Confidence intervals across scenarios
 
 For each of the five `SCENARIOS` in `agreement.py`, compute the 95% confidence
-interval for kappa using the standard error formula.
+interval for $\kappa$ using the standard error formula.
 Add error bars to the bar chart.
 Do the confidence intervals for adjacent scenarios overlap?
 
 ### Three or more raters
 
 Extend the generator to produce ratings from three raters.
-Compute all three pairwise kappa values and the mean pairwise kappa.
-How do pairwise kappas relate to each other when one rater is systematically
+Compute all three pairwise $\kappa$ values and the mean pairwise $\kappa$.
+How do pairwise $\kappa$ values relate to each other when one rater is systematically
 more conservative than the others?
 
 ### Category prevalence
@@ -203,5 +203,5 @@ more conservative than the others?
 The expected-agreement correction assumes the marginal distributions are
 determined by chance.
 Generate a dataset where rater A's marginals are highly skewed (e.g., 70%
-in category 0) and compute kappa.
-How does a skewed marginal affect kappa relative to percent agreement?
+in category 0) and compute $\kappa$.
+How does a skewed marginal affect $\kappa$ relative to percent agreement?

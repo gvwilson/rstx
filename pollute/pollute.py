@@ -2,7 +2,7 @@ import networkx as nx
 import polars as pl
 import altair as alt
 
-# mccole: constants
+# mccole:constants
 # River network: 5 nodes in a directed tree (upstream to downstream).
 # Node indices correspond to NODE_NAMES.
 NODE_NAMES = ["upstream_a", "upstream_b", "junction", "reach", "outlet"]
@@ -19,10 +19,10 @@ TRANSPORT_RATE = 0.4
 
 N_STEPS = 20
 SNAPSHOT_INTERVAL = 5
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: build-network
+# mccole:build-network
 def build_network():
     """Return a directed graph representing the river network.
 
@@ -38,10 +38,10 @@ def build_network():
     G.add_edge(2, 3, weight=8.0)
     G.add_edge(3, 4, weight=8.0)
     return G
-# mccole: /build-network
+# mccole:/build-network
 
 
-# mccole: build-upstream
+# mccole:build-upstream
 def build_upstream(G):
     """Return upstream[v] = list of (u, fraction) pairs for each node v.
 
@@ -61,10 +61,10 @@ def build_upstream(G):
         for v in succs:
             upstream[v].append((u, fraction))
     return upstream
-# mccole: /build-upstream
+# mccole:/build-upstream
 
 
-# mccole: simulate
+# mccole:simulate
 def simulate(G):
     """Simulate pollutant transport and return concentration snapshots.
 
@@ -107,10 +107,10 @@ def _snapshot(c, step):
         {"node": NODE_NAMES[i], "concentration": float(c[i]), "step": step}
         for i in range(len(NODE_NAMES))
     ]
-# mccole: /simulate
+# mccole:/simulate
 
 
-# mccole: plot
+# mccole:plot
 def plot(df):
     """Return an Altair line chart of concentration at each node over time."""
     return (
@@ -127,7 +127,7 @@ def plot(df):
         )
         .properties(width=350, height=250)
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

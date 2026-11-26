@@ -23,7 +23,7 @@ STEP_LEN = {
 }
 
 
-# mccole: dijkstra
+# mccole:dijkstra
 def least_cost_path(elev, start, end):
     """Return the least-cost path through an elevation grid.
 
@@ -68,10 +68,10 @@ def least_cost_path(elev, start, end):
     path.append(start)
     path.reverse()
     return path
-# mccole: /dijkstra
+# mccole:/dijkstra
 
 
-# mccole: plot
+# mccole:plot
 def plot_path(elev, path, filename):
     """Save a terrain map with the least-cost path overlaid as an SVG."""
     fig, ax = plt.subplots(figsize=(8, 5))
@@ -90,7 +90,7 @@ def plot_path(elev, path, filename):
     fig.tight_layout()
     fig.savefig(filename)
     plt.close(fig)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

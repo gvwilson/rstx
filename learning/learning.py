@@ -15,7 +15,7 @@ def power_law(n, a, b):
     return a * n ** (-b)
 
 
-# mccole: fit
+# mccole:fit
 def fit_power_law(trials, rt):
     """Fit a power-law learning curve to per-trial reaction-time data.
 
@@ -43,10 +43,10 @@ def fit_power_law(trials, rt):
     se_b = float(np.sqrt(pcov[1, 1]))
     b_ci = (b - CI_Z * se_b, b + CI_Z * se_b)
     return float(a), float(b), b_ci
-# mccole: /fit
+# mccole:/fit
 
 
-# mccole: plot
+# mccole:plot
 def plot_fit(trials, rt, a, b, b_ci, filename):
     """Save a scatter plot of raw data with the fitted power-law curve overlaid."""
     trials = np.asarray(trials, dtype=float)
@@ -89,7 +89,7 @@ def plot_fit(trials, rt, a, b, b_ci, filename):
         height=300,
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

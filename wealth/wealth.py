@@ -8,7 +8,7 @@ N_AGENTS = 200  # number of agents in the exchange economy
 N_STEPS = 2000  # number of pairwise exchanges to simulate
 
 
-# mccole: gini
+# mccole:gini
 def gini(wealth):
     """Gini coefficient of a wealth distribution.
 
@@ -22,10 +22,10 @@ def gini(wealth):
     indices = np.arange(1, n + 1)
     total = np.sum(sorted_w)
     return (2.0 * np.dot(indices, sorted_w) - (n + 1) * total) / (n * total)
-# mccole: /gini
+# mccole:/gini
 
 
-# mccole: simulate
+# mccole:simulate
 def simulate_exchange(n_agents=N_AGENTS, n_steps=N_STEPS, seed=SEED):
     """Run the random-exchange wealth model.
 
@@ -51,10 +51,10 @@ def simulate_exchange(n_agents=N_AGENTS, n_steps=N_STEPS, seed=SEED):
         wealth[j] += transfer
         gini_history[step + 1] = gini(wealth)
     return wealth, gini_history
-# mccole: /simulate
+# mccole:/simulate
 
 
-# mccole: lorenz
+# mccole:lorenz
 def lorenz_curve(wealth):
     """Return (population_fractions, wealth_fractions) arrays for the Lorenz curve.
 
@@ -68,10 +68,10 @@ def lorenz_curve(wealth):
     pop_fracs = np.arange(0, n + 1) / n
     wealth_fracs = np.concatenate([[0.0], cum_w / cum_w[-1]])
     return pop_fracs, wealth_fracs
-# mccole: /lorenz
+# mccole:/lorenz
 
 
-# mccole: plot_gini
+# mccole:plot_gini
 def plot_gini_trajectory(gini_history, filename):
     """Save a line chart of the Gini coefficient at each exchange step."""
     df = pl.DataFrame(
@@ -92,10 +92,10 @@ def plot_gini_trajectory(gini_history, filename):
         .properties(width=450, height=300, title="Gini coefficient over time")
     )
     chart.save(filename)
-# mccole: /plot_gini
+# mccole:/plot_gini
 
 
-# mccole: plot_lorenz
+# mccole:plot_lorenz
 def plot_lorenz_curve(wealth, filename):
     """Save a Lorenz curve with the line of equality overlaid."""
     pop_fracs, wealth_fracs = lorenz_curve(wealth)
@@ -118,7 +118,7 @@ def plot_lorenz_curve(wealth, filename):
         width=350, height=350, title="Lorenz curve after 2000 exchanges"
     )
     chart.save(filename)
-# mccole: /plot_lorenz
+# mccole:/plot_lorenz
 
 
 if __name__ == "__main__":

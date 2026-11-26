@@ -16,7 +16,7 @@ IDW_POWER = 2.0
 EPSILON = 1e-10
 
 
-# mccole: idw
+# mccole:idw
 def idw(station_xy, station_values, query_xy, power=IDW_POWER):
     """Interpolate values at query points using inverse-distance weighting.
 
@@ -40,10 +40,10 @@ def idw(station_xy, station_values, query_xy, power=IDW_POWER):
     dists = np.sqrt((diff**2).sum(axis=2)) + EPSILON
     weights = dists ** (-power)
     return (weights * station_values).sum(axis=1) / weights.sum(axis=1)
-# mccole: /idw
+# mccole:/idw
 
 
-# mccole: grid
+# mccole:grid
 def interpolate_grid(station_xy, station_values, rows, cols, power=IDW_POWER):
     """Return an IDW-interpolated field on a regular (rows x cols) grid.
 
@@ -56,10 +56,10 @@ def interpolate_grid(station_xy, station_values, rows, cols, power=IDW_POWER):
     query_xy = np.column_stack([X.ravel(), Y.ravel()])
     estimates = idw(station_xy, station_values, query_xy, power)
     return estimates.reshape(rows, cols)
-# mccole: /grid
+# mccole:/grid
 
 
-# mccole: plot
+# mccole:plot
 def plot_comparison(true_field, idw_field, station_xy, filename):
     """Save a side-by-side comparison of the true and interpolated fields."""
     vmin = min(true_field.min(), idw_field.min())
@@ -90,7 +90,7 @@ def plot_comparison(true_field, idw_field, station_xy, filename):
     fig.colorbar(im, ax=axes, label="Temperature (normalised)", shrink=0.8)
     fig.savefig(filename)
     plt.close(fig)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

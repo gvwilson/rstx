@@ -1,7 +1,7 @@
 import numpy as np
 import polars as pl
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed for reproducibility
 N_POINTS = 80  # number of price-quantity observations
 TRUE_ELASTICITY = -1.5  # true price elasticity (slope in log-log space)
@@ -11,10 +11,10 @@ PRICE_MAX = 20.0  # maximum price ($)
 # Log-quantity noise: chosen so that ~95% of observed quantities fall within
 # exp(±2 * NOISE_STD) ≈ ±35% of the true quantity at each price.
 NOISE_STD = 0.15
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def make_elasticity_data(
     n=N_POINTS,
     true_elasticity=TRUE_ELASTICITY,
@@ -43,7 +43,7 @@ def make_elasticity_data(
     )
     quantities = np.exp(log_quantities)
     return pl.DataFrame({"price": prices, "quantity": quantities})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

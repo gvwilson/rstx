@@ -20,7 +20,7 @@ TRUE_B = 0.3
 NOISE_SD = 20.0
 
 
-# mccole: generate
+# mccole:generate
 def make_trials(
     n_trials=N_TRIALS,
     a=TRUE_A,
@@ -43,7 +43,7 @@ def make_trials(
     rt = a * trials ** (-b) + rng.normal(0.0, noise_sd, n_trials)
     rt = np.maximum(rt, 1.0)
     return pl.DataFrame({"trial": list(range(1, n_trials + 1)), "rt": rt.tolist()})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

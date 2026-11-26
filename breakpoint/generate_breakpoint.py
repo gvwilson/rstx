@@ -12,7 +12,7 @@ MEAN_AFTER = 3.0  # series mean after the break (shift of 3 standard deviations)
 NOISE_STD = 1.0
 
 
-# mccole: generate
+# mccole:generate
 def make_breakpoint_data(
     n_steps=N_STEPS,
     break_step=BREAK_STEP,
@@ -34,7 +34,7 @@ def make_breakpoint_data(
     means = np.where(steps < break_step, mean_before, mean_after)
     values = means + rng.normal(0.0, noise_std, n_steps)
     return pl.DataFrame({"step": steps, "value": values})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

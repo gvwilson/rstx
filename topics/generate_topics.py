@@ -20,7 +20,7 @@ TOPIC_WEIGHT = 20.0
 BACKGROUND_WEIGHT = 0.5
 
 
-# mccole: generate
+# mccole:generate
 def make_corpus(
     n_topics=N_TOPICS,
     docs_per_topic=DOCS_PER_TOPIC,
@@ -62,7 +62,7 @@ def make_corpus(
             doc_id += 1
 
     return pl.DataFrame(records)
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

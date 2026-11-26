@@ -12,17 +12,17 @@ from generate_rv import (
 )
 
 
-# mccole: model
+# mccole:model
 def model_rv(t, amplitude, period, phase, v_sys):
     """Sinusoidal radial-velocity model for a single planet.
 
     v(t) = amplitude * sin(2π t / period + phase) + v_sys
     """
     return amplitude * np.sin(2 * np.pi * t / period + phase) + v_sys
-# mccole: /model
+# mccole:/model
 
 
-# mccole: fit
+# mccole:fit
 def fit_sinusoid(t, rv):
     """Fit model_rv to the data and return (params, errors).
 
@@ -47,10 +47,10 @@ def fit_sinusoid(t, rv):
     popt, pcov = curve_fit(model_rv, t, rv, p0=p0, bounds=bounds, max_nfev=10_000)
     perr = np.sqrt(np.diag(pcov))
     return popt, perr
-# mccole: /fit
+# mccole:/fit
 
 
-# mccole: plot
+# mccole:plot
 def plot_fit(t, rv, popt, filename, t_true=None, rv_true=None):
     """Save an Altair figure with data, fitted curve, and (optionally) the true signal.
 
@@ -90,7 +90,7 @@ def plot_fit(t, rv, popt, filename, t_true=None, rv_true=None):
 
     chart = alt.layer(*layers).properties(width=500, height=250)
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 import numpy as np
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed
 PERIOD = 10.0  # orbital period (days)
 AMPLITUDE = 50.0  # radial-velocity semi-amplitude (m/s)
@@ -9,10 +9,10 @@ V_SYSTEMIC = 0.0  # centre-of-mass (systemic) velocity (m/s)
 NOISE_SCALE = 10.0  # per-observation measurement noise (m/s); 20% of AMPLITUDE
 N_POINTS = 50  # number of observations
 T_MAX = 30.0  # time baseline (days); spans 3 complete periods
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: make-rv
+# mccole:make-rv
 def make_rv_data(
     period=PERIOD,
     amplitude=AMPLITUDE,
@@ -37,10 +37,10 @@ def make_rv_data(
     signal = amplitude * np.sin(2 * np.pi * t / period + phase) + v_sys
     rv = signal + rng.normal(0.0, noise_scale, n_points)
     return t, rv
-# mccole: /make-rv
+# mccole:/make-rv
 
 
-# mccole: make-noise-rv
+# mccole:make-noise-rv
 def make_pure_noise_rv(
     noise_scale=NOISE_SCALE, n_points=N_POINTS, t_max=T_MAX, seed=SEED
 ):
@@ -49,7 +49,7 @@ def make_pure_noise_rv(
     t = np.sort(rng.uniform(0.0, t_max, n_points))
     rv = rng.normal(0.0, noise_scale, n_points)
     return t, rv
-# mccole: /make-noise-rv
+# mccole:/make-noise-rv
 
 
 if __name__ == "__main__":

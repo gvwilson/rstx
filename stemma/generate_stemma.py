@@ -22,7 +22,7 @@ def _copy(sequence, prob, rng):
     return np.where(flips, 1 - sequence, sequence)
 
 
-# mccole: generate
+# mccole:generate
 def make_manuscripts(
     n_loci=N_LOCI,
     mutation_prob=MUTATION_PROB,
@@ -56,7 +56,7 @@ def make_manuscripts(
         "D": _copy(beta, mutation_prob, rng),
     }
     return mss
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

@@ -9,7 +9,7 @@ from generate_vocab import make_corpus
 MATTR_WINDOW = 50
 
 
-# mccole: ttr
+# mccole:ttr
 def type_token_ratio(words):
     """Return unique words / total words (type-token ratio, TTR).
 
@@ -40,10 +40,10 @@ def mattr(words, window=MATTR_WINDOW):
         type_token_ratio(words[i : i + window]) for i in range(n - window + 1)
     ]
     return float(np.mean(window_ttrs))
-# mccole: /ttr
+# mccole:/ttr
 
 
-# mccole: richness
+# mccole:richness
 def compute_richness(df, window=MATTR_WINDOW):
     """Return a DataFrame with TTR and MATTR for each text.
 
@@ -64,10 +64,10 @@ def compute_richness(df, window=MATTR_WINDOW):
             }
         )
     return pl.DataFrame(rows)
-# mccole: /richness
+# mccole:/richness
 
 
-# mccole: plot
+# mccole:plot
 def plot_richness(richness_df, filename):
     """Save a bar chart of MATTR per text, coloured by author."""
     df = richness_df.with_columns(
@@ -94,7 +94,7 @@ def plot_richness(richness_df, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

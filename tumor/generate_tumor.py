@@ -1,7 +1,7 @@
 import numpy as np
 import polars as pl
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed for reproducibility
 N_PER_CLASS = 150  # samples per class
 
@@ -11,10 +11,10 @@ N_PER_CLASS = 150  # samples per class
 BENIGN_MEAN = [1.5, 1.5]
 MALIGNANT_MEAN = [3.5, 3.5]
 FEATURE_STD = 0.6  # within-class spread for each feature
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def make_tumor_data(
     n_per_class=N_PER_CLASS,
     benign_mean=None,
@@ -43,7 +43,7 @@ def make_tumor_data(
     return pl.DataFrame(
         {"feature_1": features[:, 0], "feature_2": features[:, 1], "label": labels}
     )
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

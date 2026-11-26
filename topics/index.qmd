@@ -56,7 +56,7 @@ Because it ignores word order within a document.
     $\mathbf{t}_d \in \mathbb{Z}_{\geq 0}^V$ where $V$ is the vocabulary size and
     $t_{dw}$ counts how many times word $w$ appears in document $d$.
 -   Extracting word-count columns from the DataFrame and converting to a NumPy matrix
-    gives a two-dimensional array with shape $(\text{n\_docs},\, V)$.
+    gives a two-dimensional array with shape $(\text{n_docs},\, V)$.
 
 {{< inc topics/topics.py mark=tf_matrix >}}
 

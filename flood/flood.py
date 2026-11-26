@@ -4,14 +4,14 @@ import altair as alt
 from scipy.stats import norm
 from generate_flood import generate
 
-# mccole: constants
+# mccole:constants
 # Return periods of interest (years).  A T-year flood has probability
 # 1/T of being exceeded in any given year.
 RETURN_PERIODS = [2, 5, 10, 25, 50, 100, 200]
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: fit-lognormal
+# mccole:fit-lognormal
 def fit_lognormal(flows):
     """Estimate log-normal parameters by the method of moments.
 
@@ -23,10 +23,10 @@ def fit_lognormal(flows):
     mu_y = float(np.mean(log_flows))
     sigma_y = float(np.std(log_flows, ddof=1))
     return mu_y, sigma_y
-# mccole: /fit-lognormal
+# mccole:/fit-lognormal
 
 
-# mccole: return-level
+# mccole:return-level
 def return_level(mu_y, sigma_y, T):
     """Return the flood magnitude exceeded on average once every T years.
 
@@ -38,10 +38,10 @@ def return_level(mu_y, sigma_y, T):
     p = 1.0 - 1.0 / T
     z_p = norm.ppf(p)
     return np.exp(mu_y + z_p * sigma_y)
-# mccole: /return-level
+# mccole:/return-level
 
 
-# mccole: plotting-positions
+# mccole:plotting-positions
 def plotting_positions(flows):
     """Return (normal_quantiles, sorted_log_flows) for a normal probability plot.
 
@@ -56,10 +56,10 @@ def plotting_positions(flows):
     p = ranks / (n + 1.0)
     z = norm.ppf(p)
     return z, sorted_log_flows
-# mccole: /plotting-positions
+# mccole:/plotting-positions
 
 
-# mccole: plot
+# mccole:plot
 def plot(flows, mu_y, sigma_y):
     """Return an Altair normal probability plot (Q-Q plot) for log-flows.
 
@@ -94,7 +94,7 @@ def plot(flows, mu_y, sigma_y):
     return (points + line).properties(
         width=400, height=300, title="Normal probability plot of log-flows"
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

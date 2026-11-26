@@ -10,7 +10,7 @@ START = (0, 0)
 END = (GRID_ROWS - 1, GRID_COLS - 1)
 
 
-# mccole: terrain
+# mccole:terrain
 def make_terrain(rows, cols, seed=SEED):
     """Return a (rows, cols) elevation array with values in [0, 1].
 
@@ -33,7 +33,7 @@ def make_terrain(rows, cols, seed=SEED):
         elev += amp * np.sin(k * X + px) * np.cos(k * Y + py)
     lo, hi = elev.min(), elev.max()
     return (elev - lo) / (hi - lo)
-# mccole: /terrain
+# mccole:/terrain
 
 
 if __name__ == "__main__":

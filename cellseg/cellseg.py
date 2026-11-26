@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from scipy import ndimage
 from generate_image import make_image, make_pure_noise
 
-# mccole: constants
+# mccole:constants
 SMOOTH_SIGMA = 2.0  # std dev of the Gaussian smoothing kernel (pixels)
 
 # After smoothing, cell peak brightness ≈ σ²/(σ²+σ_s²) = 36/40 ≈ 0.90.
@@ -15,17 +15,17 @@ THRESHOLD = 0.50
 # r_t = sqrt(−2·ln(threshold/peak)) · σ_eff ≈ 1.085 · 6.32 ≈ 6.9 px, area ≈ 148 px².
 # MIN_CELL_SIZE is set well below this to keep real cells while removing noise blobs.
 MIN_CELL_SIZE = 30  # minimum pixel count for a detected cell
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: smooth
+# mccole:smooth
 def smooth(image, sigma=SMOOTH_SIGMA):
     """Return the image after 2-D Gaussian smoothing with the given sigma."""
     return ndimage.gaussian_filter(image.astype(float), sigma=sigma)
-# mccole: /smooth
+# mccole:/smooth
 
 
-# mccole: segment
+# mccole:segment
 def segment(image, threshold=THRESHOLD, min_size=MIN_CELL_SIZE):
     """Return (labeled, n_cells) from a smoothed image.
 
@@ -50,18 +50,18 @@ def segment(image, threshold=THRESHOLD, min_size=MIN_CELL_SIZE):
             new_label += 1
 
     return filtered, new_label - 1
-# mccole: /segment
+# mccole:/segment
 
 
-# mccole: cellsizes
+# mccole:cellsizes
 def cell_sizes(labeled):
     """Return an array of pixel counts, one per detected cell."""
     n = labeled.max()
     return np.array([np.sum(labeled == i) for i in range(1, n + 1)])
-# mccole: /cellsizes
+# mccole:/cellsizes
 
 
-# mccole: plot
+# mccole:plot
 def plot_segmentation(image, labeled, centers, filename):
     """Save a two-panel figure to `filename`.
 
@@ -102,7 +102,7 @@ def plot_segmentation(image, labeled, centers, filename):
     plt.tight_layout()
     plt.savefig(filename, dpi=90)
     plt.close(fig)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

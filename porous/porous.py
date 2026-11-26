@@ -2,7 +2,7 @@ import numpy as np
 import polars as pl
 import altair as alt
 
-# mccole: constants
+# mccole:constants
 GRID_SIZE = 20  # side length of the square grid (cells)
 N_TRIALS = 200  # independent trials per probability value
 N_PROBS = 41  # number of probability values from 0.0 to 1.0 inclusive
@@ -12,20 +12,20 @@ RNG_SEED = 7493418
 # 4-neighbor (von Neumann) connectivity.  From Stauffer & Aharony,
 # Introduction to Percolation Theory (2nd ed., 1994), Appendix B.
 THRESHOLD_THEORY = 0.5927
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: make-grid
+# mccole:make-grid
 def make_grid(p, rng):
     """Return a GRID_SIZE x GRID_SIZE boolean array.
 
     Each cell is independently True (open) with probability p.
     """
     return rng.random((GRID_SIZE, GRID_SIZE)) < p
-# mccole: /make-grid
+# mccole:/make-grid
 
 
-# mccole: percolates
+# mccole:percolates
 def percolates(grid):
     """Return True if an open path connects any top-row cell to any bottom-row cell.
 
@@ -55,10 +55,10 @@ def percolates(grid):
                 visited[nr, nc] = True
                 stack.append((nr, nc))
     return False
-# mccole: /percolates
+# mccole:/percolates
 
 
-# mccole: sweep
+# mccole:sweep
 def sweep():
     """Return a DataFrame with the percolation fraction at each probability.
 
@@ -73,10 +73,10 @@ def sweep():
         for p in probs
     ]
     return pl.DataFrame({"probability": probs, "fraction_percolating": fractions})
-# mccole: /sweep
+# mccole:/sweep
 
 
-# mccole: estimate-threshold
+# mccole:estimate-threshold
 def estimate_threshold(df):
     """Return the smallest p where the percolation fraction first reaches 0.5.
 
@@ -86,10 +86,10 @@ def estimate_threshold(df):
     """
     above = df.filter(pl.col("fraction_percolating") >= 0.5)
     return float(above["probability"].min()) if not above.is_empty() else float("nan")
-# mccole: /estimate-threshold
+# mccole:/estimate-threshold
 
 
-# mccole: plot
+# mccole:plot
 def plot(df):
     """Return an Altair line chart of percolation fraction vs. open probability."""
     return (
@@ -105,7 +105,7 @@ def plot(df):
         )
         .properties(width=400, height=300, title="Percolation threshold sweep")
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

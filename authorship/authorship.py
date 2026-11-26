@@ -9,7 +9,7 @@ from generate_authorship import make_corpus, AUTHORS
 NGRAM_SIZE = 2
 
 
-# mccole: ngrams
+# mccole:ngrams
 def char_ngrams(text, n):
     """Return a Counter of character n-grams in text.
 
@@ -18,10 +18,10 @@ def char_ngrams(text, n):
     contribute to the profile alongside within-word patterns.
     """
     return Counter(text[i : i + n] for i in range(len(text) - n + 1))
-# mccole: /ngrams
+# mccole:/ngrams
 
 
-# mccole: profile
+# mccole:profile
 def build_profile(texts, n=NGRAM_SIZE):
     """Build a normalised character n-gram frequency profile from a list of texts.
 
@@ -34,10 +34,10 @@ def build_profile(texts, n=NGRAM_SIZE):
         counts += char_ngrams(text, n)
     total = sum(counts.values())
     return {ng: c / total for ng, c in counts.items()}
-# mccole: /profile
+# mccole:/profile
 
 
-# mccole: similarity
+# mccole:similarity
 def cosine_similarity(profile_a, profile_b):
     """Return the cosine similarity between two n-gram frequency profiles.
 
@@ -54,10 +54,10 @@ def cosine_similarity(profile_a, profile_b):
     if norm_a == 0.0 or norm_b == 0.0:
         return 0.0
     return dot / (norm_a * norm_b)
-# mccole: /similarity
+# mccole:/similarity
 
 
-# mccole: attribute
+# mccole:attribute
 def attribute(unknown_profile, candidate_profiles):
     """Return candidates ranked by cosine similarity to the unknown profile.
 
@@ -70,10 +70,10 @@ def attribute(unknown_profile, candidate_profiles):
         for author, profile in candidate_profiles.items()
     ]
     return sorted(scores, key=lambda pair: pair[1], reverse=True)
-# mccole: /attribute
+# mccole:/attribute
 
 
-# mccole: plot
+# mccole:plot
 def plot_similarity(ranked, filename):
     """Save a horizontal bar chart of cosine similarity scores."""
     df = pl.DataFrame([{"author": author, "similarity": sim} for author, sim in ranked])
@@ -96,7 +96,7 @@ def plot_similarity(ranked, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

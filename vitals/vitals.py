@@ -4,7 +4,7 @@ import altair as alt
 from generate_vitals import make_vitals_data, STEP_START, SPIKE_POSITIONS
 
 
-# mccole: rolling
+# mccole:rolling
 def rolling_stats(values, window):
     """Compute trailing rolling mean and standard deviation.
 
@@ -22,10 +22,10 @@ def rolling_stats(values, window):
         means[i] = np.mean(segment)
         stds[i] = np.std(segment, ddof=1) if len(segment) > 1 else 0.0
     return means, stds
-# mccole: /rolling
+# mccole:/rolling
 
 
-# mccole: detect
+# mccole:detect
 def detect_anomalies(values, window, threshold):
     """Flag time points where the value deviates from the rolling mean by more than
     threshold standard deviations.
@@ -38,10 +38,10 @@ def detect_anomalies(values, window, threshold):
     deviations = np.abs(values - means)
     flagged = deviations > threshold * stds
     return flagged, means, stds
-# mccole: /detect
+# mccole:/detect
 
 
-# mccole: plot
+# mccole:plot
 def plot_vitals(times, values, means, flagged, filename):
     """Save an Altair figure with the time series, rolling mean, and flagged anomalies."""
     df = pl.DataFrame({"time": times, "heart_rate": values, "rolling_mean": means})
@@ -70,7 +70,7 @@ def plot_vitals(times, values, means, flagged, filename):
         width=550, height=250, title="Anomaly detection in patient vital signs"
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 # Rolling window width and z-score threshold for anomaly detection.

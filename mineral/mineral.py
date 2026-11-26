@@ -3,13 +3,13 @@ import polars as pl
 import altair as alt
 from generate_mineral import make_mineral_data, train_test_split, TRAIN_FRAC
 
-# mccole: constants
+# mccole:constants
 LEARNING_RATE = 0.1  # gradient-descent step size
 N_ITER = 500  # number of gradient-descent iterations
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: normalize
+# mccole:normalize
 def normalize(X, mean=None, std=None):
     """Standardize X to zero mean and unit standard deviation.
 
@@ -21,17 +21,17 @@ def normalize(X, mean=None, std=None):
     if std is None:
         std = X.std(axis=0)
     return (X - mean) / std, mean, std
-# mccole: /normalize
+# mccole:/normalize
 
 
-# mccole: sigmoid
+# mccole:sigmoid
 def sigmoid(z):
     """Map any real number to (0, 1): sigma(z) = 1 / (1 + exp(-z))."""
     return 1.0 / (1.0 + np.exp(-z))
-# mccole: /sigmoid
+# mccole:/sigmoid
 
 
-# mccole: train
+# mccole:train
 def train(X, y, lr=LEARNING_RATE, n_iter=N_ITER):
     """Fit a logistic regression model by gradient descent.
 
@@ -68,10 +68,10 @@ def train(X, y, lr=LEARNING_RATE, n_iter=N_ITER):
         b -= lr * db
 
     return w, b, losses
-# mccole: /train
+# mccole:/train
 
 
-# mccole: predict
+# mccole:predict
 def predict(X, w, b, threshold=0.5):
     """Return binary class predictions (0 or 1) for each row of X."""
     return (sigmoid(X @ w + b) >= threshold).astype(int)
@@ -80,10 +80,10 @@ def predict(X, w, b, threshold=0.5):
 def accuracy(y_true, y_pred):
     """Return fraction of correct predictions."""
     return np.mean(y_true == y_pred)
-# mccole: /predict
+# mccole:/predict
 
 
-# mccole: boundary
+# mccole:boundary
 def decision_boundary_line(w, b, mean, std, x_range):
     """Return (x_vals, y_vals) for the decision boundary in original feature space.
 
@@ -96,10 +96,10 @@ def decision_boundary_line(w, b, mean, std, x_range):
     x_vals = np.linspace(*x_range, 200)
     y_vals = mean[1] - (std[1] / w[1]) * (w[0] * (x_vals - mean[0]) / std[0] + b)
     return x_vals, y_vals
-# mccole: /boundary
+# mccole:/boundary
 
 
-# mccole: plot
+# mccole:plot
 def plot_boundary(X, y, w, b, mean, std, filename):
     """Save a scatter plot with the logistic regression decision boundary."""
     x_range = (X[:, 0].min() - 1, X[:, 0].max() + 1)
@@ -138,7 +138,7 @@ def plot_boundary(X, y, w, b, mean, std, filename):
     )
     chart = (scatter + line).properties(width=400, height=300)
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

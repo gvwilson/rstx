@@ -3,7 +3,7 @@ import polars as pl
 import altair as alt
 from generate_spectrum import make_spectrum, make_pure_noise, PEAKS
 
-# mccole: constants
+# mccole:constants
 SMOOTH_WINDOW = 5  # number of points in the moving-average filter;
 # wide enough to suppress point-to-point noise,
 # narrow enough not to blur nearby peaks
@@ -13,10 +13,10 @@ THRESHOLD = 0.10  # minimum smoothed intensity to be reported as a peak;
 MIN_DISTANCE = 15  # minimum index separation between reported peaks;
 # at 500 points over 500 Da this equals 1 Da per index,
 # so MIN_DISTANCE = 15 means peaks must be ≥ 15 Da apart
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: smooth
+# mccole:smooth
 def smooth(intensity, window=SMOOTH_WINDOW):
     """Return the moving-average of `intensity` over `window` points.
 
@@ -27,10 +27,10 @@ def smooth(intensity, window=SMOOTH_WINDOW):
     """
     kernel = np.ones(window) / window
     return np.convolve(intensity, kernel, mode="same")
-# mccole: /smooth
+# mccole:/smooth
 
 
-# mccole: detect
+# mccole:detect
 def detect_peaks(mz, intensity, threshold=THRESHOLD, min_distance=MIN_DISTANCE):
     """Return the m/z positions of peaks in `intensity`.
 
@@ -60,10 +60,10 @@ def detect_peaks(mz, intensity, threshold=THRESHOLD, min_distance=MIN_DISTANCE):
 
     kept.sort()
     return mz[np.array(kept)]
-# mccole: /detect
+# mccole:/detect
 
 
-# mccole: plot
+# mccole:plot
 def plot_spectrum(mz, raw, smoothed, detected_mz, filename):
     """Save a layered Altair chart to `filename`.
 
@@ -92,7 +92,7 @@ def plot_spectrum(mz, raw, smoothed, detected_mz, filename):
 
     chart = alt.layer(*layers).properties(width=500, height=250)
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

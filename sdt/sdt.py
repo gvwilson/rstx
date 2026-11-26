@@ -6,7 +6,7 @@ import altair as alt
 N_ROC_POINTS = 200
 
 
-# mccole: rates
+# mccole:rates
 def confusion_rates(labels, decisions):
     """Return (hit_rate, false_alarm_rate) from binary label and decision arrays.
 
@@ -25,10 +25,10 @@ def confusion_rates(labels, decisions):
     hit_rate = hits / np.sum(signal_trials)
     false_alarm_rate = false_alarms / np.sum(noise_trials)
     return float(hit_rate), float(false_alarm_rate)
-# mccole: /rates
+# mccole:/rates
 
 
-# mccole: roc
+# mccole:roc
 def roc_curve(scores, labels):
     """Return (far, hr) arrays tracing the ROC curve from evidence scores.
 
@@ -62,10 +62,10 @@ def roc_curve(scores, labels):
         far[i] = fa / n_noise
 
     return far, hr
-# mccole: /roc
+# mccole:/roc
 
 
-# mccole: auc
+# mccole:auc
 def auc(far, hr):
     """Return the area under the ROC curve using the trapezoidal rule.
 
@@ -86,10 +86,10 @@ def auc(far, hr):
     widths = np.abs(np.diff(sorted_far))
     heights = 0.5 * (sorted_hr[:-1] + sorted_hr[1:])
     return float(np.sum(widths * heights))
-# mccole: /auc
+# mccole:/auc
 
 
-# mccole: plot
+# mccole:plot
 def plot_roc(roc_far, roc_hr, filename):
     """Save an ROC curve plot as an SVG file."""
     curve_data = [{"far": float(f), "hr": float(h)} for f, h in zip(roc_far, roc_hr)]
@@ -112,7 +112,7 @@ def plot_roc(roc_far, roc_hr, filename):
         height=360,
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

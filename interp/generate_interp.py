@@ -23,7 +23,7 @@ def true_field(x, y):
     return np.sin(X_FREQ * np.pi * x) * np.cos(Y_FREQ * np.pi * y)
 
 
-# mccole: generate
+# mccole:generate
 def make_stations(n_stations=N_STATIONS, seed=SEED):
     """Return a Polars DataFrame of synthetic weather station observations.
 
@@ -42,7 +42,7 @@ def make_stations(n_stations=N_STATIONS, seed=SEED):
     ys = rng.uniform(0.0, 1.0, n_stations)
     values = true_field(xs, ys)
     return pl.DataFrame({"x": xs.tolist(), "y": ys.tolist(), "value": values.tolist()})
-# mccole: /generate
+# mccole:/generate
 
 
 def make_true_grid(rows=GRID_ROWS, cols=GRID_COLS):

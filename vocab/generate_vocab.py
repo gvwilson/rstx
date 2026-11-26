@@ -22,7 +22,7 @@ TEXT_LENGTH = 500
 ZIPF_EXP = 1.0
 
 
-# mccole: generate
+# mccole:generate
 def make_corpus(
     authors=AUTHORS,
     vocab_sizes=VOCAB_SIZES,
@@ -52,7 +52,7 @@ def make_corpus(
                 records.append({"text_id": text_id, "author": author, "word": w})
             text_id += 1
     return pl.DataFrame(records)
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

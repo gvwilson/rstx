@@ -15,7 +15,7 @@ MAX_ITER = 100
 SEED = 7493418
 
 
-# mccole: tf_matrix
+# mccole:tf_matrix
 def make_tf_matrix(df):
     """Return a (n_docs, vocab_size) NumPy array of raw term-frequency counts.
 
@@ -25,10 +25,10 @@ def make_tf_matrix(df):
     word_cols = [c for c in df.columns if c not in ("doc_id", "true_topic")]
     tf = df.select(word_cols).to_numpy().astype(float)
     return tf, word_cols
-# mccole: /tf_matrix
+# mccole:/tf_matrix
 
 
-# mccole: normalize
+# mccole:normalize
 def normalize_rows(matrix):
     """Return a copy of matrix with each row divided by its L2 norm.
 
@@ -41,10 +41,10 @@ def normalize_rows(matrix):
     # Avoid division by zero for any all-zero document.
     safe_norms = np.where(norms == 0, 1.0, norms)
     return matrix / safe_norms
-# mccole: /normalize
+# mccole:/normalize
 
 
-# mccole: kmeans
+# mccole:kmeans
 def kmeans(matrix, k, seed=SEED, max_iter=MAX_ITER):
     """Run k-means clustering and return (labels, centroids).
 
@@ -89,10 +89,10 @@ def kmeans(matrix, k, seed=SEED, max_iter=MAX_ITER):
         centroids = new_centroids
 
     return labels, centroids
-# mccole: /kmeans
+# mccole:/kmeans
 
 
-# mccole: top_words
+# mccole:top_words
 def top_words(centroids, word_cols, n_words=5):
     """Return a list of k lists, each with the top n_words for that cluster.
 
@@ -105,10 +105,10 @@ def top_words(centroids, word_cols, n_words=5):
         indices = np.argsort(centroids[c])[::-1][:n_words]
         result.append([word_cols[i] for i in indices])
     return result
-# mccole: /top_words
+# mccole:/top_words
 
 
-# mccole: plot
+# mccole:plot
 def plot_clusters(labels, true_topics, centroids, word_cols, filename):
     """Save a heatmap of centroid word weights, one row per cluster."""
     n_clusters, vocab_size = centroids.shape
@@ -142,7 +142,7 @@ def plot_clusters(labels, true_topics, centroids, word_cols, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

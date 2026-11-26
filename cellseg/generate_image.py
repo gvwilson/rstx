@@ -1,6 +1,6 @@
 import numpy as np
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed
 IMAGE_SIZE = 128  # pixels per side; kept small for fast tests
 N_CELLS = 8  # number of cells to place
@@ -14,7 +14,7 @@ NOISE_SCALE = 0.15  # std dev of additive Gaussian noise
 # Setting this below 0.5 gives d > 2σ·sqrt(2·ln(4A)) = 2·6·sqrt(2·ln(4)) ≈ 19.8.
 # We use 24 pixels for a comfortable margin.
 MIN_SEPARATION = 24
-# mccole: /constants
+# mccole:/constants
 
 
 def _place_cells(n_cells, image_size, min_sep, rng, max_attempts=10_000):
@@ -36,7 +36,7 @@ def _place_cells(n_cells, image_size, min_sep, rng, max_attempts=10_000):
     return centers
 
 
-# mccole: make-image
+# mccole:make-image
 def make_image(
     n_cells=N_CELLS,
     sigma=CELL_SIGMA,
@@ -64,10 +64,10 @@ def make_image(
     image += rng.normal(0.0, noise_scale, image.shape)
     image = np.clip(image, 0.0, None)  # negative counts are unphysical
     return image, centers
-# mccole: /make-image
+# mccole:/make-image
 
 
-# mccole: make-noise
+# mccole:make-noise
 def make_pure_noise(noise_scale=NOISE_SCALE, image_size=IMAGE_SIZE, seed=SEED):
     """Return an image containing only Gaussian noise, no cell signal.
 
@@ -76,7 +76,7 @@ def make_pure_noise(noise_scale=NOISE_SCALE, image_size=IMAGE_SIZE, seed=SEED):
     """
     rng = np.random.default_rng(seed)
     return np.maximum(rng.normal(0.0, noise_scale, (image_size, image_size)), 0.0)
-# mccole: /make-noise
+# mccole:/make-noise
 
 
 if __name__ == "__main__":

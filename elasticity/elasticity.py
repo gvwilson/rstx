@@ -5,7 +5,7 @@ from scipy.stats import t as t_dist
 from generate_elasticity import make_elasticity_data, TRUE_ELASTICITY, TRUE_INTERCEPT
 
 
-# mccole: ols
+# mccole:ols
 def log_log_ols(prices, quantities):
     """Fit log(quantity) = intercept + slope * log(price) by ordinary least squares.
 
@@ -36,10 +36,10 @@ def log_log_ols(prices, quantities):
     ci_low = slope - t_crit * se_slope
     ci_high = slope + t_crit * se_slope
     return intercept, slope, se_slope, ci_low, ci_high
-# mccole: /ols
+# mccole:/ols
 
 
-# mccole: plot
+# mccole:plot
 def plot_loglog(prices, quantities, intercept, slope, filename):
     """Save a log-log scatter plot with the fitted OLS line.
 
@@ -74,7 +74,7 @@ def plot_loglog(prices, quantities, intercept, slope, filename):
         width=450, height=300, title="Log-log demand curve with OLS fit"
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

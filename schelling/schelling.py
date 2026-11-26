@@ -30,7 +30,7 @@ BLUE = 2
 SNAPSHOT_STEPS = [0, 5, 10, 20]
 
 
-# mccole: grid
+# mccole:grid
 def make_grid(size=GRID_SIZE, empty_fraction=EMPTY_FRACTION, seed=SEED):
     """Return a random grid of RED and BLUE agents with some EMPTY cells.
 
@@ -46,10 +46,10 @@ def make_grid(size=GRID_SIZE, empty_fraction=EMPTY_FRACTION, seed=SEED):
     flat = np.array([EMPTY] * n_empty + [RED] * n_red + [BLUE] * n_blue)
     rng.shuffle(flat)
     return flat.reshape(size, size)
-# mccole: /grid
+# mccole:/grid
 
 
-# mccole: neighbors
+# mccole:neighbors
 def same_neighbor_fraction(grid, row, col):
     """Return the fraction of occupied neighbours of the same type.
 
@@ -73,10 +73,10 @@ def same_neighbor_fraction(grid, row, col):
     if n_occupied == 0:
         return 1.0
     return n_same / n_occupied
-# mccole: /neighbors
+# mccole:/neighbors
 
 
-# mccole: step
+# mccole:step
 def step(grid, threshold=THRESHOLD, rng=None):
     """Return a new grid after moving all dissatisfied agents.
 
@@ -103,10 +103,10 @@ def step(grid, threshold=THRESHOLD, rng=None):
             new_grid[er, ec] = grid[r, c]
             new_grid[r, c] = EMPTY
     return new_grid
-# mccole: /step
+# mccole:/step
 
 
-# mccole: segregation
+# mccole:segregation
 def satisfaction_rate(grid, threshold=THRESHOLD):
     """Return the fraction of agents that are satisfied.
 
@@ -125,10 +125,10 @@ def satisfaction_rate(grid, threshold=THRESHOLD):
     if n_agents == 0:
         return 1.0
     return n_satisfied / n_agents
-# mccole: /segregation
+# mccole:/segregation
 
 
-# mccole: run
+# mccole:run
 def run(grid, n_steps=N_STEPS, threshold=THRESHOLD, seed=SEED):
     """Run the simulation and return a list of grid snapshots.
 
@@ -140,10 +140,10 @@ def run(grid, n_steps=N_STEPS, threshold=THRESHOLD, seed=SEED):
         grid = step(grid, threshold, rng)
         snapshots.append(grid.copy())
     return snapshots
-# mccole: /run
+# mccole:/run
 
 
-# mccole: plot
+# mccole:plot
 def plot_snapshots(snapshots, steps_to_show, filename):
     """Save a figure showing the grid state at the given step indices.
 
@@ -159,7 +159,7 @@ def plot_snapshots(snapshots, steps_to_show, filename):
     fig.tight_layout()
     fig.savefig(filename, dpi=150)
     plt.close(fig)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

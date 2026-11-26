@@ -3,7 +3,7 @@ import polars as pl
 
 SEED = 7493418
 
-# mccole: constants
+# mccole:constants
 # True log-normal parameters used to generate the synthetic flow record.
 # Annual maximum flows X are modelled as log-normal: ln(X) ~ Normal(mu_y, sigma_y).
 # With TRUE_MU_LOG = 4.8 and TRUE_SIGMA_LOG = 0.4 the median flow is
@@ -13,10 +13,10 @@ TRUE_MU_LOG = 4.8  # mean of log-flows (dimensionless, logs of m^3/s)
 TRUE_SIGMA_LOG = 0.4  # standard deviation of log-flows (dimensionless)
 
 N_YEARS = 50  # years of annual maximum flow record
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def generate(mu_log=TRUE_MU_LOG, sigma_log=TRUE_SIGMA_LOG, n=N_YEARS, seed=SEED):
     """Return a DataFrame with synthetic annual maximum flows.
 
@@ -28,7 +28,7 @@ def generate(mu_log=TRUE_MU_LOG, sigma_log=TRUE_SIGMA_LOG, n=N_YEARS, seed=SEED)
     log_flows = rng.normal(loc=mu_log, scale=sigma_log, size=n)
     flows = np.exp(log_flows)
     return pl.DataFrame({"year": np.arange(1, n + 1), "annual_max_flow": flows})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

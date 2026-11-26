@@ -2,7 +2,7 @@ import numpy as np
 
 SEED = 7493418  # RNG seed
 
-# mccole: constants
+# mccole:constants
 MZ_MIN = 100.0  # lower end of m/z range (daltons)
 MZ_MAX = 600.0  # upper end of m/z range (daltons)
 N_POINTS = 500  # number of evenly-spaced m/z values
@@ -17,10 +17,10 @@ PEAKS = [
 ]
 
 DEFAULT_NOISE = 0.05  # Gaussian noise std dev relative to tallest peak
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: make-spectrum
+# mccole:make-spectrum
 def make_spectrum(
     peaks=PEAKS,
     noise_scale=DEFAULT_NOISE,
@@ -44,10 +44,10 @@ def make_spectrum(
     intensity += rng.normal(0.0, noise_scale, n_points)
     intensity = np.maximum(intensity, 0.0)
     return mz, intensity
-# mccole: /make-spectrum
+# mccole:/make-spectrum
 
 
-# mccole: make-noise
+# mccole:make-noise
 def make_pure_noise(
     noise_scale=DEFAULT_NOISE,
     n_points=N_POINTS,
@@ -64,7 +64,7 @@ def make_pure_noise(
     mz = np.linspace(mz_min, mz_max, n_points)
     intensity = np.maximum(rng.normal(0.0, noise_scale, n_points), 0.0)
     return mz, intensity
-# mccole: /make-noise
+# mccole:/make-noise
 
 
 if __name__ == "__main__":

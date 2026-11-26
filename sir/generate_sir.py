@@ -4,7 +4,7 @@ from scipy.integrate import solve_ivp
 
 SEED = 7493418
 
-# mccole: constants
+# mccole:constants
 # True SIR parameters used to generate synthetic outbreak data.
 # BETA_TRUE: number of contacts per day that lead to transmission.
 # GAMMA_TRUE: 1/GAMMA_TRUE is the mean infectious period (10 days here).
@@ -16,10 +16,10 @@ N_POP = 10_000  # total population (constant; no births or deaths)
 I0 = 10  # initial number of infectious individuals
 
 T_MAX = 160  # simulation length (days)
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def generate(beta=BETA_TRUE, gamma=GAMMA_TRUE, n=N_POP, i0=I0, t_max=T_MAX, seed=SEED):
     """Return daily new-case counts from an SIR model with Poisson observation noise.
 
@@ -51,7 +51,7 @@ def _sir_rhs(t, y, beta, gamma, n):
     susc, infect, rec = y
     force = beta * susc * infect / n
     return [-force, force - gamma * infect, gamma * infect]
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

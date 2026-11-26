@@ -204,7 +204,7 @@ identify the noise level at which the pipeline begins to fail consistently.
 Real microscopy images often have uneven illumination: the background is brighter in some
 regions than others.  Simulate this by adding a low-frequency gradient:
 
-<p>$G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}$</p>
+<p>$G(x,y) = 0.2 \cdot x / \text{IMAGE_SIZE}$</p>
 
 to the synthetic image before adding noise.
 Show that the global threshold misses cells in dark regions or over-detects in bright

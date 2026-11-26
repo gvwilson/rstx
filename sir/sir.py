@@ -5,7 +5,7 @@ from scipy.integrate import solve_ivp
 from scipy.optimize import least_squares
 from generate_sir import I0, N_POP, T_MAX, generate
 
-# mccole: constants
+# mccole:constants
 # Initial parameter guesses for the optimizer.  Starting near biologically
 # plausible values helps the solver converge; exact values do not matter
 # as long as residuals decrease monotonically from the starting point.
@@ -15,10 +15,10 @@ GAMMA_INIT = 0.1
 # Both parameters must be positive; upper bounds are generous.
 LOWER_BOUNDS = [1e-6, 1e-6]
 UPPER_BOUNDS = [2.0, 2.0]
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: sir-rhs
+# mccole:sir-rhs
 def sir_rhs(t, y, beta, gamma, n):
     """Return [dS/dt, dI/dt, dR/dt] for the SIR epidemic model.
 
@@ -31,10 +31,10 @@ def sir_rhs(t, y, beta, gamma, n):
     susc, infect, rec = y
     force = beta * susc * infect / n
     return [-force, force - gamma * infect, gamma * infect]
-# mccole: /sir-rhs
+# mccole:/sir-rhs
 
 
-# mccole: model-cases
+# mccole:model-cases
 def model_cases(beta, gamma, n=N_POP, i0=I0, t_max=T_MAX):
     """Return modelled daily new cases for parameters beta and gamma.
 
@@ -52,10 +52,10 @@ def model_cases(beta, gamma, n=N_POP, i0=I0, t_max=T_MAX):
         atol=1e-10,
     )
     return np.maximum(np.diff(sol.y[0]) * -1.0, 0.0)
-# mccole: /model-cases
+# mccole:/model-cases
 
 
-# mccole: fit
+# mccole:fit
 def fit(observed, n=N_POP, i0=I0, t_max=T_MAX):
     """Fit beta and gamma to observed daily case counts by least squares.
 
@@ -73,10 +73,10 @@ def fit(observed, n=N_POP, i0=I0, t_max=T_MAX):
         bounds=(LOWER_BOUNDS, UPPER_BOUNDS),
     )
     return float(result.x[0]), float(result.x[1])
-# mccole: /fit
+# mccole:/fit
 
 
-# mccole: plot
+# mccole:plot
 def plot(days, observed, beta, gamma):
     """Return an Altair chart of observed cases and the fitted SIR model curve."""
     fitted = model_cases(beta, gamma)
@@ -101,7 +101,7 @@ def plot(days, observed, beta, gamma):
         )
         .properties(width=400, height=280)
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

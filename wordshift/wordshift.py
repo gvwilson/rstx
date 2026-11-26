@@ -4,7 +4,7 @@ import altair as alt
 from generate_wordshift import make_corpus, TARGET_WORDS
 
 
-# mccole: normalize
+# mccole:normalize
 def normalize(df):
     """Return df with a 'freq' column: each word's share of tokens that decade.
 
@@ -16,10 +16,10 @@ def normalize(df):
     return df.join(totals, on="decade").with_columns(
         (pl.col("count") / pl.col("total")).alias("freq")
     )
-# mccole: /normalize
+# mccole:/normalize
 
 
-# mccole: trend
+# mccole:trend
 def linear_trend(decade_indices, freqs):
     """Return the OLS slope: change in normalized frequency per decade.
 
@@ -53,10 +53,10 @@ def compute_trends(freq_df, words):
         freqs = subset["freq"].to_list()
         trends[word] = linear_trend(decade_indices, freqs)
     return trends
-# mccole: /trend
+# mccole:/trend
 
 
-# mccole: plot
+# mccole:plot
 def plot_trajectories(freq_df, words, filename):
     """Save an Altair line chart of normalized frequency over time for each word.
 
@@ -79,7 +79,7 @@ def plot_trajectories(freq_df, words, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

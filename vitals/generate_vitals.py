@@ -1,7 +1,7 @@
 import numpy as np
 import polars as pl
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed for reproducibility
 N_POINTS = 200  # number of time points (minutes)
 BASELINE_MEAN = 70.0  # baseline heart rate (bpm)
@@ -11,10 +11,10 @@ STEP_SIZE = 12.0  # magnitude of the step change (bpm)
 # Positions of isolated spike outliers and their magnitude.
 SPIKE_POSITIONS = [30, 110, 165]
 SPIKE_SIZE = 18.0  # spike magnitude above local baseline (bpm)
-# mccole: /constants
+# mccole:/constants
 
 
-# mccole: generate
+# mccole:generate
 def make_vitals_data(
     n=N_POINTS,
     baseline_mean=BASELINE_MEAN,
@@ -43,7 +43,7 @@ def make_vitals_data(
     for pos in spike_positions:
         anomaly[pos] = 1
     return pl.DataFrame({"time": times, "heart_rate": values, "is_anomaly": anomaly})
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

@@ -111,8 +111,33 @@ Wrong: <span class="math inline">\(R_0\)</span> is not a percentage; final epide
 </ul></li>
 <li>In discrete form, new_cases(<span class="math inline">\(t\)</span>) <span class="math inline">\(\approx S(t-1) - S(t)\)</span> when evaluated at integer days</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb1" data-file="sir/sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> sir_rhs(t, y, beta, gamma, n):</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return [dS/dt, dI/dt, dR/dt] for the SIR epidemic model.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    S, I, R are the numbers of susceptible, infectious, and recovered</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">    individuals.  The force of infection beta * I / N uses</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">    frequency-dependent (proportional) transmission: each susceptible</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">    encounters a fixed fraction of the population per unit time.</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    The total N = S + I + R is conserved: dS/dt + dI/dt + dR/dt = 0.</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    susc, infect, rec <span class="op">=</span> y</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    force <span class="op">=</span> beta <span class="op">*</span> susc <span class="op">*</span> infect <span class="op">/</span> n</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="op">-</span>force, force <span class="op">-</span> gamma <span class="op">*</span> infect, gamma <span class="op">*</span> infect]</span></code></pre></div>
+<div class="sourceCode" id="cb2" data-file="sir/sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_cases(beta, gamma, n<span class="op">=</span>N_POP, i0<span class="op">=</span>I0, t_max<span class="op">=</span>T_MAX):</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return modelled daily new cases for parameters beta and gamma.</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Integrates the SIR ODEs at integer days and returns the daily incidence</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co">    new_cases(t) = S(t-1) - S(t), the number of new infections per day.</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>    t_eval <span class="op">=</span> np.arange(<span class="dv">0</span>, t_max <span class="op">+</span> <span class="dv">1</span>, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        sir_rhs,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="bu">float</span>(t_max)],</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>        [<span class="bu">float</span>(n <span class="op">-</span> i0), <span class="bu">float</span>(i0), <span class="fl">0.0</span>],</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>        args<span class="op">=</span>(beta, gamma, n),</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>t_eval,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-10</span>,</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> np.maximum(np.diff(sol.y[<span class="dv">0</span>]) <span class="op">*</span> <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>)</span></code></pre></div>
 <div class="forma-multiple-choice" data-lang="en" data-markdown="1">
 <p>The SIR equations satisfy <span class="math inline">\(dS/dt + dI/dt + dR/dt = 0\)</span> for all <span class="math inline">\(t\)</span>. What does this imply about the numerical solution?</p>
 <dl>
@@ -142,8 +167,44 @@ Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, n
 <li>The variance equals the mean</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb3" data-file="sir/generate_sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># True SIR parameters used to generate synthetic outbreak data.</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># BETA_TRUE: number of contacts per day that lead to transmission.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># GAMMA_TRUE: 1/GAMMA_TRUE is the mean infectious period (10 days here).</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># R0_TRUE = BETA_TRUE / GAMMA_TRUE = 3.0: each case generates 3 secondary</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># cases early in the outbreak, so an epidemic occurs (R0 &gt; 1).</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>BETA_TRUE <span class="op">=</span> <span class="fl">0.30</span>  <span class="co"># transmission rate (day^-1)</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>GAMMA_TRUE <span class="op">=</span> <span class="fl">0.10</span>  <span class="co"># recovery rate (day^-1)</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>N_POP <span class="op">=</span> <span class="dv">10_000</span>  <span class="co"># total population (constant; no births or deaths)</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>I0 <span class="op">=</span> <span class="dv">10</span>  <span class="co"># initial number of infectious individuals</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>T_MAX <span class="op">=</span> <span class="dv">160</span>  <span class="co"># simulation length (days)</span></span></code></pre></div>
+<div class="sourceCode" id="cb4" data-file="sir/generate_sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> generate(beta<span class="op">=</span>BETA_TRUE, gamma<span class="op">=</span>GAMMA_TRUE, n<span class="op">=</span>N_POP, i0<span class="op">=</span>I0, t_max<span class="op">=</span>T_MAX, seed<span class="op">=</span>SEED):</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return daily new-case counts from an SIR model with Poisson observation noise.</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Integrates the SIR ODEs from day 0 to day t_max and approximates the</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    daily incidence as the decrease in S between consecutive integer days:</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    new_cases(t) = S(t-1) - S(t).  Poisson noise is added to mimic</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    stochastic reporting; the Poisson mean is clipped to zero to avoid</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">    negative arguments (can occur near the epidemic peak due to ODE</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">    interpolation).</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>    t_eval <span class="op">=</span> np.arange(<span class="dv">0</span>, t_max <span class="op">+</span> <span class="dv">1</span>, dtype<span class="op">=</span><span class="bu">float</span>)</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    sol <span class="op">=</span> solve_ivp(</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>        _sir_rhs,</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="bu">float</span>(t_max)],</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>        [<span class="bu">float</span>(n <span class="op">-</span> i0), <span class="bu">float</span>(i0), <span class="fl">0.0</span>],</span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        args<span class="op">=</span>(beta, gamma, n),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        t_eval<span class="op">=</span>t_eval,</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        rtol<span class="op">=</span><span class="fl">1e-8</span>,</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        atol<span class="op">=</span><span class="fl">1e-10</span>,</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Daily incidence: drop in S from one day to the next.</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    new_cases_true <span class="op">=</span> np.maximum(np.diff(sol.y[<span class="dv">0</span>]) <span class="op">*</span> <span class="op">-</span><span class="fl">1.0</span>, <span class="fl">0.0</span>)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    new_cases_obs <span class="op">=</span> rng.poisson(new_cases_true).astype(<span class="bu">float</span>)</span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pl.DataFrame({<span class="st">"day"</span>: np.arange(<span class="dv">1</span>, t_max <span class="op">+</span> <span class="dv">1</span>), <span class="st">"cases"</span>: new_cases_obs})</span>
+<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> _sir_rhs(t, y, beta, gamma, n):</span>
+<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>    susc, infect, rec <span class="op">=</span> y</span>
+<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    force <span class="op">=</span> beta <span class="op">*</span> susc <span class="op">*</span> infect <span class="op">/</span> n</span>
+<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> [<span class="op">-</span>force, force <span class="op">-</span> gamma <span class="op">*</span> infect, gamma <span class="op">*</span> infect]</span></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps in the correct order to generate a synthetic SIR outbreak with Poisson noise.</p>
 <ol type="1">
@@ -158,10 +219,53 @@ Wrong: <span class="math inline">\(R_0 = \beta/\gamma\)</span> is a parameter, n
 <li><code>scipy.optimize.least_squares</code> minimises the sum of squared residuals <span class="math inline">\(\sum_t (\hat{c}_t - c_t)^2\)</span>, where <span class="math inline">\(\hat{c}_t\)</span> is the modelled incidence and <span class="math inline">\(c_t\)</span> is the observed count</li>
 <li>Both <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span> must be positive, so we impose box constraints with <code>bounds</code></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
-<div class="sourceCode" id="cb6"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb5" data-file="sir/sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initial parameter guesses for the optimizer.  Starting near biologically</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># plausible values helps the solver converge; exact values do not matter</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># as long as residuals decrease monotonically from the starting point.</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>BETA_INIT <span class="op">=</span> <span class="fl">0.3</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>GAMMA_INIT <span class="op">=</span> <span class="fl">0.1</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Both parameters must be positive; upper bounds are generous.</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>LOWER_BOUNDS <span class="op">=</span> [<span class="fl">1e-6</span>, <span class="fl">1e-6</span>]</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>UPPER_BOUNDS <span class="op">=</span> [<span class="fl">2.0</span>, <span class="fl">2.0</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb6" data-file="sir/sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit(observed, n<span class="op">=</span>N_POP, i0<span class="op">=</span>I0, t_max<span class="op">=</span>T_MAX):</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fit beta and gamma to observed daily case counts by least squares.</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Minimises the sum of squared residuals between the modelled and observed</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">    daily incidence.  Returns the fitted (beta, gamma) as a tuple.</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> residuals(params):</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>        beta, gamma <span class="op">=</span> params</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> model_cases(beta, gamma, n, i0, t_max) <span class="op">-</span> observed</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    result <span class="op">=</span> least_squares(</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        residuals,</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>        x0<span class="op">=</span>[BETA_INIT, GAMMA_INIT],</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>        bounds<span class="op">=</span>(LOWER_BOUNDS, UPPER_BOUNDS),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="bu">float</span>(result.x[<span class="dv">0</span>]), <span class="bu">float</span>(result.x[<span class="dv">1</span>])</span></code></pre></div>
 <h2 data-number="25.6" id="visualizing-the-results"><span class="header-section-number">25.6</span> Visualizing the Results</h2>
-<div class="sourceCode" id="cb7"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb7" data-file="sir/sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot(days, observed, beta, gamma):</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return an Altair chart of observed cases and the fitted SIR model curve."""</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    fitted <span class="op">=</span> model_cases(beta, gamma)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    df_obs <span class="op">=</span> pl.DataFrame(</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        {<span class="st">"day"</span>: days, <span class="st">"cases"</span>: observed.tolist(), <span class="st">"source"</span>: [<span class="st">"observed"</span>] <span class="op">*</span> <span class="bu">len</span>(days)}</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    df_fit <span class="op">=</span> pl.DataFrame(</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        {</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            <span class="st">"day"</span>: <span class="bu">list</span>(<span class="bu">range</span>(<span class="dv">1</span>, T_MAX <span class="op">+</span> <span class="dv">1</span>)),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="st">"cases"</span>: fitted.tolist(),</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>            <span class="st">"source"</span>: [<span class="st">"fitted"</span>] <span class="op">*</span> T_MAX,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        }</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> (</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>        alt.Chart(pl.concat([df_obs, df_fit]))</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        .mark_line()</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(<span class="st">"day:Q"</span>, title<span class="op">=</span><span class="st">"Day"</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(<span class="st">"cases:Q"</span>, title<span class="op">=</span><span class="st">"New cases per day"</span>),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>            color<span class="op">=</span>alt.Color(<span class="st">"source:N"</span>, title<span class="op">=</span><span class="st">""</span>),</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>            strokeDash<span class="op">=</span>alt.StrokeDash(<span class="st">"source:N"</span>),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>        .properties(width<span class="op">=</span><span class="dv">400</span>, height<span class="op">=</span><span class="dv">280</span>)</span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
 <div id="fig-sir-fit" class="quarto-float quarto-figure quarto-figure-center" alt="Two curves: noisy observed daily cases (blue) and smooth fitted SIR model (orange). The fitted curve tracks the observed data closely.">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-sir-fit-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -202,7 +306,7 @@ Figure&nbsp;25.1: Observed daily cases (with Poisson noise) and the fitted SIR m
 <li>This is the best-case scenario for the optimizer: 1% is a generous tolerance for a well-conditioned least-squares problem</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<div class="sourceCode" id="cb8" data-file="sir/test_sir.py"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> scipy.integrate <span class="im">import</span> solve_ivp</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> generate_sir <span class="im">import</span> BETA_TRUE, GAMMA_TRUE, I0, N_POP, T_MAX</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sir <span class="im">import</span> fit, model_cases, sir_rhs</span>
@@ -274,6 +378,14 @@ Figure&nbsp;25.1: Observed daily cases (with Poisson noise) and the fitted SIR m
     <a class="pager-link next" href="../mineral/index.html">Mineral Classification by Geochemistry →</a>
   </nav>
 </footer>
+<script>
+document.addEventListener('click', function (e) {
+  var link = e.target.closest && e.target.closest('a');
+  document.querySelectorAll('details.topnav-dropdown[open]').forEach(function (d) {
+    if (!d.contains(e.target) || (link && d.contains(link))) d.removeAttribute('open');
+  });
+});
+</script>
 
 
 </body></html>

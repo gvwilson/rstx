@@ -25,7 +25,7 @@ REGION_MIN = 0.0
 REGION_MAX = 100.0
 
 
-# mccole: generate
+# mccole:generate
 def make_sites(
     centers=CLUSTER_CENTERS,
     spread=CLUSTER_SPREAD,
@@ -71,7 +71,7 @@ def make_sites(
         )
 
     return pl.DataFrame(records)
-# mccole: /generate
+# mccole:/generate
 
 
 if __name__ == "__main__":

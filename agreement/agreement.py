@@ -7,7 +7,7 @@ from generate_agreement import make_ratings, N_CATS, SEED, N_ITEMS
 SCENARIOS = [0.2, 0.4, 0.6, 0.8, 0.95]
 
 
-# mccole: table
+# mccole:table
 def contingency_table(rater_a, rater_b, n_cats):
     """Return a (n_cats x n_cats) integer contingency table.
 
@@ -19,10 +19,10 @@ def contingency_table(rater_a, rater_b, n_cats):
     for a, b in zip(rater_a, rater_b):
         table[a, b] += 1
     return table
-# mccole: /table
+# mccole:/table
 
 
-# mccole: kappa
+# mccole:kappa
 def cohen_kappa(table):
     """Return Cohen's kappa and its standard error from a contingency table.
 
@@ -58,10 +58,10 @@ def cohen_kappa(table):
     kappa = (p_o - p_e) / (1.0 - p_e)
     se = np.sqrt(p_o * (1.0 - p_o) / (n * (1.0 - p_e) ** 2))
     return float(kappa), float(se)
-# mccole: /kappa
+# mccole:/kappa
 
 
-# mccole: plot
+# mccole:plot
 def plot_kappa_scenarios(scenarios, n_items, n_cats, seed, filename):
     """Save a bar chart of kappa values across underlying agreement scenarios."""
     records = []
@@ -98,7 +98,7 @@ def plot_kappa_scenarios(scenarios, n_items, n_cats, seed, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

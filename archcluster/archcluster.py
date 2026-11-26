@@ -37,14 +37,14 @@ def build_grid(coords, region_min, region_max, grid_size):
         row = min(row, grid_size - 1)
         grid[row, col] += 1
     return grid
-# mccole: /grid
+# mccole:/grid
 
 
 # mccole:hot-cells
 def find_hot_cells(grid, threshold):
     """Boolean mask: True where count >= threshold."""
     return grid >= threshold
-# mccole: /hot-cells
+# mccole:/hot-cells
 
 
 # mccole:dfs
@@ -85,7 +85,7 @@ def find_clusters(hot):
             cluster_id += 1
 
     return labels
-# mccole: /dfs
+# mccole:/dfs
 
 
 # mccole:assign
@@ -107,7 +107,7 @@ def assign_labels(coords, cell_labels, region_min, region_max, grid_size):
         row = min(row, grid_size - 1)
         site_labels[i] = cell_labels[row, col]
     return site_labels
-# mccole: /assign
+# mccole:/assign
 
 
 # mccole:centroids
@@ -123,7 +123,7 @@ def cluster_centroids(coords, labels):
         mask = labels == lbl
         centroids[lbl] = (coords[mask, 0].mean(), coords[mask, 1].mean())
     return centroids
-# mccole: /centroids
+# mccole:/centroids
 
 
 # mccole:plot
@@ -153,7 +153,7 @@ def plot_clusters(df, filename):
         )
     )
     chart.save(filename)
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

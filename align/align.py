@@ -2,7 +2,7 @@ import numpy as np
 import polars as pl
 import altair as alt
 
-# mccole: params
+# mccole:params
 MATCH_SCORE = 2      # reward for aligning identical characters
 MISMATCH_PENALTY = -1  # penalty for aligning different characters
 GAP_PENALTY = -1     # penalty per gap character inserted in either sequence
@@ -10,17 +10,17 @@ GAP_PENALTY = -1     # penalty per gap character inserted in either sequence
 # Example sequences for the lesson.
 SEQ_A = "ACGT"
 SEQ_B = "AGT"
-# mccole: /params
+# mccole:/params
 
 
-# mccole: score-func
+# mccole:score-func
 def _nt_score(a, b):
     """Return match score or mismatch penalty for two nucleotide characters."""
     return MATCH_SCORE if a == b else MISMATCH_PENALTY
-# mccole: /score-func
+# mccole:/score-func
 
 
-# mccole: fill
+# mccole:fill
 def fill_matrix(seq_a, seq_b):
     """Return the Needleman-Wunsch scoring matrix for two sequences.
 
@@ -42,10 +42,10 @@ def fill_matrix(seq_a, seq_b):
             insert = H[i, j - 1] + GAP_PENALTY  # gap in seq_a
             H[i, j] = max(diag, delete, insert)
     return H
-# mccole: /fill
+# mccole:/fill
 
 
-# mccole: traceback
+# mccole:traceback
 def traceback(H, seq_a, seq_b):
     """Trace back from the bottom-right cell to recover the global alignment.
 
@@ -76,18 +76,18 @@ def traceback(H, seq_a, seq_b):
             aligned_b.append(seq_b[j - 1])
             j -= 1
     return "".join(reversed(aligned_a)), "".join(reversed(aligned_b)), score
-# mccole: /traceback
+# mccole:/traceback
 
 
-# mccole: align
+# mccole:align
 def align(seq_a, seq_b):
     """Return the best global alignment of seq_a and seq_b as (aligned_a, aligned_b, score)."""
     H = fill_matrix(seq_a, seq_b)
     return traceback(H, seq_a, seq_b)
-# mccole: /align
+# mccole:/align
 
 
-# mccole: format
+# mccole:format
 def format_alignment(aligned_a, aligned_b):
     """Return a three-line string representation of an alignment.
 
@@ -95,10 +95,10 @@ def format_alignment(aligned_a, aligned_b):
     """
     middle = "".join("|" if a == b else " " for a, b in zip(aligned_a, aligned_b))
     return f"a: {aligned_a}\n   {middle}\nb: {aligned_b}"
-# mccole: /format
+# mccole:/format
 
 
-# mccole: plot
+# mccole:plot
 def plot_matrix(H, seq_a, seq_b):
     """Return an Altair heatmap of the scoring matrix."""
     rows = [
@@ -133,7 +133,7 @@ def plot_matrix(H, seq_a, seq_b):
         )
         .properties(width=300, height=300, title="Needleman-Wunsch scoring matrix")
     )
-# mccole: /plot
+# mccole:/plot
 
 
 if __name__ == "__main__":

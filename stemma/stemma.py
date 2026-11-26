@@ -21,7 +21,7 @@ _BRANCH = {
 }
 
 
-# mccole: hamming
+# mccole:hamming
 def hamming_distance(seq_a, seq_b):
     """Return the fraction of loci where seq_a and seq_b differ.
 
@@ -30,10 +30,10 @@ def hamming_distance(seq_a, seq_b):
     every locus.  This is the Hamming distance normalized by sequence length.
     """
     return float(np.sum(seq_a != seq_b)) / len(seq_a)
-# mccole: /hamming
+# mccole:/hamming
 
 
-# mccole: make-dist
+# mccole:make-dist
 def make_distance_matrix(noise_scale=0.0, seed=42):
     """Return (names, D) using exact tree-additive distances.
 
@@ -56,10 +56,10 @@ def make_distance_matrix(noise_scale=0.0, seed=42):
         np.fill_diagonal(noise, 0)
         D = np.maximum(D + noise, 0.0)
     return list(MANUSCRIPTS), D
-# mccole: /make-dist
+# mccole:/make-dist
 
 
-# mccole: upgma
+# mccole:upgma
 def upgma(names, dist_matrix):
     """Run the UPGMA algorithm and return a list of (node_a, node_b, length) edges.
 
@@ -122,10 +122,10 @@ def upgma(names, dist_matrix):
     # Two nodes remain; connect them with the remaining distance.
     edges.append((names[0], names[1], D[0, 1]))
     return edges
-# mccole: /upgma
+# mccole:/upgma
 
 
-# mccole: draw
+# mccole:draw
 def draw_stemma(edges, manuscripts, filename):
     """Save an unrooted stemma tree diagram to `filename`.
 
@@ -170,7 +170,7 @@ def draw_stemma(edges, manuscripts, filename):
     plt.tight_layout()
     plt.savefig(filename)
     plt.close(fig)
-# mccole: /draw
+# mccole:/draw
 
 
 if __name__ == "__main__":

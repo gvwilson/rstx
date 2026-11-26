@@ -1,11 +1,11 @@
 import numpy as np
 import networkx as nx
 
-# mccole: constants
+# mccole:constants
 SEED = 7493418  # RNG seed
 MIN_TAXA = 3  # smallest unrooted binary tree has 3 leaves and 1 internal node
 DEFAULT_BRANCH_MEAN = 0.5  # mean branch length for exponential distribution
-# mccole: /constants
+# mccole:/constants
 
 
 # Topology is built by iterative leaf insertion starting from three taxa
@@ -15,7 +15,7 @@ DEFAULT_BRANCH_MEAN = 0.5  # mean branch length for exponential distribution
 # drawn independently from Exponential(branch_mean).  An optional
 # symmetric Gaussian noise with standard deviation noise_scale is added to
 # the distance matrix after it is computed from the tree.
-# mccole: random-tree
+# mccole:random-tree
 def make_random_tree(
     n_taxa, seed=SEED, branch_mean=DEFAULT_BRANCH_MEAN, noise_scale=0.0
 ):
@@ -72,7 +72,7 @@ def make_random_tree(
 
     true_edges = [(a, b, w) for a, b, w in edges]
     return names, D, true_edges
-# mccole: /random-tree
+# mccole:/random-tree
 
 
 # Each bipartition is a frozenset of two frozensets of taxon names,
