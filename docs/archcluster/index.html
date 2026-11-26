@@ -100,11 +100,11 @@ Wrong: in the synthetic data there are 20 noise points and 60 cluster sites, but
 </div>
 <h2 data-number="7.2" id="dividing-the-region-into-a-grid"><span class="header-section-number">7.2</span> Dividing the Region into a Grid</h2>
 <ul>
-<li>The survey region spans <span class="math inline">\([\text{region_min}, \text{region_max}]\)</span> in both easting and northing</li>
-<li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline">\(w = (\text{region_max} - \text{region_min}) / \text{grid_size}\)</span></li>
+<li>The survey region spans <span class="math inline">\([\text{region\_min}, \text{region\_max}]\)</span> in both easting and northing</li>
+<li>Divide each axis into <code>grid_size</code> equal-width cells of width <span class="math inline">\(w = (\text{region\_max} - \text{region\_min}) / \text{grid\_size}\)</span></li>
 <li>The cell index along one axis for a coordinate <span class="math inline">\(v\)</span> is:</li>
 </ul>
-<p><span class="math display">\[\text{cell} = \left\lfloor \frac{v - \text{region_min}}{w} \right\rfloor\]</span></p>
+<p><span class="math display">\[\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor\]</span></p>
 <ul>
 <li>Sites exactly on the upper boundary would map to index <code>grid_size</code>
 <ul>
@@ -163,7 +163,7 @@ Wrong: larger cells aggregate more sites; the tendency is to merge clusters, not
 <ul>
 <li>Only hot cells receive a non-negative label</li>
 </ul></li>
-<li>Each cell is pushed onto the stack at most once (when first labelled), so the algorithm runs in <span class="math inline">\(O(\text{grid_size}^2)\)</span> time</li>
+<li>Each cell is pushed onto the stack at most once (when first labelled), so the algorithm runs in <span class="math inline">\(O(\text{grid\_size}^2)\)</span> time</li>
 </ul>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these steps of the DFS connected-component labelling in the correct order.</p>

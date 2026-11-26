@@ -83,14 +83,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <ul>
 <li>Observation times are drawn uniformly at random across the time baseline to simulate a realistic (unevenly spaced) survey schedule</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">7493418</span>  <span class="co"># RNG seed</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>PERIOD <span class="op">=</span> <span class="fl">10.0</span>  <span class="co"># orbital period (days)</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>AMPLITUDE <span class="op">=</span> <span class="fl">50.0</span>  <span class="co"># radial-velocity semi-amplitude (m/s)</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>PHASE <span class="op">=</span> <span class="fl">0.3</span>  <span class="co"># initial orbital phase (radians)</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>V_SYSTEMIC <span class="op">=</span> <span class="fl">0.0</span>  <span class="co"># centre-of-mass (systemic) velocity (m/s)</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>NOISE_SCALE <span class="op">=</span> <span class="fl">10.0</span>  <span class="co"># per-observation measurement noise (m/s); 20% of AMPLITUDE</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>N_POINTS <span class="op">=</span> <span class="dv">50</span>  <span class="co"># number of observations</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>T_MAX <span class="op">=</span> <span class="fl">30.0</span>  <span class="co"># time baseline (days); spans 3 complete periods</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="29.4" id="fitting-the-model"><span class="header-section-number">29.4</span> Fitting the Model</h2>
 <ul>
@@ -102,32 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
 <li>The period guess assumes roughly three cycles are visible in the baseline</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> model_rv(t, amplitude, period, phase, v_sys):</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Sinusoidal radial-velocity model for a single planet.</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">    v(t) = amplitude * sin(2π t / period + phase) + v_sys</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> amplitude <span class="op">*</span> np.sin(<span class="dv">2</span> <span class="op">*</span> np.pi <span class="op">*</span> t <span class="op">/</span> period <span class="op">+</span> phase) <span class="op">+</span> v_sys</span></code></pre></div>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> fit_sinusoid(t, rv):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fit model_rv to the data and return (params, errors).</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    params = [amplitude, period, phase, v_sys]</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">    errors = one-standard-deviation uncertainties from the covariance matrix</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    Initial guesses:</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">      amplitude ← std(rv) * sqrt(2)   (std of a sinusoid = K / sqrt(2))</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co">      period    ← time span / 3       (assumes ≈3 cycles are visible)</span></span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co">      phase     ← 0</span></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">      v_sys     ← mean(rv)</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="co">    Bounds keep amplitude positive and period within [0.5 day, full baseline].</span></span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    amp_guess <span class="op">=</span> np.std(rv) <span class="op">*</span> np.sqrt(<span class="dv">2</span>)</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>    period_guess <span class="op">=</span> (t[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> t[<span class="dv">0</span>]) <span class="op">/</span> <span class="fl">3.0</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>    p0 <span class="op">=</span> [amp_guess, period_guess, <span class="fl">0.0</span>, np.mean(rv)]</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>    bounds <span class="op">=</span> (</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>        [<span class="fl">0.0</span>, <span class="fl">0.5</span>, <span class="op">-</span>np.pi, <span class="op">-</span>np.inf],</span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        [np.inf, t[<span class="op">-</span><span class="dv">1</span>] <span class="op">-</span> t[<span class="dv">0</span>], np.pi, np.inf],</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    popt, pcov <span class="op">=</span> curve_fit(model_rv, t, rv, p0<span class="op">=</span>p0, bounds<span class="op">=</span>bounds, max_nfev<span class="op">=</span><span class="dv">10_000</span>)</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    perr <span class="op">=</span> np.sqrt(np.diag(pcov))</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> popt, perr</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-matching" data-lang="en" data-markdown="1">
 <p>Match each initial-guess formula to the property of a sinusoid it exploits.</p>
 <table class="caption-top">

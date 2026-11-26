@@ -45,12 +45,12 @@ Because cluster sites always outnumber noise sites.
 
 ## Dividing the Region into a Grid
 
--   The survey region spans $[\text{region_min}, \text{region_max}]$ in both easting and northing
+-   The survey region spans $[\text{region\_min}, \text{region\_max}]$ in both easting and northing
 -   Divide each axis into `grid_size` equal-width cells of width
-    $w = (\text{region_max} - \text{region_min}) / \text{grid_size}$
+    $w = (\text{region\_max} - \text{region\_min}) / \text{grid\_size}$
 -   The cell index along one axis for a coordinate $v$ is:
 
-$$\text{cell} = \left\lfloor \frac{v - \text{region_min}}{w} \right\rfloor$$
+$$\text{cell} = \left\lfloor \frac{v - \text{region\_min}}{w} \right\rfloor$$
 
 -   Sites exactly on the upper boundary would map to index `grid_size`
     -   Clip to `grid_size - 1` to keep them inside the array
@@ -111,7 +111,7 @@ Each cluster splits into more fragments because the cells are larger.
 -   `labels` is initialized to -1
     -   Only hot cells receive a non-negative label
 -   Each cell is pushed onto the stack at most once (when first labelled),
-    so the algorithm runs in $O(\text{grid_size}^2)$ time
+    so the algorithm runs in $O(\text{grid\_size}^2)$ time
 
 <div class="forma-ordering" data-lang="en" markdown="1">
 

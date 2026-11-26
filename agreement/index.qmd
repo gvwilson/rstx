@@ -87,7 +87,7 @@ $$P_o = \text{agree\_prob} + \frac{1 - \text{agree\_prob}}{K}$$
 -   When marginals are uniform ($p_i = q_i = 1/K$):
     $P_e = K \cdot (1/K)^2 = 1/K$
 -   Substituting into the kappa formula and simplifying gives
-    $\kappa = \text{agree_prob}$.
+    $\kappa = \text{agree\_prob}$.
 -   So the synthetic generator produces data where
     the expected kappa directly equals the underlying agreement probability,
     making it easy to verify the implementation

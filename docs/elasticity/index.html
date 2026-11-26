@@ -116,33 +116,7 @@ Wrong: that would describe a perfectly inelastic good (<span class="math inline"
 <li><span class="math inline">\(\text{RSS} = \sum_i (\ln Q_i - \hat{a} - \hat{\varepsilon} \ln P_i)^2\)</span> is the residual sum of squares</li>
 <li>A 95% confidence interval is <span class="math inline">\(\hat{\varepsilon} \pm t_{0.975,\,n-2} \cdot \text{SE}(\hat{\varepsilon})\)</span></li>
 </ul>
-<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> log_log_ols(prices, quantities):</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Fit log(quantity) = intercept + slope * log(price) by ordinary least squares.</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">    OLS formulas:</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co">        slope     = sum[(x_i - x_mean)(y_i - y_mean)] / sum[(x_i - x_mean)^2]</span></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co">        intercept = y_mean - slope * x_mean</span></span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co">        SE(slope) = sqrt(RSS / (n - 2)) / sqrt(sum[(x_i - x_mean)^2])</span></span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co">    The 95% confidence interval uses the t-distribution with n - 2 degrees of freedom.</span></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co">    A large SE relative to the slope indicates a poorly constrained estimate.</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">    Returns (intercept, slope, se_slope, ci_low, ci_high).</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.log(prices)</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    y <span class="op">=</span> np.log(quantities)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    n <span class="op">=</span> <span class="bu">len</span>(x)</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    x_mean <span class="op">=</span> np.mean(x)</span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    y_mean <span class="op">=</span> np.mean(y)</span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    ss_xx <span class="op">=</span> np.<span class="bu">sum</span>((x <span class="op">-</span> x_mean) <span class="op">**</span> <span class="dv">2</span>)</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    ss_xy <span class="op">=</span> np.<span class="bu">sum</span>((x <span class="op">-</span> x_mean) <span class="op">*</span> (y <span class="op">-</span> y_mean))</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    slope <span class="op">=</span> ss_xy <span class="op">/</span> ss_xx</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    intercept <span class="op">=</span> y_mean <span class="op">-</span> slope <span class="op">*</span> x_mean</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    residuals <span class="op">=</span> y <span class="op">-</span> (intercept <span class="op">+</span> slope <span class="op">*</span> x)</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    rss <span class="op">=</span> np.<span class="bu">sum</span>(residuals<span class="op">**</span><span class="dv">2</span>)</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Residual standard error: sqrt(RSS / (n - 2))</span></span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    se_slope <span class="op">=</span> np.sqrt(rss <span class="op">/</span> (n <span class="op">-</span> <span class="dv">2</span>) <span class="op">/</span> ss_xx)</span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>    t_crit <span class="op">=</span> t_dist.ppf(<span class="fl">0.975</span>, df<span class="op">=</span>n <span class="op">-</span> <span class="dv">2</span>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>    ci_low <span class="op">=</span> slope <span class="op">-</span> t_crit <span class="op">*</span> se_slope</span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a>    ci_high <span class="op">=</span> slope <span class="op">+</span> t_crit <span class="op">*</span> se_slope</span>
-<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> intercept, slope, se_slope, ci_low, ci_high</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div class="forma-ordering" data-lang="en" data-markdown="1">
 <p>Put these log-log OLS steps in the correct order.</p>
 <ol type="1">
@@ -164,72 +138,10 @@ Wrong: that would describe a perfectly inelastic good (<span class="math inline"
 <li>Each observed quantity is <span class="math inline">\(Q_i = A P_i^\varepsilon \cdot e^{\epsilon_i}\)</span>, where <span class="math inline">\(\epsilon_i \sim N(0, \sigma^2)\)</span></li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>SEED <span class="op">=</span> <span class="dv">7493418</span>  <span class="co"># RNG seed for reproducibility</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>N_POINTS <span class="op">=</span> <span class="dv">80</span>  <span class="co"># number of price-quantity observations</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>TRUE_ELASTICITY <span class="op">=</span> <span class="op">-</span><span class="fl">1.5</span>  <span class="co"># true price elasticity (slope in log-log space)</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>TRUE_INTERCEPT <span class="op">=</span> <span class="fl">5.0</span>  <span class="co"># true log-scale intercept</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>PRICE_MIN <span class="op">=</span> <span class="fl">1.0</span>  <span class="co"># minimum price ($)</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>PRICE_MAX <span class="op">=</span> <span class="fl">20.0</span>  <span class="co"># maximum price ($)</span></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Log-quantity noise: chosen so that ~95% of observed quantities fall within</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># exp(±2 * NOISE_STD) ≈ ±35% of the true quantity at each price.</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>NOISE_STD <span class="op">=</span> <span class="fl">0.15</span></span></code></pre></div>
-<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> make_elasticity_data(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    n<span class="op">=</span>N_POINTS,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    true_elasticity<span class="op">=</span>TRUE_ELASTICITY,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    true_intercept<span class="op">=</span>TRUE_INTERCEPT,</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    price_min<span class="op">=</span>PRICE_MIN,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    price_max<span class="op">=</span>PRICE_MAX,</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    noise_std<span class="op">=</span>NOISE_STD,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    seed<span class="op">=</span>SEED,</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>):</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Return a Polars DataFrame with columns 'price' and 'quantity'.</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">    Prices are drawn uniformly from [price_min, price_max].</span></span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">    Log-quantities follow:</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co">        log(quantity) = true_intercept + true_elasticity * log(price) + noise</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">    where noise ~ N(0, noise_std^2), so quantities are log-normally distributed</span></span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co">    around the true power-law demand curve.</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>    rng <span class="op">=</span> np.random.default_rng(seed)</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>    prices <span class="op">=</span> rng.uniform(price_min, price_max, n)</span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>    log_quantities <span class="op">=</span> (</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>        true_intercept</span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> true_elasticity <span class="op">*</span> np.log(prices)</span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>        <span class="op">+</span> rng.normal(<span class="fl">0.0</span>, noise_std, n)</span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>    quantities <span class="op">=</span> np.exp(log_quantities)</span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> pl.DataFrame({<span class="st">"price"</span>: prices, <span class="st">"quantity"</span>: quantities})</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <h2 data-number="30.5" id="fitting-and-reporting-the-elasticity"><span class="header-section-number">30.5</span> Fitting and Reporting the Elasticity</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_loglog(prices, quantities, intercept, slope, filename):</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">"""Save a log-log scatter plot with the fitted OLS line.</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co">    Both axes are on a log scale.  The fitted curve is the power-law:</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co">        quantity = exp(intercept) * price^slope</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">    shown as a straight line in log-log space.</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co">    """</span></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    df <span class="op">=</span> pl.DataFrame({<span class="st">"price"</span>: prices, <span class="st">"quantity"</span>: quantities})</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>    scatter <span class="op">=</span> (</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>        alt.Chart(df)</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>        .mark_point(color<span class="op">=</span><span class="st">"steelblue"</span>, opacity<span class="op">=</span><span class="fl">0.7</span>, size<span class="op">=</span><span class="dv">40</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>        .encode(</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>            x<span class="op">=</span>alt.X(</span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>                <span class="st">"price:Q"</span>, scale<span class="op">=</span>alt.Scale(<span class="bu">type</span><span class="op">=</span><span class="st">"log"</span>), title<span class="op">=</span><span class="st">"Price ($, log scale)"</span></span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>            ),</span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>            y<span class="op">=</span>alt.Y(</span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>                <span class="st">"quantity:Q"</span>, scale<span class="op">=</span>alt.Scale(<span class="bu">type</span><span class="op">=</span><span class="st">"log"</span>), title<span class="op">=</span><span class="st">"Quantity (log scale)"</span></span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>            ),</span>
-<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>    p_range <span class="op">=</span> np.linspace(prices.<span class="bu">min</span>(), prices.<span class="bu">max</span>(), <span class="dv">200</span>)</span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>    q_fit <span class="op">=</span> np.exp(intercept) <span class="op">*</span> p_range<span class="op">**</span>slope</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>    fit_df <span class="op">=</span> pl.DataFrame({<span class="st">"price"</span>: p_range, <span class="st">"quantity"</span>: q_fit})</span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>    fit_line <span class="op">=</span> (</span>
-<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>        alt.Chart(fit_df)</span>
-<span id="cb4-25"><a href="#cb4-25" aria-hidden="true" tabindex="-1"></a>        .mark_line(color<span class="op">=</span><span class="st">"firebrick"</span>, strokeWidth<span class="op">=</span><span class="dv">2</span>)</span>
-<span id="cb4-26"><a href="#cb4-26" aria-hidden="true" tabindex="-1"></a>        .encode(x<span class="op">=</span><span class="st">"price:Q"</span>, y<span class="op">=</span><span class="st">"quantity:Q"</span>)</span>
-<span id="cb4-27"><a href="#cb4-27" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-28"><a href="#cb4-28" aria-hidden="true" tabindex="-1"></a>    chart <span class="op">=</span> alt.layer(scatter, fit_line).properties(</span>
-<span id="cb4-29"><a href="#cb4-29" aria-hidden="true" tabindex="-1"></a>        width<span class="op">=</span><span class="dv">450</span>, height<span class="op">=</span><span class="dv">300</span>, title<span class="op">=</span><span class="st">"Log-log demand curve with OLS fit"</span></span>
-<span id="cb4-30"><a href="#cb4-30" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb4-31"><a href="#cb4-31" aria-hidden="true" tabindex="-1"></a>    chart.save(filename)</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode python"><code class="sourceCode python"></code></pre></div>
 <div id="fig-elasticity-loglog" class="quarto-float quarto-figure quarto-figure-center" alt="Log-log scatter plot of price vs quantity with a straight fitted line showing a negative slope.">
 <figure class="quarto-float quarto-float-fig">
 <div aria-describedby="fig-elasticity-loglog-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
