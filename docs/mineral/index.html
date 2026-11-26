@@ -307,7 +307,6 @@ Iterative optimisation that moves weights in the direction that most rapidly dec
 </dd>
 </dl>
 </div>
-<section class="exercises">
 <h2 data-number="26.7" id="exercises"><span class="header-section-number">26.7</span> Exercises</h2>
 <h3 data-number="26.7.1" id="do-the-math"><span class="header-section-number">26.7.1</span> Do the math</h3>
 <p>The Mahalanobis distance between two univariate Gaussians with means <span class="math inline">\(\mu_1\)</span>, <span class="math inline">\(\mu_2\)</span> and equal standard deviation <span class="math inline">\(\sigma\)</span> is <span class="math inline">\(|\mu_1 - \mu_2| / \sigma\)</span>. Using <code>FELSIC_MEAN[0] = 70</code>, <code>MAFIC_MEAN[0] = 50</code>, <code>FELSIC_STD[0] = 3</code>, what fraction of the <span class="math inline">\(\text{SiO}_2\)</span> distributions overlap? (Hint: use the 68-95-99.7 rule: the distance is about <span class="math inline">\(6.7\sigma\)</span>, so overlap <span class="math inline">\(\approx 0\)</span>.)</p>
@@ -319,7 +318,6 @@ Iterative optimisation that moves weights in the direction that most rapidly dec
 <p>Save the weights <span class="math inline">\(w\)</span> and bias <span class="math inline">\(b\)</span> every 50 iterations during training. Plot the decision boundary at each checkpoint on the same scatter plot. Show that the boundary rotates and shifts as training progresses and stabilises near the optimum.</p>
 <h3 data-number="26.7.5" id="effect-of-class-imbalance"><span class="header-section-number">26.7.5</span> Effect of class imbalance</h3>
 <p>Generate a dataset with 160 felsic samples and 20 mafic samples. Train the classifier and report the confusion matrix. Show that the model achieves high overall accuracy by predicting felsic almost everywhere, then implement class-weighted cross-entropy loss (multiply the mafic term by <code>n_felsic / n_mafic</code>) and show that it recovers better detection of the minority class.</p>
-</section>
 
 </main>
 <footer class="page-footer">

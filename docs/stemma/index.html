@@ -496,7 +496,6 @@ Unweighted Pair-Group Method with Arithmetic means; a clustering algorithm that 
 </dd>
 </dl>
 </div>
-<section class="exercises">
 <h2 data-number="11.10" id="exercises"><span class="header-section-number">11.10</span> Exercises</h2>
 <h3 data-number="11.10.1" id="do-the-math"><span class="header-section-number">11.10.1</span> Do the math</h3>
 <ol type="1">
@@ -511,7 +510,6 @@ Unweighted Pair-Group Method with Arithmetic means; a clustering algorithm that 
 <p>UPGMA assumes all branch rates are equal (the constant-rate assumption). Add Gaussian noise to the reference distance matrix using <code>make_distance_matrix(noise_scale=s)</code> for <span class="math inline">\(s \in \{0.01, 0.02, 0.05\}\)</span>. At what noise level does UPGMA first recover the wrong topology (A or B grouped with C or D)? How does this compare to the noiseless case?</p>
 <h3 data-number="11.10.5" id="adding-a-contaminated-manuscript"><span class="header-section-number">11.10.5</span> Adding a contaminated manuscript</h3>
 <p>A contaminated manuscript (one that was copied partly from two different sources) does not fit a tree model. Add a fifth manuscript E whose sequence is a 50/50 mix of A and C. Compute the distance matrix for all five manuscripts and run UPGMA. Does the algorithm detect the problem, and if so, how is it visible in the recovered tree?</p>
-</section>
 
 </main>
 <footer class="page-footer">

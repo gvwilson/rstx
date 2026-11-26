@@ -255,7 +255,6 @@ Figure&nbsp;25.1: Observed daily cases (with Poisson noise) and the fitted SIR m
 <span id="cb8-51"><a href="#cb8-51" aria-hidden="true" tabindex="-1"></a>    beta_fit, gamma_fit <span class="op">=</span> fit(noiseless)</span>
 <span id="cb8-52"><a href="#cb8-52" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(beta_fit <span class="op">-</span> BETA_TRUE) <span class="op">/</span> BETA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span>
 <span id="cb8-53"><a href="#cb8-53" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(gamma_fit <span class="op">-</span> GAMMA_TRUE) <span class="op">/</span> GAMMA_TRUE <span class="op">&lt;</span> <span class="fl">0.01</span></span></code></pre></div>
-<section class="exercises">
 <h2 data-number="25.8" id="exercises"><span class="header-section-number">25.8</span> Exercises</h2>
 <h3 data-number="25.8.1" id="do-the-math"><span class="header-section-number">25.8.1</span> Do the math</h3>
 <p>Using <code>BETA_TRUE</code> = 0.30 day<span class="math inline">\(^{-1}\)</span> and <code>GAMMA_TRUE</code> = 0.10 day<span class="math inline">\(^{-1}\)</span>, compute <span class="math inline">\(R_0 = \beta / \gamma\)</span>. Give your answer to one decimal place.</p>
@@ -267,7 +266,6 @@ Figure&nbsp;25.1: Observed daily cases (with Poisson noise) and the fitted SIR m
 <p>Add an exposed (latent) compartment <span class="math inline">\(E\)</span> between <span class="math inline">\(S\)</span> and <span class="math inline">\(I\)</span>: <span class="math inline">\(dE/dt = \beta SI/N - \sigma E\)</span> and <span class="math inline">\(dI/dt = \sigma E - \gamma I\)</span>, where <span class="math inline">\(\sigma^{-1}\)</span> is the mean latent period. Generate synthetic data with <span class="math inline">\(\sigma = 0.2\)</span> day<span class="math inline">\(^{-1}\)</span> (mean 5-day latent period) and fit the four-parameter SEIR model. Does the SIR fit to SEIR data give biased estimates of <span class="math inline">\(\beta\)</span> and <span class="math inline">\(\gamma\)</span>?</p>
 <h3 data-number="25.8.5" id="sensitivity-analysis"><span class="header-section-number">25.8.5</span> Sensitivity analysis</h3>
 <p>Vary <span class="math inline">\(\beta\)</span> from 0.1 to 0.5 (holding <span class="math inline">\(\gamma = 0.1\)</span> fixed) and plot the epidemic peak size and peak timing as functions of <span class="math inline">\(\beta\)</span>. At what value of <span class="math inline">\(\beta\)</span> does the epidemic just barely cross the threshold (peak in <span class="math inline">\(I\)</span> is very small)? How close is this to the theoretical threshold <span class="math inline">\(\beta = \gamma\)</span>?</p>
-</section>
 
 </main>
 <footer class="page-footer">

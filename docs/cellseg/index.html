@@ -279,7 +279,6 @@ At threshold 0.05 pure noise must produce at least one false detection, showing 
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    <span class="co"># At the operating threshold (0.50 ≈ 24σ) pure noise must not trigger any cell.</span></span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    _, n_safe <span class="op">=</span> segment(smooth(noise), threshold<span class="op">=</span>THRESHOLD)</span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> n_safe <span class="op">==</span> <span class="dv">0</span>, <span class="st">"Operating threshold should reject all noise blobs"</span></span></code></pre></div>
-<section class="exercises">
 <h2 data-number="15.8" id="exercises"><span class="header-section-number">15.8</span> Exercises</h2>
 <h3 data-number="15.8.1" id="do-the-math"><span class="header-section-number">15.8.1</span> Do the math</h3>
 <p>A cell has peak brightness <span class="math inline">\(B = 1.0\)</span> and Gaussian width <span class="math inline">\(\sigma = 6\)</span> pixels. After smoothing with a Gaussian filter of width <span class="math inline">\(\sigma_s = 2\)</span> pixels, the smoothed peak brightness is <span class="math inline">\(B \cdot \sigma^2 / (\sigma^2 + \sigma_s^2)\)</span>. What is the result? Give your answer to two decimal places.</p>
@@ -295,7 +294,6 @@ At threshold 0.05 pure noise must produce at least one false detection, showing 
 <span class="math inline">\(G(x,y) = 0.2 \cdot x / \text{IMAGE\_SIZE}\)</span>
 </p>
 <p>to the synthetic image before adding noise. Show that the global threshold misses cells in dark regions or over-detects in bright regions, then implement local thresholding (<code>scipy.ndimage.generic_filter</code> with a percentile-based local estimate) and show that it restores accurate cell counts.</p>
-</section>
 
 </main>
 <footer class="page-footer">

@@ -379,7 +379,6 @@ Figure&nbsp;12.1: UPGMA tree for four taxa. Blue nodes are observed taxa; grey n
 <span id="cb6-52"><a href="#cb6-52" aria-hidden="true" tabindex="-1"></a>    _, D1, _ <span class="op">=</span> make_random_tree(<span class="dv">6</span>)</span>
 <span id="cb6-53"><a href="#cb6-53" aria-hidden="true" tabindex="-1"></a>    _, D2, _ <span class="op">=</span> make_random_tree(<span class="dv">6</span>, seed<span class="op">=</span><span class="dv">999</span>)</span>
 <span id="cb6-54"><a href="#cb6-54" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="kw">not</span> np.allclose(D1, D2)</span></code></pre></div>
-<section class="exercises">
 <h2 data-number="12.8" id="exercises"><span class="header-section-number">12.8</span> Exercises</h2>
 <h3 data-number="12.8.1" id="do-the-math"><span class="header-section-number">12.8.1</span> Do the math</h3>
 <p>In the first UPGMA iteration Human and Gorilla are merged. <span class="math inline">\(D(\text{Human}, \text{Gorilla}) = 0.9\)</span>. The new internal node is placed at height <span class="math inline">\(D/2\)</span>. What is the branch length from the new node to Human? Give your answer to two decimal places.</p>
@@ -391,7 +390,6 @@ Figure&nbsp;12.1: UPGMA tree for four taxa. Blue nodes are observed taxa; grey n
 <p>A distance matrix is tree-additive if and only if it satisfies the four-point condition: for every four taxa <span class="math inline">\(i, j, k, l\)</span>, the largest two of the three sums <span class="math inline">\(D(i,j)+D(k,l)\)</span>, <span class="math inline">\(D(i,k)+D(j,l)\)</span>, <span class="math inline">\(D(i,l)+D(j,k)\)</span> are equal. Write <code>is_additive(names, D)</code> that checks this condition for all <span class="math inline">\(\binom{N}{4}\)</span> quadruples and returns <code>True</code> or <code>False</code>. Verify that the exact matrix passes and a noisy matrix fails.</p>
 <h3 data-number="12.8.5" id="larger-synthetic-trees"><span class="header-section-number">12.8.5</span> Larger synthetic trees</h3>
 <p>Extend <code>make_distance_matrix</code> to accept an arbitrary Newick-format string such as <code>"((A:0.1,B:0.2):0.3,(C:0.4,D:0.5):0.6)"</code> and compute the full distance matrix from it. Use this to generate a 10-taxon example and confirm that UPGMA recovers the correct topology.</p>
-</section>
 
 </main>
 <footer class="page-footer">

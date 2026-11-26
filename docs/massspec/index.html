@@ -308,7 +308,6 @@ Running the detector on pure noise at a low threshold must return at least one f
 <span id="cb7-63"><a href="#cb7-63" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">len</span>(detect_peaks(mz, smoothed, threshold<span class="op">=</span>THRESHOLD)) <span class="op">==</span> <span class="dv">0</span>, (</span>
 <span id="cb7-64"><a href="#cb7-64" aria-hidden="true" tabindex="-1"></a>        <span class="st">"Normal threshold should reject all noise peaks"</span></span>
 <span id="cb7-65"><a href="#cb7-65" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<section class="exercises">
 <h2 data-number="14.7" id="exercises"><span class="header-section-number">14.7</span> Exercises</h2>
 <h3 data-number="14.7.1" id="savitzky-golay-filter"><span class="header-section-number">14.7.1</span> Savitzky-Golay filter</h3>
 <p>Replace the moving-average smoother with a Savitzky-Golay filter, which fits a low-degree polynomial to each window rather than taking a plain mean. The advantage is that the filter preserves peak heights more accurately. Use <code>scipy.signal.savgol_filter</code> and compare the peak positions and heights it reports to those from the moving-average filter on the same synthetic spectrum.</p>
@@ -318,7 +317,6 @@ Running the detector on pure noise at a low threshold must return at least one f
 <p>The area under a Gaussian peak is <span class="math inline">\(h \sigma \sqrt{2\pi}\)</span> and is proportional to compound abundance. After detecting each peak, fit a Gaussian to the smoothed signal in a small window around it using <code>scipy.optimize.curve_fit</code> and report the fitted height, center, and area. Compare the fitted values to the ground truth in <code>PEAKS</code>.</p>
 <h3 data-number="14.7.4" id="receiver-operating-characteristic"><span class="header-section-number">14.7.4</span> Receiver operating characteristic</h3>
 <p>Use <code>make_pure_noise</code> to generate 200 noise-only spectra and <code>make_spectrum</code> to generate 200 signal spectra. For each, record whether the detector finds at least one peak. Sweep the threshold from 0.01 to 0.30 and plot the ROC curve (true positive rate vs. false positive rate). Report the threshold that maximises the F1 score.</p>
-</section>
 
 </main>
 <footer class="page-footer">

@@ -325,7 +325,6 @@ Figure&nbsp;5.1: Concentration at each node over 20 time steps. The pollutant pu
 <span id="cb6-121"><a href="#cb6-121" aria-hidden="true" tabindex="-1"></a>            <span class="cf">assert</span> <span class="bu">abs</span>(total <span class="op">-</span> TRANSPORT_RATE) <span class="op">&lt;</span> <span class="fl">1e-12</span>, (</span>
 <span id="cb6-122"><a href="#cb6-122" aria-hidden="true" tabindex="-1"></a>                <span class="ss">f"node </span><span class="sc">{</span>NODE_NAMES[u]<span class="sc">}</span><span class="ss"> sends </span><span class="sc">{</span>total<span class="sc">}</span><span class="ss">, expected </span><span class="sc">{</span>TRANSPORT_RATE<span class="sc">}</span><span class="ss">"</span></span>
 <span id="cb6-123"><a href="#cb6-123" aria-hidden="true" tabindex="-1"></a>            )</span></code></pre></div>
-<section class="exercises">
 <h2 data-number="5.8" id="exercises"><span class="header-section-number">5.8</span> Exercises</h2>
 <h3 data-number="5.8.1" id="do-the-math"><span class="header-section-number">5.8.1</span> Do the math</h3>
 <p>Starting from <span class="math inline">\(c = [1, 0, 0, 0, 0]\)</span> and using <code>TRANSPORT_RATE</code> = 0.4, what is the concentration at <code>junction</code> (node 2) after exactly 2 time steps? Give your answer to two decimal places.</p>
@@ -338,7 +337,6 @@ Figure&nbsp;5.1: Concentration at each node over 20 time steps. The pollutant pu
 <p>Change the initial condition so that <code>upstream_a</code> receives a constant input of 0.1 concentration units per step (a continuous source rather than an instantaneous spill). Modify <code>simulate</code> to add this source term to <code>new_c[SPILL_NODE]</code> after each update step. Is mass still conserved? At what step does the outlet concentration stabilise?</p>
 <h3 data-number="5.8.5" id="two-spill-comparison"><span class="header-section-number">5.8.5</span> Two-spill comparison</h3>
 <p>Run two separate simulations: one with the spill at <code>upstream_a</code> and one with a spill at <code>upstream_b</code>. Add the two concentration lists at each step. Compare the result to a single simulation that starts with concentration 1.0 at both headwater nodes simultaneously. Are the results identical? Explain why in terms of the structure of the update rule.</p>
-</section>
 
 </main>
 <footer class="page-footer">

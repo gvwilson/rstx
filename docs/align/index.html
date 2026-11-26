@@ -395,7 +395,6 @@ When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALT
 <span id="cb9-60"><a href="#cb9-60" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> aligned_a <span class="op">==</span> <span class="st">"ACGT"</span></span>
 <span id="cb9-61"><a href="#cb9-61" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> aligned_b <span class="op">==</span> <span class="st">"A-GT"</span></span>
 <span id="cb9-62"><a href="#cb9-62" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> score <span class="op">==</span> <span class="dv">5</span></span></code></pre></div>
-<section class="exercises">
 <h2 data-number="9.10" id="exercises"><span class="header-section-number">9.10</span> Exercises</h2>
 <h3 data-number="9.10.1" id="do-the-math"><span class="header-section-number">9.10.1</span> Do the math</h3>
 <p>Aligning “AGTC” with “AGC” using <code>MATCH_SCORE = 2</code>, <code>MISMATCH_PENALTY = -1</code>, <code>GAP_PENALTY = -1</code>: the best global alignment has three matches and one gap. What is the total alignment score?</p>
@@ -407,7 +406,6 @@ When every character pair is a mismatch and <code>GAP_PENALTY == MISMATCH_PENALT
 <p>Biological sequence aligners use substitution matrices such as BLOSUM62 that assign different scores to each pair of amino acid characters, reflecting how often each substitution occurs in evolution. Replace <code>_nt_score</code> with a function that looks up scores in a small hand-written <span class="math inline">\(4 \times 4\)</span> substitution matrix for the four DNA bases A, C, G, T. Assign a higher score to transitions (A vs G, C vs T) than transversions (A vs C, A vs T, etc.), since transitions are more common mutations. Verify that aligning <code>"ATCG"</code> with <code>"AGCG"</code> now gives a different score than with the flat <code>MATCH_SCORE</code> / <code>MISMATCH_PENALTY</code> scheme.</p>
 <h3 data-number="9.10.5" id="affine-gap-penalty"><span class="header-section-number">9.10.5</span> Affine gap penalty</h3>
 <p>The linear gap penalty <span class="math inline">\(g\)</span> treats opening a gap and extending an existing gap identically. A more realistic affine gap penalty charges a higher cost <span class="math inline">\(g_o\)</span> to open a gap and a lower cost <span class="math inline">\(g_e\)</span> to extend it: a gap of length <span class="math inline">\(k\)</span> costs <span class="math inline">\(g_o + (k-1)g_e\)</span>. Look up the three-matrix formulation of Needleman-Wunsch with affine gaps (using matrices <span class="math inline">\(H\)</span>, <span class="math inline">\(E\)</span>, <span class="math inline">\(F\)</span>) and implement it. Verify that with <span class="math inline">\(g_o = -3\)</span> and <span class="math inline">\(g_e = -1\)</span> the alignment of <code>"ACCCGT"</code> with <code>"AGT"</code> produces a single gap of length 3 rather than three individual gaps.</p>
-</section>
 
 </main>
 <footer class="page-footer">

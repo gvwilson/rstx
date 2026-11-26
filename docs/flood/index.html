@@ -245,7 +245,6 @@ Figure&nbsp;31.1: Normal probability plot of log-flows. Points are ranked log-ob
 <span id="cb8-44"><a href="#cb8-44" aria-hidden="true" tabindex="-1"></a>    z, log_q <span class="op">=</span> plotting_positions(flows)</span>
 <span id="cb8-45"><a href="#cb8-45" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> np.isfinite(z).<span class="bu">all</span>(), <span class="st">"normal quantiles contain infinite values"</span></span>
 <span id="cb8-46"><a href="#cb8-46" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> (np.diff(log_q) <span class="op">&gt;=</span> <span class="dv">0</span>).<span class="bu">all</span>(), <span class="st">"log-flows are not sorted ascending"</span></span></code></pre></div>
-<section class="exercises">
 <h2 data-number="31.8" id="exercises"><span class="header-section-number">31.8</span> Exercises</h2>
 <h3 data-number="31.8.1" id="do-the-math"><span class="header-section-number">31.8.1</span> Do the math</h3>
 <p>Using <span class="math inline">\(\hat{\mu}_y = 4.80\)</span> and <span class="math inline">\(\hat{\sigma}_y = 0.40\)</span>, the standard normal quantile at <span class="math inline">\(p = 0.99\)</span> is <span class="math inline">\(z_{0.99} \approx 2.3263\)</span>. Compute the 100-year return level <span class="math inline">\(x_{100} = \exp(4.80 + 2.3263 \times 0.40)\)</span>. Give your answer in m^3/s, rounded to one decimal place.</p>
@@ -257,7 +256,6 @@ Figure&nbsp;31.1: Normal probability plot of log-flows. Points are ranked log-ob
 <p>The log-normal is one of several distributions used in hydrology; the Pearson Type III (a three-parameter gamma family) is another common choice. Use <code>scipy.stats.pearson3.fit</code> to fit the Pearson Type III distribution to the log-flows and compare its 100-year return level with the log-normal estimate. Which distribution fits the Q-Q plot more closely?</p>
 <h3 data-number="31.8.5" id="annual-maxima-from-daily-data"><span class="header-section-number">31.8.5</span> Annual maxima from daily data</h3>
 <p>Generate a synthetic series of daily flows for 50 years as the exponent of a first-order autoregressive process: <span class="math inline">\(\ln Q_t = \phi \ln Q_{t-1} + \varepsilon_t\)</span> with <span class="math inline">\(\phi = 0.8\)</span> and <span class="math inline">\(\varepsilon_t \sim \text{Normal}(0, 0.2)\)</span>. Extract the annual maximum from each year. Fit the log-normal distribution to the maxima and plot the result on a normal probability plot. How does the quality of the fit compare to the case where the data were drawn directly from a log-normal distribution?</p>
-</section>
 
 </main>
 <footer class="page-footer">

@@ -274,7 +274,6 @@ Large-scale spatial separation of agent types arising from individual satisfacti
 </dd>
 </dl>
 </div>
-<section class="exercises">
 <h2 data-number="3.9" id="exercises"><span class="header-section-number">3.9</span> Exercises</h2>
 <h3 data-number="3.9.1" id="do-the-math"><span class="header-section-number">3.9.1</span> Do the math</h3>
 <p>An agent has 8 fully occupied Moore neighbours, of which 3 are the same type. What is its same-neighbour fraction?</p>
@@ -286,7 +285,6 @@ Large-scale spatial separation of agent types arising from individual satisfacti
 <p>The satisfaction rate measures individual happiness, not the spatial extent of clustering. Implement a <code>mean_cluster_size</code> function that computes the mean size of same-type connected components using <code>scipy.ndimage.label</code>. Plot mean cluster size over time alongside the satisfaction rate.</p>
 <h3 data-number="3.9.5" id="convergence-detection"><span class="header-section-number">3.9.5</span> Convergence detection</h3>
 <p>Add a <code>converged</code> parameter to <code>run</code> that stops early when fewer than 1% of agents are dissatisfied. How many steps are needed to converge at threshold 0.3 for a 100x100 grid?</p>
-</section>
 
 </main>
 <footer class="page-footer">

@@ -248,7 +248,6 @@ Dropping censored patients inflates <span class="math inline">\(\hat{\lambda}\)<
 <div class="note">
 <p>The Kaplan-Meier estimator handles censored observations more carefully using conditional probabilities at each event time, and does not assume an exponential distribution; it requires more advanced statistics.</p>
 </div>
-<section class="exercises">
 <h2 data-number="32.9" id="exercises"><span class="header-section-number">32.9</span> Exercises</h2>
 <h3 data-number="32.9.1" id="do-the-math"><span class="header-section-number">32.9.1</span> Do the math</h3>
 <ol type="1">
@@ -263,7 +262,6 @@ Dropping censored patients inflates <span class="math inline">\(\hat{\lambda}\)<
 <p>The Weibull distribution generalises the Exponential: <span class="math inline">\(S(t) = e^{-(\lambda t)^k}\)</span> where <span class="math inline">\(k = 1\)</span> recovers the Exponential. Derive the log-likelihood, implement MLE for both <span class="math inline">\(\lambda\)</span> and <span class="math inline">\(k\)</span> using <code>scipy.optimize.minimize</code>, and compare the Weibull and Exponential fits on the synthetic data.</p>
 <h3 data-number="32.9.5" id="two-group-comparison"><span class="header-section-number">32.9.5</span> Two-group comparison</h3>
 <p>Generate two groups with true rates <span class="math inline">\(\lambda_1 = 0.04\)</span> and <span class="math inline">\(\lambda_2 = 0.06\)</span>. Estimate the corrected rate for each group and test whether the ratio <span class="math inline">\(\hat{\lambda}_1 / \hat{\lambda}_2\)</span> differs significantly from 1 using the fact that <span class="math inline">\(\ln(\hat{\lambda}_1 / \hat{\lambda}_2)\)</span> is approximately normal with standard error <span class="math inline">\(\sqrt{1/d_1 + 1/d_2}\)</span>.</p>
-</section>
 
 </main>
 <footer class="page-footer">

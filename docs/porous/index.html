@@ -217,7 +217,6 @@ Figure&nbsp;6.1: Percolation fraction vs.&nbsp;open-cell probability p on a 20 x
 <span id="cb7-41"><a href="#cb7-41" aria-hidden="true" tabindex="-1"></a>    <span class="cf">assert</span> <span class="bu">abs</span>(p_c <span class="op">-</span> THRESHOLD_THEORY) <span class="op">&lt;</span> <span class="fl">0.07</span>, (</span>
 <span id="cb7-42"><a href="#cb7-42" aria-hidden="true" tabindex="-1"></a>        <span class="ss">f"estimated threshold </span><span class="sc">{</span>p_c<span class="sc">:.3f}</span><span class="ss"> is too far from theory </span><span class="sc">{</span>THRESHOLD_THEORY<span class="sc">:.4f}</span><span class="ss">"</span></span>
 <span id="cb7-43"><a href="#cb7-43" aria-hidden="true" tabindex="-1"></a>    )</span></code></pre></div>
-<section class="exercises">
 <h2 data-number="6.7" id="exercises"><span class="header-section-number">6.7</span> Exercises</h2>
 <h3 data-number="6.7.1" id="do-the-math"><span class="header-section-number">6.7.1</span> Do the math</h3>
 <p>The theoretical percolation threshold for 2D site percolation on a square lattice with 4-neighbor connectivity is commonly cited as 0.5927. To three decimal places, what is <code>THRESHOLD_THEORY</code> as defined in <code>porous.py</code>?</p>
@@ -229,7 +228,6 @@ Figure&nbsp;6.1: Percolation fraction vs.&nbsp;open-cell probability p on a 20 x
 <p>In bond percolation, edges between adjacent cells are open with probability <span class="math inline">\(p\)</span> (rather than cells themselves). Implement a <code>make_bond_grid</code> function that creates a random boolean array for horizontal bonds and another for vertical bonds. Modify <code>percolates</code> to use bond arrays instead of a cell array. The theoretical threshold for 2D bond percolation on a square lattice is exactly <span class="math inline">\(p_c = 0.5\)</span>. Estimate it numerically and compare.</p>
 <h3 data-number="6.7.5" id="cluster-size-distribution"><span class="header-section-number">6.7.5</span> Cluster size distribution</h3>
 <p>Instead of returning only a boolean, modify <code>percolates</code> to return the sizes of all connected open clusters found during the DFS. At <span class="math inline">\(p = p_c\)</span>, the largest cluster grows as a power law of the grid size <span class="math inline">\(N\)</span>. Run sweeps at several grid sizes and plot the largest cluster size vs.&nbsp;<span class="math inline">\(N\)</span> near the threshold.</p>
-</section>
 
 </main>
 <footer class="page-footer">

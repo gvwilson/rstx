@@ -280,7 +280,6 @@ A method for finding periodic signals in unevenly sampled time series without re
 </dd>
 </dl>
 </div>
-<section class="exercises">
 <h2 data-number="29.7" id="exercises"><span class="header-section-number">29.7</span> Exercises</h2>
 <h3 data-number="29.7.1" id="do-the-math"><span class="header-section-number">29.7.1</span> Do the math</h3>
 <p>Using <span class="math inline">\(v(t) = K \sin(2\pi t / P + \varphi) + v_\text{sys}\)</span> with <span class="math inline">\(K = 50\)</span> m/s, <span class="math inline">\(P = 10\)</span> days, <span class="math inline">\(\varphi = 0\)</span>, <span class="math inline">\(v_\text{sys} = 0\)</span>, what is <span class="math inline">\(v(2.5)\)</span>? Give your answer in m/s.</p>
@@ -294,7 +293,6 @@ A method for finding periodic signals in unevenly sampled time series without re
 <p>Extend <code>make_rv_data</code> to superpose signals from two planets with different periods. Show that <code>fit_sinusoid</code> (single-planet model) fails to recover either period correctly, then fit a two-planet model and demonstrate clean recovery.</p>
 <h3 data-number="29.7.5" id="detection-threshold"><span class="header-section-number">29.7.5</span> Detection threshold</h3>
 <p>Generate 200 data sets for each of ten noise levels from 2 to 50 m/s. For each data set, run <code>fit_sinusoid</code> and classify the result as a detection when <span class="math inline">\(\sigma_K / K &lt; 0.1\)</span>. Plot the detection fraction as a function of noise level and identify the noise floor at which detection drops below 50%.</p>
-</section>
 
 </main>
 <footer class="page-footer">
