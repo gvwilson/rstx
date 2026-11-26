@@ -5,7 +5,7 @@
 
 local M = {}
 
-M.LANG = { py = "python", sh = "bash", sql = "sql", js = "javascript", css = "css", html = "html" }
+M.LANG = { py = "python", sh = "bash", sql = "sql", js = "javascript", css = "css", html = "html", json = "json" }
 
 function M.s(v)
   if type(v) == "string" and v ~= "" then return v end
